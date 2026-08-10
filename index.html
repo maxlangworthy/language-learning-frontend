@@ -39,17 +39,13 @@
 
 
     * {
-      box-sizing:
-        border-box;
+      box-sizing: border-box;
     }
 
 
     body {
-      margin:
-        0;
-
-      min-height:
-        100vh;
+      margin: 0;
+      min-height: 100vh;
 
       font-family:
         Inter,
@@ -67,50 +63,37 @@
           #eef3fa 100%
         );
 
-      color:
-        var(--text);
+      color: var(--text);
     }
 
 
     button,
     select,
     input {
-      font:
-        inherit;
+      font: inherit;
     }
 
 
     button {
-      cursor:
-        pointer;
+      cursor: pointer;
     }
 
 
     button:disabled,
     input:disabled {
-      cursor:
-        not-allowed;
-
-      opacity:
-        0.6;
+      cursor: not-allowed;
+      opacity: 0.6;
     }
 
 
     .page {
-      min-height:
-        100vh;
+      min-height: 100vh;
 
-      display:
-        flex;
+      display: flex;
+      align-items: center;
+      justify-content: center;
 
-      align-items:
-        center;
-
-      justify-content:
-        center;
-
-      padding:
-        28px;
+      padding: 28px;
     }
 
 
@@ -121,11 +104,9 @@
           100%
         );
 
-      min-height:
-        680px;
+      min-height: 680px;
 
-      background:
-        var(--surface);
+      background: var(--surface);
 
       border:
         1px solid
@@ -136,29 +117,22 @@
           0.9
         );
 
-      border-radius:
-        28px;
+      border-radius: 28px;
 
-      box-shadow:
-        var(--shadow);
+      box-shadow: var(--shadow);
 
-      overflow:
-        hidden;
+      overflow: hidden;
     }
 
 
     .screen {
-      display:
-        none;
-
-      min-height:
-        680px;
+      display: none;
+      min-height: 680px;
     }
 
 
     .screen.active {
-      display:
-        flex;
+      display: flex;
     }
 
 
@@ -166,11 +140,8 @@
 
 
     #homeScreen {
-      align-items:
-        center;
-
-      justify-content:
-        center;
+      align-items: center;
+      justify-content: center;
 
       padding:
         56px 28px;
@@ -187,38 +158,24 @@
 
 
     .eyebrow {
-      display:
-        inline-flex;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
 
-      align-items:
-        center;
+      margin-bottom: 14px;
 
-      gap:
-        8px;
+      color: var(--primary);
 
-      margin-bottom:
-        14px;
+      font-size: 0.86rem;
+      font-weight: 700;
 
-      color:
-        var(--primary);
-
-      font-size:
-        0.86rem;
-
-      font-weight:
-        700;
-
-      letter-spacing:
-        0.08em;
-
-      text-transform:
-        uppercase;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
     }
 
 
     h1 {
-      margin:
-        0;
+      margin: 0;
 
       font-size:
         clamp(
@@ -227,11 +184,8 @@
           4rem
         );
 
-      line-height:
-        1;
-
-      letter-spacing:
-        -0.045em;
+      line-height: 1;
+      letter-spacing: -0.045em;
     }
 
 
@@ -239,50 +193,37 @@
       margin:
         18px 0 36px;
 
-      color:
-        var(--muted);
+      color: var(--muted);
 
-      font-size:
-        1.05rem;
-
-      line-height:
-        1.65;
+      font-size: 1.05rem;
+      line-height: 1.65;
     }
 
 
     .field {
-      margin-bottom:
-        22px;
+      margin-bottom: 22px;
     }
 
 
     .field label {
-      display:
-        block;
+      display: block;
 
-      margin-bottom:
-        9px;
+      margin-bottom: 9px;
 
-      font-size:
-        0.92rem;
-
-      font-weight:
-        700;
+      font-size: 0.92rem;
+      font-weight: 700;
     }
 
 
     .select-wrap {
-      position:
-        relative;
+      position: relative;
     }
 
 
     select {
-      width:
-        100%;
+      width: 100%;
 
-      appearance:
-        none;
+      appearance: none;
 
       padding:
         15px 46px 15px 16px;
@@ -291,17 +232,12 @@
         1px solid
         var(--border);
 
-      border-radius:
-        14px;
+      border-radius: 14px;
 
-      background:
-        var(--surface);
+      background: var(--surface);
+      color: var(--text);
 
-      color:
-        var(--text);
-
-      outline:
-        none;
+      outline: none;
 
       transition:
         border-color 0.2s ease,
@@ -331,58 +267,38 @@
 
 
     .select-wrap::after {
-      content:
-        "⌄";
+      content: "⌄";
 
-      position:
-        absolute;
+      position: absolute;
 
-      right:
-        16px;
-
-      top:
-        50%;
+      right: 16px;
+      top: 50%;
 
       transform:
-        translateY(
-          -55%
-        );
+        translateY(-55%);
 
-      color:
-        var(--muted);
+      color: var(--muted);
 
-      pointer-events:
-        none;
+      pointer-events: none;
 
-      font-size:
-        1.1rem;
+      font-size: 1.1rem;
     }
 
 
     .primary-btn {
-      width:
-        100%;
+      width: 100%;
 
-      border:
-        none;
-
-      border-radius:
-        14px;
+      border: none;
+      border-radius: 14px;
 
       padding:
         15px 18px;
 
-      background:
-        var(--primary);
+      background: var(--primary);
+      color: #fff;
 
-      color:
-        #fff;
-
-      font-weight:
-        750;
-
-      font-size:
-        1rem;
+      font-weight: 750;
+      font-size: 1rem;
 
       transition:
         background 0.2s ease,
@@ -398,9 +314,7 @@
 
     .primary-btn:active {
       transform:
-        translateY(
-          1px
-        );
+        translateY(1px);
     }
 
 
@@ -408,23 +322,16 @@
 
 
     #chatScreen {
-      flex-direction:
-        column;
+      flex-direction: column;
     }
 
 
     .chat-header {
-      display:
-        flex;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
 
-      align-items:
-        center;
-
-      justify-content:
-        space-between;
-
-      gap:
-        20px;
+      gap: 20px;
 
       padding:
         20px 24px;
@@ -444,8 +351,7 @@
 
 
     .chat-heading {
-      min-width:
-        0;
+      min-width: 0;
     }
 
 
@@ -459,23 +365,15 @@
 
 
     .chat-heading p {
-      margin:
-        0;
+      margin: 0;
 
-      color:
-        var(--muted);
+      color: var(--muted);
 
-      font-size:
-        0.91rem;
+      font-size: 0.91rem;
 
-      white-space:
-        nowrap;
-
-      overflow:
-        hidden;
-
-      text-overflow:
-        ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
 
@@ -511,17 +409,12 @@
 
 
     .chat-main {
-      flex:
-        1;
+      flex: 1;
 
-      display:
-        flex;
+      display: flex;
+      flex-direction: column;
 
-      flex-direction:
-        column;
-
-      min-height:
-        0;
+      min-height: 0;
 
       background:
         var(--surface-soft);
@@ -529,32 +422,22 @@
 
 
     .messages {
-      flex:
-        1;
+      flex: 1;
 
-      overflow-y:
-        auto;
+      overflow-y: auto;
 
-      padding:
-        30px;
+      padding: 30px;
 
-      display:
-        flex;
+      display: flex;
+      flex-direction: column;
 
-      flex-direction:
-        column;
-
-      gap:
-        16px;
+      gap: 16px;
     }
 
 
     .message-row {
-      display:
-        flex;
-
-      width:
-        100%;
+      display: flex;
+      width: 100%;
     }
 
 
@@ -615,7 +498,7 @@
     }
 
 
-    /* HOVERABLE WORDS */
+    /* WORDS */
 
 
     .word-token {
@@ -628,11 +511,8 @@
           0.42
         );
 
-      cursor:
-        help;
-
-      outline:
-        none;
+      cursor: help;
+      outline: none;
     }
 
 
@@ -648,8 +528,7 @@
 
 
     .word-token:focus {
-      border-bottom-style:
-        solid;
+      border-bottom-style: solid;
     }
 
 
@@ -657,14 +536,11 @@
 
 
     .dictionary-tooltip {
-      display:
-        none;
+      display: none;
 
-      position:
-        fixed;
+      position: fixed;
 
-      z-index:
-        9999;
+      z-index: 9999;
 
       width:
         max-content;
@@ -689,14 +565,12 @@
           0.13
         );
 
-      border-radius:
-        12px;
+      border-radius: 12px;
 
       background:
         #18212f;
 
-      color:
-        #fff;
+      color: #fff;
 
       box-shadow:
         0 12px 32px
@@ -707,32 +581,23 @@
           0.22
         );
 
-      font-size:
-        0.86rem;
+      font-size: 0.86rem;
+      line-height: 1.4;
 
-      line-height:
-        1.4;
-
-      pointer-events:
-        none;
+      pointer-events: none;
     }
 
 
     .dictionary-tooltip.visible {
-      display:
-        block;
+      display: block;
     }
 
 
     .tooltip-word {
-      margin-bottom:
-        3px;
+      margin-bottom: 3px;
 
-      font-size:
-        0.92rem;
-
-      font-weight:
-        800;
+      font-size: 0.92rem;
+      font-weight: 800;
     }
 
 
@@ -748,8 +613,7 @@
 
 
     .dictionary-meta {
-      margin-top:
-        5px;
+      margin-top: 5px;
 
       color:
         rgba(
@@ -759,8 +623,7 @@
           0.68
         );
 
-      font-size:
-        0.77rem;
+      font-size: 0.77rem;
     }
 
 
@@ -787,23 +650,17 @@
 
 
     .feedback-panel.hidden {
-      display:
-        none;
+      display: none;
     }
 
 
     .feedback-title {
-      margin-bottom:
-        7px;
+      margin-bottom: 7px;
 
-      font-size:
-        0.82rem;
+      font-size: 0.82rem;
+      font-weight: 800;
 
-      font-weight:
-        800;
-
-      letter-spacing:
-        0.06em;
+      letter-spacing: 0.06em;
 
       text-transform:
         uppercase;
@@ -817,8 +674,7 @@
       margin:
         5px 0;
 
-      line-height:
-        1.5;
+      line-height: 1.5;
     }
 
 
@@ -826,8 +682,7 @@
       color:
         var(--success);
 
-      font-weight:
-        700;
+      font-weight: 700;
     }
 
 
@@ -835,8 +690,7 @@
       color:
         var(--danger);
 
-      font-weight:
-        700;
+      font-weight: 700;
     }
 
 
@@ -844,11 +698,9 @@
 
 
     .composer {
-      display:
-        flex;
+      display: flex;
 
-      gap:
-        12px;
+      gap: 12px;
 
       padding:
         18px 22px 22px;
@@ -857,17 +709,14 @@
         1px solid
         var(--border);
 
-      background:
-        #fff;
+      background: #fff;
     }
 
 
     .composer input {
-      flex:
-        1;
+      flex: 1;
 
-      min-width:
-        0;
+      min-width: 0;
 
       padding:
         14px 16px;
@@ -876,20 +725,15 @@
         1px solid
         var(--border);
 
-      border-radius:
-        14px;
+      border-radius: 14px;
 
-      outline:
-        none;
+      outline: none;
     }
 
 
     .send-btn {
-      border:
-        none;
-
-      border-radius:
-        14px;
+      border: none;
+      border-radius: 14px;
 
       padding:
         0 20px;
@@ -897,11 +741,9 @@
       background:
         var(--primary);
 
-      color:
-        #fff;
+      color: #fff;
 
-      font-weight:
-        750;
+      font-weight: 750;
     }
 
 
@@ -933,8 +775,7 @@
 
 
     .data-credit a {
-      color:
-        inherit;
+      color: inherit;
 
       text-decoration:
         underline;
@@ -945,8 +786,7 @@
 
 
     .chat-credit {
-      margin:
-        0;
+      margin: 0;
 
       padding:
         0 22px 10px;
@@ -956,27 +796,20 @@
     }
 
 
-    /* MOBILE */
-
-
     @media (
       max-width:
         700px
     ) {
 
       .page {
-        padding:
-          0;
+        padding: 0;
       }
 
 
       .app-shell,
       .screen {
-        min-height:
-          100vh;
-
-        border-radius:
-          0;
+        min-height: 100vh;
+        border-radius: 0;
       }
 
 
@@ -993,8 +826,7 @@
 
 
       .message {
-        max-width:
-          86%;
+        max-width: 86%;
       }
 
 
@@ -1011,8 +843,7 @@
 
 
       .composer {
-        padding:
-          14px;
+        padding: 14px;
       }
 
 
@@ -1035,9 +866,6 @@
 
 
     <section class="app-shell">
-
-
-      <!-- HOME -->
 
 
       <section
@@ -1083,10 +911,28 @@
               >
 
 
-                <option
-                  value="german"
-                >
+                <option value="german">
                   German
+                </option>
+
+
+                <option value="italian">
+                  Italian
+                </option>
+
+
+                <option value="spanish">
+                  Spanish
+                </option>
+
+
+                <option value="afrikaans">
+                  Afrikaans
+                </option>
+
+
+                <option value="french">
+                  French
                 </option>
 
 
@@ -1117,23 +963,17 @@
               >
 
 
-                <option
-                  value="coffee"
-                >
+                <option value="coffee">
                   Ordering a coffee
                 </option>
 
 
-                <option
-                  value="weekend"
-                >
+                <option value="weekend">
                   Talking about your weekend with a colleague
                 </option>
 
 
-                <option
-                  value="directions"
-                >
+                <option value="directions">
                   Giving a stranger directions
                 </option>
 
@@ -1199,14 +1039,6 @@
               CC BY-SA 4.0
             </a>.
 
-            <a
-              href="https://en.wiktionary.org/wiki/Wiktionary:Copyrights"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Upstream licensing details
-            </a>.
-
           </p>
 
 
@@ -1216,35 +1048,24 @@
       </section>
 
 
-      <!-- CHAT -->
-
-
       <section
         id="chatScreen"
         class="screen"
       >
 
 
-        <header
-          class="chat-header"
-        >
+        <header class="chat-header">
 
 
-          <div
-            class="chat-heading"
-          >
+          <div class="chat-heading">
 
 
-            <h2
-              id="chatTitle"
-            >
+            <h2 id="chatTitle">
               Conversation
             </h2>
 
 
-            <p
-              id="scenarioLabel"
-            >
+            <p id="scenarioLabel">
               Scenario
             </p>
 
@@ -1263,9 +1084,7 @@
         </header>
 
 
-        <div
-          class="chat-main"
-        >
+        <div class="chat-main">
 
 
           <div
@@ -1282,9 +1101,7 @@
           >
 
 
-            <div
-              class="feedback-title"
-            >
+            <div class="feedback-title">
               Feedback on your last message
             </div>
 
@@ -1324,9 +1141,7 @@
           </form>
 
 
-          <p
-            class="data-credit chat-credit"
-          >
+          <p class="data-credit chat-credit">
 
             Dictionary data:
 
@@ -1384,11 +1199,6 @@
 
     const API_BASE_URL =
       "https://learning-german.onrender.com";
-
-
-    // ----------------------------------------------------
-    // PAGE ELEMENTS
-    // ----------------------------------------------------
 
 
     const homeScreen =
@@ -1481,71 +1291,45 @@
       );
 
 
-    // ----------------------------------------------------
-    // STATE
-    // ----------------------------------------------------
-
-
-    let history =
-      [];
-
+    let history = [];
 
     let conversationEnded =
       false;
 
-
     let activeLanguageId =
       null;
-
 
     const dictionaryCache =
       new Map();
 
-
     let activeDictionaryWord =
       null;
-
 
     let tooltipHideTimer =
       null;
 
-
     let tooltipHoverTimer =
       null;
 
-
     let tooltipRequestToken =
       0;
-
-
-    // ----------------------------------------------------
-    // GENERAL
-    // ----------------------------------------------------
 
 
     function showScreen(
       screenToShow
     ) {
 
-      homeScreen
-        .classList
-        .remove(
-          "active"
-        );
+      homeScreen.classList.remove(
+        "active"
+      );
 
+      chatScreen.classList.remove(
+        "active"
+      );
 
-      chatScreen
-        .classList
-        .remove(
-          "active"
-        );
-
-
-      screenToShow
-        .classList
-        .add(
-          "active"
-        );
+      screenToShow.classList.add(
+        "active"
+      );
 
     }
 
@@ -1554,8 +1338,7 @@
 
       return languageSelect
         .options[
-          languageSelect
-            .selectedIndex
+          languageSelect.selectedIndex
         ]
         .text;
 
@@ -1598,19 +1381,12 @@
     }
 
 
-    // ----------------------------------------------------
-    // DICTIONARY
-    // ----------------------------------------------------
-
-
     function normalizeDictionaryKey(
       word
     ) {
 
       return word
-        .normalize(
-          "NFC"
-        )
+        .normalize("NFC")
         .toLocaleLowerCase();
 
     }
@@ -1677,9 +1453,7 @@
 
 
       const request =
-        fetch(
-          url
-        )
+        fetch(url)
           .then(
             readJsonResponse
           )
@@ -1711,23 +1485,16 @@
     }
 
 
-    // ----------------------------------------------------
-    // TOOLTIP
-    // ----------------------------------------------------
-
-
     function positionDictionaryTooltip(
       target
     ) {
 
       const targetRect =
-        target
-          .getBoundingClientRect();
+        target.getBoundingClientRect();
 
 
       const tooltipRect =
-        dictionaryTooltip
-          .getBoundingClientRect();
+        dictionaryTooltip.getBoundingClientRect();
 
 
       const margin =
@@ -1771,16 +1538,12 @@
       }
 
 
-      dictionaryTooltip
-        .style
-        .left =
-          `${left}px`;
+      dictionaryTooltip.style.left =
+        `${left}px`;
 
 
-      dictionaryTooltip
-        .style
-        .top =
-          `${top}px`;
+      dictionaryTooltip.style.top =
+        `${top}px`;
 
     }
 
@@ -1789,9 +1552,8 @@
       surfaceWord
     ) {
 
-      dictionaryTooltip
-        .innerHTML =
-          "";
+      dictionaryTooltip.innerHTML =
+        "";
 
 
       const title =
@@ -1836,9 +1598,8 @@
       lookupWord
     ) {
 
-      dictionaryTooltip
-        .innerHTML =
-          "";
+      dictionaryTooltip.innerHTML =
+        "";
 
 
       const title =
@@ -1855,10 +1616,9 @@
         surfaceWord;
 
 
-      dictionaryTooltip
-        .appendChild(
-          title
-        );
+      dictionaryTooltip.appendChild(
+        title
+      );
 
 
       if (
@@ -1884,10 +1644,9 @@
           "Meaning unavailable.";
 
 
-        dictionaryTooltip
-          .appendChild(
-            unavailable
-          );
+        dictionaryTooltip.appendChild(
+          unavailable
+        );
 
 
         return;
@@ -1896,9 +1655,7 @@
 
 
       const entry =
-        data.entries[
-          0
-        ];
+        data.entries[0];
 
 
       const meanings =
@@ -1931,10 +1688,9 @@
         "Meaning unavailable.";
 
 
-      dictionaryTooltip
-        .appendChild(
-          meaning
-        );
+      dictionaryTooltip.appendChild(
+        meaning
+      );
 
 
       const metaParts =
@@ -1992,10 +1748,9 @@
           );
 
 
-        dictionaryTooltip
-          .appendChild(
-            meta
-          );
+        dictionaryTooltip.appendChild(
+          meta
+        );
 
       }
 
@@ -2030,11 +1785,9 @@
       );
 
 
-      dictionaryTooltip
-        .classList
-        .add(
-          "visible"
-        );
+      dictionaryTooltip.classList.add(
+        "visible"
+      );
 
 
       positionDictionaryTooltip(
@@ -2119,11 +1872,6 @@
     }
 
 
-    // ----------------------------------------------------
-    // WORD METADATA MATCHING
-    // ----------------------------------------------------
-
-
     function createWordMetadataMatcher(
       replyWords
     ) {
@@ -2192,6 +1940,7 @@
 
 
             return {
+
               lookup:
                 typeof item.lookup ===
                   "string" &&
@@ -2204,6 +1953,7 @@
                   "string"
                   ? item.pos
                   : "other",
+
             };
 
           }
@@ -2212,21 +1962,18 @@
 
 
         return {
+
           lookup:
             visibleWord,
 
           pos:
             "other",
+
         };
 
       };
 
     }
-
-
-    // ----------------------------------------------------
-    // INTERACTIVE TEXT
-    // ----------------------------------------------------
 
 
     function appendInteractiveLanguageText(
@@ -2268,13 +2015,11 @@
 
         if (!isWord) {
 
-          container
-            .appendChild(
-              document
-                .createTextNode(
-                  part
-                )
-            );
+          container.appendChild(
+            document.createTextNode(
+              part
+            )
+          );
 
 
           continue;
@@ -2420,11 +2165,6 @@
     }
 
 
-    // ----------------------------------------------------
-    // MESSAGE DISPLAY
-    // ----------------------------------------------------
-
-
     function addMessage(
       text,
       sender,
@@ -2477,23 +2217,15 @@
     }
 
 
-    // ----------------------------------------------------
-    // FEEDBACK
-    // ----------------------------------------------------
-
-
     function clearFeedback() {
 
-      feedbackContent
-        .innerHTML =
-          "";
+      feedbackContent.innerHTML =
+        "";
 
 
-      feedbackPanel
-        .classList
-        .add(
-          "hidden"
-        );
+      feedbackPanel.classList.add(
+        "hidden"
+      );
 
     }
 
@@ -2502,16 +2234,13 @@
       feedback
     ) {
 
-      feedbackContent
-        .innerHTML =
-          "";
+      feedbackContent.innerHTML =
+        "";
 
 
-      feedbackPanel
-        .classList
-        .remove(
-          "hidden"
-        );
+      feedbackPanel.classList.remove(
+        "hidden"
+      );
 
 
       if (
@@ -2535,10 +2264,9 @@
           "No correction needed.";
 
 
-        feedbackContent
-          .appendChild(
-            text
-          );
+        feedbackContent.appendChild(
+          text
+        );
 
 
         return;
@@ -2598,16 +2326,13 @@
       message
     ) {
 
-      feedbackContent
-        .innerHTML =
-          "";
+      feedbackContent.innerHTML =
+        "";
 
 
-      feedbackPanel
-        .classList
-        .remove(
-          "hidden"
-        );
+      feedbackPanel.classList.remove(
+        "hidden"
+      );
 
 
       const text =
@@ -2624,17 +2349,11 @@
         message;
 
 
-      feedbackContent
-        .appendChild(
-          text
-        );
+      feedbackContent.appendChild(
+        text
+      );
 
     }
-
-
-    // ----------------------------------------------------
-    // COMPOSER
-    // ----------------------------------------------------
 
 
     function setComposerEnabled(
@@ -2649,11 +2368,6 @@
         !enabled;
 
     }
-
-
-    // ----------------------------------------------------
-    // START
-    // ----------------------------------------------------
 
 
     async function startConversation() {
@@ -2673,8 +2387,7 @@
       const scenarioName =
         scenarioSelect
           .options[
-            scenarioSelect
-              .selectedIndex
+            scenarioSelect.selectedIndex
           ]
           .text;
 
@@ -2739,6 +2452,7 @@
           await fetch(
             `${API_BASE_URL}/api/start`,
             {
+
               method:
                 "POST",
 
@@ -2749,11 +2463,14 @@
 
               body:
                 JSON.stringify({
+
                   language:
                     languageId,
 
                   scenario,
+
                 }),
+
             }
           );
 
@@ -2773,11 +2490,13 @@
 
 
         history.push({
+
           role:
             "assistant",
 
           content:
             data.reply,
+
         });
 
 
@@ -2825,11 +2544,6 @@
       }
 
     }
-
-
-    // ----------------------------------------------------
-    // END
-    // ----------------------------------------------------
 
 
     function endConversation() {
@@ -2882,11 +2596,6 @@
     }
 
 
-    // ----------------------------------------------------
-    // EVENTS
-    // ----------------------------------------------------
-
-
     document.addEventListener(
       "click",
       (
@@ -2933,23 +2642,16 @@
     );
 
 
-    startChatButton
-      .addEventListener(
-        "click",
-        startConversation
-      );
+    startChatButton.addEventListener(
+      "click",
+      startConversation
+    );
 
 
-    endChatButton
-      .addEventListener(
-        "click",
-        endConversation
-      );
-
-
-    // ----------------------------------------------------
-    // SEND MESSAGE
-    // ----------------------------------------------------
+    endChatButton.addEventListener(
+      "click",
+      endConversation
+    );
 
 
     chatForm.addEventListener(
@@ -3032,6 +2734,7 @@
             await fetch(
               `${API_BASE_URL}/api/chat`,
               {
+
                 method:
                   "POST",
 
@@ -3042,6 +2745,7 @@
 
                 body:
                   JSON.stringify({
+
                     language:
                       languageId,
 
@@ -3051,7 +2755,9 @@
 
                     history:
                       historyBeforeMessage,
+
                   }),
+
               }
             );
 
@@ -3063,20 +2769,24 @@
 
 
           history.push({
+
             role:
               "user",
 
             content:
               message,
+
           });
 
 
           history.push({
+
             role:
               "assistant",
 
             content:
               data.reply,
+
           });
 
 
