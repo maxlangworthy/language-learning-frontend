@@ -1,11 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Language Learning</title>
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+
+  <title>
+    Language Learning
+  </title>
+
 
   <style>
+
     :root {
       --bg: #f4f7fb;
       --surface: #ffffff;
@@ -21,16 +32,25 @@
       --success: #267447;
       --feedback-bg: #fffdf5;
       --feedback-border: #eadfac;
-      --shadow: 0 18px 50px rgba(23, 35, 58, 0.09);
+      --shadow:
+        0 18px 50px
+        rgba(23, 35, 58, 0.09);
     }
+
 
     * {
-      box-sizing: border-box;
+      box-sizing:
+        border-box;
     }
 
+
     body {
-      margin: 0;
-      min-height: 100vh;
+      margin:
+        0;
+
+      min-height:
+        100vh;
+
       font-family:
         Inter,
         ui-sans-serif,
@@ -47,545 +67,1082 @@
           #eef3fa 100%
         );
 
-      color: var(--text);
+      color:
+        var(--text);
     }
+
 
     button,
     select,
     input {
-      font: inherit;
+      font:
+        inherit;
     }
 
+
     button {
-      cursor: pointer;
+      cursor:
+        pointer;
     }
+
 
     button:disabled,
     input:disabled {
-      cursor: not-allowed;
-      opacity: 0.6;
+      cursor:
+        not-allowed;
+
+      opacity:
+        0.6;
     }
+
 
     .page {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 28px;
+      min-height:
+        100vh;
+
+      display:
+        flex;
+
+      align-items:
+        center;
+
+      justify-content:
+        center;
+
+      padding:
+        28px;
     }
+
 
     .app-shell {
-      width: min(1050px, 100%);
-      min-height: 680px;
-      background: var(--surface);
-      border: 1px solid rgba(220, 227, 236, 0.9);
-      border-radius: 28px;
-      box-shadow: var(--shadow);
-      overflow: hidden;
+      width:
+        min(
+          1050px,
+          100%
+        );
+
+      min-height:
+        680px;
+
+      background:
+        var(--surface);
+
+      border:
+        1px solid
+        rgba(
+          220,
+          227,
+          236,
+          0.9
+        );
+
+      border-radius:
+        28px;
+
+      box-shadow:
+        var(--shadow);
+
+      overflow:
+        hidden;
     }
+
 
     .screen {
-      display: none;
-      min-height: 680px;
+      display:
+        none;
+
+      min-height:
+        680px;
     }
 
+
     .screen.active {
-      display: flex;
+      display:
+        flex;
     }
+
 
     /* HOME */
 
+
     #homeScreen {
-      align-items: center;
-      justify-content: center;
-      padding: 56px 28px;
+      align-items:
+        center;
+
+      justify-content:
+        center;
+
+      padding:
+        56px 28px;
     }
+
 
     .home-card {
-      width: min(560px, 100%);
+      width:
+        min(
+          560px,
+          100%
+        );
     }
+
 
     .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 14px;
-      color: var(--primary);
-      font-size: 0.86rem;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
+      display:
+        inline-flex;
+
+      align-items:
+        center;
+
+      gap:
+        8px;
+
+      margin-bottom:
+        14px;
+
+      color:
+        var(--primary);
+
+      font-size:
+        0.86rem;
+
+      font-weight:
+        700;
+
+      letter-spacing:
+        0.08em;
+
+      text-transform:
+        uppercase;
     }
+
 
     h1 {
-      margin: 0;
-      font-size: clamp(2.3rem, 5vw, 4rem);
-      line-height: 1;
-      letter-spacing: -0.045em;
+      margin:
+        0;
+
+      font-size:
+        clamp(
+          2.3rem,
+          5vw,
+          4rem
+        );
+
+      line-height:
+        1;
+
+      letter-spacing:
+        -0.045em;
     }
+
 
     .intro {
-      margin: 18px 0 36px;
-      color: var(--muted);
-      font-size: 1.05rem;
-      line-height: 1.65;
+      margin:
+        18px 0 36px;
+
+      color:
+        var(--muted);
+
+      font-size:
+        1.05rem;
+
+      line-height:
+        1.65;
     }
+
 
     .field {
-      margin-bottom: 22px;
+      margin-bottom:
+        22px;
     }
+
 
     .field label {
-      display: block;
-      margin-bottom: 9px;
-      font-size: 0.92rem;
-      font-weight: 700;
+      display:
+        block;
+
+      margin-bottom:
+        9px;
+
+      font-size:
+        0.92rem;
+
+      font-weight:
+        700;
     }
+
 
     .select-wrap {
-      position: relative;
+      position:
+        relative;
     }
 
+
     select {
-      width: 100%;
-      appearance: none;
-      padding: 15px 46px 15px 16px;
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      background: var(--surface);
-      color: var(--text);
-      outline: none;
+      width:
+        100%;
+
+      appearance:
+        none;
+
+      padding:
+        15px 46px 15px 16px;
+
+      border:
+        1px solid
+        var(--border);
+
+      border-radius:
+        14px;
+
+      background:
+        var(--surface);
+
+      color:
+        var(--text);
+
+      outline:
+        none;
 
       transition:
         border-color 0.2s ease,
         box-shadow 0.2s ease;
     }
 
+
     select:focus,
     input:focus {
-      border-color: rgba(40, 86, 216, 0.65);
+      border-color:
+        rgba(
+          40,
+          86,
+          216,
+          0.65
+        );
+
       box-shadow:
         0 0 0 4px
-        rgba(40, 86, 216, 0.10);
+        rgba(
+          40,
+          86,
+          216,
+          0.10
+        );
     }
+
 
     .select-wrap::after {
-      content: "⌄";
-      position: absolute;
-      right: 16px;
-      top: 50%;
-      transform: translateY(-55%);
-      color: var(--muted);
-      pointer-events: none;
-      font-size: 1.1rem;
+      content:
+        "⌄";
+
+      position:
+        absolute;
+
+      right:
+        16px;
+
+      top:
+        50%;
+
+      transform:
+        translateY(
+          -55%
+        );
+
+      color:
+        var(--muted);
+
+      pointer-events:
+        none;
+
+      font-size:
+        1.1rem;
     }
 
+
     .primary-btn {
-      width: 100%;
-      border: none;
-      border-radius: 14px;
-      padding: 15px 18px;
-      background: var(--primary);
-      color: #fff;
-      font-weight: 750;
-      font-size: 1rem;
+      width:
+        100%;
+
+      border:
+        none;
+
+      border-radius:
+        14px;
+
+      padding:
+        15px 18px;
+
+      background:
+        var(--primary);
+
+      color:
+        #fff;
+
+      font-weight:
+        750;
+
+      font-size:
+        1rem;
 
       transition:
         background 0.2s ease,
         transform 0.15s ease;
     }
 
+
     .primary-btn:hover:not(:disabled) {
-      background: var(--primary-hover);
+      background:
+        var(--primary-hover);
     }
 
+
     .primary-btn:active {
-      transform: translateY(1px);
+      transform:
+        translateY(
+          1px
+        );
     }
+
 
     /* CHAT */
 
+
     #chatScreen {
-      flex-direction: column;
+      flex-direction:
+        column;
     }
+
 
     .chat-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 20px;
-      padding: 20px 24px;
-      border-bottom: 1px solid var(--border);
-      background: rgba(255, 255, 255, 0.96);
+      display:
+        flex;
+
+      align-items:
+        center;
+
+      justify-content:
+        space-between;
+
+      gap:
+        20px;
+
+      padding:
+        20px 24px;
+
+      border-bottom:
+        1px solid
+        var(--border);
+
+      background:
+        rgba(
+          255,
+          255,
+          255,
+          0.96
+        );
     }
+
 
     .chat-heading {
-      min-width: 0;
+      min-width:
+        0;
     }
+
 
     .chat-heading h2 {
-      margin: 0 0 5px;
-      font-size: 1.18rem;
+      margin:
+        0 0 5px;
+
+      font-size:
+        1.18rem;
     }
+
 
     .chat-heading p {
-      margin: 0;
-      color: var(--muted);
-      font-size: 0.91rem;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      margin:
+        0;
+
+      color:
+        var(--muted);
+
+      font-size:
+        0.91rem;
+
+      white-space:
+        nowrap;
+
+      overflow:
+        hidden;
+
+      text-overflow:
+        ellipsis;
     }
+
 
     .secondary-btn {
-      flex: 0 0 auto;
-      border: 1px solid #ecd1d1;
-      border-radius: 11px;
-      padding: 10px 14px;
-      background: #fffafa;
-      color: var(--danger);
-      font-weight: 700;
+      flex:
+        0 0 auto;
+
+      border:
+        1px solid
+        #ecd1d1;
+
+      border-radius:
+        11px;
+
+      padding:
+        10px 14px;
+
+      background:
+        #fffafa;
+
+      color:
+        var(--danger);
+
+      font-weight:
+        700;
     }
+
 
     .secondary-btn:hover {
-      background: #fff2f2;
+      background:
+        #fff2f2;
     }
+
 
     .chat-main {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      min-height: 0;
-      background: var(--surface-soft);
+      flex:
+        1;
+
+      display:
+        flex;
+
+      flex-direction:
+        column;
+
+      min-height:
+        0;
+
+      background:
+        var(--surface-soft);
     }
+
 
     .messages {
-      flex: 1;
-      overflow-y: auto;
-      padding: 30px;
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
+      flex:
+        1;
+
+      overflow-y:
+        auto;
+
+      padding:
+        30px;
+
+      display:
+        flex;
+
+      flex-direction:
+        column;
+
+      gap:
+        16px;
     }
+
 
     .message-row {
-      display: flex;
-      width: 100%;
+      display:
+        flex;
+
+      width:
+        100%;
     }
+
 
     .message-row.ai {
-      justify-content: flex-start;
+      justify-content:
+        flex-start;
     }
+
 
     .message-row.user {
-      justify-content: flex-end;
+      justify-content:
+        flex-end;
     }
+
 
     .message {
-      max-width: min(70%, 620px);
-      padding: 13px 16px;
-      border-radius: 16px;
-      line-height: 1.5;
-      word-wrap: break-word;
+      max-width:
+        min(
+          70%,
+          620px
+        );
+
+      padding:
+        13px 16px;
+
+      border-radius:
+        16px;
+
+      line-height:
+        1.5;
+
+      word-wrap:
+        break-word;
     }
+
 
     .message-row.ai .message {
-      background: var(--ai-bubble);
-      color: var(--text);
-      border-bottom-left-radius: 5px;
+      background:
+        var(--ai-bubble);
+
+      color:
+        var(--text);
+
+      border-bottom-left-radius:
+        5px;
     }
+
 
     .message-row.user .message {
-      background: var(--user-bubble);
-      color: #fff;
-      border-bottom-right-radius: 5px;
+      background:
+        var(--user-bubble);
+
+      color:
+        #fff;
+
+      border-bottom-right-radius:
+        5px;
     }
 
+
     /* HOVERABLE WORDS */
+
 
     .word-token {
       border-bottom:
         1px dotted
-        rgba(24, 33, 47, 0.42);
+        rgba(
+          24,
+          33,
+          47,
+          0.42
+        );
 
-      cursor: help;
-      outline: none;
+      cursor:
+        help;
+
+      outline:
+        none;
     }
+
 
     .message-row.user .word-token {
       border-bottom-color:
-        rgba(255, 255, 255, 0.68);
+        rgba(
+          255,
+          255,
+          255,
+          0.68
+        );
     }
+
 
     .word-token:focus {
-      border-bottom-style: solid;
+      border-bottom-style:
+        solid;
     }
 
-    /* DICTIONARY TOOLTIP */
+
+    /* TOOLTIP */
+
 
     .dictionary-tooltip {
-      display: none;
-      position: fixed;
-      z-index: 9999;
+      display:
+        none;
 
-      width: max-content;
+      position:
+        fixed;
+
+      z-index:
+        9999;
+
+      width:
+        max-content;
+
       max-width:
-        min(320px, calc(100vw - 24px));
+        min(
+          320px,
+          calc(
+            100vw - 24px
+          )
+        );
 
-      padding: 11px 13px;
+      padding:
+        11px 13px;
 
       border:
         1px solid
-        rgba(24, 33, 47, 0.13);
+        rgba(
+          24,
+          33,
+          47,
+          0.13
+        );
 
-      border-radius: 12px;
+      border-radius:
+        12px;
 
-      background: #18212f;
-      color: #fff;
+      background:
+        #18212f;
+
+      color:
+        #fff;
 
       box-shadow:
         0 12px 32px
-        rgba(23, 35, 58, 0.22);
+        rgba(
+          23,
+          35,
+          58,
+          0.22
+        );
 
-      font-size: 0.86rem;
-      line-height: 1.4;
+      font-size:
+        0.86rem;
 
-      pointer-events: none;
+      line-height:
+        1.4;
+
+      pointer-events:
+        none;
     }
+
 
     .dictionary-tooltip.visible {
-      display: block;
+      display:
+        block;
     }
+
 
     .tooltip-word {
-      margin-bottom: 3px;
-      font-size: 0.92rem;
-      font-weight: 800;
+      margin-bottom:
+        3px;
+
+      font-size:
+        0.92rem;
+
+      font-weight:
+        800;
     }
+
 
     .tooltip-meaning {
-      color: rgba(255, 255, 255, 0.94);
+      color:
+        rgba(
+          255,
+          255,
+          255,
+          0.94
+        );
     }
 
+
     .dictionary-meta {
-      margin-top: 5px;
-      color: rgba(255, 255, 255, 0.68);
-      font-size: 0.77rem;
+      margin-top:
+        5px;
+
+      color:
+        rgba(
+          255,
+          255,
+          255,
+          0.68
+        );
+
+      font-size:
+        0.77rem;
     }
+
 
     /* FEEDBACK */
 
+
     .feedback-panel {
-      margin: 0 22px 14px;
-      padding: 14px 16px;
-      border: 1px solid var(--feedback-border);
-      border-radius: 14px;
-      background: var(--feedback-bg);
+      margin:
+        0 22px 14px;
+
+      padding:
+        14px 16px;
+
+      border:
+        1px solid
+        var(--feedback-border);
+
+      border-radius:
+        14px;
+
+      background:
+        var(--feedback-bg);
     }
+
 
     .feedback-panel.hidden {
-      display: none;
+      display:
+        none;
     }
+
 
     .feedback-title {
-      margin-bottom: 7px;
-      font-size: 0.82rem;
-      font-weight: 800;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      color: var(--muted);
+      margin-bottom:
+        7px;
+
+      font-size:
+        0.82rem;
+
+      font-weight:
+        800;
+
+      letter-spacing:
+        0.06em;
+
+      text-transform:
+        uppercase;
+
+      color:
+        var(--muted);
     }
+
 
     .feedback-panel p {
-      margin: 5px 0;
-      line-height: 1.5;
+      margin:
+        5px 0;
+
+      line-height:
+        1.5;
     }
+
 
     .feedback-ok {
-      color: var(--success);
-      font-weight: 700;
+      color:
+        var(--success);
+
+      font-weight:
+        700;
     }
 
+
     .feedback-error {
-      color: var(--danger);
-      font-weight: 700;
+      color:
+        var(--danger);
+
+      font-weight:
+        700;
     }
+
 
     /* COMPOSER */
 
+
     .composer {
-      display: flex;
-      gap: 12px;
-      padding: 18px 22px 22px;
-      border-top: 1px solid var(--border);
-      background: #fff;
+      display:
+        flex;
+
+      gap:
+        12px;
+
+      padding:
+        18px 22px 22px;
+
+      border-top:
+        1px solid
+        var(--border);
+
+      background:
+        #fff;
     }
+
 
     .composer input {
-      flex: 1;
-      min-width: 0;
-      padding: 14px 16px;
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      outline: none;
+      flex:
+        1;
+
+      min-width:
+        0;
+
+      padding:
+        14px 16px;
+
+      border:
+        1px solid
+        var(--border);
+
+      border-radius:
+        14px;
+
+      outline:
+        none;
     }
+
 
     .send-btn {
-      border: none;
-      border-radius: 14px;
-      padding: 0 20px;
-      background: var(--primary);
-      color: #fff;
-      font-weight: 750;
+      border:
+        none;
+
+      border-radius:
+        14px;
+
+      padding:
+        0 20px;
+
+      background:
+        var(--primary);
+
+      color:
+        #fff;
+
+      font-weight:
+        750;
     }
 
+
     .send-btn:hover:not(:disabled) {
-      background: var(--primary-hover);
+      background:
+        var(--primary-hover);
     }
+
 
     /* ATTRIBUTION */
 
+
     .data-credit {
-      margin: 18px 0 0;
-      color: var(--muted);
-      font-size: 0.74rem;
-      line-height: 1.5;
-      text-align: center;
+      margin:
+        18px 0 0;
+
+      color:
+        var(--muted);
+
+      font-size:
+        0.74rem;
+
+      line-height:
+        1.5;
+
+      text-align:
+        center;
     }
+
 
     .data-credit a {
-      color: inherit;
-      text-decoration: underline;
-      text-underline-offset: 2px;
+      color:
+        inherit;
+
+      text-decoration:
+        underline;
+
+      text-underline-offset:
+        2px;
     }
 
+
     .chat-credit {
-      margin: 0;
-      padding: 0 22px 10px;
-      background: #fff;
+      margin:
+        0;
+
+      padding:
+        0 22px 10px;
+
+      background:
+        #fff;
     }
+
 
     /* MOBILE */
 
-    @media (max-width: 700px) {
+
+    @media (
+      max-width:
+        700px
+    ) {
+
       .page {
-        padding: 0;
+        padding:
+          0;
       }
+
 
       .app-shell,
       .screen {
-        min-height: 100vh;
-        border-radius: 0;
+        min-height:
+          100vh;
+
+        border-radius:
+          0;
       }
+
 
       #homeScreen {
-        padding: 34px 22px;
+        padding:
+          34px 22px;
       }
+
 
       .chat-header {
-        align-items: flex-start;
+        align-items:
+          flex-start;
       }
+
 
       .message {
-        max-width: 86%;
+        max-width:
+          86%;
       }
+
 
       .messages {
-        padding: 22px 16px;
+        padding:
+          22px 16px;
       }
+
 
       .feedback-panel {
-        margin: 0 14px 12px;
+        margin:
+          0 14px 12px;
       }
+
 
       .composer {
-        padding: 14px;
+        padding:
+          14px;
       }
 
+
       .chat-credit {
-        padding: 0 14px 8px;
+        padding:
+          0 14px 8px;
       }
+
     }
+
   </style>
+
 </head>
+
 
 <body>
 
+
   <main class="page">
+
 
     <section class="app-shell">
 
-      <!-- HOME SCREEN -->
+
+      <!-- HOME -->
+
 
       <section
         id="homeScreen"
         class="screen active"
       >
 
+
         <div class="home-card">
+
 
           <div class="eyebrow">
             Conversation practice
           </div>
 
+
           <h1>
             Language Learning
           </h1>
 
+
           <p class="intro">
-            Choose your language and a real-world
-            scenario, then practise through a
-            simple conversation.
+            Choose your language and a real-world scenario,
+            then practise through a simple conversation.
           </p>
 
 
           <div class="field">
 
-            <label for="languageSelect">
+
+            <label
+              for="languageSelect"
+            >
               Language
             </label>
 
+
             <div class="select-wrap">
 
-              <select id="languageSelect">
 
-                <option value="german">
+              <select
+                id="languageSelect"
+              >
+
+
+                <option
+                  value="german"
+                >
                   German
                 </option>
 
+
               </select>
 
+
             </div>
+
 
           </div>
 
 
           <div class="field">
 
-            <label for="scenarioSelect">
+
+            <label
+              for="scenarioSelect"
+            >
               Scenario
             </label>
 
+
             <div class="select-wrap">
 
-              <select id="scenarioSelect">
 
-                <option value="coffee">
+              <select
+                id="scenarioSelect"
+              >
+
+
+                <option
+                  value="coffee"
+                >
                   Ordering a coffee
                 </option>
 
-                <option value="weekend">
-                  Talking about your weekend
-                  with a colleague
+
+                <option
+                  value="weekend"
+                >
+                  Talking about your weekend with a colleague
                 </option>
 
-                <option value="directions">
+
+                <option
+                  value="directions"
+                >
                   Giving a stranger directions
                 </option>
 
+
               </select>
 
+
             </div>
+
 
           </div>
 
@@ -600,7 +1157,7 @@
 
           <p class="data-credit">
 
-            German dictionary data derived from
+            Dictionary data derived from
 
             <a
               href="https://en.wiktionary.org/"
@@ -632,8 +1189,7 @@
 
             and reduced for this app.
 
-            Dictionary-derived data is provided
-            under
+            Dictionary-derived data is provided under
 
             <a
               href="https://creativecommons.org/licenses/by-sa/4.0/"
@@ -653,29 +1209,45 @@
 
           </p>
 
+
         </div>
+
 
       </section>
 
 
-      <!-- CHAT SCREEN -->
+      <!-- CHAT -->
+
 
       <section
         id="chatScreen"
         class="screen"
       >
 
-        <header class="chat-header">
 
-          <div class="chat-heading">
+        <header
+          class="chat-header"
+        >
 
-            <h2>
-              German conversation
+
+          <div
+            class="chat-heading"
+          >
+
+
+            <h2
+              id="chatTitle"
+            >
+              Conversation
             </h2>
 
-            <p id="scenarioLabel">
+
+            <p
+              id="scenarioLabel"
+            >
               Scenario
             </p>
+
 
           </div>
 
@@ -687,10 +1259,14 @@
             End conversation
           </button>
 
+
         </header>
 
 
-        <div class="chat-main">
+        <div
+          class="chat-main"
+        >
+
 
           <div
             id="messages"
@@ -705,11 +1281,18 @@
             aria-live="polite"
           >
 
-            <div class="feedback-title">
+
+            <div
+              class="feedback-title"
+            >
               Feedback on your last message
             </div>
 
-            <div id="feedbackContent"></div>
+
+            <div
+              id="feedbackContent"
+            ></div>
+
 
           </section>
 
@@ -719,13 +1302,15 @@
             class="composer"
           >
 
+
             <input
               id="messageInput"
               type="text"
               autocomplete="off"
-              placeholder="Type your message in German..."
+              placeholder="Type your message..."
               aria-label="Chat message"
             />
+
 
             <button
               id="sendButton"
@@ -735,10 +1320,13 @@
               Send
             </button>
 
+
           </form>
 
 
-          <p class="data-credit chat-credit">
+          <p
+            class="data-credit chat-credit"
+          >
 
             Dictionary data:
 
@@ -772,11 +1360,15 @@
 
           </p>
 
+
         </div>
+
 
       </section>
 
+
     </section>
+
 
   </main>
 
@@ -789,1192 +1381,1787 @@
 
 
   <script>
-const API_BASE_URL =
-  'https://learning-german.onrender.com';
 
+    const API_BASE_URL =
+      "https://learning-german.onrender.com";
 
-// ------------------------------------------------------
-// PAGE ELEMENTS
-// ------------------------------------------------------
 
-const homeScreen =
-  document.getElementById('homeScreen');
+    // ----------------------------------------------------
+    // PAGE ELEMENTS
+    // ----------------------------------------------------
 
-const chatScreen =
-  document.getElementById('chatScreen');
 
-const startChatButton =
-  document.getElementById('startChatButton');
-
-const endChatButton =
-  document.getElementById('endChatButton');
-
-const languageSelect =
-  document.getElementById('languageSelect');
-
-const scenarioSelect =
-  document.getElementById('scenarioSelect');
-
-const scenarioLabel =
-  document.getElementById('scenarioLabel');
-
-const chatForm =
-  document.getElementById('chatForm');
-
-const messageInput =
-  document.getElementById('messageInput');
-
-const sendButton =
-  document.getElementById('sendButton');
-
-const messages =
-  document.getElementById('messages');
-
-const feedbackPanel =
-  document.getElementById('feedbackPanel');
-
-const feedbackContent =
-  document.getElementById('feedbackContent');
-
-const dictionaryTooltip =
-  document.getElementById('dictionaryTooltip');
-
-
-// ------------------------------------------------------
-// CONVERSATION STATE
-// ------------------------------------------------------
-
-let history = [];
-let conversationEnded = false;
-
-
-// ------------------------------------------------------
-// DICTIONARY STATE
-// ------------------------------------------------------
-
-const dictionaryCache = new Map();
-
-let activeDictionaryWord = null;
-let tooltipHideTimer = null;
-let tooltipHoverTimer = null;
-let tooltipRequestToken = 0;
-
-
-// ------------------------------------------------------
-// SCREEN SWITCHING
-// ------------------------------------------------------
-
-function showScreen(screenToShow) {
-  homeScreen.classList.remove('active');
-  chatScreen.classList.remove('active');
-
-  screenToShow.classList.add('active');
-}
-
-
-// ------------------------------------------------------
-// API RESPONSE HANDLING
-// ------------------------------------------------------
-
-async function readJsonResponse(response) {
-  let data;
-
-  try {
-    data = await response.json();
-  } catch {
-    throw new Error(
-      'The server returned an invalid response.'
-    );
-  }
-
-  if (!response.ok) {
-    throw new Error(
-      data.error ||
-      'The request failed.'
-    );
-  }
-
-  return data;
-}
-
-
-// ------------------------------------------------------
-// DICTIONARY HELPERS
-// ------------------------------------------------------
-
-function normalizeDictionaryKey(word) {
-  return word
-    .normalize('NFC')
-    .toLocaleLowerCase('de-DE');
-}
-
-
-function splitGermanText(text) {
-  return text.split(
-    /(\p{L}[\p{L}\p{M}'’-]*)/gu
-  );
-}
-
-
-async function getWordMeaning(
-  lookupWord,
-  partOfSpeech = ''
-) {
-  const cacheKey =
-    `${normalizeDictionaryKey(lookupWord)}|${partOfSpeech}`;
-
-
-  if (
-    dictionaryCache.has(
-      cacheKey
-    )
-  ) {
-    return dictionaryCache.get(
-      cacheKey
-    );
-  }
-
-
-  let url =
-    `${API_BASE_URL}/api/word` +
-    `?language=german` +
-    `&word=${encodeURIComponent(lookupWord)}`;
-
-
-  if (partOfSpeech) {
-    url +=
-      `&pos=${encodeURIComponent(partOfSpeech)}`;
-  }
-
-
-  const request =
-    fetch(url)
-      .then(readJsonResponse)
-      .catch(() => ({
-        word: lookupWord,
-        found: false,
-        entries: []
-      }));
-
-
-  dictionaryCache.set(
-    cacheKey,
-    request
-  );
-
-
-  return request;
-}
-
-
-// ------------------------------------------------------
-// TOOLTIP POSITION
-// ------------------------------------------------------
-
-function positionDictionaryTooltip(target) {
-  const targetRect =
-    target.getBoundingClientRect();
-
-  const tooltipRect =
-    dictionaryTooltip
-      .getBoundingClientRect();
-
-  const margin = 8;
-
-
-  let left =
-    targetRect.left +
-    (
-      targetRect.width -
-      tooltipRect.width
-    ) / 2;
-
-
-  let top =
-    targetRect.top -
-    tooltipRect.height -
-    margin;
-
-
-  left =
-    Math.max(
-      10,
-      Math.min(
-        left,
-        window.innerWidth -
-        tooltipRect.width -
-        10
-      )
-    );
-
-
-  if (top < 10) {
-    top =
-      targetRect.bottom +
-      margin;
-  }
-
-
-  dictionaryTooltip.style.left =
-    `${left}px`;
-
-  dictionaryTooltip.style.top =
-    `${top}px`;
-}
-
-
-// ------------------------------------------------------
-// TOOLTIP CONTENT
-// ------------------------------------------------------
-
-function showTooltipLoading(surfaceWord) {
-  dictionaryTooltip.innerHTML = '';
-
-
-  const title =
-    document.createElement('div');
-
-  title.className =
-    'tooltip-word';
-
-  title.textContent =
-    surfaceWord;
-
-
-  const loading =
-    document.createElement('div');
-
-  loading.className =
-    'tooltip-meaning';
-
-  loading.textContent =
-    'Looking up…';
-
-
-  dictionaryTooltip.append(
-    title,
-    loading
-  );
-}
-
-
-function renderDictionaryTooltip(
-  data,
-  surfaceWord,
-  lookupWord
-) {
-  dictionaryTooltip.innerHTML = '';
-
-
-  const title =
-    document.createElement('div');
-
-  title.className =
-    'tooltip-word';
-
-  title.textContent =
-    surfaceWord;
-
-  dictionaryTooltip.appendChild(
-    title
-  );
-
-
-  if (
-    !data?.found ||
-    !Array.isArray(data.entries) ||
-    data.entries.length === 0
-  ) {
-    const unavailable =
-      document.createElement('div');
-
-    unavailable.className =
-      'tooltip-meaning';
-
-    unavailable.textContent =
-      'Meaning unavailable.';
-
-    dictionaryTooltip.appendChild(
-      unavailable
-    );
-
-    return;
-  }
-
-
-  const entry =
-    data.entries[0];
-
-
-  const meanings =
-    Array.isArray(entry.meanings)
-      ? entry.meanings
-      : [];
-
-
-  const meaning =
-    document.createElement('div');
-
-  meaning.className =
-    'tooltip-meaning';
-
-  meaning.textContent =
-    meanings
-      .slice(0, 3)
-      .join('; ')
-    ||
-    'Meaning unavailable.';
-
-  dictionaryTooltip.appendChild(
-    meaning
-  );
-
-
-  /*
-    Keep the tooltip simple:
-
-    meaning
-    lemma / lookup form
-    part of speech
-
-    No case, gender, number or
-    declension information.
-  */
-
-  const metaParts = [];
-
-
-  if (
-    lookupWord &&
-    normalizeDictionaryKey(
-      lookupWord
-    ) !==
-    normalizeDictionaryKey(
-      surfaceWord
-    )
-  ) {
-    metaParts.push(
-      `from ${lookupWord}`
-    );
-  }
-
-
-  if (
-    entry.partOfSpeech &&
-    entry.partOfSpeech !== 'unknown'
-  ) {
-    metaParts.push(
-      entry.partOfSpeech
-    );
-  }
-
-
-  if (metaParts.length > 0) {
-    const meta =
-      document.createElement('div');
-
-    meta.className =
-      'dictionary-meta';
-
-    meta.textContent =
-      metaParts.join(' · ');
-
-    dictionaryTooltip.appendChild(
-      meta
-    );
-  }
-}
-
-
-// ------------------------------------------------------
-// OPEN / CLOSE TOOLTIP
-// ------------------------------------------------------
-
-async function openDictionaryTooltip(
-  target,
-  surfaceWord,
-  lookupWord = surfaceWord,
-  partOfSpeech = ''
-) {
-  clearTimeout(
-    tooltipHideTimer
-  );
-
-
-  activeDictionaryWord =
-    target;
-
-
-  const requestToken =
-    ++tooltipRequestToken;
-
-
-  showTooltipLoading(
-    surfaceWord
-  );
-
-
-  dictionaryTooltip
-    .classList
-    .add('visible');
-
-
-  positionDictionaryTooltip(
-    target
-  );
-
-
-  const data =
-    await getWordMeaning(
-      lookupWord,
-      partOfSpeech
-    );
-
-
-  if (
-    requestToken !==
-    tooltipRequestToken
-  ) {
-    return;
-  }
-
-
-  if (
-    activeDictionaryWord !==
-    target
-  ) {
-    return;
-  }
-
-
-  renderDictionaryTooltip(
-    data,
-    surfaceWord,
-    lookupWord
-  );
-
-
-  positionDictionaryTooltip(
-    target
-  );
-}
-
-
-function hideDictionaryTooltip(
-  delay = 80
-) {
-  clearTimeout(
-    tooltipHideTimer
-  );
-
-
-  tooltipHideTimer =
-    setTimeout(
-      () => {
-        tooltipRequestToken += 1;
-
-        activeDictionaryWord =
-          null;
-
-        dictionaryTooltip
-          .classList
-          .remove('visible');
-      },
-      delay
-    );
-}
-
-
-// ------------------------------------------------------
-// TURN GERMAN TEXT INTO HOVERABLE WORDS
-// ------------------------------------------------------
-
-function appendInteractiveGermanText(
-  container,
-  text,
-  lookupForms = [],
-  partsOfSpeech = []
-) {
-  const parts =
-    splitGermanText(text);
-
-
-  let wordIndex = 0;
-
-
-  for (const part of parts) {
-    if (!part) {
-      continue;
-    }
-
-
-    const isWord =
-      /^\p{L}[\p{L}\p{M}'’-]*$/u
-        .test(part);
-
-
-    if (!isWord) {
-      container.appendChild(
-        document.createTextNode(
-          part
-        )
+    const homeScreen =
+      document.getElementById(
+        "homeScreen"
       );
 
-      continue;
-    }
+
+    const chatScreen =
+      document.getElementById(
+        "chatScreen"
+      );
 
 
-    const lookupWord =
-      lookupForms[wordIndex] ||
-      part;
+    const startChatButton =
+      document.getElementById(
+        "startChatButton"
+      );
 
 
-    const partOfSpeech =
-      partsOfSpeech[wordIndex] ||
-      '';
+    const endChatButton =
+      document.getElementById(
+        "endChatButton"
+      );
 
 
-    wordIndex += 1;
+    const languageSelect =
+      document.getElementById(
+        "languageSelect"
+      );
 
 
-    const word =
-      document.createElement('span');
+    const scenarioSelect =
+      document.getElementById(
+        "scenarioSelect"
+      );
 
 
-    word.className =
-      'word-token';
+    const chatTitle =
+      document.getElementById(
+        "chatTitle"
+      );
 
-    word.textContent =
-      part;
 
-    word.tabIndex =
+    const scenarioLabel =
+      document.getElementById(
+        "scenarioLabel"
+      );
+
+
+    const chatForm =
+      document.getElementById(
+        "chatForm"
+      );
+
+
+    const messageInput =
+      document.getElementById(
+        "messageInput"
+      );
+
+
+    const sendButton =
+      document.getElementById(
+        "sendButton"
+      );
+
+
+    const messages =
+      document.getElementById(
+        "messages"
+      );
+
+
+    const feedbackPanel =
+      document.getElementById(
+        "feedbackPanel"
+      );
+
+
+    const feedbackContent =
+      document.getElementById(
+        "feedbackContent"
+      );
+
+
+    const dictionaryTooltip =
+      document.getElementById(
+        "dictionaryTooltip"
+      );
+
+
+    // ----------------------------------------------------
+    // STATE
+    // ----------------------------------------------------
+
+
+    let history =
+      [];
+
+
+    let conversationEnded =
+      false;
+
+
+    let activeLanguageId =
+      null;
+
+
+    const dictionaryCache =
+      new Map();
+
+
+    let activeDictionaryWord =
+      null;
+
+
+    let tooltipHideTimer =
+      null;
+
+
+    let tooltipHoverTimer =
+      null;
+
+
+    let tooltipRequestToken =
       0;
 
 
-    word.setAttribute(
-      'aria-label',
-      `${part}: show English meaning`
-    );
+    // ----------------------------------------------------
+    // GENERAL
+    // ----------------------------------------------------
 
 
-    // Desktop hover
-    word.addEventListener(
-      'mouseenter',
-      () => {
-        clearTimeout(
-          tooltipHoverTimer
-        );
-
-
-        tooltipHoverTimer =
-          setTimeout(
-            () => {
-              openDictionaryTooltip(
-                word,
-                part,
-                lookupWord,
-                partOfSpeech
-              );
-            },
-            120
-          );
-      }
-    );
-
-
-    word.addEventListener(
-      'mouseleave',
-      () => {
-        clearTimeout(
-          tooltipHoverTimer
-        );
-
-        hideDictionaryTooltip();
-      }
-    );
-
-
-    // Keyboard
-    word.addEventListener(
-      'focus',
-      () => {
-        openDictionaryTooltip(
-          word,
-          part,
-          lookupWord,
-          partOfSpeech
-        );
-      }
-    );
-
-
-    word.addEventListener(
-      'blur',
-      () => {
-        hideDictionaryTooltip();
-      }
-    );
-
-
-    // Mobile / tablet tap
-    word.addEventListener(
-      'click',
-      (event) => {
-        event.stopPropagation();
-
-        openDictionaryTooltip(
-          word,
-          part,
-          lookupWord,
-          partOfSpeech
-        );
-      }
-    );
-
-
-    container.appendChild(
-      word
-    );
-  }
-}
-
-
-// ------------------------------------------------------
-// MESSAGE DISPLAY
-// ------------------------------------------------------
-
-function addMessage(
-  text,
-  sender,
-  lookupForms = [],
-  partsOfSpeech = []
-) {
-  const row =
-    document.createElement('div');
-
-
-  row.className =
-    `message-row ${sender}`;
-
-
-  const bubble =
-    document.createElement('div');
-
-
-  bubble.className =
-    'message';
-
-
-  appendInteractiveGermanText(
-    bubble,
-    text,
-    lookupForms,
-    partsOfSpeech
-  );
-
-
-  row.appendChild(
-    bubble
-  );
-
-
-  messages.appendChild(
-    row
-  );
-
-
-  messages.scrollTop =
-    messages.scrollHeight;
-}
-
-
-// ------------------------------------------------------
-// FEEDBACK
-// ------------------------------------------------------
-
-function clearFeedback() {
-  feedbackContent.innerHTML =
-    '';
-
-  feedbackPanel
-    .classList
-    .add('hidden');
-}
-
-
-function showFeedback(feedback) {
-  feedbackContent.innerHTML =
-    '';
-
-  feedbackPanel
-    .classList
-    .remove('hidden');
-
-
-  if (
-    !feedback ||
-    feedback.hasIssues === false
-  ) {
-    const text =
-      document.createElement('p');
-
-    text.className =
-      'feedback-ok';
-
-    text.textContent =
-      feedback?.explanation ||
-      'No correction needed.';
-
-    feedbackContent.appendChild(
-      text
-    );
-
-    return;
-  }
-
-
-  const correction =
-    document.createElement('p');
-
-
-  const label =
-    document.createElement('strong');
-
-  label.textContent =
-    'Correction: ';
-
-
-  correction.appendChild(
-    label
-  );
-
-
-  correction.appendChild(
-    document.createTextNode(
-      feedback.correctedVersion ||
-      ''
-    )
-  );
-
-
-  const explanation =
-    document.createElement('p');
-
-  explanation.textContent =
-    feedback.explanation ||
-    '';
-
-
-  feedbackContent.append(
-    correction,
-    explanation
-  );
-}
-
-
-function showError(message) {
-  feedbackContent.innerHTML =
-    '';
-
-  feedbackPanel
-    .classList
-    .remove('hidden');
-
-
-  const text =
-    document.createElement('p');
-
-  text.className =
-    'feedback-error';
-
-  text.textContent =
-    message;
-
-
-  feedbackContent.appendChild(
-    text
-  );
-}
-
-
-// ------------------------------------------------------
-// COMPOSER
-// ------------------------------------------------------
-
-function setComposerEnabled(enabled) {
-  messageInput.disabled =
-    !enabled;
-
-  sendButton.disabled =
-    !enabled;
-}
-
-
-// ------------------------------------------------------
-// START CONVERSATION
-// ------------------------------------------------------
-
-async function startConversation() {
-  const language =
-    languageSelect.value;
-
-  const scenario =
-    scenarioSelect.value;
-
-  const scenarioName =
-    scenarioSelect.options[
-      scenarioSelect.selectedIndex
-    ].text;
-
-
-  scenarioLabel.textContent =
-    scenarioName;
-
-
-  messages.innerHTML =
-    '';
-
-  clearFeedback();
-
-  hideDictionaryTooltip(0);
-
-  history = [];
-
-  conversationEnded =
-    false;
-
-
-  startChatButton.disabled =
-    true;
-
-  startChatButton.textContent =
-    'Starting...';
-
-
-  showScreen(
-    chatScreen
-  );
-
-
-  setComposerEnabled(
-    false
-  );
-
-
-  try {
-    const response =
-      await fetch(
-        `${API_BASE_URL}/api/start`,
-        {
-          method: 'POST',
-
-          headers: {
-            'Content-Type':
-              'application/json'
-          },
-
-          body:
-            JSON.stringify({
-              language,
-              scenario
-            })
-        }
-      );
-
-
-    const data =
-      await readJsonResponse(
-        response
-      );
-
-
-    addMessage(
-      data.reply,
-      'ai',
-      data.replyLookupForms,
-      data.replyPartsOfSpeech
-    );
-
-
-    history.push({
-      role: 'assistant',
-      content: data.reply
-    });
-
-
-    conversationEnded =
-      Boolean(
-        data.conversationEnded
-      );
-
-
-    if (!conversationEnded) {
-      setComposerEnabled(
-        true
-      );
-
-      messageInput.focus();
-    }
-
-  } catch (error) {
-    showError(
-      `Could not start the conversation: ${error.message}`
-    );
-
-    setComposerEnabled(
-      false
-    );
-
-  } finally {
-    startChatButton.disabled =
-      false;
-
-    startChatButton.textContent =
-      'Chat';
-  }
-}
-
-
-// ------------------------------------------------------
-// END CONVERSATION
-// ------------------------------------------------------
-
-function endConversation() {
-  history = [];
-
-  conversationEnded =
-    false;
-
-  messages.innerHTML =
-    '';
-
-  messageInput.value =
-    '';
-
-  clearFeedback();
-
-  hideDictionaryTooltip(0);
-
-  setComposerEnabled(true);
-
-  messageInput.placeholder =
-    'Type your message in German...';
-
-  showScreen(
-    homeScreen
-  );
-}
-
-
-// ------------------------------------------------------
-// PAGE EVENTS
-// ------------------------------------------------------
-
-document.addEventListener(
-  'click',
-  (event) => {
-    if (
-      !event.target.closest(
-        '.word-token'
-      )
+    function showScreen(
+      screenToShow
     ) {
-      hideDictionaryTooltip(0);
-    }
-  }
-);
+
+      homeScreen
+        .classList
+        .remove(
+          "active"
+        );
 
 
-window.addEventListener(
-  'resize',
-  () => {
-    hideDictionaryTooltip(0);
-  }
-);
+      chatScreen
+        .classList
+        .remove(
+          "active"
+        );
 
 
-messages.addEventListener(
-  'scroll',
-  () => {
-    hideDictionaryTooltip(0);
-  }
-);
+      screenToShow
+        .classList
+        .add(
+          "active"
+        );
 
-
-startChatButton.addEventListener(
-  'click',
-  startConversation
-);
-
-
-endChatButton.addEventListener(
-  'click',
-  endConversation
-);
-
-
-// ------------------------------------------------------
-// SEND USER MESSAGE
-// ------------------------------------------------------
-
-chatForm.addEventListener(
-  'submit',
-  async (event) => {
-    event.preventDefault();
-
-
-    if (conversationEnded) {
-      return;
     }
 
 
-    const message =
-      messageInput
-        .value
-        .trim();
+    function getSelectedLanguageName() {
 
+      return languageSelect
+        .options[
+          languageSelect
+            .selectedIndex
+        ]
+        .text;
 
-    if (!message) {
-      return;
     }
 
 
-    const language =
-      languageSelect.value;
+    async function readJsonResponse(
+      response
+    ) {
 
-    const scenario =
-      scenarioSelect.value;
-
-
-    const historyBeforeMessage =
-      [...history];
+      let data;
 
 
-    /*
-      User messages do not have LLM-generated
-      lookup metadata, so they fall back to
-      their visible surface words.
-    */
+      try {
 
-    addMessage(
-      message,
-      'user'
-    );
+        data =
+          await response.json();
 
+      } catch {
 
-    messageInput.value =
-      '';
+        throw new Error(
+          "The server returned an invalid response."
+        );
 
-    clearFeedback();
-
-    hideDictionaryTooltip(0);
-
-    setComposerEnabled(false);
-
-    sendButton.textContent =
-      'Sending...';
+      }
 
 
-    try {
-      const response =
-        await fetch(
-          `${API_BASE_URL}/api/chat`,
-          {
-            method: 'POST',
+      if (!response.ok) {
 
-            headers: {
-              'Content-Type':
-                'application/json'
-            },
+        throw new Error(
+          data.error ||
+          "The request failed."
+        );
 
-            body:
-              JSON.stringify({
-                language,
-                scenario,
-                message,
-                history:
-                  historyBeforeMessage
-              })
+      }
+
+
+      return data;
+
+    }
+
+
+    // ----------------------------------------------------
+    // DICTIONARY
+    // ----------------------------------------------------
+
+
+    function normalizeDictionaryKey(
+      word
+    ) {
+
+      return word
+        .normalize(
+          "NFC"
+        )
+        .toLocaleLowerCase();
+
+    }
+
+
+    function splitLanguageText(
+      text
+    ) {
+
+      return text.split(
+        /(\p{L}[\p{L}\p{M}'’-]*)/gu
+      );
+
+    }
+
+
+    async function getWordMeaning(
+      languageId,
+      lookupWord,
+      partOfSpeech = ""
+    ) {
+
+      const cacheKey =
+        `${languageId}|${normalizeDictionaryKey(
+          lookupWord
+        )}|${partOfSpeech}`;
+
+
+      if (
+        dictionaryCache.has(
+          cacheKey
+        )
+      ) {
+
+        return dictionaryCache.get(
+          cacheKey
+        );
+
+      }
+
+
+      let url =
+        `${API_BASE_URL}/api/word` +
+        `?language=${encodeURIComponent(
+          languageId
+        )}` +
+        `&word=${encodeURIComponent(
+          lookupWord
+        )}`;
+
+
+      if (
+        partOfSpeech &&
+        partOfSpeech !==
+          "other"
+      ) {
+
+        url +=
+          `&pos=${encodeURIComponent(
+            partOfSpeech
+          )}`;
+
+      }
+
+
+      const request =
+        fetch(
+          url
+        )
+          .then(
+            readJsonResponse
+          )
+          .catch(
+            () => ({
+              language:
+                languageId,
+
+              word:
+                lookupWord,
+
+              found:
+                false,
+
+              entries:
+                [],
+            })
+          );
+
+
+      dictionaryCache.set(
+        cacheKey,
+        request
+      );
+
+
+      return request;
+
+    }
+
+
+    // ----------------------------------------------------
+    // TOOLTIP
+    // ----------------------------------------------------
+
+
+    function positionDictionaryTooltip(
+      target
+    ) {
+
+      const targetRect =
+        target
+          .getBoundingClientRect();
+
+
+      const tooltipRect =
+        dictionaryTooltip
+          .getBoundingClientRect();
+
+
+      const margin =
+        8;
+
+
+      let left =
+        targetRect.left +
+        (
+          targetRect.width -
+          tooltipRect.width
+        ) / 2;
+
+
+      let top =
+        targetRect.top -
+        tooltipRect.height -
+        margin;
+
+
+      left =
+        Math.max(
+          10,
+          Math.min(
+            left,
+            window.innerWidth -
+            tooltipRect.width -
+            10
+          )
+        );
+
+
+      if (
+        top < 10
+      ) {
+
+        top =
+          targetRect.bottom +
+          margin;
+
+      }
+
+
+      dictionaryTooltip
+        .style
+        .left =
+          `${left}px`;
+
+
+      dictionaryTooltip
+        .style
+        .top =
+          `${top}px`;
+
+    }
+
+
+    function showTooltipLoading(
+      surfaceWord
+    ) {
+
+      dictionaryTooltip
+        .innerHTML =
+          "";
+
+
+      const title =
+        document.createElement(
+          "div"
+        );
+
+
+      title.className =
+        "tooltip-word";
+
+
+      title.textContent =
+        surfaceWord;
+
+
+      const loading =
+        document.createElement(
+          "div"
+        );
+
+
+      loading.className =
+        "tooltip-meaning";
+
+
+      loading.textContent =
+        "Looking up…";
+
+
+      dictionaryTooltip.append(
+        title,
+        loading
+      );
+
+    }
+
+
+    function renderDictionaryTooltip(
+      data,
+      surfaceWord,
+      lookupWord
+    ) {
+
+      dictionaryTooltip
+        .innerHTML =
+          "";
+
+
+      const title =
+        document.createElement(
+          "div"
+        );
+
+
+      title.className =
+        "tooltip-word";
+
+
+      title.textContent =
+        surfaceWord;
+
+
+      dictionaryTooltip
+        .appendChild(
+          title
+        );
+
+
+      if (
+        !data?.found ||
+        !Array.isArray(
+          data.entries
+        ) ||
+        data.entries.length ===
+          0
+      ) {
+
+        const unavailable =
+          document.createElement(
+            "div"
+          );
+
+
+        unavailable.className =
+          "tooltip-meaning";
+
+
+        unavailable.textContent =
+          "Meaning unavailable.";
+
+
+        dictionaryTooltip
+          .appendChild(
+            unavailable
+          );
+
+
+        return;
+
+      }
+
+
+      const entry =
+        data.entries[
+          0
+        ];
+
+
+      const meanings =
+        Array.isArray(
+          entry.meanings
+        )
+          ? entry.meanings
+          : [];
+
+
+      const meaning =
+        document.createElement(
+          "div"
+        );
+
+
+      meaning.className =
+        "tooltip-meaning";
+
+
+      meaning.textContent =
+        meanings
+          .slice(
+            0,
+            3
+          )
+          .join(
+            "; "
+          ) ||
+        "Meaning unavailable.";
+
+
+      dictionaryTooltip
+        .appendChild(
+          meaning
+        );
+
+
+      const metaParts =
+        [];
+
+
+      if (
+        lookupWord &&
+        normalizeDictionaryKey(
+          lookupWord
+        ) !==
+        normalizeDictionaryKey(
+          surfaceWord
+        )
+      ) {
+
+        metaParts.push(
+          `from ${lookupWord}`
+        );
+
+      }
+
+
+      if (
+        entry.partOfSpeech &&
+        entry.partOfSpeech !==
+          "unknown"
+      ) {
+
+        metaParts.push(
+          entry.partOfSpeech
+        );
+
+      }
+
+
+      if (
+        metaParts.length >
+        0
+      ) {
+
+        const meta =
+          document.createElement(
+            "div"
+          );
+
+
+        meta.className =
+          "dictionary-meta";
+
+
+        meta.textContent =
+          metaParts.join(
+            " · "
+          );
+
+
+        dictionaryTooltip
+          .appendChild(
+            meta
+          );
+
+      }
+
+    }
+
+
+    async function openDictionaryTooltip(
+      target,
+      languageId,
+      surfaceWord,
+      lookupWord =
+        surfaceWord,
+      partOfSpeech =
+        ""
+    ) {
+
+      clearTimeout(
+        tooltipHideTimer
+      );
+
+
+      activeDictionaryWord =
+        target;
+
+
+      const requestToken =
+        ++tooltipRequestToken;
+
+
+      showTooltipLoading(
+        surfaceWord
+      );
+
+
+      dictionaryTooltip
+        .classList
+        .add(
+          "visible"
+        );
+
+
+      positionDictionaryTooltip(
+        target
+      );
+
+
+      const data =
+        await getWordMeaning(
+          languageId,
+          lookupWord,
+          partOfSpeech
+        );
+
+
+      if (
+        requestToken !==
+        tooltipRequestToken
+      ) {
+
+        return;
+
+      }
+
+
+      if (
+        activeDictionaryWord !==
+        target
+      ) {
+
+        return;
+
+      }
+
+
+      renderDictionaryTooltip(
+        data,
+        surfaceWord,
+        lookupWord
+      );
+
+
+      positionDictionaryTooltip(
+        target
+      );
+
+    }
+
+
+    function hideDictionaryTooltip(
+      delay =
+        80
+    ) {
+
+      clearTimeout(
+        tooltipHideTimer
+      );
+
+
+      tooltipHideTimer =
+        setTimeout(
+          () => {
+
+            tooltipRequestToken +=
+              1;
+
+
+            activeDictionaryWord =
+              null;
+
+
+            dictionaryTooltip
+              .classList
+              .remove(
+                "visible"
+              );
+
+          },
+          delay
+        );
+
+    }
+
+
+    // ----------------------------------------------------
+    // WORD METADATA MATCHING
+    // ----------------------------------------------------
+
+
+    function createWordMetadataMatcher(
+      replyWords
+    ) {
+
+      const metadata =
+        Array.isArray(
+          replyWords
+        )
+          ? replyWords
+          : [];
+
+
+      let cursor =
+        0;
+
+
+      return function getMetadataForWord(
+        visibleWord
+      ) {
+
+        const visibleKey =
+          normalizeDictionaryKey(
+            visibleWord
+          );
+
+
+        for (
+          let i =
+            cursor;
+
+          i <
+            metadata.length;
+
+          i +=
+            1
+        ) {
+
+          const item =
+            metadata[i];
+
+
+          if (
+            !item ||
+            typeof item.surface !==
+              "string"
+          ) {
+
+            continue;
+
+          }
+
+
+          const surfaceKey =
+            normalizeDictionaryKey(
+              item.surface
+            );
+
+
+          if (
+            surfaceKey ===
+            visibleKey
+          ) {
+
+            cursor =
+              i + 1;
+
+
+            return {
+              lookup:
+                typeof item.lookup ===
+                  "string" &&
+                item.lookup.trim()
+                  ? item.lookup
+                  : visibleWord,
+
+              pos:
+                typeof item.pos ===
+                  "string"
+                  ? item.pos
+                  : "other",
+            };
+
+          }
+
+        }
+
+
+        return {
+          lookup:
+            visibleWord,
+
+          pos:
+            "other",
+        };
+
+      };
+
+    }
+
+
+    // ----------------------------------------------------
+    // INTERACTIVE TEXT
+    // ----------------------------------------------------
+
+
+    function appendInteractiveLanguageText(
+      container,
+      text,
+      languageId,
+      replyWords =
+        []
+    ) {
+
+      const parts =
+        splitLanguageText(
+          text
+        );
+
+
+      const getMetadataForWord =
+        createWordMetadataMatcher(
+          replyWords
+        );
+
+
+      for (
+        const part
+        of parts
+      ) {
+
+        if (!part) {
+          continue;
+        }
+
+
+        const isWord =
+          /^\p{L}[\p{L}\p{M}'’-]*$/u
+            .test(
+              part
+            );
+
+
+        if (!isWord) {
+
+          container
+            .appendChild(
+              document
+                .createTextNode(
+                  part
+                )
+            );
+
+
+          continue;
+
+        }
+
+
+        const metadata =
+          getMetadataForWord(
+            part
+          );
+
+
+        const lookupWord =
+          metadata.lookup;
+
+
+        const partOfSpeech =
+          metadata.pos;
+
+
+        const word =
+          document.createElement(
+            "span"
+          );
+
+
+        word.className =
+          "word-token";
+
+
+        word.textContent =
+          part;
+
+
+        word.tabIndex =
+          0;
+
+
+        word.setAttribute(
+          "aria-label",
+          `${part}: show English meaning`
+        );
+
+
+        word.addEventListener(
+          "mouseenter",
+          () => {
+
+            clearTimeout(
+              tooltipHoverTimer
+            );
+
+
+            tooltipHoverTimer =
+              setTimeout(
+                () => {
+
+                  openDictionaryTooltip(
+                    word,
+                    languageId,
+                    part,
+                    lookupWord,
+                    partOfSpeech
+                  );
+
+                },
+                120
+              );
+
           }
         );
 
 
-      const data =
-        await readJsonResponse(
-          response
+        word.addEventListener(
+          "mouseleave",
+          () => {
+
+            clearTimeout(
+              tooltipHoverTimer
+            );
+
+
+            hideDictionaryTooltip();
+
+          }
         );
 
 
-      history.push({
-        role: 'user',
-        content: message
-      });
+        word.addEventListener(
+          "focus",
+          () => {
+
+            openDictionaryTooltip(
+              word,
+              languageId,
+              part,
+              lookupWord,
+              partOfSpeech
+            );
+
+          }
+        );
 
 
-      history.push({
-        role: 'assistant',
-        content: data.reply
-      });
+        word.addEventListener(
+          "blur",
+          () => {
+
+            hideDictionaryTooltip();
+
+          }
+        );
 
 
-      /*
-        The visible German is unchanged.
+        word.addEventListener(
+          "click",
+          (
+            event
+          ) => {
 
-        The hidden lookup metadata is only
-        used when a learner hovers/taps a word.
-      */
+            event.stopPropagation();
 
-      addMessage(
-        data.reply,
-        'ai',
-        data.replyLookupForms,
-        data.replyPartsOfSpeech
+
+            openDictionaryTooltip(
+              word,
+              languageId,
+              part,
+              lookupWord,
+              partOfSpeech
+            );
+
+          }
+        );
+
+
+        container.appendChild(
+          word
+        );
+
+      }
+
+    }
+
+
+    // ----------------------------------------------------
+    // MESSAGE DISPLAY
+    // ----------------------------------------------------
+
+
+    function addMessage(
+      text,
+      sender,
+      languageId,
+      replyWords =
+        []
+    ) {
+
+      const row =
+        document.createElement(
+          "div"
+        );
+
+
+      row.className =
+        `message-row ${sender}`;
+
+
+      const bubble =
+        document.createElement(
+          "div"
+        );
+
+
+      bubble.className =
+        "message";
+
+
+      appendInteractiveLanguageText(
+        bubble,
+        text,
+        languageId,
+        replyWords
       );
 
 
-      showFeedback(
-        data.feedback
+      row.appendChild(
+        bubble
       );
+
+
+      messages.appendChild(
+        row
+      );
+
+
+      messages.scrollTop =
+        messages.scrollHeight;
+
+    }
+
+
+    // ----------------------------------------------------
+    // FEEDBACK
+    // ----------------------------------------------------
+
+
+    function clearFeedback() {
+
+      feedbackContent
+        .innerHTML =
+          "";
+
+
+      feedbackPanel
+        .classList
+        .add(
+          "hidden"
+        );
+
+    }
+
+
+    function showFeedback(
+      feedback
+    ) {
+
+      feedbackContent
+        .innerHTML =
+          "";
+
+
+      feedbackPanel
+        .classList
+        .remove(
+          "hidden"
+        );
+
+
+      if (
+        !feedback ||
+        feedback.hasIssues ===
+          false
+      ) {
+
+        const text =
+          document.createElement(
+            "p"
+          );
+
+
+        text.className =
+          "feedback-ok";
+
+
+        text.textContent =
+          feedback?.explanation ||
+          "No correction needed.";
+
+
+        feedbackContent
+          .appendChild(
+            text
+          );
+
+
+        return;
+
+      }
+
+
+      const correction =
+        document.createElement(
+          "p"
+        );
+
+
+      const label =
+        document.createElement(
+          "strong"
+        );
+
+
+      label.textContent =
+        "Correction: ";
+
+
+      correction.appendChild(
+        label
+      );
+
+
+      correction.appendChild(
+        document.createTextNode(
+          feedback.correctedVersion ||
+          ""
+        )
+      );
+
+
+      const explanation =
+        document.createElement(
+          "p"
+        );
+
+
+      explanation.textContent =
+        feedback.explanation ||
+        "";
+
+
+      feedbackContent.append(
+        correction,
+        explanation
+      );
+
+    }
+
+
+    function showError(
+      message
+    ) {
+
+      feedbackContent
+        .innerHTML =
+          "";
+
+
+      feedbackPanel
+        .classList
+        .remove(
+          "hidden"
+        );
+
+
+      const text =
+        document.createElement(
+          "p"
+        );
+
+
+      text.className =
+        "feedback-error";
+
+
+      text.textContent =
+        message;
+
+
+      feedbackContent
+        .appendChild(
+          text
+        );
+
+    }
+
+
+    // ----------------------------------------------------
+    // COMPOSER
+    // ----------------------------------------------------
+
+
+    function setComposerEnabled(
+      enabled
+    ) {
+
+      messageInput.disabled =
+        !enabled;
+
+
+      sendButton.disabled =
+        !enabled;
+
+    }
+
+
+    // ----------------------------------------------------
+    // START
+    // ----------------------------------------------------
+
+
+    async function startConversation() {
+
+      const languageId =
+        languageSelect.value;
+
+
+      const languageName =
+        getSelectedLanguageName();
+
+
+      const scenario =
+        scenarioSelect.value;
+
+
+      const scenarioName =
+        scenarioSelect
+          .options[
+            scenarioSelect
+              .selectedIndex
+          ]
+          .text;
+
+
+      activeLanguageId =
+        languageId;
+
+
+      chatTitle.textContent =
+        `${languageName} conversation`;
+
+
+      scenarioLabel.textContent =
+        scenarioName;
+
+
+      messageInput.placeholder =
+        `Type your message in ${languageName}...`;
+
+
+      messages.innerHTML =
+        "";
+
+
+      clearFeedback();
+
+
+      hideDictionaryTooltip(
+        0
+      );
+
+
+      history =
+        [];
 
 
       conversationEnded =
-        Boolean(
-          data.conversationEnded
+        false;
+
+
+      startChatButton.disabled =
+        true;
+
+
+      startChatButton.textContent =
+        "Starting...";
+
+
+      showScreen(
+        chatScreen
+      );
+
+
+      setComposerEnabled(
+        false
+      );
+
+
+      try {
+
+        const response =
+          await fetch(
+            `${API_BASE_URL}/api/start`,
+            {
+              method:
+                "POST",
+
+              headers: {
+                "Content-Type":
+                  "application/json",
+              },
+
+              body:
+                JSON.stringify({
+                  language:
+                    languageId,
+
+                  scenario,
+                }),
+            }
+          );
+
+
+        const data =
+          await readJsonResponse(
+            response
+          );
+
+
+        addMessage(
+          data.reply,
+          "ai",
+          languageId,
+          data.replyWords
         );
 
 
-      if (conversationEnded) {
-        messageInput.placeholder =
-          'Conversation ended.';
+        history.push({
+          role:
+            "assistant",
 
-        setComposerEnabled(false);
+          content:
+            data.reply,
+        });
 
-      } else {
-        setComposerEnabled(true);
 
-        messageInput.focus();
+        conversationEnded =
+          Boolean(
+            data.conversationEnded
+          );
+
+
+        if (
+          !conversationEnded
+        ) {
+
+          setComposerEnabled(
+            true
+          );
+
+
+          messageInput.focus();
+
+        }
+
+      } catch (
+        error
+      ) {
+
+        showError(
+          `Could not start the conversation: ${error.message}`
+        );
+
+
+        setComposerEnabled(
+          false
+        );
+
+      } finally {
+
+        startChatButton.disabled =
+          false;
+
+
+        startChatButton.textContent =
+          "Chat";
+
       }
 
-    } catch (error) {
-      showError(
-        `Could not get an AI response: ${error.message}`
+    }
+
+
+    // ----------------------------------------------------
+    // END
+    // ----------------------------------------------------
+
+
+    function endConversation() {
+
+      history =
+        [];
+
+
+      conversationEnded =
+        false;
+
+
+      activeLanguageId =
+        null;
+
+
+      messages.innerHTML =
+        "";
+
+
+      messageInput.value =
+        "";
+
+
+      messageInput.placeholder =
+        "Type your message...";
+
+
+      chatTitle.textContent =
+        "Conversation";
+
+
+      clearFeedback();
+
+
+      hideDictionaryTooltip(
+        0
       );
 
-      setComposerEnabled(true);
 
-      messageInput.focus();
+      setComposerEnabled(
+        true
+      );
 
-    } finally {
-      sendButton.textContent =
-        'Send';
 
-      if (conversationEnded) {
-        setComposerEnabled(false);
-      }
+      showScreen(
+        homeScreen
+      );
+
     }
-  }
-);
-  
-</script>
+
+
+    // ----------------------------------------------------
+    // EVENTS
+    // ----------------------------------------------------
+
+
+    document.addEventListener(
+      "click",
+      (
+        event
+      ) => {
+
+        if (
+          !event.target.closest(
+            ".word-token"
+          )
+        ) {
+
+          hideDictionaryTooltip(
+            0
+          );
+
+        }
+
+      }
+    );
+
+
+    window.addEventListener(
+      "resize",
+      () => {
+
+        hideDictionaryTooltip(
+          0
+        );
+
+      }
+    );
+
+
+    messages.addEventListener(
+      "scroll",
+      () => {
+
+        hideDictionaryTooltip(
+          0
+        );
+
+      }
+    );
+
+
+    startChatButton
+      .addEventListener(
+        "click",
+        startConversation
+      );
+
+
+    endChatButton
+      .addEventListener(
+        "click",
+        endConversation
+      );
+
+
+    // ----------------------------------------------------
+    // SEND MESSAGE
+    // ----------------------------------------------------
+
+
+    chatForm.addEventListener(
+      "submit",
+      async (
+        event
+      ) => {
+
+        event.preventDefault();
+
+
+        if (
+          conversationEnded
+        ) {
+
+          return;
+
+        }
+
+
+        const message =
+          messageInput
+            .value
+            .trim();
+
+
+        if (!message) {
+
+          return;
+
+        }
+
+
+        const languageId =
+          activeLanguageId ||
+          languageSelect.value;
+
+
+        const scenario =
+          scenarioSelect.value;
+
+
+        const historyBeforeMessage =
+          [
+            ...history
+          ];
+
+
+        addMessage(
+          message,
+          "user",
+          languageId
+        );
+
+
+        messageInput.value =
+          "";
+
+
+        clearFeedback();
+
+
+        hideDictionaryTooltip(
+          0
+        );
+
+
+        setComposerEnabled(
+          false
+        );
+
+
+        sendButton.textContent =
+          "Sending...";
+
+
+        try {
+
+          const response =
+            await fetch(
+              `${API_BASE_URL}/api/chat`,
+              {
+                method:
+                  "POST",
+
+                headers: {
+                  "Content-Type":
+                    "application/json",
+                },
+
+                body:
+                  JSON.stringify({
+                    language:
+                      languageId,
+
+                    scenario,
+
+                    message,
+
+                    history:
+                      historyBeforeMessage,
+                  }),
+              }
+            );
+
+
+          const data =
+            await readJsonResponse(
+              response
+            );
+
+
+          history.push({
+            role:
+              "user",
+
+            content:
+              message,
+          });
+
+
+          history.push({
+            role:
+              "assistant",
+
+            content:
+              data.reply,
+          });
+
+
+          addMessage(
+            data.reply,
+            "ai",
+            languageId,
+            data.replyWords
+          );
+
+
+          showFeedback(
+            data.feedback
+          );
+
+
+          conversationEnded =
+            Boolean(
+              data.conversationEnded
+            );
+
+
+          if (
+            conversationEnded
+          ) {
+
+            messageInput.placeholder =
+              "Conversation ended.";
+
+
+            setComposerEnabled(
+              false
+            );
+
+          } else {
+
+            setComposerEnabled(
+              true
+            );
+
+
+            messageInput.focus();
+
+          }
+
+        } catch (
+          error
+        ) {
+
+          showError(
+            `Could not get an AI response: ${error.message}`
+          );
+
+
+          setComposerEnabled(
+            true
+          );
+
+
+          messageInput.focus();
+
+        } finally {
+
+          sendButton.textContent =
+            "Send";
+
+
+          if (
+            conversationEnded
+          ) {
+
+            setComposerEnabled(
+              false
+            );
+
+          }
+
+        }
+
+      }
+    );
+
+  </script>
+
 
 </body>
+
 </html>
