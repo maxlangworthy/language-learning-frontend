@@ -79,7 +79,8 @@
 
     button,
     select,
-    input {
+    input,
+    textarea {
       font:
         inherit;
     }
@@ -92,12 +93,19 @@
 
 
     button:disabled,
-    input:disabled {
+    input:disabled,
+    textarea:disabled {
       cursor:
         not-allowed;
 
       opacity:
         0.6;
+    }
+
+
+    .hidden {
+      display:
+        none !important;
     }
 
 
@@ -185,7 +193,7 @@
     .home-card {
       width:
         min(
-          560px,
+          620px,
           100%
         );
     }
@@ -305,7 +313,8 @@
 
 
     select:focus,
-    input:focus {
+    input:focus,
+    textarea:focus {
       border-color:
         rgba(
           40,
@@ -348,6 +357,134 @@
 
       pointer-events:
         none;
+    }
+
+
+    .custom-scenario-panel {
+      margin:
+        -4px 0 22px;
+
+      padding:
+        16px;
+
+      border:
+        1px solid
+        var(--border);
+
+      border-radius:
+        16px;
+
+      background:
+        var(--surface-soft);
+    }
+
+
+    .custom-scenario-panel label {
+      display:
+        block;
+
+      margin-bottom:
+        7px;
+
+      font-size:
+        0.92rem;
+
+      font-weight:
+        750;
+    }
+
+
+    .custom-scenario-help {
+      margin:
+        0 0 11px;
+
+      color:
+        var(--muted);
+
+      font-size:
+        0.84rem;
+
+      line-height:
+        1.45;
+    }
+
+
+    .custom-scenario-panel textarea {
+      display:
+        block;
+
+      width:
+        100%;
+
+      min-height:
+        150px;
+
+      resize:
+        vertical;
+
+      padding:
+        14px 15px;
+
+      border:
+        1px solid
+        var(--border);
+
+      border-radius:
+        12px;
+
+      background:
+        #fff;
+
+      color:
+        var(--text);
+
+      line-height:
+        1.5;
+
+      outline:
+        none;
+    }
+
+
+    .custom-scenario-footer {
+      display:
+        flex;
+
+      justify-content:
+        space-between;
+
+      gap:
+        12px;
+
+      margin-top:
+        7px;
+
+      min-height:
+        19px;
+
+      font-size:
+        0.78rem;
+    }
+
+
+    .custom-scenario-error {
+      color:
+        var(--danger);
+
+      font-weight:
+        650;
+    }
+
+
+    .character-counter {
+      margin-left:
+        auto;
+
+      color:
+        var(--muted);
+
+      white-space:
+        nowrap;
     }
 
 
@@ -819,12 +956,6 @@
     }
 
 
-    .feedback-panel.hidden {
-      display:
-        none;
-    }
-
-
     .feedback-title {
       margin-bottom:
         7px;
@@ -1155,7 +1286,7 @@
 
           <p class="intro">
             Choose your language and a real-world scenario,
-            then practise through a simple conversation.
+            or create your own conversation.
           </p>
 
 
@@ -1177,37 +1308,27 @@
               >
 
 
-                <option
-                  value="german"
-                >
+                <option value="german">
                   German
                 </option>
 
 
-                <option
-                  value="italian"
-                >
+                <option value="italian">
                   Italian
                 </option>
 
 
-                <option
-                  value="spanish"
-                >
+                <option value="spanish">
                   Spanish
                 </option>
 
 
-                <option
-                  value="afrikaans"
-                >
+                <option value="afrikaans">
                   Afrikaans
                 </option>
 
 
-                <option
-                  value="french"
-                >
+                <option value="french">
                   French
                 </option>
 
@@ -1239,28 +1360,80 @@
               >
 
 
-                <option
-                  value="coffee"
-                >
+                <option value="coffee">
                   Ordering a coffee
                 </option>
 
 
-                <option
-                  value="weekend"
-                >
+                <option value="weekend">
                   Talking about your weekend with a colleague
                 </option>
 
 
-                <option
-                  value="directions"
-                >
+                <option value="directions">
                   Giving a stranger directions
                 </option>
 
 
+                <option value="custom">
+                  Custom scenario...
+                </option>
+
+
               </select>
+
+
+            </div>
+
+
+          </div>
+
+
+          <!-- CUSTOM SCENARIO -->
+
+
+          <div
+            id="customScenarioPanel"
+            class="custom-scenario-panel hidden"
+          >
+
+
+            <label
+              for="customScenarioInput"
+            >
+              Describe your scenario
+            </label>
+
+
+            <p class="custom-scenario-help">
+              Describe what you want to talk about, who you
+              want the AI to be, where the conversation takes
+              place, or any details you want included.
+            </p>
+
+
+            <textarea
+              id="customScenarioInput"
+              maxlength="2000"
+              placeholder="For example: I want to talk about boxing with a friend who follows the sport. Ask me about my favourite fighters, recent fights and whether I prefer amateur or professional boxing. Keep the conversation informal."
+            ></textarea>
+
+
+            <div class="custom-scenario-footer">
+
+
+              <div
+                id="customScenarioError"
+                class="custom-scenario-error"
+              ></div>
+
+
+              <div
+                id="customScenarioCounter"
+                class="character-counter"
+              >
+                0 / 2000
+              </div>
 
 
             </div>
@@ -1509,6 +1682,10 @@
       "https://learning-german.onrender.com";
 
 
+    const MAX_CUSTOM_SCENARIO_LENGTH =
+      2000;
+
+
     // ----------------------------------------------------
     // ELEMENTS
     // ----------------------------------------------------
@@ -1547,6 +1724,30 @@
     const scenarioSelect =
       document.getElementById(
         "scenarioSelect"
+      );
+
+
+    const customScenarioPanel =
+      document.getElementById(
+        "customScenarioPanel"
+      );
+
+
+    const customScenarioInput =
+      document.getElementById(
+        "customScenarioInput"
+      );
+
+
+    const customScenarioCounter =
+      document.getElementById(
+        "customScenarioCounter"
+      );
+
+
+    const customScenarioError =
+      document.getElementById(
+        "customScenarioError"
       );
 
 
@@ -1627,6 +1828,14 @@
       null;
 
 
+    let activeScenarioKey =
+      null;
+
+
+    let activeCustomScenario =
+      "";
+
+
     const dictionaryCache =
       new Map();
 
@@ -1655,7 +1864,6 @@
     function showScreen(
       screenToShow
     ) {
-
       homeScreen
         .classList
         .remove(
@@ -1675,57 +1883,123 @@
         .add(
           "active"
         );
-
     }
 
 
     function getSelectedLanguageName() {
-
       return languageSelect
         .options[
           languageSelect
             .selectedIndex
         ]
         .text;
-
     }
 
 
     async function readJsonResponse(
       response
     ) {
-
       let data;
 
 
       try {
-
         data =
           await response.json();
 
       } catch {
-
         throw new Error(
           "The server returned an invalid response."
         );
-
       }
 
 
       if (
         !response.ok
       ) {
-
         throw new Error(
           data.error ||
           "The request failed."
         );
-
       }
 
 
       return data;
+    }
 
+
+    // ----------------------------------------------------
+    // CUSTOM SCENARIO
+    // ----------------------------------------------------
+
+
+    function updateCustomScenarioUI() {
+      const isCustom =
+        scenarioSelect.value ===
+        "custom";
+
+
+      customScenarioPanel
+        .classList
+        .toggle(
+          "hidden",
+          !isCustom
+        );
+
+
+      if (
+        !isCustom
+      ) {
+        customScenarioError
+          .textContent =
+            "";
+      }
+    }
+
+
+    function updateCustomScenarioCounter() {
+      const length =
+        customScenarioInput
+          .value
+          .length;
+
+
+      customScenarioCounter
+        .textContent =
+          `${length} / ${MAX_CUSTOM_SCENARIO_LENGTH}`;
+
+
+      if (
+        customScenarioInput
+          .value
+          .trim()
+      ) {
+        customScenarioError
+          .textContent =
+            "";
+      }
+    }
+
+
+    function getActiveConversationPayload() {
+      const payload = {
+        language:
+          activeLanguageId,
+
+        scenario:
+          activeScenarioKey,
+      };
+
+
+      if (
+        activeScenarioKey ===
+        "custom"
+      ) {
+        payload.customScenario =
+          activeCustomScenario;
+      }
+
+
+      return payload;
     }
 
 
@@ -1737,24 +2011,20 @@
     function normalizeDictionaryKey(
       word
     ) {
-
       return word
         .normalize(
           "NFC"
         )
         .toLocaleLowerCase();
-
     }
 
 
     function splitLanguageText(
       text
     ) {
-
       return text.split(
         /(\p{L}[\p{L}\p{M}'’-]*)/gu
       );
-
     }
 
 
@@ -1764,7 +2034,6 @@
       partOfSpeech =
         ""
     ) {
-
       const cacheKey =
         `${languageId}|${normalizeDictionaryKey(
           lookupWord
@@ -1776,11 +2045,9 @@
           cacheKey
         )
       ) {
-
         return dictionaryCache.get(
           cacheKey
         );
-
       }
 
 
@@ -1799,12 +2066,10 @@
         partOfSpeech !==
           "other"
       ) {
-
         url +=
           `&pos=${encodeURIComponent(
             partOfSpeech
           )}`;
-
       }
 
 
@@ -1839,7 +2104,6 @@
 
 
       return request;
-
     }
 
 
@@ -1851,7 +2115,6 @@
     function positionDictionaryTooltip(
       target
     ) {
-
       const targetRect =
         target
           .getBoundingClientRect();
@@ -1895,11 +2158,9 @@
       if (
         top < 10
       ) {
-
         top =
           targetRect.bottom +
           margin;
-
       }
 
 
@@ -1913,14 +2174,12 @@
         .style
         .top =
           `${top}px`;
-
     }
 
 
     function showTooltipLoading(
       surfaceWord
     ) {
-
       dictionaryTooltip
         .innerHTML =
           "";
@@ -1958,7 +2217,6 @@
         title,
         loading
       );
-
     }
 
 
@@ -1967,7 +2225,6 @@
       surfaceWord,
       lookupWord
     ) {
-
       dictionaryTooltip
         .innerHTML =
           "";
@@ -2001,7 +2258,6 @@
         data.entries.length ===
           0
       ) {
-
         const unavailable =
           document.createElement(
             "div"
@@ -2023,7 +2279,6 @@
 
 
         return;
-
       }
 
 
@@ -2082,11 +2337,9 @@
           surfaceWord
         )
       ) {
-
         metaParts.push(
           `from ${lookupWord}`
         );
-
       }
 
 
@@ -2095,11 +2348,9 @@
         entry.partOfSpeech !==
           "unknown"
       ) {
-
         metaParts.push(
           entry.partOfSpeech
         );
-
       }
 
 
@@ -2107,7 +2358,6 @@
         metaParts.length >
         0
       ) {
-
         const meta =
           document.createElement(
             "div"
@@ -2128,9 +2378,7 @@
           .appendChild(
             meta
           );
-
       }
-
     }
 
 
@@ -2143,7 +2391,6 @@
       partOfSpeech =
         ""
     ) {
-
       clearTimeout(
         tooltipHideTimer
       );
@@ -2184,13 +2431,11 @@
 
       if (
         requestToken !==
-        tooltipRequestToken ||
+          tooltipRequestToken ||
         activeDictionaryWord !==
-        target
+          target
       ) {
-
         return;
-
       }
 
 
@@ -2204,7 +2449,6 @@
       positionDictionaryTooltip(
         target
       );
-
     }
 
 
@@ -2212,7 +2456,6 @@
       delay =
         80
     ) {
-
       clearTimeout(
         tooltipHideTimer
       );
@@ -2221,7 +2464,6 @@
       tooltipHideTimer =
         setTimeout(
           () => {
-
             tooltipRequestToken +=
               1;
 
@@ -2235,11 +2477,9 @@
               .remove(
                 "visible"
               );
-
           },
           delay
         );
-
     }
 
 
@@ -2251,7 +2491,6 @@
     function createWordMetadataMatcher(
       replyWords
     ) {
-
       const metadata =
         Array.isArray(
           replyWords
@@ -2267,7 +2506,6 @@
       return function getMetadataForWord(
         visibleWord
       ) {
-
         const visibleKey =
           normalizeDictionaryKey(
             visibleWord
@@ -2284,7 +2522,6 @@
           i +=
             1
         ) {
-
           const item =
             metadata[i];
 
@@ -2294,9 +2531,7 @@
             typeof item.surface !==
               "string"
           ) {
-
             continue;
-
           }
 
 
@@ -2310,13 +2545,11 @@
             surfaceKey ===
             visibleKey
           ) {
-
             cursor =
               i + 1;
 
 
             return {
-
               lookup:
                 typeof item.lookup ===
                   "string" &&
@@ -2329,26 +2562,19 @@
                   "string"
                   ? item.pos
                   : "other",
-
             };
-
           }
-
         }
 
 
         return {
-
           lookup:
             visibleWord,
 
           pos:
             "other",
-
         };
-
       };
-
     }
 
 
@@ -2364,7 +2590,6 @@
       replyWords =
         []
     ) {
-
       const parts =
         splitLanguageText(
           text
@@ -2381,13 +2606,10 @@
         const part
         of parts
       ) {
-
         if (
           !part
         ) {
-
           continue;
-
         }
 
 
@@ -2401,7 +2623,6 @@
         if (
           !isWord
         ) {
-
           container
             .appendChild(
               document
@@ -2412,7 +2633,6 @@
 
 
           continue;
-
         }
 
 
@@ -2457,7 +2677,6 @@
         word.addEventListener(
           "mouseenter",
           () => {
-
             clearTimeout(
               tooltipHoverTimer
             );
@@ -2466,7 +2685,6 @@
             tooltipHoverTimer =
               setTimeout(
                 () => {
-
                   openDictionaryTooltip(
                     word,
                     languageId,
@@ -2474,11 +2692,9 @@
                     lookupWord,
                     partOfSpeech
                   );
-
                 },
                 120
               );
-
           }
         );
 
@@ -2486,14 +2702,12 @@
         word.addEventListener(
           "mouseleave",
           () => {
-
             clearTimeout(
               tooltipHoverTimer
             );
 
 
             hideDictionaryTooltip();
-
           }
         );
 
@@ -2501,7 +2715,6 @@
         word.addEventListener(
           "focus",
           () => {
-
             openDictionaryTooltip(
               word,
               languageId,
@@ -2509,7 +2722,6 @@
               lookupWord,
               partOfSpeech
             );
-
           }
         );
 
@@ -2517,9 +2729,7 @@
         word.addEventListener(
           "blur",
           () => {
-
             hideDictionaryTooltip();
-
           }
         );
 
@@ -2529,7 +2739,6 @@
           (
             event
           ) => {
-
             event.stopPropagation();
 
 
@@ -2540,7 +2749,6 @@
               lookupWord,
               partOfSpeech
             );
-
           }
         );
 
@@ -2548,9 +2756,7 @@
         container.appendChild(
           word
         );
-
       }
-
     }
 
 
@@ -2568,7 +2774,6 @@
       options =
         {}
     ) {
-
       const row =
         document.createElement(
           "div"
@@ -2592,7 +2797,6 @@
       if (
         options.isExample
       ) {
-
         const label =
           document.createElement(
             "div"
@@ -2610,7 +2814,6 @@
         bubble.appendChild(
           label
         );
-
       }
 
 
@@ -2636,7 +2839,6 @@
       if (
         options.translation
       ) {
-
         const translation =
           document.createElement(
             "div"
@@ -2654,7 +2856,6 @@
         bubble.appendChild(
           translation
         );
-
       }
 
 
@@ -2670,7 +2871,6 @@
 
       messages.scrollTop =
         messages.scrollHeight;
-
     }
 
 
@@ -2680,7 +2880,6 @@
 
 
     function clearFeedback() {
-
       feedbackContent
         .innerHTML =
           "";
@@ -2691,14 +2890,12 @@
         .add(
           "hidden"
         );
-
     }
 
 
     function showFeedback(
       feedback
     ) {
-
       feedbackContent
         .innerHTML =
           "";
@@ -2716,7 +2913,6 @@
         feedback.hasIssues ===
           false
       ) {
-
         const text =
           document.createElement(
             "p"
@@ -2739,7 +2935,6 @@
 
 
         return;
-
       }
 
 
@@ -2787,14 +2982,12 @@
         correction,
         explanation
       );
-
     }
 
 
     function showError(
       message
     ) {
-
       feedbackContent
         .innerHTML =
           "";
@@ -2825,7 +3018,6 @@
         .appendChild(
           text
         );
-
     }
 
 
@@ -2837,7 +3029,6 @@
     function setComposerEnabled(
       enabled
     ) {
-
       messageInput.disabled =
         !enabled;
 
@@ -2848,17 +3039,15 @@
 
       exampleButton.disabled =
         !enabled;
-
     }
 
 
     // ----------------------------------------------------
-    // START
+    // START CONVERSATION
     // ----------------------------------------------------
 
 
     async function startConversation() {
-
       const languageId =
         languageSelect.value;
 
@@ -2867,21 +3056,76 @@
         getSelectedLanguageName();
 
 
-      const scenario =
+      const scenarioKey =
         scenarioSelect.value;
 
 
+      let customScenario =
+        "";
+
+
+      if (
+        scenarioKey ===
+        "custom"
+      ) {
+        customScenario =
+          customScenarioInput
+            .value
+            .trim();
+
+
+        if (
+          !customScenario
+        ) {
+          customScenarioError
+            .textContent =
+              "Please describe the conversation you want to practise.";
+
+
+          customScenarioInput
+            .focus();
+
+
+          return;
+        }
+
+
+        if (
+          customScenario.length >
+          MAX_CUSTOM_SCENARIO_LENGTH
+        ) {
+          customScenarioError
+            .textContent =
+              "Your scenario is longer than 2,000 characters.";
+
+
+          return;
+        }
+      }
+
+
       const scenarioName =
-        scenarioSelect
-          .options[
-            scenarioSelect
-              .selectedIndex
-          ]
-          .text;
+        scenarioKey ===
+          "custom"
+          ? "Custom scenario"
+          : scenarioSelect
+              .options[
+                scenarioSelect
+                  .selectedIndex
+              ]
+              .text;
 
 
       activeLanguageId =
         languageId;
+
+
+      activeScenarioKey =
+        scenarioKey;
+
+
+      activeCustomScenario =
+        customScenario;
 
 
       chatTitle.textContent =
@@ -2934,13 +3178,29 @@
       );
 
 
-      try {
+      const requestBody = {
+        language:
+          languageId,
 
+        scenario:
+          scenarioKey,
+      };
+
+
+      if (
+        scenarioKey ===
+        "custom"
+      ) {
+        requestBody.customScenario =
+          customScenario;
+      }
+
+
+      try {
         const response =
           await fetch(
             `${API_BASE_URL}/api/start`,
             {
-
               method:
                 "POST",
 
@@ -2950,13 +3210,9 @@
               },
 
               body:
-                JSON.stringify({
-                  language:
-                    languageId,
-
-                  scenario,
-                }),
-
+                JSON.stringify(
+                  requestBody
+                ),
             }
           );
 
@@ -2993,20 +3249,17 @@
         if (
           !conversationEnded
         ) {
-
           setComposerEnabled(
             true
           );
 
 
           messageInput.focus();
-
         }
 
       } catch (
         error
       ) {
-
         showError(
           `Could not start the conversation: ${error.message}`
         );
@@ -3017,26 +3270,22 @@
         );
 
       } finally {
-
         startChatButton.disabled =
           false;
 
 
         startChatButton.textContent =
           "Chat";
-
       }
-
     }
 
 
     // ----------------------------------------------------
-    // END
+    // END CONVERSATION
     // ----------------------------------------------------
 
 
     function endConversation() {
-
       history =
         [];
 
@@ -3047,6 +3296,14 @@
 
       activeLanguageId =
         null;
+
+
+      activeScenarioKey =
+        null;
+
+
+      activeCustomScenario =
+        "";
 
 
       messages.innerHTML =
@@ -3081,39 +3338,29 @@
       showScreen(
         homeScreen
       );
-
     }
 
 
     // ----------------------------------------------------
-    // NEW: GENERATE EXAMPLE RESPONSE
+    // GENERATE EXAMPLE RESPONSE
     // ----------------------------------------------------
 
 
     async function generateExampleResponse() {
-
       if (
         conversationEnded
       ) {
-
         return;
-
       }
 
 
-      const languageId =
-        activeLanguageId ||
-        languageSelect.value;
+      const requestBody = {
+        ...getActiveConversationPayload(),
 
-
-      const scenario =
-        scenarioSelect.value;
-
-
-      const historyBeforeExample =
-        [
+        history: [
           ...history
-        ];
+        ],
+      };
 
 
       clearFeedback();
@@ -3134,12 +3381,10 @@
 
 
       try {
-
         const response =
           await fetch(
             `${API_BASE_URL}/api/example`,
             {
-
               method:
                 "POST",
 
@@ -3149,18 +3394,9 @@
               },
 
               body:
-                JSON.stringify({
-
-                  language:
-                    languageId,
-
-                  scenario,
-
-                  history:
-                    historyBeforeExample,
-
-                }),
-
+                JSON.stringify(
+                  requestBody
+                ),
             }
           );
 
@@ -3171,18 +3407,10 @@
           );
 
 
-        /*
-          Display the generated learner
-          response as a user message.
-
-          Its English translation appears
-          directly underneath it.
-        */
-
         addMessage(
           data.exampleMessage,
           "user",
-          languageId,
+          activeLanguageId,
           data.exampleWords,
           {
             isExample:
@@ -3193,11 +3421,6 @@
           }
         );
 
-
-        /*
-          Treat the generated response as
-          though the learner actually sent it.
-        */
 
         history.push({
           role:
@@ -3217,15 +3440,10 @@
         });
 
 
-        /*
-          Display the character's next
-          response immediately.
-        */
-
         addMessage(
           data.reply,
           "ai",
-          languageId,
+          activeLanguageId,
           data.replyWords
         );
 
@@ -3239,7 +3457,6 @@
         if (
           conversationEnded
         ) {
-
           messageInput.placeholder =
             "Conversation ended.";
 
@@ -3249,20 +3466,17 @@
           );
 
         } else {
-
           setComposerEnabled(
             true
           );
 
 
           messageInput.focus();
-
         }
 
       } catch (
         error
       ) {
-
         showError(
           `Could not generate an example response: ${error.message}`
         );
@@ -3276,7 +3490,6 @@
         messageInput.focus();
 
       } finally {
-
         exampleButton.textContent =
           "Generate example response";
 
@@ -3284,15 +3497,11 @@
         if (
           conversationEnded
         ) {
-
           setComposerEnabled(
             false
           );
-
         }
-
       }
-
     }
 
 
@@ -3301,24 +3510,50 @@
     // ----------------------------------------------------
 
 
+    scenarioSelect
+      .addEventListener(
+        "change",
+        () => {
+          updateCustomScenarioUI();
+
+
+          if (
+            scenarioSelect.value ===
+            "custom"
+          ) {
+            setTimeout(
+              () => {
+                customScenarioInput
+                  .focus();
+              },
+              0
+            );
+          }
+        }
+      );
+
+
+    customScenarioInput
+      .addEventListener(
+        "input",
+        updateCustomScenarioCounter
+      );
+
+
     document.addEventListener(
       "click",
       (
         event
       ) => {
-
         if (
           !event.target.closest(
             ".word-token"
           )
         ) {
-
           hideDictionaryTooltip(
             0
           );
-
         }
-
       }
     );
 
@@ -3326,11 +3561,9 @@
     window.addEventListener(
       "resize",
       () => {
-
         hideDictionaryTooltip(
           0
         );
-
       }
     );
 
@@ -3338,11 +3571,9 @@
     messages.addEventListener(
       "scroll",
       () => {
-
         hideDictionaryTooltip(
           0
         );
-
       }
     );
 
@@ -3378,16 +3609,13 @@
       async (
         event
       ) => {
-
         event.preventDefault();
 
 
         if (
           conversationEnded
         ) {
-
           return;
-
         }
 
 
@@ -3400,19 +3628,8 @@
         if (
           !message
         ) {
-
           return;
-
         }
-
-
-        const languageId =
-          activeLanguageId ||
-          languageSelect.value;
-
-
-        const scenario =
-          scenarioSelect.value;
 
 
         const historyBeforeMessage =
@@ -3424,7 +3641,7 @@
         addMessage(
           message,
           "user",
-          languageId
+          activeLanguageId
         );
 
 
@@ -3449,13 +3666,21 @@
           "Sending...";
 
 
-        try {
+        const requestBody = {
+          ...getActiveConversationPayload(),
 
+          message,
+
+          history:
+            historyBeforeMessage,
+        };
+
+
+        try {
           const response =
             await fetch(
               `${API_BASE_URL}/api/chat`,
               {
-
                 method:
                   "POST",
 
@@ -3465,20 +3690,9 @@
                 },
 
                 body:
-                  JSON.stringify({
-
-                    language:
-                      languageId,
-
-                    scenario,
-
-                    message,
-
-                    history:
-                      historyBeforeMessage,
-
-                  }),
-
+                  JSON.stringify(
+                    requestBody
+                  ),
               }
             );
 
@@ -3510,7 +3724,7 @@
           addMessage(
             data.reply,
             "ai",
-            languageId,
+            activeLanguageId,
             data.replyWords
           );
 
@@ -3529,7 +3743,6 @@
           if (
             conversationEnded
           ) {
-
             messageInput.placeholder =
               "Conversation ended.";
 
@@ -3539,20 +3752,17 @@
             );
 
           } else {
-
             setComposerEnabled(
               true
             );
 
 
             messageInput.focus();
-
           }
 
         } catch (
           error
         ) {
-
           showError(
             `Could not get an AI response: ${error.message}`
           );
@@ -3566,7 +3776,6 @@
           messageInput.focus();
 
         } finally {
-
           sendButton.textContent =
             "Send";
 
@@ -3574,17 +3783,23 @@
           if (
             conversationEnded
           ) {
-
             setComposerEnabled(
               false
             );
-
           }
-
         }
-
       }
     );
+
+
+    // ----------------------------------------------------
+    // INITIAL PAGE STATE
+    // ----------------------------------------------------
+
+
+    updateCustomScenarioUI();
+
+    updateCustomScenarioCounter();
 
   </script>
 
