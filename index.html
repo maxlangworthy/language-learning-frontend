@@ -22,7 +22,6 @@
       --feedback-bg: #fffdf5;
       --feedback-border: #eadfac;
       --shadow: 0 18px 50px rgba(23, 35, 58, 0.09);
-      --radius: 20px;
     }
 
     * {
@@ -40,12 +39,14 @@
         BlinkMacSystemFont,
         "Segoe UI",
         sans-serif;
+
       background:
         linear-gradient(
           145deg,
           #f7f9fc 0%,
           #eef3fa 100%
         );
+
       color: var(--text);
     }
 
@@ -65,10 +66,6 @@
       opacity: 0.6;
     }
 
-    a {
-      color: inherit;
-    }
-
     .page {
       min-height: 100vh;
       display: flex;
@@ -81,9 +78,7 @@
       width: min(1050px, 100%);
       min-height: 680px;
       background: var(--surface);
-      border:
-        1px solid
-        rgba(220, 227, 236, 0.9);
+      border: 1px solid rgba(220, 227, 236, 0.9);
       border-radius: 28px;
       box-shadow: var(--shadow);
       overflow: hidden;
@@ -98,9 +93,7 @@
       display: flex;
     }
 
-    /* -----------------------------
-       HOME SCREEN
-    ----------------------------- */
+    /* HOME */
 
     #homeScreen {
       align-items: center;
@@ -126,12 +119,7 @@
 
     h1 {
       margin: 0;
-      font-size:
-        clamp(
-          2.3rem,
-          5vw,
-          4rem
-        );
+      font-size: clamp(2.3rem, 5vw, 4rem);
       line-height: 1;
       letter-spacing: -0.045em;
     }
@@ -161,16 +149,13 @@
     select {
       width: 100%;
       appearance: none;
-      padding:
-        15px 46px
-        15px 16px;
-      border:
-        1px solid
-        var(--border);
+      padding: 15px 46px 15px 16px;
+      border: 1px solid var(--border);
       border-radius: 14px;
       background: var(--surface);
       color: var(--text);
       outline: none;
+
       transition:
         border-color 0.2s ease,
         box-shadow 0.2s ease;
@@ -178,8 +163,7 @@
 
     select:focus,
     input:focus {
-      border-color:
-        rgba(40, 86, 216, 0.65);
+      border-color: rgba(40, 86, 216, 0.65);
       box-shadow:
         0 0 0 4px
         rgba(40, 86, 216, 0.10);
@@ -190,8 +174,7 @@
       position: absolute;
       right: 16px;
       top: 50%;
-      transform:
-        translateY(-55%);
+      transform: translateY(-55%);
       color: var(--muted);
       pointer-events: none;
       font-size: 1.1rem;
@@ -206,24 +189,21 @@
       color: #fff;
       font-weight: 750;
       font-size: 1rem;
+
       transition:
         background 0.2s ease,
         transform 0.15s ease;
     }
 
     .primary-btn:hover:not(:disabled) {
-      background:
-        var(--primary-hover);
+      background: var(--primary-hover);
     }
 
     .primary-btn:active {
-      transform:
-        translateY(1px);
+      transform: translateY(1px);
     }
 
-    /* -----------------------------
-       CHAT SCREEN
-    ----------------------------- */
+    /* CHAT */
 
     #chatScreen {
       flex-direction: column;
@@ -235,11 +215,8 @@
       justify-content: space-between;
       gap: 20px;
       padding: 20px 24px;
-      border-bottom:
-        1px solid
-        var(--border);
-      background:
-        rgba(255, 255, 255, 0.96);
+      border-bottom: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.96);
     }
 
     .chat-heading {
@@ -262,9 +239,7 @@
 
     .secondary-btn {
       flex: 0 0 auto;
-      border:
-        1px solid
-        #ecd1d1;
+      border: 1px solid #ecd1d1;
       border-radius: 11px;
       padding: 10px 14px;
       background: #fffafa;
@@ -281,8 +256,7 @@
       display: flex;
       flex-direction: column;
       min-height: 0;
-      background:
-        var(--surface-soft);
+      background: var(--surface-soft);
     }
 
     .messages {
@@ -308,8 +282,7 @@
     }
 
     .message {
-      max-width:
-        min(70%, 620px);
+      max-width: min(70%, 620px);
       padding: 13px 16px;
       border-radius: 16px;
       line-height: 1.5;
@@ -317,62 +290,66 @@
     }
 
     .message-row.ai .message {
-      background:
-        var(--ai-bubble);
+      background: var(--ai-bubble);
       color: var(--text);
       border-bottom-left-radius: 5px;
     }
 
     .message-row.user .message {
-      background:
-        var(--user-bubble);
+      background: var(--user-bubble);
       color: #fff;
       border-bottom-right-radius: 5px;
     }
 
-    /* -----------------------------
-       DICTIONARY WORDS
-    ----------------------------- */
+    /* HOVERABLE WORDS */
 
-    .dictionary-word {
-      cursor: help;
-      text-decoration-line: underline;
-      text-decoration-style: dotted;
-      text-decoration-thickness: 1px;
-      text-underline-offset: 3px;
-      text-decoration-color:
+    .word-token {
+      border-bottom:
+        1px dotted
         rgba(24, 33, 47, 0.42);
+
+      cursor: help;
+      outline: none;
     }
 
-    .message-row.user
-    .dictionary-word {
-      text-decoration-color:
-        rgba(255, 255, 255, 0.62);
+    .message-row.user .word-token {
+      border-bottom-color:
+        rgba(255, 255, 255, 0.68);
     }
 
-    .dictionary-word:hover {
-      text-decoration-style: solid;
+    .word-token:focus {
+      border-bottom-style: solid;
     }
+
+    /* DICTIONARY TOOLTIP */
 
     .dictionary-tooltip {
+      display: none;
       position: fixed;
       z-index: 9999;
-      display: none;
+
       width: max-content;
       max-width:
-        min(320px, calc(100vw - 28px));
+        min(320px, calc(100vw - 24px));
+
       padding: 11px 13px;
+
       border:
         1px solid
         rgba(24, 33, 47, 0.13);
-      border-radius: 11px;
+
+      border-radius: 12px;
+
       background: #18212f;
       color: #fff;
+
       box-shadow:
-        0 10px 30px
-        rgba(18, 27, 42, 0.22);
+        0 12px 32px
+        rgba(23, 35, 58, 0.22);
+
       font-size: 0.86rem;
-      line-height: 1.45;
+      line-height: 1.4;
+
       pointer-events: none;
     }
 
@@ -381,37 +358,29 @@
     }
 
     .tooltip-word {
-      margin-bottom: 4px;
-      font-weight: 800;
+      margin-bottom: 3px;
       font-size: 0.92rem;
+      font-weight: 800;
     }
 
     .tooltip-meaning {
-      color:
-        rgba(255, 255, 255, 0.94);
+      color: rgba(255, 255, 255, 0.94);
     }
 
-    .tooltip-detail {
+    .dictionary-meta {
       margin-top: 5px;
-      color:
-        rgba(255, 255, 255, 0.67);
-      font-size: 0.76rem;
+      color: rgba(255, 255, 255, 0.68);
+      font-size: 0.77rem;
     }
 
-    /* -----------------------------
-       FEEDBACK
-    ----------------------------- */
+    /* FEEDBACK */
 
     .feedback-panel {
-      margin:
-        0 22px 14px;
+      margin: 0 22px 14px;
       padding: 14px 16px;
-      border:
-        1px solid
-        var(--feedback-border);
+      border: 1px solid var(--feedback-border);
       border-radius: 14px;
-      background:
-        var(--feedback-bg);
+      background: var(--feedback-bg);
     }
 
     .feedback-panel.hidden {
@@ -442,18 +411,13 @@
       font-weight: 700;
     }
 
-    /* -----------------------------
-       MESSAGE COMPOSER
-    ----------------------------- */
+    /* COMPOSER */
 
     .composer {
       display: flex;
       gap: 12px;
-      padding:
-        18px 22px 22px;
-      border-top:
-        1px solid
-        var(--border);
+      padding: 18px 22px 22px;
+      border-top: 1px solid var(--border);
       background: #fff;
     }
 
@@ -461,9 +425,7 @@
       flex: 1;
       min-width: 0;
       padding: 14px 16px;
-      border:
-        1px solid
-        var(--border);
+      border: 1px solid var(--border);
       border-radius: 14px;
       outline: none;
     }
@@ -478,19 +440,17 @@
     }
 
     .send-btn:hover:not(:disabled) {
-      background:
-        var(--primary-hover);
+      background: var(--primary-hover);
     }
 
-    /* -----------------------------
-       DICTIONARY ATTRIBUTION
-    ----------------------------- */
+    /* ATTRIBUTION */
 
     .data-credit {
-      margin-top: 26px;
+      margin: 18px 0 0;
       color: var(--muted);
-      font-size: 0.7rem;
+      font-size: 0.74rem;
       line-height: 1.5;
+      text-align: center;
     }
 
     .data-credit a {
@@ -500,16 +460,12 @@
     }
 
     .chat-credit {
-      padding:
-        0 22px 10px;
       margin: 0;
+      padding: 0 22px 10px;
       background: #fff;
-      text-align: center;
     }
 
-    /* -----------------------------
-       MOBILE
-    ----------------------------- */
+    /* MOBILE */
 
     @media (max-width: 700px) {
       .page {
@@ -527,8 +483,7 @@
       }
 
       .chat-header {
-        align-items:
-          flex-start;
+        align-items: flex-start;
       }
 
       .message {
@@ -540,8 +495,7 @@
       }
 
       .feedback-panel {
-        margin:
-          0 14px 12px;
+        margin: 0 14px 12px;
       }
 
       .composer {
@@ -549,13 +503,7 @@
       }
 
       .chat-credit {
-        padding:
-          0 14px 8px;
-      }
-
-      .dictionary-tooltip {
-        max-width:
-          calc(100vw - 24px);
+        padding: 0 14px 8px;
       }
     }
   </style>
@@ -567,7 +515,7 @@
 
     <section class="app-shell">
 
-      <!-- HOME / SELECTION SCREEN -->
+      <!-- HOME SCREEN -->
 
       <section
         id="homeScreen"
@@ -585,10 +533,9 @@
           </h1>
 
           <p class="intro">
-            Choose your language and a
-            real-world scenario, then
-            practise through a simple
-            conversation.
+            Choose your language and a real-world
+            scenario, then practise through a
+            simple conversation.
           </p>
 
 
@@ -652,38 +599,58 @@
 
 
           <p class="data-credit">
-            German dictionary data derived
-            from
+
+            German dictionary data derived from
+
             <a
               href="https://en.wiktionary.org/"
               target="_blank"
               rel="noopener noreferrer"
-            >English Wiktionary contributors</a>,
+            >
+              English Wiktionary contributors
+            </a>,
+
             extracted via
+
             <a
               href="https://github.com/tatuylonen/wiktextract"
               target="_blank"
               rel="noopener noreferrer"
-            >Wiktextract</a>
+            >
+              Wiktextract
+            </a>
+
             /
+
             <a
               href="https://kaikki.org/"
               target="_blank"
               rel="noopener noreferrer"
-            >Kaikki.org</a>
+            >
+              Kaikki.org
+            </a>
+
             and reduced for this app.
-            Dictionary-derived data is
-            provided under
+
+            Dictionary-derived data is provided
+            under
+
             <a
               href="https://creativecommons.org/licenses/by-sa/4.0/"
               target="_blank"
               rel="noopener noreferrer"
-            >CC BY-SA 4.0</a>.
+            >
+              CC BY-SA 4.0
+            </a>.
+
             <a
               href="https://en.wiktionary.org/wiki/Wiktionary:Copyrights"
               target="_blank"
               rel="noopener noreferrer"
-            >Upstream licensing details</a>.
+            >
+              Upstream licensing details
+            </a>.
+
           </p>
 
         </div>
@@ -772,25 +739,37 @@
 
 
           <p class="data-credit chat-credit">
+
             Dictionary data:
+
             <a
               href="https://en.wiktionary.org/"
               target="_blank"
               rel="noopener noreferrer"
-            >English Wiktionary</a>
+            >
+              English Wiktionary
+            </a>
+
             via
+
             <a
               href="https://kaikki.org/"
               target="_blank"
               rel="noopener noreferrer"
-            >Kaikki.org</a>,
-            modified for this app and
-            provided under
+            >
+              Kaikki.org
+            </a>,
+
+            modified for this app and provided under
+
             <a
               href="https://creativecommons.org/licenses/by-sa/4.0/"
               target="_blank"
               rel="noopener noreferrer"
-            >CC BY-SA 4.0</a>.
+            >
+              CC BY-SA 4.0
+            </a>.
+
           </p>
 
         </div>
@@ -801,8 +780,6 @@
 
   </main>
 
-
-  <!-- One shared dictionary tooltip -->
 
   <div
     id="dictionaryTooltip"
@@ -822,7 +799,7 @@
 
 
     // ------------------------------------------------------
-    // ELEMENTS
+    // PAGE ELEMENTS
     // ------------------------------------------------------
 
     const homeScreen =
@@ -902,40 +879,32 @@
 
     let history = [];
 
-    let conversationEnded = false;
+    let conversationEnded =
+      false;
 
 
     // ------------------------------------------------------
     // DICTIONARY STATE
     // ------------------------------------------------------
 
-    /*
-      Once a word has been looked up,
-      its result is stored here.
-
-      Example:
-
-      "milch" -> result
-
-      This prevents repeated network
-      requests when the learner hovers
-      over the same word again.
-    */
-
     const dictionaryCache =
       new Map();
-
 
     let activeDictionaryWord =
       null;
 
-
-    let hoverTimer =
+    let tooltipHideTimer =
       null;
+
+    let tooltipHoverTimer =
+      null;
+
+    let tooltipRequestToken =
+      0;
 
 
     // ------------------------------------------------------
-    // BASIC UI
+    // SCREEN SWITCHING
     // ------------------------------------------------------
 
     function showScreen(
@@ -953,270 +922,51 @@
       screenToShow.classList.add(
         'active'
       );
+
     }
 
 
     // ------------------------------------------------------
-    // TURN GERMAN TEXT INTO HOVERABLE WORDS
+    // API RESPONSE HANDLING
     // ------------------------------------------------------
 
-    function appendInteractiveText(
-      container,
-      text
+    async function readJsonResponse(
+      response
     ) {
 
-      /*
-        This regex separates German-style
-        words from spaces/punctuation.
+      let data;
 
-        It keeps the original sentence
-        visually unchanged.
-      */
+      try {
 
-      const parts =
-        text.split(
-          /(\p{L}[\p{L}\p{M}'’-]*)/gu
-        );
+        data =
+          await response.json();
 
+      } catch {
 
-      for (const part of parts) {
-
-        if (!part) {
-          continue;
-        }
-
-
-        const isWord =
-          /^\p{L}[\p{L}\p{M}'’-]*$/u
-            .test(part);
-
-
-        if (!isWord) {
-
-          container.appendChild(
-            document.createTextNode(
-              part
-            )
-          );
-
-          continue;
-        }
-
-
-        const word =
-          document.createElement(
-            'span'
-          );
-
-
-        word.className =
-          'dictionary-word';
-
-
-        word.textContent =
-          part;
-
-
-        word.dataset.word =
-          part;
-
-
-        word.tabIndex = 0;
-
-
-        /*
-          Desktop hover
-        */
-
-        word.addEventListener(
-          'mouseenter',
-          () => {
-
-            clearTimeout(
-              hoverTimer
-            );
-
-
-            hoverTimer =
-              setTimeout(
-                () => {
-                  openDictionaryTooltip(
-                    word
-                  );
-                },
-                140
-              );
-          }
-        );
-
-
-        word.addEventListener(
-          'mouseleave',
-          () => {
-
-            clearTimeout(
-              hoverTimer
-            );
-
-
-            /*
-              Delay slightly so moving
-              around the sentence does
-              not cause harsh flashing.
-            */
-
-            setTimeout(
-              () => {
-
-                if (
-                  activeDictionaryWord
-                  === word
-                ) {
-
-                  hideDictionaryTooltip();
-
-                }
-
-              },
-              90
-            );
-          }
-        );
-
-
-        /*
-          Keyboard accessibility
-        */
-
-        word.addEventListener(
-          'focus',
-          () => {
-            openDictionaryTooltip(
-              word
-            );
-          }
-        );
-
-
-        word.addEventListener(
-          'blur',
-          () => {
-
-            if (
-              activeDictionaryWord
-              === word
-            ) {
-
-              hideDictionaryTooltip();
-
-            }
-          }
-        );
-
-
-        /*
-          Mobile / tablet tap
-
-          Also works with a mouse click.
-        */
-
-        word.addEventListener(
-          'click',
-          (event) => {
-
-            event.stopPropagation();
-
-
-            if (
-              activeDictionaryWord
-              === word &&
-              dictionaryTooltip
-                .classList
-                .contains('visible')
-            ) {
-
-              hideDictionaryTooltip();
-
-            } else {
-
-              openDictionaryTooltip(
-                word
-              );
-
-            }
-
-          }
-        );
-
-
-        container.appendChild(
-          word
+        throw new Error(
+          'The server returned an invalid response.'
         );
 
       }
 
-    }
 
+      if (!response.ok) {
 
-    // ------------------------------------------------------
-    // MESSAGE DISPLAY
-    // ------------------------------------------------------
-
-    function addMessage(
-      text,
-      sender
-    ) {
-
-      const row =
-        document.createElement(
-          'div'
+        throw new Error(
+          data.error ||
+          'The request failed.'
         );
 
-
-      row.className =
-        `message-row ${sender}`;
+      }
 
 
-      const bubble =
-        document.createElement(
-          'div'
-        );
-
-
-      bubble.className =
-        'message';
-
-
-      /*
-        Instead of bubble.textContent,
-        we turn each German word into
-        a dictionary-enabled span.
-      */
-
-      appendInteractiveText(
-        bubble,
-        text
-      );
-
-
-      row.appendChild(
-        bubble
-      );
-
-
-      messages.appendChild(
-        row
-      );
-
-
-      messages.scrollTop =
-        messages.scrollHeight;
+      return data;
 
     }
 
 
     // ------------------------------------------------------
-    // DICTIONARY LOOKUP
+    // DICTIONARY HELPERS
     // ------------------------------------------------------
 
     function normalizeDictionaryKey(
@@ -1232,100 +982,144 @@
     }
 
 
-    async function lookupWord(
+    function splitGermanText(
+      text
+    ) {
+
+      return text.split(
+        /(\p{L}[\p{L}\p{M}'’-]*)/gu
+      );
+
+    }
+
+
+    async function getWordMeaning(
       word
     ) {
 
-      const cacheKey =
+      const key =
         normalizeDictionaryKey(
           word
         );
 
 
       /*
-        Cached result = no second request
-        to Render.
+        Once a word has been looked up,
+        reuse the result for the rest
+        of the browser session.
       */
 
       if (
         dictionaryCache.has(
-          cacheKey
+          key
         )
       ) {
 
         return dictionaryCache.get(
-          cacheKey
+          key
         );
 
       }
 
 
-      const url =
-        `${API_BASE_URL}/api/word` +
-        `?language=german` +
-        `&word=${encodeURIComponent(word)}`;
-
-
-      try {
-
-        const response =
-          await fetch(url);
-
-
-        if (!response.ok) {
-
-          throw new Error(
-            'Dictionary request failed'
+      const request =
+        fetch(
+          `${API_BASE_URL}/api/word?language=german&word=${encodeURIComponent(word)}`
+        )
+          .then(
+            readJsonResponse
+          )
+          .catch(
+            () => ({
+              word,
+              found: false,
+              entries: []
+            })
           );
 
-        }
+
+      dictionaryCache.set(
+        key,
+        request
+      );
 
 
-        const data =
-          await response.json();
-
-
-        dictionaryCache.set(
-          cacheKey,
-          data
-        );
-
-
-        return data;
-
-      } catch (error) {
-
-        /*
-          Cache unavailable lookups too,
-          preventing repeated failures
-          during this session.
-        */
-
-        const fallback = {
-          word,
-          found: false,
-          entries: []
-        };
-
-
-        dictionaryCache.set(
-          cacheKey,
-          fallback
-        );
-
-
-        return fallback;
-
-      }
+      return request;
 
     }
 
 
     // ------------------------------------------------------
-    // DICTIONARY TOOLTIP CONTENT
+    // TOOLTIP POSITION
     // ------------------------------------------------------
 
-    function setTooltipLoading(
+    function positionDictionaryTooltip(
+      target
+    ) {
+
+      const targetRect =
+        target.getBoundingClientRect();
+
+
+      const tooltipRect =
+        dictionaryTooltip
+          .getBoundingClientRect();
+
+
+      const margin =
+        8;
+
+
+      let left =
+        targetRect.left +
+        (
+          targetRect.width -
+          tooltipRect.width
+        ) / 2;
+
+
+      let top =
+        targetRect.top -
+        tooltipRect.height -
+        margin;
+
+
+      left =
+        Math.max(
+          10,
+          Math.min(
+            left,
+            window.innerWidth -
+            tooltipRect.width -
+            10
+          )
+        );
+
+
+      if (top < 10) {
+
+        top =
+          targetRect.bottom +
+          margin;
+
+      }
+
+
+      dictionaryTooltip.style.left =
+        `${left}px`;
+
+
+      dictionaryTooltip.style.top =
+        `${top}px`;
+
+    }
+
+
+    // ------------------------------------------------------
+    // TOOLTIP CONTENT
+    // ------------------------------------------------------
+
+    function showTooltipLoading(
       word
     ) {
 
@@ -1347,31 +1141,31 @@
         word;
 
 
-      const text =
+      const loading =
         document.createElement(
           'div'
         );
 
 
-      text.className =
+      loading.className =
         'tooltip-meaning';
 
 
-      text.textContent =
+      loading.textContent =
         'Looking up…';
 
 
       dictionaryTooltip.append(
         title,
-        text
+        loading
       );
 
     }
 
 
-    function renderDictionaryResult(
-      requestedWord,
-      data
+    function renderDictionaryTooltip(
+      data,
+      requestedWord
     ) {
 
       dictionaryTooltip.innerHTML =
@@ -1429,14 +1223,6 @@
       }
 
 
-      /*
-        For a compact learner tooltip,
-        show the first dictionary entry.
-
-        The API can return several entries
-        for ambiguous German words.
-      */
-
       const entry =
         data.entries[0];
 
@@ -1447,12 +1233,6 @@
         )
           ? entry.meanings
           : [];
-
-
-      const meaningText =
-        meanings
-          .slice(0, 3)
-          .join('; ');
 
 
       const meaning =
@@ -1466,7 +1246,10 @@
 
 
       meaning.textContent =
-        meaningText ||
+        meanings
+          .slice(0, 3)
+          .join('; ')
+        ||
         'Meaning unavailable.';
 
 
@@ -1475,7 +1258,23 @@
       );
 
 
-      const details = [];
+      /*
+        Intentionally only show:
+
+        - lemma
+        - part of speech
+
+        We do NOT display grammatical
+        case, gender, number or declension.
+
+        An isolated German word can have
+        several valid grammatical analyses.
+        Context-sensitive grammar correction
+        is handled by the AI feedback instead.
+      */
+
+      const metaParts =
+        [];
 
 
       if (
@@ -1488,7 +1287,7 @@
         )
       ) {
 
-        details.push(
+        metaParts.push(
           `from ${entry.lemma}`
         );
 
@@ -1496,10 +1295,12 @@
 
 
       if (
-        entry.partOfSpeech
+        entry.partOfSpeech &&
+        entry.partOfSpeech !==
+        'unknown'
       ) {
 
-        details.push(
+        metaParts.push(
           entry.partOfSpeech
         );
 
@@ -1507,170 +1308,82 @@
 
 
       if (
-        Array.isArray(
-          entry.grammar
-        ) &&
-        entry.grammar.length > 0
+        metaParts.length > 0
       ) {
 
-        details.push(
-          entry.grammar
-            .slice(0, 4)
-            .join(', ')
-        );
-
-      }
-
-
-      if (
-        details.length > 0
-      ) {
-
-        const detail =
+        const meta =
           document.createElement(
             'div'
           );
 
 
-        detail.className =
-          'tooltip-detail';
+        meta.className =
+          'dictionary-meta';
 
 
-        detail.textContent =
-          details.join(' · ');
+        meta.textContent =
+          metaParts.join(' · ');
 
 
         dictionaryTooltip.appendChild(
-          detail
+          meta
         );
 
       }
-
-    }
-
-
-    // ------------------------------------------------------
-    // TOOLTIP POSITION
-    // ------------------------------------------------------
-
-    function positionTooltip(
-      wordElement
-    ) {
-
-      const rect =
-        wordElement
-          .getBoundingClientRect();
-
-
-      const tooltipRect =
-        dictionaryTooltip
-          .getBoundingClientRect();
-
-
-      const margin = 8;
-
-
-      let left =
-        rect.left +
-        (
-          rect.width -
-          tooltipRect.width
-        ) / 2;
-
-
-      let top =
-        rect.top -
-        tooltipRect.height -
-        margin;
-
-
-      /*
-        Keep tooltip inside viewport.
-      */
-
-      left =
-        Math.max(
-          10,
-          Math.min(
-            left,
-            window.innerWidth -
-            tooltipRect.width -
-            10
-          )
-        );
-
-
-      /*
-        If there is not enough room
-        above the word, show it below.
-      */
-
-      if (top < 10) {
-
-        top =
-          rect.bottom +
-          margin;
-
-      }
-
-
-      dictionaryTooltip.style.left =
-        `${left}px`;
-
-
-      dictionaryTooltip.style.top =
-        `${top}px`;
 
     }
 
 
     async function openDictionaryTooltip(
-      wordElement
+      target,
+      word
     ) {
 
-      const word =
-        wordElement.dataset.word;
-
-
-      if (!word) {
-        return;
-      }
+      clearTimeout(
+        tooltipHideTimer
+      );
 
 
       activeDictionaryWord =
-        wordElement;
+        target;
 
 
-      setTooltipLoading(
+      const requestToken =
+        ++tooltipRequestToken;
+
+
+      showTooltipLoading(
         word
       );
 
 
       dictionaryTooltip
         .classList
-        .add('visible');
+        .add(
+          'visible'
+        );
 
 
-      positionTooltip(
-        wordElement
+      positionDictionaryTooltip(
+        target
       );
 
 
       const data =
-        await lookupWord(
+        await getWordMeaning(
           word
         );
 
 
       /*
-        The user may have moved to another
-        word while the network request
-        was running.
+        If the user has moved to a
+        different word while this request
+        was happening, ignore this result.
       */
 
       if (
-        activeDictionaryWord
-        !== wordElement
+        requestToken !==
+        tooltipRequestToken
       ) {
 
         return;
@@ -1678,66 +1391,283 @@
       }
 
 
-      renderDictionaryResult(
-        word,
-        data
-      );
+      if (
+        activeDictionaryWord !==
+        target
+      ) {
 
+        return;
 
-      positionTooltip(
-        wordElement
-      );
-
-    }
-
-
-    function hideDictionaryTooltip() {
-
-      dictionaryTooltip
-        .classList
-        .remove('visible');
-
-
-      activeDictionaryWord =
-        null;
-
-    }
-
-
-    /*
-      Close tooltip if user taps
-      elsewhere on mobile.
-    */
-
-    document.addEventListener(
-      'click',
-      () => {
-        hideDictionaryTooltip();
       }
-    );
 
 
-    /*
-      Keep it correctly positioned
-      if the page changes size.
-    */
+      renderDictionaryTooltip(
+        data,
+        word
+      );
 
-    window.addEventListener(
-      'resize',
-      () => {
 
-        if (
-          activeDictionaryWord
-        ) {
+      positionDictionaryTooltip(
+        target
+      );
 
-          positionTooltip(
-            activeDictionaryWord
+    }
+
+
+    function hideDictionaryTooltip(
+      delay = 80
+    ) {
+
+      clearTimeout(
+        tooltipHideTimer
+      );
+
+
+      tooltipHideTimer =
+        setTimeout(
+          () => {
+
+            tooltipRequestToken += 1;
+
+            activeDictionaryWord =
+              null;
+
+            dictionaryTooltip
+              .classList
+              .remove(
+                'visible'
+              );
+
+          },
+          delay
+        );
+
+    }
+
+
+    // ------------------------------------------------------
+    // TURN GERMAN TEXT INTO HOVERABLE WORDS
+    // ------------------------------------------------------
+
+    function appendInteractiveGermanText(
+      container,
+      text
+    ) {
+
+      const parts =
+        splitGermanText(
+          text
+        );
+
+
+      for (
+        const part
+        of parts
+      ) {
+
+        if (!part) {
+          continue;
+        }
+
+
+        const isWord =
+          /^\p{L}[\p{L}\p{M}'’-]*$/u
+            .test(
+              part
+            );
+
+
+        if (!isWord) {
+
+          container.appendChild(
+            document.createTextNode(
+              part
+            )
           );
+
+          continue;
 
         }
 
+
+        const word =
+          document.createElement(
+            'span'
+          );
+
+
+        word.className =
+          'word-token';
+
+
+        word.textContent =
+          part;
+
+
+        word.tabIndex =
+          0;
+
+
+        word.setAttribute(
+          'aria-label',
+          `${part}: show English meaning`
+        );
+
+
+        /*
+          Desktop hover.
+
+          Small delay prevents unnecessary
+          lookups when the mouse merely
+          passes over a word.
+        */
+
+        word.addEventListener(
+          'mouseenter',
+          () => {
+
+            clearTimeout(
+              tooltipHoverTimer
+            );
+
+
+            tooltipHoverTimer =
+              setTimeout(
+                () => {
+
+                  openDictionaryTooltip(
+                    word,
+                    part
+                  );
+
+                },
+                120
+              );
+
+          }
+        );
+
+
+        word.addEventListener(
+          'mouseleave',
+          () => {
+
+            clearTimeout(
+              tooltipHoverTimer
+            );
+
+
+            hideDictionaryTooltip();
+
+          }
+        );
+
+
+        /*
+          Keyboard access.
+        */
+
+        word.addEventListener(
+          'focus',
+          () => {
+
+            openDictionaryTooltip(
+              word,
+              part
+            );
+
+          }
+        );
+
+
+        word.addEventListener(
+          'blur',
+          () => {
+
+            hideDictionaryTooltip();
+
+          }
+        );
+
+
+        /*
+          Mobile / tablet tap.
+        */
+
+        word.addEventListener(
+          'click',
+          (event) => {
+
+            event.stopPropagation();
+
+
+            openDictionaryTooltip(
+              word,
+              part
+            );
+
+          }
+        );
+
+
+        container.appendChild(
+          word
+        );
+
       }
-    );
+
+    }
+
+
+    // ------------------------------------------------------
+    // MESSAGE DISPLAY
+    // ------------------------------------------------------
+
+    function addMessage(
+      text,
+      sender
+    ) {
+
+      const row =
+        document.createElement(
+          'div'
+        );
+
+
+      row.className =
+        `message-row ${sender}`;
+
+
+      const bubble =
+        document.createElement(
+          'div'
+        );
+
+
+      bubble.className =
+        'message';
+
+
+      appendInteractiveGermanText(
+        bubble,
+        text
+      );
+
+
+      row.appendChild(
+        bubble
+      );
+
+
+      messages.appendChild(
+        row
+      );
+
+
+      messages.scrollTop =
+        messages.scrollHeight;
+
+    }
 
 
     // ------------------------------------------------------
@@ -1752,7 +1682,9 @@
 
       feedbackPanel
         .classList
-        .add('hidden');
+        .add(
+          'hidden'
+        );
 
     }
 
@@ -1767,12 +1699,15 @@
 
       feedbackPanel
         .classList
-        .remove('hidden');
+        .remove(
+          'hidden'
+        );
 
 
       if (
         !feedback ||
-        feedback.hasIssues === false
+        feedback.hasIssues ===
+        false
       ) {
 
         const text =
@@ -1790,9 +1725,10 @@
           'No correction needed.';
 
 
-        feedbackContent.appendChild(
-          text
-        );
+        feedbackContent
+          .appendChild(
+            text
+          );
 
 
         return;
@@ -1806,18 +1742,18 @@
         );
 
 
-      const correctionLabel =
+      const label =
         document.createElement(
           'strong'
         );
 
 
-      correctionLabel.textContent =
+      label.textContent =
         'Correction: ';
 
 
       correction.appendChild(
-        correctionLabel
+        label
       );
 
 
@@ -1858,7 +1794,9 @@
 
       feedbackPanel
         .classList
-        .remove('hidden');
+        .remove(
+          'hidden'
+        );
 
 
       const text =
@@ -1875,15 +1813,16 @@
         message;
 
 
-      feedbackContent.appendChild(
-        text
-      );
+      feedbackContent
+        .appendChild(
+          text
+        );
 
     }
 
 
     // ------------------------------------------------------
-    // INPUT STATE
+    // COMPOSER STATE
     // ------------------------------------------------------
 
     function setComposerEnabled(
@@ -1896,46 +1835,6 @@
 
       sendButton.disabled =
         !enabled;
-
-    }
-
-
-    // ------------------------------------------------------
-    // API RESPONSE HELPER
-    // ------------------------------------------------------
-
-    async function readJsonResponse(
-      response
-    ) {
-
-      let data;
-
-
-      try {
-
-        data =
-          await response.json();
-
-      } catch {
-
-        throw new Error(
-          'The server returned an invalid response.'
-        );
-
-      }
-
-
-      if (!response.ok) {
-
-        throw new Error(
-          data.error ||
-          'The request failed.'
-        );
-
-      }
-
-
-      return data;
 
     }
 
@@ -1971,10 +1870,13 @@
       clearFeedback();
 
 
-      hideDictionaryTooltip();
+      hideDictionaryTooltip(
+        0
+      );
 
 
-      history = [];
+      history =
+        [];
 
 
       conversationEnded =
@@ -2005,7 +1907,8 @@
           await fetch(
             `${API_BASE_URL}/api/start`,
             {
-              method: 'POST',
+              method:
+                'POST',
 
               headers: {
                 'Content-Type':
@@ -2048,7 +1951,9 @@
           );
 
 
-        if (!conversationEnded) {
+        if (
+          !conversationEnded
+        ) {
 
           setComposerEnabled(
             true
@@ -2090,7 +1995,8 @@
 
     function endConversation() {
 
-      history = [];
+      history =
+        [];
 
 
       conversationEnded =
@@ -2108,7 +2014,9 @@
       clearFeedback();
 
 
-      hideDictionaryTooltip();
+      hideDictionaryTooltip(
+        0
+      );
 
 
       setComposerEnabled(
@@ -2128,23 +2036,69 @@
 
 
     // ------------------------------------------------------
-    // EVENTS
+    // PAGE EVENTS
     // ------------------------------------------------------
 
-    startChatButton.addEventListener(
+    document.addEventListener(
       'click',
-      startConversation
+      (event) => {
+
+        if (
+          !event.target.closest(
+            '.word-token'
+          )
+        ) {
+
+          hideDictionaryTooltip(
+            0
+          );
+
+        }
+
+      }
     );
 
 
-    endChatButton.addEventListener(
-      'click',
-      endConversation
+    window.addEventListener(
+      'resize',
+      () => {
+
+        hideDictionaryTooltip(
+          0
+        );
+
+      }
     );
 
 
+    messages.addEventListener(
+      'scroll',
+      () => {
+
+        hideDictionaryTooltip(
+          0
+        );
+
+      }
+    );
+
+
+    startChatButton
+      .addEventListener(
+        'click',
+        startConversation
+      );
+
+
+    endChatButton
+      .addEventListener(
+        'click',
+        endConversation
+      );
+
+
     // ------------------------------------------------------
-    // SEND USER MESSAGE
+    // SEND MESSAGE
     // ------------------------------------------------------
 
     chatForm.addEventListener(
@@ -2154,13 +2108,19 @@
         event.preventDefault();
 
 
-        if (conversationEnded) {
+        if (
+          conversationEnded
+        ) {
+
           return;
+
         }
 
 
         const message =
-          messageInput.value.trim();
+          messageInput
+            .value
+            .trim();
 
 
         if (!message) {
@@ -2177,13 +2137,12 @@
 
 
         /*
-          IMPORTANT:
+          The newest user message is
+          deliberately NOT inserted into
+          history before the request.
 
-          This is the SAME conversation
-          payload structure used before.
-
-          The dictionary feature does not
-          change what we ask OpenAI.
+          The backend receives it separately
+          as "message", exactly as before.
         */
 
         const historyBeforeMessage =
@@ -2203,7 +2162,9 @@
         clearFeedback();
 
 
-        hideDictionaryTooltip();
+        hideDictionaryTooltip(
+          0
+        );
 
 
         setComposerEnabled(
@@ -2221,7 +2182,8 @@
             await fetch(
               `${API_BASE_URL}/api/chat`,
               {
-                method: 'POST',
+                method:
+                  'POST',
 
                 headers: {
                   'Content-Type':
