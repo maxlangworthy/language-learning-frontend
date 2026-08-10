@@ -18,7 +18,6 @@
   <style>
 
     :root {
-      --bg: #f4f7fb;
       --surface: #ffffff;
       --surface-soft: #f8fafc;
       --text: #18212f;
@@ -32,20 +31,30 @@
       --success: #267447;
       --feedback-bg: #fffdf5;
       --feedback-border: #eadfac;
+
       --shadow:
         0 18px 50px
-        rgba(23, 35, 58, 0.09);
+        rgba(
+          23,
+          35,
+          58,
+          0.09
+        );
     }
 
 
     * {
-      box-sizing: border-box;
+      box-sizing:
+        border-box;
     }
 
 
     body {
-      margin: 0;
-      min-height: 100vh;
+      margin:
+        0;
+
+      min-height:
+        100vh;
 
       font-family:
         Inter,
@@ -63,37 +72,50 @@
           #eef3fa 100%
         );
 
-      color: var(--text);
+      color:
+        var(--text);
     }
 
 
     button,
     select,
     input {
-      font: inherit;
+      font:
+        inherit;
     }
 
 
     button {
-      cursor: pointer;
+      cursor:
+        pointer;
     }
 
 
     button:disabled,
     input:disabled {
-      cursor: not-allowed;
-      opacity: 0.6;
+      cursor:
+        not-allowed;
+
+      opacity:
+        0.6;
     }
 
 
     .page {
-      min-height: 100vh;
+      min-height:
+        100vh;
 
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      display:
+        flex;
 
-      padding: 28px;
+      align-items:
+        center;
+
+      justify-content:
+        center;
+
+      padding:
+        28px;
     }
 
 
@@ -104,9 +126,11 @@
           100%
         );
 
-      min-height: 680px;
+      min-height:
+        680px;
 
-      background: var(--surface);
+      background:
+        var(--surface);
 
       border:
         1px solid
@@ -117,22 +141,29 @@
           0.9
         );
 
-      border-radius: 28px;
+      border-radius:
+        28px;
 
-      box-shadow: var(--shadow);
+      box-shadow:
+        var(--shadow);
 
-      overflow: hidden;
+      overflow:
+        hidden;
     }
 
 
     .screen {
-      display: none;
-      min-height: 680px;
+      display:
+        none;
+
+      min-height:
+        680px;
     }
 
 
     .screen.active {
-      display: flex;
+      display:
+        flex;
     }
 
 
@@ -140,8 +171,11 @@
 
 
     #homeScreen {
-      align-items: center;
-      justify-content: center;
+      align-items:
+        center;
+
+      justify-content:
+        center;
 
       padding:
         56px 28px;
@@ -158,24 +192,32 @@
 
 
     .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
+      display:
+        inline-flex;
 
-      margin-bottom: 14px;
+      margin-bottom:
+        14px;
 
-      color: var(--primary);
+      color:
+        var(--primary);
 
-      font-size: 0.86rem;
-      font-weight: 700;
+      font-size:
+        0.86rem;
 
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
+      font-weight:
+        700;
+
+      letter-spacing:
+        0.08em;
+
+      text-transform:
+        uppercase;
     }
 
 
     h1 {
-      margin: 0;
+      margin:
+        0;
 
       font-size:
         clamp(
@@ -184,8 +226,11 @@
           4rem
         );
 
-      line-height: 1;
-      letter-spacing: -0.045em;
+      line-height:
+        1;
+
+      letter-spacing:
+        -0.045em;
     }
 
 
@@ -193,37 +238,50 @@
       margin:
         18px 0 36px;
 
-      color: var(--muted);
+      color:
+        var(--muted);
 
-      font-size: 1.05rem;
-      line-height: 1.65;
+      font-size:
+        1.05rem;
+
+      line-height:
+        1.65;
     }
 
 
     .field {
-      margin-bottom: 22px;
+      margin-bottom:
+        22px;
     }
 
 
     .field label {
-      display: block;
+      display:
+        block;
 
-      margin-bottom: 9px;
+      margin-bottom:
+        9px;
 
-      font-size: 0.92rem;
-      font-weight: 700;
+      font-size:
+        0.92rem;
+
+      font-weight:
+        700;
     }
 
 
     .select-wrap {
-      position: relative;
+      position:
+        relative;
     }
 
 
     select {
-      width: 100%;
+      width:
+        100%;
 
-      appearance: none;
+      appearance:
+        none;
 
       padding:
         15px 46px 15px 16px;
@@ -232,16 +290,17 @@
         1px solid
         var(--border);
 
-      border-radius: 14px;
+      border-radius:
+        14px;
 
-      background: var(--surface);
-      color: var(--text);
+      background:
+        var(--surface);
 
-      outline: none;
+      color:
+        var(--text);
 
-      transition:
-        border-color 0.2s ease,
-        box-shadow 0.2s ease;
+      outline:
+        none;
     }
 
 
@@ -267,54 +326,62 @@
 
 
     .select-wrap::after {
-      content: "⌄";
+      content:
+        "⌄";
 
-      position: absolute;
+      position:
+        absolute;
 
-      right: 16px;
-      top: 50%;
+      right:
+        16px;
+
+      top:
+        50%;
 
       transform:
-        translateY(-55%);
+        translateY(
+          -55%
+        );
 
-      color: var(--muted);
+      color:
+        var(--muted);
 
-      pointer-events: none;
-
-      font-size: 1.1rem;
+      pointer-events:
+        none;
     }
 
 
     .primary-btn {
-      width: 100%;
+      width:
+        100%;
 
-      border: none;
-      border-radius: 14px;
+      border:
+        none;
+
+      border-radius:
+        14px;
 
       padding:
         15px 18px;
 
-      background: var(--primary);
-      color: #fff;
+      background:
+        var(--primary);
 
-      font-weight: 750;
-      font-size: 1rem;
+      color:
+        #fff;
 
-      transition:
-        background 0.2s ease,
-        transform 0.15s ease;
+      font-weight:
+        750;
+
+      font-size:
+        1rem;
     }
 
 
-    .primary-btn:hover:not(:disabled) {
+    .primary-btn:hover:not(:disabled),
+    .send-btn:hover:not(:disabled) {
       background:
         var(--primary-hover);
-    }
-
-
-    .primary-btn:active {
-      transform:
-        translateY(1px);
     }
 
 
@@ -322,16 +389,23 @@
 
 
     #chatScreen {
-      flex-direction: column;
+      flex-direction:
+        column;
     }
 
 
     .chat-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+      display:
+        flex;
 
-      gap: 20px;
+      align-items:
+        center;
+
+      justify-content:
+        space-between;
+
+      gap:
+        20px;
 
       padding:
         20px 24px;
@@ -351,7 +425,8 @@
 
 
     .chat-heading {
-      min-width: 0;
+      min-width:
+        0;
     }
 
 
@@ -365,15 +440,14 @@
 
 
     .chat-heading p {
-      margin: 0;
+      margin:
+        0;
 
-      color: var(--muted);
+      color:
+        var(--muted);
 
-      font-size: 0.91rem;
-
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      font-size:
+        0.91rem;
     }
 
 
@@ -409,12 +483,17 @@
 
 
     .chat-main {
-      flex: 1;
+      flex:
+        1;
 
-      display: flex;
-      flex-direction: column;
+      display:
+        flex;
 
-      min-height: 0;
+      flex-direction:
+        column;
+
+      min-height:
+        0;
 
       background:
         var(--surface-soft);
@@ -422,22 +501,32 @@
 
 
     .messages {
-      flex: 1;
+      flex:
+        1;
 
-      overflow-y: auto;
+      overflow-y:
+        auto;
 
-      padding: 30px;
+      padding:
+        30px;
 
-      display: flex;
-      flex-direction: column;
+      display:
+        flex;
 
-      gap: 16px;
+      flex-direction:
+        column;
+
+      gap:
+        16px;
     }
 
 
     .message-row {
-      display: flex;
-      width: 100%;
+      display:
+        flex;
+
+      width:
+        100%;
     }
 
 
@@ -498,6 +587,67 @@
     }
 
 
+    /* GENERATED EXAMPLE */
+
+
+    .example-label {
+      margin-bottom:
+        4px;
+
+      font-size:
+        0.72rem;
+
+      font-weight:
+        800;
+
+      letter-spacing:
+        0.05em;
+
+      text-transform:
+        uppercase;
+
+      color:
+        rgba(
+          255,
+          255,
+          255,
+          0.72
+        );
+    }
+
+
+    .example-translation {
+      margin-top:
+        8px;
+
+      padding-top:
+        8px;
+
+      border-top:
+        1px solid
+        rgba(
+          255,
+          255,
+          255,
+          0.22
+        );
+
+      font-size:
+        0.82rem;
+
+      line-height:
+        1.4;
+
+      color:
+        rgba(
+          255,
+          255,
+          255,
+          0.82
+        );
+    }
+
+
     /* WORDS */
 
 
@@ -511,8 +661,11 @@
           0.42
         );
 
-      cursor: help;
-      outline: none;
+      cursor:
+        help;
+
+      outline:
+        none;
     }
 
 
@@ -528,7 +681,8 @@
 
 
     .word-token:focus {
-      border-bottom-style: solid;
+      border-bottom-style:
+        solid;
     }
 
 
@@ -536,11 +690,14 @@
 
 
     .dictionary-tooltip {
-      display: none;
+      display:
+        none;
 
-      position: fixed;
+      position:
+        fixed;
 
-      z-index: 9999;
+      z-index:
+        9999;
 
       width:
         max-content;
@@ -565,12 +722,14 @@
           0.13
         );
 
-      border-radius: 12px;
+      border-radius:
+        12px;
 
       background:
         #18212f;
 
-      color: #fff;
+      color:
+        #fff;
 
       box-shadow:
         0 12px 32px
@@ -581,23 +740,32 @@
           0.22
         );
 
-      font-size: 0.86rem;
-      line-height: 1.4;
+      font-size:
+        0.86rem;
 
-      pointer-events: none;
+      line-height:
+        1.4;
+
+      pointer-events:
+        none;
     }
 
 
     .dictionary-tooltip.visible {
-      display: block;
+      display:
+        block;
     }
 
 
     .tooltip-word {
-      margin-bottom: 3px;
+      margin-bottom:
+        3px;
 
-      font-size: 0.92rem;
-      font-weight: 800;
+      font-size:
+        0.92rem;
+
+      font-weight:
+        800;
     }
 
 
@@ -613,7 +781,8 @@
 
 
     .dictionary-meta {
-      margin-top: 5px;
+      margin-top:
+        5px;
 
       color:
         rgba(
@@ -623,7 +792,8 @@
           0.68
         );
 
-      font-size: 0.77rem;
+      font-size:
+        0.77rem;
     }
 
 
@@ -650,17 +820,23 @@
 
 
     .feedback-panel.hidden {
-      display: none;
+      display:
+        none;
     }
 
 
     .feedback-title {
-      margin-bottom: 7px;
+      margin-bottom:
+        7px;
 
-      font-size: 0.82rem;
-      font-weight: 800;
+      font-size:
+        0.82rem;
 
-      letter-spacing: 0.06em;
+      font-weight:
+        800;
+
+      letter-spacing:
+        0.06em;
 
       text-transform:
         uppercase;
@@ -674,7 +850,8 @@
       margin:
         5px 0;
 
-      line-height: 1.5;
+      line-height:
+        1.5;
     }
 
 
@@ -682,7 +859,8 @@
       color:
         var(--success);
 
-      font-weight: 700;
+      font-weight:
+        700;
     }
 
 
@@ -690,7 +868,8 @@
       color:
         var(--danger);
 
-      font-weight: 700;
+      font-weight:
+        700;
     }
 
 
@@ -698,9 +877,11 @@
 
 
     .composer {
-      display: flex;
+      display:
+        flex;
 
-      gap: 12px;
+      gap:
+        10px;
 
       padding:
         18px 22px 22px;
@@ -709,14 +890,17 @@
         1px solid
         var(--border);
 
-      background: #fff;
+      background:
+        #fff;
     }
 
 
     .composer input {
-      flex: 1;
+      flex:
+        1 1 260px;
 
-      min-width: 0;
+      min-width:
+        0;
 
       padding:
         14px 16px;
@@ -725,15 +909,59 @@
         1px solid
         var(--border);
 
-      border-radius: 14px;
+      border-radius:
+        14px;
 
-      outline: none;
+      outline:
+        none;
+    }
+
+
+    .example-btn {
+      flex:
+        0 0 auto;
+
+      border:
+        1px solid
+        rgba(
+          40,
+          86,
+          216,
+          0.28
+        );
+
+      border-radius:
+        14px;
+
+      padding:
+        0 16px;
+
+      background:
+        #f4f7ff;
+
+      color:
+        var(--primary);
+
+      font-weight:
+        750;
+    }
+
+
+    .example-btn:hover:not(:disabled) {
+      background:
+        #eaf0ff;
     }
 
 
     .send-btn {
-      border: none;
-      border-radius: 14px;
+      flex:
+        0 0 auto;
+
+      border:
+        none;
+
+      border-radius:
+        14px;
 
       padding:
         0 20px;
@@ -741,15 +969,11 @@
       background:
         var(--primary);
 
-      color: #fff;
+      color:
+        #fff;
 
-      font-weight: 750;
-    }
-
-
-    .send-btn:hover:not(:disabled) {
-      background:
-        var(--primary-hover);
+      font-weight:
+        750;
     }
 
 
@@ -775,7 +999,8 @@
 
 
     .data-credit a {
-      color: inherit;
+      color:
+        inherit;
 
       text-decoration:
         underline;
@@ -786,7 +1011,8 @@
 
 
     .chat-credit {
-      margin: 0;
+      margin:
+        0;
 
       padding:
         0 22px 10px;
@@ -796,20 +1022,27 @@
     }
 
 
+    /* MOBILE */
+
+
     @media (
       max-width:
-        700px
+        760px
     ) {
 
       .page {
-        padding: 0;
+        padding:
+          0;
       }
 
 
       .app-shell,
       .screen {
-        min-height: 100vh;
-        border-radius: 0;
+        min-height:
+          100vh;
+
+        border-radius:
+          0;
       }
 
 
@@ -826,7 +1059,8 @@
 
 
       .message {
-        max-width: 86%;
+        max-width:
+          86%;
       }
 
 
@@ -843,7 +1077,36 @@
 
 
       .composer {
-        padding: 14px;
+        padding:
+          14px;
+
+        flex-wrap:
+          wrap;
+      }
+
+
+      .composer input {
+        flex-basis:
+          100%;
+      }
+
+
+      .example-btn,
+      .send-btn {
+        min-height:
+          46px;
+      }
+
+
+      .example-btn {
+        flex:
+          1 1 auto;
+      }
+
+
+      .send-btn {
+        flex:
+          0 0 auto;
       }
 
 
@@ -866,6 +1129,9 @@
 
 
     <section class="app-shell">
+
+
+      <!-- HOME -->
 
 
       <section
@@ -911,27 +1177,37 @@
               >
 
 
-                <option value="german">
+                <option
+                  value="german"
+                >
                   German
                 </option>
 
 
-                <option value="italian">
+                <option
+                  value="italian"
+                >
                   Italian
                 </option>
 
 
-                <option value="spanish">
+                <option
+                  value="spanish"
+                >
                   Spanish
                 </option>
 
 
-                <option value="afrikaans">
+                <option
+                  value="afrikaans"
+                >
                   Afrikaans
                 </option>
 
 
-                <option value="french">
+                <option
+                  value="french"
+                >
                   French
                 </option>
 
@@ -963,17 +1239,23 @@
               >
 
 
-                <option value="coffee">
+                <option
+                  value="coffee"
+                >
                   Ordering a coffee
                 </option>
 
 
-                <option value="weekend">
+                <option
+                  value="weekend"
+                >
                   Talking about your weekend with a colleague
                 </option>
 
 
-                <option value="directions">
+                <option
+                  value="directions"
+                >
                   Giving a stranger directions
                 </option>
 
@@ -1048,24 +1330,35 @@
       </section>
 
 
+      <!-- CHAT -->
+
+
       <section
         id="chatScreen"
         class="screen"
       >
 
 
-        <header class="chat-header">
+        <header
+          class="chat-header"
+        >
 
 
-          <div class="chat-heading">
+          <div
+            class="chat-heading"
+          >
 
 
-            <h2 id="chatTitle">
+            <h2
+              id="chatTitle"
+            >
               Conversation
             </h2>
 
 
-            <p id="scenarioLabel">
+            <p
+              id="scenarioLabel"
+            >
               Scenario
             </p>
 
@@ -1084,7 +1377,9 @@
         </header>
 
 
-        <div class="chat-main">
+        <div
+          class="chat-main"
+        >
 
 
           <div
@@ -1101,7 +1396,9 @@
           >
 
 
-            <div class="feedback-title">
+            <div
+              class="feedback-title"
+            >
               Feedback on your last message
             </div>
 
@@ -1130,6 +1427,15 @@
 
 
             <button
+              id="exampleButton"
+              class="example-btn"
+              type="button"
+            >
+              Generate example response
+            </button>
+
+
+            <button
               id="sendButton"
               class="send-btn"
               type="submit"
@@ -1141,7 +1447,9 @@
           </form>
 
 
-          <p class="data-credit chat-credit">
+          <p
+            class="data-credit chat-credit"
+          >
 
             Dictionary data:
 
@@ -1199,6 +1507,11 @@
 
     const API_BASE_URL =
       "https://learning-german.onrender.com";
+
+
+    // ----------------------------------------------------
+    // ELEMENTS
+    // ----------------------------------------------------
 
 
     const homeScreen =
@@ -1261,6 +1574,12 @@
       );
 
 
+    const exampleButton =
+      document.getElementById(
+        "exampleButton"
+      );
+
+
     const sendButton =
       document.getElementById(
         "sendButton"
@@ -1291,45 +1610,71 @@
       );
 
 
-    let history = [];
+    // ----------------------------------------------------
+    // STATE
+    // ----------------------------------------------------
+
+
+    let history =
+      [];
+
 
     let conversationEnded =
       false;
 
+
     let activeLanguageId =
       null;
+
 
     const dictionaryCache =
       new Map();
 
+
     let activeDictionaryWord =
       null;
+
 
     let tooltipHideTimer =
       null;
 
+
     let tooltipHoverTimer =
       null;
 
+
     let tooltipRequestToken =
       0;
+
+
+    // ----------------------------------------------------
+    // GENERAL
+    // ----------------------------------------------------
 
 
     function showScreen(
       screenToShow
     ) {
 
-      homeScreen.classList.remove(
-        "active"
-      );
+      homeScreen
+        .classList
+        .remove(
+          "active"
+        );
 
-      chatScreen.classList.remove(
-        "active"
-      );
 
-      screenToShow.classList.add(
-        "active"
-      );
+      chatScreen
+        .classList
+        .remove(
+          "active"
+        );
+
+
+      screenToShow
+        .classList
+        .add(
+          "active"
+        );
 
     }
 
@@ -1338,7 +1683,8 @@
 
       return languageSelect
         .options[
-          languageSelect.selectedIndex
+          languageSelect
+            .selectedIndex
         ]
         .text;
 
@@ -1366,7 +1712,9 @@
       }
 
 
-      if (!response.ok) {
+      if (
+        !response.ok
+      ) {
 
         throw new Error(
           data.error ||
@@ -1381,12 +1729,19 @@
     }
 
 
+    // ----------------------------------------------------
+    // DICTIONARY
+    // ----------------------------------------------------
+
+
     function normalizeDictionaryKey(
       word
     ) {
 
       return word
-        .normalize("NFC")
+        .normalize(
+          "NFC"
+        )
         .toLocaleLowerCase();
 
     }
@@ -1406,7 +1761,8 @@
     async function getWordMeaning(
       languageId,
       lookupWord,
-      partOfSpeech = ""
+      partOfSpeech =
+        ""
     ) {
 
       const cacheKey =
@@ -1453,7 +1809,9 @@
 
 
       const request =
-        fetch(url)
+        fetch(
+          url
+        )
           .then(
             readJsonResponse
           )
@@ -1485,16 +1843,23 @@
     }
 
 
+    // ----------------------------------------------------
+    // TOOLTIP
+    // ----------------------------------------------------
+
+
     function positionDictionaryTooltip(
       target
     ) {
 
       const targetRect =
-        target.getBoundingClientRect();
+        target
+          .getBoundingClientRect();
 
 
       const tooltipRect =
-        dictionaryTooltip.getBoundingClientRect();
+        dictionaryTooltip
+          .getBoundingClientRect();
 
 
       const margin =
@@ -1538,12 +1903,16 @@
       }
 
 
-      dictionaryTooltip.style.left =
-        `${left}px`;
+      dictionaryTooltip
+        .style
+        .left =
+          `${left}px`;
 
 
-      dictionaryTooltip.style.top =
-        `${top}px`;
+      dictionaryTooltip
+        .style
+        .top =
+          `${top}px`;
 
     }
 
@@ -1552,8 +1921,9 @@
       surfaceWord
     ) {
 
-      dictionaryTooltip.innerHTML =
-        "";
+      dictionaryTooltip
+        .innerHTML =
+          "";
 
 
       const title =
@@ -1598,8 +1968,9 @@
       lookupWord
     ) {
 
-      dictionaryTooltip.innerHTML =
-        "";
+      dictionaryTooltip
+        .innerHTML =
+          "";
 
 
       const title =
@@ -1616,9 +1987,10 @@
         surfaceWord;
 
 
-      dictionaryTooltip.appendChild(
-        title
-      );
+      dictionaryTooltip
+        .appendChild(
+          title
+        );
 
 
       if (
@@ -1644,9 +2016,10 @@
           "Meaning unavailable.";
 
 
-        dictionaryTooltip.appendChild(
-          unavailable
-        );
+        dictionaryTooltip
+          .appendChild(
+            unavailable
+          );
 
 
         return;
@@ -1655,7 +2028,9 @@
 
 
       const entry =
-        data.entries[0];
+        data.entries[
+          0
+        ];
 
 
       const meanings =
@@ -1688,9 +2063,10 @@
         "Meaning unavailable.";
 
 
-      dictionaryTooltip.appendChild(
-        meaning
-      );
+      dictionaryTooltip
+        .appendChild(
+          meaning
+        );
 
 
       const metaParts =
@@ -1748,9 +2124,10 @@
           );
 
 
-        dictionaryTooltip.appendChild(
-          meta
-        );
+        dictionaryTooltip
+          .appendChild(
+            meta
+          );
 
       }
 
@@ -1785,9 +2162,11 @@
       );
 
 
-      dictionaryTooltip.classList.add(
-        "visible"
-      );
+      dictionaryTooltip
+        .classList
+        .add(
+          "visible"
+        );
 
 
       positionDictionaryTooltip(
@@ -1805,15 +2184,7 @@
 
       if (
         requestToken !==
-        tooltipRequestToken
-      ) {
-
-        return;
-
-      }
-
-
-      if (
+        tooltipRequestToken ||
         activeDictionaryWord !==
         target
       ) {
@@ -1870,6 +2241,11 @@
         );
 
     }
+
+
+    // ----------------------------------------------------
+    // WORD METADATA
+    // ----------------------------------------------------
 
 
     function createWordMetadataMatcher(
@@ -1976,6 +2352,11 @@
     }
 
 
+    // ----------------------------------------------------
+    // INTERACTIVE TEXT
+    // ----------------------------------------------------
+
+
     function appendInteractiveLanguageText(
       container,
       text,
@@ -2001,8 +2382,12 @@
         of parts
       ) {
 
-        if (!part) {
+        if (
+          !part
+        ) {
+
           continue;
+
         }
 
 
@@ -2013,13 +2398,17 @@
             );
 
 
-        if (!isWord) {
+        if (
+          !isWord
+        ) {
 
-          container.appendChild(
-            document.createTextNode(
-              part
-            )
-          );
+          container
+            .appendChild(
+              document
+                .createTextNode(
+                  part
+                )
+            );
 
 
           continue;
@@ -2165,12 +2554,19 @@
     }
 
 
+    // ----------------------------------------------------
+    // MESSAGE DISPLAY
+    // ----------------------------------------------------
+
+
     function addMessage(
       text,
       sender,
       languageId,
       replyWords =
-        []
+        [],
+      options =
+        {}
     ) {
 
       const row =
@@ -2193,12 +2589,73 @@
         "message";
 
 
+      if (
+        options.isExample
+      ) {
+
+        const label =
+          document.createElement(
+            "div"
+          );
+
+
+        label.className =
+          "example-label";
+
+
+        label.textContent =
+          "Example response";
+
+
+        bubble.appendChild(
+          label
+        );
+
+      }
+
+
+      const textContainer =
+        document.createElement(
+          "div"
+        );
+
+
       appendInteractiveLanguageText(
-        bubble,
+        textContainer,
         text,
         languageId,
         replyWords
       );
+
+
+      bubble.appendChild(
+        textContainer
+      );
+
+
+      if (
+        options.translation
+      ) {
+
+        const translation =
+          document.createElement(
+            "div"
+          );
+
+
+        translation.className =
+          "example-translation";
+
+
+        translation.textContent =
+          `English: ${options.translation}`;
+
+
+        bubble.appendChild(
+          translation
+        );
+
+      }
 
 
       row.appendChild(
@@ -2217,15 +2674,23 @@
     }
 
 
+    // ----------------------------------------------------
+    // FEEDBACK
+    // ----------------------------------------------------
+
+
     function clearFeedback() {
 
-      feedbackContent.innerHTML =
-        "";
+      feedbackContent
+        .innerHTML =
+          "";
 
 
-      feedbackPanel.classList.add(
-        "hidden"
-      );
+      feedbackPanel
+        .classList
+        .add(
+          "hidden"
+        );
 
     }
 
@@ -2234,13 +2699,16 @@
       feedback
     ) {
 
-      feedbackContent.innerHTML =
-        "";
+      feedbackContent
+        .innerHTML =
+          "";
 
 
-      feedbackPanel.classList.remove(
-        "hidden"
-      );
+      feedbackPanel
+        .classList
+        .remove(
+          "hidden"
+        );
 
 
       if (
@@ -2264,9 +2732,10 @@
           "No correction needed.";
 
 
-        feedbackContent.appendChild(
-          text
-        );
+        feedbackContent
+          .appendChild(
+            text
+          );
 
 
         return;
@@ -2326,13 +2795,16 @@
       message
     ) {
 
-      feedbackContent.innerHTML =
-        "";
+      feedbackContent
+        .innerHTML =
+          "";
 
 
-      feedbackPanel.classList.remove(
-        "hidden"
-      );
+      feedbackPanel
+        .classList
+        .remove(
+          "hidden"
+        );
 
 
       const text =
@@ -2349,11 +2821,17 @@
         message;
 
 
-      feedbackContent.appendChild(
-        text
-      );
+      feedbackContent
+        .appendChild(
+          text
+        );
 
     }
+
+
+    // ----------------------------------------------------
+    // COMPOSER
+    // ----------------------------------------------------
 
 
     function setComposerEnabled(
@@ -2367,7 +2845,16 @@
       sendButton.disabled =
         !enabled;
 
+
+      exampleButton.disabled =
+        !enabled;
+
     }
+
+
+    // ----------------------------------------------------
+    // START
+    // ----------------------------------------------------
 
 
     async function startConversation() {
@@ -2387,7 +2874,8 @@
       const scenarioName =
         scenarioSelect
           .options[
-            scenarioSelect.selectedIndex
+            scenarioSelect
+              .selectedIndex
           ]
           .text;
 
@@ -2463,12 +2951,10 @@
 
               body:
                 JSON.stringify({
-
                   language:
                     languageId,
 
                   scenario,
-
                 }),
 
             }
@@ -2490,13 +2976,11 @@
 
 
         history.push({
-
           role:
             "assistant",
 
           content:
             data.reply,
-
         });
 
 
@@ -2544,6 +3028,11 @@
       }
 
     }
+
+
+    // ----------------------------------------------------
+    // END
+    // ----------------------------------------------------
 
 
     function endConversation() {
@@ -2596,6 +3085,222 @@
     }
 
 
+    // ----------------------------------------------------
+    // NEW: GENERATE EXAMPLE RESPONSE
+    // ----------------------------------------------------
+
+
+    async function generateExampleResponse() {
+
+      if (
+        conversationEnded
+      ) {
+
+        return;
+
+      }
+
+
+      const languageId =
+        activeLanguageId ||
+        languageSelect.value;
+
+
+      const scenario =
+        scenarioSelect.value;
+
+
+      const historyBeforeExample =
+        [
+          ...history
+        ];
+
+
+      clearFeedback();
+
+
+      hideDictionaryTooltip(
+        0
+      );
+
+
+      setComposerEnabled(
+        false
+      );
+
+
+      exampleButton.textContent =
+        "Generating...";
+
+
+      try {
+
+        const response =
+          await fetch(
+            `${API_BASE_URL}/api/example`,
+            {
+
+              method:
+                "POST",
+
+              headers: {
+                "Content-Type":
+                  "application/json",
+              },
+
+              body:
+                JSON.stringify({
+
+                  language:
+                    languageId,
+
+                  scenario,
+
+                  history:
+                    historyBeforeExample,
+
+                }),
+
+            }
+          );
+
+
+        const data =
+          await readJsonResponse(
+            response
+          );
+
+
+        /*
+          Display the generated learner
+          response as a user message.
+
+          Its English translation appears
+          directly underneath it.
+        */
+
+        addMessage(
+          data.exampleMessage,
+          "user",
+          languageId,
+          data.exampleWords,
+          {
+            isExample:
+              true,
+
+            translation:
+              data.exampleTranslation,
+          }
+        );
+
+
+        /*
+          Treat the generated response as
+          though the learner actually sent it.
+        */
+
+        history.push({
+          role:
+            "user",
+
+          content:
+            data.exampleMessage,
+        });
+
+
+        history.push({
+          role:
+            "assistant",
+
+          content:
+            data.reply,
+        });
+
+
+        /*
+          Display the character's next
+          response immediately.
+        */
+
+        addMessage(
+          data.reply,
+          "ai",
+          languageId,
+          data.replyWords
+        );
+
+
+        conversationEnded =
+          Boolean(
+            data.conversationEnded
+          );
+
+
+        if (
+          conversationEnded
+        ) {
+
+          messageInput.placeholder =
+            "Conversation ended.";
+
+
+          setComposerEnabled(
+            false
+          );
+
+        } else {
+
+          setComposerEnabled(
+            true
+          );
+
+
+          messageInput.focus();
+
+        }
+
+      } catch (
+        error
+      ) {
+
+        showError(
+          `Could not generate an example response: ${error.message}`
+        );
+
+
+        setComposerEnabled(
+          true
+        );
+
+
+        messageInput.focus();
+
+      } finally {
+
+        exampleButton.textContent =
+          "Generate example response";
+
+
+        if (
+          conversationEnded
+        ) {
+
+          setComposerEnabled(
+            false
+          );
+
+        }
+
+      }
+
+    }
+
+
+    // ----------------------------------------------------
+    // EVENTS
+    // ----------------------------------------------------
+
+
     document.addEventListener(
       "click",
       (
@@ -2642,16 +3347,30 @@
     );
 
 
-    startChatButton.addEventListener(
-      "click",
-      startConversation
-    );
+    startChatButton
+      .addEventListener(
+        "click",
+        startConversation
+      );
 
 
-    endChatButton.addEventListener(
-      "click",
-      endConversation
-    );
+    endChatButton
+      .addEventListener(
+        "click",
+        endConversation
+      );
+
+
+    exampleButton
+      .addEventListener(
+        "click",
+        generateExampleResponse
+      );
+
+
+    // ----------------------------------------------------
+    // NORMAL USER MESSAGE
+    // ----------------------------------------------------
 
 
     chatForm.addEventListener(
@@ -2678,7 +3397,9 @@
             .trim();
 
 
-        if (!message) {
+        if (
+          !message
+        ) {
 
           return;
 
@@ -2769,24 +3490,20 @@
 
 
           history.push({
-
             role:
               "user",
 
             content:
               message,
-
           });
 
 
           history.push({
-
             role:
               "assistant",
 
             content:
               data.reply,
-
           });
 
 
