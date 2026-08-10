@@ -263,7 +263,8 @@
     }
 
 
-    .field label {
+    .field label,
+    .custom-scenario-panel label {
       display:
         block;
 
@@ -376,21 +377,6 @@
 
       background:
         var(--surface-soft);
-    }
-
-
-    .custom-scenario-panel label {
-      display:
-        block;
-
-      margin-bottom:
-        7px;
-
-      font-size:
-        0.92rem;
-
-      font-weight:
-        750;
     }
 
 
@@ -1285,7 +1271,7 @@
 
 
           <p class="intro">
-            Choose your language and a real-world scenario,
+            Choose your language and level, then select a scenario
             or create your own conversation.
           </p>
 
@@ -1307,31 +1293,81 @@
                 id="languageSelect"
               >
 
-
                 <option value="german">
                   German
                 </option>
-
 
                 <option value="italian">
                   Italian
                 </option>
 
-
                 <option value="spanish">
                   Spanish
                 </option>
-
 
                 <option value="afrikaans">
                   Afrikaans
                 </option>
 
-
                 <option value="french">
                   French
                 </option>
 
+              </select>
+
+
+            </div>
+
+
+          </div>
+
+
+          <!-- LANGUAGE LEVEL -->
+
+
+          <div class="field">
+
+
+            <label
+              for="levelSelect"
+            >
+              Language level
+            </label>
+
+
+            <div class="select-wrap">
+
+
+              <select
+                id="levelSelect"
+              >
+
+                <option value="a1">
+                  A1 — Beginner
+                </option>
+
+                <option value="a2">
+                  A2 — Elementary
+                </option>
+
+                <option
+                  value="b1"
+                  selected
+                >
+                  B1 — Intermediate
+                </option>
+
+                <option value="b2">
+                  B2 — Upper-intermediate
+                </option>
+
+                <option value="c1">
+                  C1 — Advanced
+                </option>
+
+                <option value="c2">
+                  C2 — Proficient
+                </option>
 
               </select>
 
@@ -1359,26 +1395,21 @@
                 id="scenarioSelect"
               >
 
-
                 <option value="coffee">
                   Ordering a coffee
                 </option>
-
 
                 <option value="weekend">
                   Talking about your weekend with a colleague
                 </option>
 
-
                 <option value="directions">
                   Giving a stranger directions
                 </option>
 
-
                 <option value="custom">
                   Custom scenario...
                 </option>
-
 
               </select>
 
@@ -1406,9 +1437,9 @@
 
 
             <p class="custom-scenario-help">
-              Describe what you want to talk about, who you
-              want the AI to be, where the conversation takes
-              place, or any details you want included.
+              Describe what you want to talk about, who you want
+              the AI to be, where the conversation takes place,
+              or any details you want included.
             </p>
 
 
@@ -1517,21 +1548,15 @@
         >
 
 
-          <div
-            class="chat-heading"
-          >
+          <div class="chat-heading">
 
 
-            <h2
-              id="chatTitle"
-            >
+            <h2 id="chatTitle">
               Conversation
             </h2>
 
 
-            <p
-              id="scenarioLabel"
-            >
+            <p id="scenarioLabel">
               Scenario
             </p>
 
@@ -1550,9 +1575,7 @@
         </header>
 
 
-        <div
-          class="chat-main"
-        >
+        <div class="chat-main">
 
 
           <div
@@ -1569,9 +1592,7 @@
           >
 
 
-            <div
-              class="feedback-title"
-            >
+            <div class="feedback-title">
               Feedback on your last message
             </div>
 
@@ -1721,6 +1742,12 @@
       );
 
 
+    const levelSelect =
+      document.getElementById(
+        "levelSelect"
+      );
+
+
     const scenarioSelect =
       document.getElementById(
         "scenarioSelect"
@@ -1828,6 +1855,10 @@
       null;
 
 
+    let activeLevelId =
+      null;
+
+
     let activeScenarioKey =
       null;
 
@@ -1890,6 +1921,16 @@
       return languageSelect
         .options[
           languageSelect
+            .selectedIndex
+        ]
+        .text;
+    }
+
+
+    function getSelectedLevelLabel() {
+      return levelSelect
+        .options[
+          levelSelect
             .selectedIndex
         ]
         .text;
@@ -1984,6 +2025,9 @@
       const payload = {
         language:
           activeLanguageId,
+
+        level:
+          activeLevelId,
 
         scenario:
           activeScenarioKey,
@@ -3056,6 +3100,14 @@
         getSelectedLanguageName();
 
 
+      const levelId =
+        levelSelect.value;
+
+
+      const levelLabel =
+        getSelectedLevelLabel();
+
+
       const scenarioKey =
         scenarioSelect.value;
 
@@ -3120,6 +3172,10 @@
         languageId;
 
 
+      activeLevelId =
+        levelId;
+
+
       activeScenarioKey =
         scenarioKey;
 
@@ -3133,7 +3189,7 @@
 
 
       scenarioLabel.textContent =
-        scenarioName;
+        `${scenarioName} · ${levelLabel}`;
 
 
       messageInput.placeholder =
@@ -3181,6 +3237,9 @@
       const requestBody = {
         language:
           languageId,
+
+        level:
+          levelId,
 
         scenario:
           scenarioKey,
@@ -3298,6 +3357,10 @@
         null;
 
 
+      activeLevelId =
+        null;
+
+
       activeScenarioKey =
         null;
 
@@ -3320,6 +3383,10 @@
 
       chatTitle.textContent =
         "Conversation";
+
+
+      scenarioLabel.textContent =
+        "Scenario";
 
 
       clearFeedback();
