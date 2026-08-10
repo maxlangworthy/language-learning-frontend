@@ -789,1519 +789,1192 @@
 
 
   <script>
-
-    // ------------------------------------------------------
-    // BACKEND
-    // ------------------------------------------------------
-
-    const API_BASE_URL =
-      'https://learning-german.onrender.com';
+const API_BASE_URL =
+  'https://learning-german.onrender.com';
 
 
-    // ------------------------------------------------------
-    // PAGE ELEMENTS
-    // ------------------------------------------------------
+// ------------------------------------------------------
+// PAGE ELEMENTS
+// ------------------------------------------------------
 
-    const homeScreen =
-      document.getElementById(
-        'homeScreen'
+const homeScreen =
+  document.getElementById('homeScreen');
+
+const chatScreen =
+  document.getElementById('chatScreen');
+
+const startChatButton =
+  document.getElementById('startChatButton');
+
+const endChatButton =
+  document.getElementById('endChatButton');
+
+const languageSelect =
+  document.getElementById('languageSelect');
+
+const scenarioSelect =
+  document.getElementById('scenarioSelect');
+
+const scenarioLabel =
+  document.getElementById('scenarioLabel');
+
+const chatForm =
+  document.getElementById('chatForm');
+
+const messageInput =
+  document.getElementById('messageInput');
+
+const sendButton =
+  document.getElementById('sendButton');
+
+const messages =
+  document.getElementById('messages');
+
+const feedbackPanel =
+  document.getElementById('feedbackPanel');
+
+const feedbackContent =
+  document.getElementById('feedbackContent');
+
+const dictionaryTooltip =
+  document.getElementById('dictionaryTooltip');
+
+
+// ------------------------------------------------------
+// CONVERSATION STATE
+// ------------------------------------------------------
+
+let history = [];
+let conversationEnded = false;
+
+
+// ------------------------------------------------------
+// DICTIONARY STATE
+// ------------------------------------------------------
+
+const dictionaryCache = new Map();
+
+let activeDictionaryWord = null;
+let tooltipHideTimer = null;
+let tooltipHoverTimer = null;
+let tooltipRequestToken = 0;
+
+
+// ------------------------------------------------------
+// SCREEN SWITCHING
+// ------------------------------------------------------
+
+function showScreen(screenToShow) {
+  homeScreen.classList.remove('active');
+  chatScreen.classList.remove('active');
+
+  screenToShow.classList.add('active');
+}
+
+
+// ------------------------------------------------------
+// API RESPONSE HANDLING
+// ------------------------------------------------------
+
+async function readJsonResponse(response) {
+  let data;
+
+  try {
+    data = await response.json();
+  } catch {
+    throw new Error(
+      'The server returned an invalid response.'
+    );
+  }
+
+  if (!response.ok) {
+    throw new Error(
+      data.error ||
+      'The request failed.'
+    );
+  }
+
+  return data;
+}
+
+
+// ------------------------------------------------------
+// DICTIONARY HELPERS
+// ------------------------------------------------------
+
+function normalizeDictionaryKey(word) {
+  return word
+    .normalize('NFC')
+    .toLocaleLowerCase('de-DE');
+}
+
+
+function splitGermanText(text) {
+  return text.split(
+    /(\p{L}[\p{L}\p{M}'’-]*)/gu
+  );
+}
+
+
+async function getWordMeaning(
+  lookupWord,
+  partOfSpeech = ''
+) {
+  const cacheKey =
+    `${normalizeDictionaryKey(lookupWord)}|${partOfSpeech}`;
+
+
+  if (
+    dictionaryCache.has(
+      cacheKey
+    )
+  ) {
+    return dictionaryCache.get(
+      cacheKey
+    );
+  }
+
+
+  let url =
+    `${API_BASE_URL}/api/word` +
+    `?language=german` +
+    `&word=${encodeURIComponent(lookupWord)}`;
+
+
+  if (partOfSpeech) {
+    url +=
+      `&pos=${encodeURIComponent(partOfSpeech)}`;
+  }
+
+
+  const request =
+    fetch(url)
+      .then(readJsonResponse)
+      .catch(() => ({
+        word: lookupWord,
+        found: false,
+        entries: []
+      }));
+
+
+  dictionaryCache.set(
+    cacheKey,
+    request
+  );
+
+
+  return request;
+}
+
+
+// ------------------------------------------------------
+// TOOLTIP POSITION
+// ------------------------------------------------------
+
+function positionDictionaryTooltip(target) {
+  const targetRect =
+    target.getBoundingClientRect();
+
+  const tooltipRect =
+    dictionaryTooltip
+      .getBoundingClientRect();
+
+  const margin = 8;
+
+
+  let left =
+    targetRect.left +
+    (
+      targetRect.width -
+      tooltipRect.width
+    ) / 2;
+
+
+  let top =
+    targetRect.top -
+    tooltipRect.height -
+    margin;
+
+
+  left =
+    Math.max(
+      10,
+      Math.min(
+        left,
+        window.innerWidth -
+        tooltipRect.width -
+        10
+      )
+    );
+
+
+  if (top < 10) {
+    top =
+      targetRect.bottom +
+      margin;
+  }
+
+
+  dictionaryTooltip.style.left =
+    `${left}px`;
+
+  dictionaryTooltip.style.top =
+    `${top}px`;
+}
+
+
+// ------------------------------------------------------
+// TOOLTIP CONTENT
+// ------------------------------------------------------
+
+function showTooltipLoading(surfaceWord) {
+  dictionaryTooltip.innerHTML = '';
+
+
+  const title =
+    document.createElement('div');
+
+  title.className =
+    'tooltip-word';
+
+  title.textContent =
+    surfaceWord;
+
+
+  const loading =
+    document.createElement('div');
+
+  loading.className =
+    'tooltip-meaning';
+
+  loading.textContent =
+    'Looking up…';
+
+
+  dictionaryTooltip.append(
+    title,
+    loading
+  );
+}
+
+
+function renderDictionaryTooltip(
+  data,
+  surfaceWord,
+  lookupWord
+) {
+  dictionaryTooltip.innerHTML = '';
+
+
+  const title =
+    document.createElement('div');
+
+  title.className =
+    'tooltip-word';
+
+  title.textContent =
+    surfaceWord;
+
+  dictionaryTooltip.appendChild(
+    title
+  );
+
+
+  if (
+    !data?.found ||
+    !Array.isArray(data.entries) ||
+    data.entries.length === 0
+  ) {
+    const unavailable =
+      document.createElement('div');
+
+    unavailable.className =
+      'tooltip-meaning';
+
+    unavailable.textContent =
+      'Meaning unavailable.';
+
+    dictionaryTooltip.appendChild(
+      unavailable
+    );
+
+    return;
+  }
+
+
+  const entry =
+    data.entries[0];
+
+
+  const meanings =
+    Array.isArray(entry.meanings)
+      ? entry.meanings
+      : [];
+
+
+  const meaning =
+    document.createElement('div');
+
+  meaning.className =
+    'tooltip-meaning';
+
+  meaning.textContent =
+    meanings
+      .slice(0, 3)
+      .join('; ')
+    ||
+    'Meaning unavailable.';
+
+  dictionaryTooltip.appendChild(
+    meaning
+  );
+
+
+  /*
+    Keep the tooltip simple:
+
+    meaning
+    lemma / lookup form
+    part of speech
+
+    No case, gender, number or
+    declension information.
+  */
+
+  const metaParts = [];
+
+
+  if (
+    lookupWord &&
+    normalizeDictionaryKey(
+      lookupWord
+    ) !==
+    normalizeDictionaryKey(
+      surfaceWord
+    )
+  ) {
+    metaParts.push(
+      `from ${lookupWord}`
+    );
+  }
+
+
+  if (
+    entry.partOfSpeech &&
+    entry.partOfSpeech !== 'unknown'
+  ) {
+    metaParts.push(
+      entry.partOfSpeech
+    );
+  }
+
+
+  if (metaParts.length > 0) {
+    const meta =
+      document.createElement('div');
+
+    meta.className =
+      'dictionary-meta';
+
+    meta.textContent =
+      metaParts.join(' · ');
+
+    dictionaryTooltip.appendChild(
+      meta
+    );
+  }
+}
+
+
+// ------------------------------------------------------
+// OPEN / CLOSE TOOLTIP
+// ------------------------------------------------------
+
+async function openDictionaryTooltip(
+  target,
+  surfaceWord,
+  lookupWord = surfaceWord,
+  partOfSpeech = ''
+) {
+  clearTimeout(
+    tooltipHideTimer
+  );
+
+
+  activeDictionaryWord =
+    target;
+
+
+  const requestToken =
+    ++tooltipRequestToken;
+
+
+  showTooltipLoading(
+    surfaceWord
+  );
+
+
+  dictionaryTooltip
+    .classList
+    .add('visible');
+
+
+  positionDictionaryTooltip(
+    target
+  );
+
+
+  const data =
+    await getWordMeaning(
+      lookupWord,
+      partOfSpeech
+    );
+
+
+  if (
+    requestToken !==
+    tooltipRequestToken
+  ) {
+    return;
+  }
+
+
+  if (
+    activeDictionaryWord !==
+    target
+  ) {
+    return;
+  }
+
+
+  renderDictionaryTooltip(
+    data,
+    surfaceWord,
+    lookupWord
+  );
+
+
+  positionDictionaryTooltip(
+    target
+  );
+}
+
+
+function hideDictionaryTooltip(
+  delay = 80
+) {
+  clearTimeout(
+    tooltipHideTimer
+  );
+
+
+  tooltipHideTimer =
+    setTimeout(
+      () => {
+        tooltipRequestToken += 1;
+
+        activeDictionaryWord =
+          null;
+
+        dictionaryTooltip
+          .classList
+          .remove('visible');
+      },
+      delay
+    );
+}
+
+
+// ------------------------------------------------------
+// TURN GERMAN TEXT INTO HOVERABLE WORDS
+// ------------------------------------------------------
+
+function appendInteractiveGermanText(
+  container,
+  text,
+  lookupForms = [],
+  partsOfSpeech = []
+) {
+  const parts =
+    splitGermanText(text);
+
+
+  let wordIndex = 0;
+
+
+  for (const part of parts) {
+    if (!part) {
+      continue;
+    }
+
+
+    const isWord =
+      /^\p{L}[\p{L}\p{M}'’-]*$/u
+        .test(part);
+
+
+    if (!isWord) {
+      container.appendChild(
+        document.createTextNode(
+          part
+        )
       );
 
-    const chatScreen =
-      document.getElementById(
-        'chatScreen'
-      );
-
-    const startChatButton =
-      document.getElementById(
-        'startChatButton'
-      );
-
-    const endChatButton =
-      document.getElementById(
-        'endChatButton'
-      );
-
-    const languageSelect =
-      document.getElementById(
-        'languageSelect'
-      );
-
-    const scenarioSelect =
-      document.getElementById(
-        'scenarioSelect'
-      );
-
-    const scenarioLabel =
-      document.getElementById(
-        'scenarioLabel'
-      );
-
-    const chatForm =
-      document.getElementById(
-        'chatForm'
-      );
-
-    const messageInput =
-      document.getElementById(
-        'messageInput'
-      );
-
-    const sendButton =
-      document.getElementById(
-        'sendButton'
-      );
-
-    const messages =
-      document.getElementById(
-        'messages'
-      );
-
-    const feedbackPanel =
-      document.getElementById(
-        'feedbackPanel'
-      );
-
-    const feedbackContent =
-      document.getElementById(
-        'feedbackContent'
-      );
-
-    const dictionaryTooltip =
-      document.getElementById(
-        'dictionaryTooltip'
-      );
+      continue;
+    }
 
 
-    // ------------------------------------------------------
-    // CONVERSATION STATE
-    // ------------------------------------------------------
-
-    let history = [];
-
-    let conversationEnded =
-      false;
+    const lookupWord =
+      lookupForms[wordIndex] ||
+      part;
 
 
-    // ------------------------------------------------------
-    // DICTIONARY STATE
-    // ------------------------------------------------------
+    const partOfSpeech =
+      partsOfSpeech[wordIndex] ||
+      '';
 
-    const dictionaryCache =
-      new Map();
 
-    let activeDictionaryWord =
-      null;
+    wordIndex += 1;
 
-    let tooltipHideTimer =
-      null;
 
-    let tooltipHoverTimer =
-      null;
+    const word =
+      document.createElement('span');
 
-    let tooltipRequestToken =
+
+    word.className =
+      'word-token';
+
+    word.textContent =
+      part;
+
+    word.tabIndex =
       0;
 
 
-    // ------------------------------------------------------
-    // SCREEN SWITCHING
-    // ------------------------------------------------------
-
-    function showScreen(
-      screenToShow
-    ) {
-
-      homeScreen.classList.remove(
-        'active'
-      );
-
-      chatScreen.classList.remove(
-        'active'
-      );
-
-      screenToShow.classList.add(
-        'active'
-      );
-
-    }
+    word.setAttribute(
+      'aria-label',
+      `${part}: show English meaning`
+    );
 
 
-    // ------------------------------------------------------
-    // API RESPONSE HANDLING
-    // ------------------------------------------------------
-
-    async function readJsonResponse(
-      response
-    ) {
-
-      let data;
-
-      try {
-
-        data =
-          await response.json();
-
-      } catch {
-
-        throw new Error(
-          'The server returned an invalid response.'
-        );
-
-      }
-
-
-      if (!response.ok) {
-
-        throw new Error(
-          data.error ||
-          'The request failed.'
-        );
-
-      }
-
-
-      return data;
-
-    }
-
-
-    // ------------------------------------------------------
-    // DICTIONARY HELPERS
-    // ------------------------------------------------------
-
-    function normalizeDictionaryKey(
-      word
-    ) {
-
-      return word
-        .normalize('NFC')
-        .toLocaleLowerCase(
-          'de-DE'
-        );
-
-    }
-
-
-    function splitGermanText(
-      text
-    ) {
-
-      return text.split(
-        /(\p{L}[\p{L}\p{M}'’-]*)/gu
-      );
-
-    }
-
-
-    async function getWordMeaning(
-      word
-    ) {
-
-      const key =
-        normalizeDictionaryKey(
-          word
+    // Desktop hover
+    word.addEventListener(
+      'mouseenter',
+      () => {
+        clearTimeout(
+          tooltipHoverTimer
         );
 
 
-      /*
-        Once a word has been looked up,
-        reuse the result for the rest
-        of the browser session.
-      */
-
-      if (
-        dictionaryCache.has(
-          key
-        )
-      ) {
-
-        return dictionaryCache.get(
-          key
-        );
-
-      }
-
-
-      const request =
-        fetch(
-          `${API_BASE_URL}/api/word?language=german&word=${encodeURIComponent(word)}`
-        )
-          .then(
-            readJsonResponse
-          )
-          .catch(
-            () => ({
-              word,
-              found: false,
-              entries: []
-            })
-          );
-
-
-      dictionaryCache.set(
-        key,
-        request
-      );
-
-
-      return request;
-
-    }
-
-
-    // ------------------------------------------------------
-    // TOOLTIP POSITION
-    // ------------------------------------------------------
-
-    function positionDictionaryTooltip(
-      target
-    ) {
-
-      const targetRect =
-        target.getBoundingClientRect();
-
-
-      const tooltipRect =
-        dictionaryTooltip
-          .getBoundingClientRect();
-
-
-      const margin =
-        8;
-
-
-      let left =
-        targetRect.left +
-        (
-          targetRect.width -
-          tooltipRect.width
-        ) / 2;
-
-
-      let top =
-        targetRect.top -
-        tooltipRect.height -
-        margin;
-
-
-      left =
-        Math.max(
-          10,
-          Math.min(
-            left,
-            window.innerWidth -
-            tooltipRect.width -
-            10
-          )
-        );
-
-
-      if (top < 10) {
-
-        top =
-          targetRect.bottom +
-          margin;
-
-      }
-
-
-      dictionaryTooltip.style.left =
-        `${left}px`;
-
-
-      dictionaryTooltip.style.top =
-        `${top}px`;
-
-    }
-
-
-    // ------------------------------------------------------
-    // TOOLTIP CONTENT
-    // ------------------------------------------------------
-
-    function showTooltipLoading(
-      word
-    ) {
-
-      dictionaryTooltip.innerHTML =
-        '';
-
-
-      const title =
-        document.createElement(
-          'div'
-        );
-
-
-      title.className =
-        'tooltip-word';
-
-
-      title.textContent =
-        word;
-
-
-      const loading =
-        document.createElement(
-          'div'
-        );
-
-
-      loading.className =
-        'tooltip-meaning';
-
-
-      loading.textContent =
-        'Looking up…';
-
-
-      dictionaryTooltip.append(
-        title,
-        loading
-      );
-
-    }
-
-
-    function renderDictionaryTooltip(
-      data,
-      requestedWord
-    ) {
-
-      dictionaryTooltip.innerHTML =
-        '';
-
-
-      const title =
-        document.createElement(
-          'div'
-        );
-
-
-      title.className =
-        'tooltip-word';
-
-
-      title.textContent =
-        requestedWord;
-
-
-      dictionaryTooltip.appendChild(
-        title
-      );
-
-
-      if (
-        !data?.found ||
-        !Array.isArray(
-          data.entries
-        ) ||
-        data.entries.length === 0
-      ) {
-
-        const unavailable =
-          document.createElement(
-            'div'
-          );
-
-
-        unavailable.className =
-          'tooltip-meaning';
-
-
-        unavailable.textContent =
-          'Meaning unavailable.';
-
-
-        dictionaryTooltip.appendChild(
-          unavailable
-        );
-
-
-        return;
-
-      }
-
-
-      const entry =
-        data.entries[0];
-
-
-      const meanings =
-        Array.isArray(
-          entry.meanings
-        )
-          ? entry.meanings
-          : [];
-
-
-      const meaning =
-        document.createElement(
-          'div'
-        );
-
-
-      meaning.className =
-        'tooltip-meaning';
-
-
-      meaning.textContent =
-        meanings
-          .slice(0, 3)
-          .join('; ')
-        ||
-        'Meaning unavailable.';
-
-
-      dictionaryTooltip.appendChild(
-        meaning
-      );
-
-
-      /*
-        Intentionally only show:
-
-        - lemma
-        - part of speech
-
-        We do NOT display grammatical
-        case, gender, number or declension.
-
-        An isolated German word can have
-        several valid grammatical analyses.
-        Context-sensitive grammar correction
-        is handled by the AI feedback instead.
-      */
-
-      const metaParts =
-        [];
-
-
-      if (
-        entry.lemma &&
-        normalizeDictionaryKey(
-          entry.lemma
-        ) !==
-        normalizeDictionaryKey(
-          requestedWord
-        )
-      ) {
-
-        metaParts.push(
-          `from ${entry.lemma}`
-        );
-
-      }
-
-
-      if (
-        entry.partOfSpeech &&
-        entry.partOfSpeech !==
-        'unknown'
-      ) {
-
-        metaParts.push(
-          entry.partOfSpeech
-        );
-
-      }
-
-
-      if (
-        metaParts.length > 0
-      ) {
-
-        const meta =
-          document.createElement(
-            'div'
-          );
-
-
-        meta.className =
-          'dictionary-meta';
-
-
-        meta.textContent =
-          metaParts.join(' · ');
-
-
-        dictionaryTooltip.appendChild(
-          meta
-        );
-
-      }
-
-    }
-
-
-    async function openDictionaryTooltip(
-      target,
-      word
-    ) {
-
-      clearTimeout(
-        tooltipHideTimer
-      );
-
-
-      activeDictionaryWord =
-        target;
-
-
-      const requestToken =
-        ++tooltipRequestToken;
-
-
-      showTooltipLoading(
-        word
-      );
-
-
-      dictionaryTooltip
-        .classList
-        .add(
-          'visible'
-        );
-
-
-      positionDictionaryTooltip(
-        target
-      );
-
-
-      const data =
-        await getWordMeaning(
-          word
-        );
-
-
-      /*
-        If the user has moved to a
-        different word while this request
-        was happening, ignore this result.
-      */
-
-      if (
-        requestToken !==
-        tooltipRequestToken
-      ) {
-
-        return;
-
-      }
-
-
-      if (
-        activeDictionaryWord !==
-        target
-      ) {
-
-        return;
-
-      }
-
-
-      renderDictionaryTooltip(
-        data,
-        word
-      );
-
-
-      positionDictionaryTooltip(
-        target
-      );
-
-    }
-
-
-    function hideDictionaryTooltip(
-      delay = 80
-    ) {
-
-      clearTimeout(
-        tooltipHideTimer
-      );
-
-
-      tooltipHideTimer =
-        setTimeout(
-          () => {
-
-            tooltipRequestToken += 1;
-
-            activeDictionaryWord =
-              null;
-
-            dictionaryTooltip
-              .classList
-              .remove(
-                'visible'
+        tooltipHoverTimer =
+          setTimeout(
+            () => {
+              openDictionaryTooltip(
+                word,
+                part,
+                lookupWord,
+                partOfSpeech
               );
+            },
+            120
+          );
+      }
+    );
 
+
+    word.addEventListener(
+      'mouseleave',
+      () => {
+        clearTimeout(
+          tooltipHoverTimer
+        );
+
+        hideDictionaryTooltip();
+      }
+    );
+
+
+    // Keyboard
+    word.addEventListener(
+      'focus',
+      () => {
+        openDictionaryTooltip(
+          word,
+          part,
+          lookupWord,
+          partOfSpeech
+        );
+      }
+    );
+
+
+    word.addEventListener(
+      'blur',
+      () => {
+        hideDictionaryTooltip();
+      }
+    );
+
+
+    // Mobile / tablet tap
+    word.addEventListener(
+      'click',
+      (event) => {
+        event.stopPropagation();
+
+        openDictionaryTooltip(
+          word,
+          part,
+          lookupWord,
+          partOfSpeech
+        );
+      }
+    );
+
+
+    container.appendChild(
+      word
+    );
+  }
+}
+
+
+// ------------------------------------------------------
+// MESSAGE DISPLAY
+// ------------------------------------------------------
+
+function addMessage(
+  text,
+  sender,
+  lookupForms = [],
+  partsOfSpeech = []
+) {
+  const row =
+    document.createElement('div');
+
+
+  row.className =
+    `message-row ${sender}`;
+
+
+  const bubble =
+    document.createElement('div');
+
+
+  bubble.className =
+    'message';
+
+
+  appendInteractiveGermanText(
+    bubble,
+    text,
+    lookupForms,
+    partsOfSpeech
+  );
+
+
+  row.appendChild(
+    bubble
+  );
+
+
+  messages.appendChild(
+    row
+  );
+
+
+  messages.scrollTop =
+    messages.scrollHeight;
+}
+
+
+// ------------------------------------------------------
+// FEEDBACK
+// ------------------------------------------------------
+
+function clearFeedback() {
+  feedbackContent.innerHTML =
+    '';
+
+  feedbackPanel
+    .classList
+    .add('hidden');
+}
+
+
+function showFeedback(feedback) {
+  feedbackContent.innerHTML =
+    '';
+
+  feedbackPanel
+    .classList
+    .remove('hidden');
+
+
+  if (
+    !feedback ||
+    feedback.hasIssues === false
+  ) {
+    const text =
+      document.createElement('p');
+
+    text.className =
+      'feedback-ok';
+
+    text.textContent =
+      feedback?.explanation ||
+      'No correction needed.';
+
+    feedbackContent.appendChild(
+      text
+    );
+
+    return;
+  }
+
+
+  const correction =
+    document.createElement('p');
+
+
+  const label =
+    document.createElement('strong');
+
+  label.textContent =
+    'Correction: ';
+
+
+  correction.appendChild(
+    label
+  );
+
+
+  correction.appendChild(
+    document.createTextNode(
+      feedback.correctedVersion ||
+      ''
+    )
+  );
+
+
+  const explanation =
+    document.createElement('p');
+
+  explanation.textContent =
+    feedback.explanation ||
+    '';
+
+
+  feedbackContent.append(
+    correction,
+    explanation
+  );
+}
+
+
+function showError(message) {
+  feedbackContent.innerHTML =
+    '';
+
+  feedbackPanel
+    .classList
+    .remove('hidden');
+
+
+  const text =
+    document.createElement('p');
+
+  text.className =
+    'feedback-error';
+
+  text.textContent =
+    message;
+
+
+  feedbackContent.appendChild(
+    text
+  );
+}
+
+
+// ------------------------------------------------------
+// COMPOSER
+// ------------------------------------------------------
+
+function setComposerEnabled(enabled) {
+  messageInput.disabled =
+    !enabled;
+
+  sendButton.disabled =
+    !enabled;
+}
+
+
+// ------------------------------------------------------
+// START CONVERSATION
+// ------------------------------------------------------
+
+async function startConversation() {
+  const language =
+    languageSelect.value;
+
+  const scenario =
+    scenarioSelect.value;
+
+  const scenarioName =
+    scenarioSelect.options[
+      scenarioSelect.selectedIndex
+    ].text;
+
+
+  scenarioLabel.textContent =
+    scenarioName;
+
+
+  messages.innerHTML =
+    '';
+
+  clearFeedback();
+
+  hideDictionaryTooltip(0);
+
+  history = [];
+
+  conversationEnded =
+    false;
+
+
+  startChatButton.disabled =
+    true;
+
+  startChatButton.textContent =
+    'Starting...';
+
+
+  showScreen(
+    chatScreen
+  );
+
+
+  setComposerEnabled(
+    false
+  );
+
+
+  try {
+    const response =
+      await fetch(
+        `${API_BASE_URL}/api/start`,
+        {
+          method: 'POST',
+
+          headers: {
+            'Content-Type':
+              'application/json'
           },
-          delay
-        );
 
-    }
-
-
-    // ------------------------------------------------------
-    // TURN GERMAN TEXT INTO HOVERABLE WORDS
-    // ------------------------------------------------------
-
-    function appendInteractiveGermanText(
-      container,
-      text
-    ) {
-
-      const parts =
-        splitGermanText(
-          text
-        );
-
-
-      for (
-        const part
-        of parts
-      ) {
-
-        if (!part) {
-          continue;
+          body:
+            JSON.stringify({
+              language,
+              scenario
+            })
         }
-
-
-        const isWord =
-          /^\p{L}[\p{L}\p{M}'’-]*$/u
-            .test(
-              part
-            );
-
-
-        if (!isWord) {
-
-          container.appendChild(
-            document.createTextNode(
-              part
-            )
-          );
-
-          continue;
-
-        }
-
-
-        const word =
-          document.createElement(
-            'span'
-          );
-
-
-        word.className =
-          'word-token';
-
-
-        word.textContent =
-          part;
-
-
-        word.tabIndex =
-          0;
-
-
-        word.setAttribute(
-          'aria-label',
-          `${part}: show English meaning`
-        );
-
-
-        /*
-          Desktop hover.
-
-          Small delay prevents unnecessary
-          lookups when the mouse merely
-          passes over a word.
-        */
-
-        word.addEventListener(
-          'mouseenter',
-          () => {
-
-            clearTimeout(
-              tooltipHoverTimer
-            );
-
-
-            tooltipHoverTimer =
-              setTimeout(
-                () => {
-
-                  openDictionaryTooltip(
-                    word,
-                    part
-                  );
-
-                },
-                120
-              );
-
-          }
-        );
-
-
-        word.addEventListener(
-          'mouseleave',
-          () => {
-
-            clearTimeout(
-              tooltipHoverTimer
-            );
-
-
-            hideDictionaryTooltip();
-
-          }
-        );
-
-
-        /*
-          Keyboard access.
-        */
-
-        word.addEventListener(
-          'focus',
-          () => {
-
-            openDictionaryTooltip(
-              word,
-              part
-            );
-
-          }
-        );
-
-
-        word.addEventListener(
-          'blur',
-          () => {
-
-            hideDictionaryTooltip();
-
-          }
-        );
-
-
-        /*
-          Mobile / tablet tap.
-        */
-
-        word.addEventListener(
-          'click',
-          (event) => {
-
-            event.stopPropagation();
-
-
-            openDictionaryTooltip(
-              word,
-              part
-            );
-
-          }
-        );
-
-
-        container.appendChild(
-          word
-        );
-
-      }
-
-    }
-
-
-    // ------------------------------------------------------
-    // MESSAGE DISPLAY
-    // ------------------------------------------------------
-
-    function addMessage(
-      text,
-      sender
-    ) {
-
-      const row =
-        document.createElement(
-          'div'
-        );
-
-
-      row.className =
-        `message-row ${sender}`;
-
-
-      const bubble =
-        document.createElement(
-          'div'
-        );
-
-
-      bubble.className =
-        'message';
-
-
-      appendInteractiveGermanText(
-        bubble,
-        text
       );
 
 
-      row.appendChild(
-        bubble
+    const data =
+      await readJsonResponse(
+        response
       );
 
 
-      messages.appendChild(
-        row
+    addMessage(
+      data.reply,
+      'ai',
+      data.replyLookupForms,
+      data.replyPartsOfSpeech
+    );
+
+
+    history.push({
+      role: 'assistant',
+      content: data.reply
+    });
+
+
+    conversationEnded =
+      Boolean(
+        data.conversationEnded
       );
 
 
-      messages.scrollTop =
-        messages.scrollHeight;
-
-    }
-
-
-    // ------------------------------------------------------
-    // FEEDBACK
-    // ------------------------------------------------------
-
-    function clearFeedback() {
-
-      feedbackContent.innerHTML =
-        '';
-
-
-      feedbackPanel
-        .classList
-        .add(
-          'hidden'
-        );
-
-    }
-
-
-    function showFeedback(
-      feedback
-    ) {
-
-      feedbackContent.innerHTML =
-        '';
-
-
-      feedbackPanel
-        .classList
-        .remove(
-          'hidden'
-        );
-
-
-      if (
-        !feedback ||
-        feedback.hasIssues ===
-        false
-      ) {
-
-        const text =
-          document.createElement(
-            'p'
-          );
-
-
-        text.className =
-          'feedback-ok';
-
-
-        text.textContent =
-          feedback?.explanation ||
-          'No correction needed.';
-
-
-        feedbackContent
-          .appendChild(
-            text
-          );
-
-
-        return;
-
-      }
-
-
-      const correction =
-        document.createElement(
-          'p'
-        );
-
-
-      const label =
-        document.createElement(
-          'strong'
-        );
-
-
-      label.textContent =
-        'Correction: ';
-
-
-      correction.appendChild(
-        label
-      );
-
-
-      correction.appendChild(
-        document.createTextNode(
-          feedback.correctedVersion ||
-          ''
-        )
-      );
-
-
-      const explanation =
-        document.createElement(
-          'p'
-        );
-
-
-      explanation.textContent =
-        feedback.explanation ||
-        '';
-
-
-      feedbackContent.append(
-        correction,
-        explanation
-      );
-
-    }
-
-
-    function showError(
-      message
-    ) {
-
-      feedbackContent.innerHTML =
-        '';
-
-
-      feedbackPanel
-        .classList
-        .remove(
-          'hidden'
-        );
-
-
-      const text =
-        document.createElement(
-          'p'
-        );
-
-
-      text.className =
-        'feedback-error';
-
-
-      text.textContent =
-        message;
-
-
-      feedbackContent
-        .appendChild(
-          text
-        );
-
-    }
-
-
-    // ------------------------------------------------------
-    // COMPOSER STATE
-    // ------------------------------------------------------
-
-    function setComposerEnabled(
-      enabled
-    ) {
-
-      messageInput.disabled =
-        !enabled;
-
-
-      sendButton.disabled =
-        !enabled;
-
-    }
-
-
-    // ------------------------------------------------------
-    // START CONVERSATION
-    // ------------------------------------------------------
-
-    async function startConversation() {
-
-      const language =
-        languageSelect.value;
-
-
-      const scenario =
-        scenarioSelect.value;
-
-
-      const scenarioName =
-        scenarioSelect.options[
-          scenarioSelect.selectedIndex
-        ].text;
-
-
-      scenarioLabel.textContent =
-        scenarioName;
-
-
-      messages.innerHTML =
-        '';
-
-
-      clearFeedback();
-
-
-      hideDictionaryTooltip(
-        0
-      );
-
-
-      history =
-        [];
-
-
-      conversationEnded =
-        false;
-
-
-      startChatButton.disabled =
-        true;
-
-
-      startChatButton.textContent =
-        'Starting...';
-
-
-      showScreen(
-        chatScreen
-      );
-
-
-      setComposerEnabled(
-        false
-      );
-
-
-      try {
-
-        const response =
-          await fetch(
-            `${API_BASE_URL}/api/start`,
-            {
-              method:
-                'POST',
-
-              headers: {
-                'Content-Type':
-                  'application/json'
-              },
-
-              body:
-                JSON.stringify({
-                  language,
-                  scenario
-                })
-            }
-          );
-
-
-        const data =
-          await readJsonResponse(
-            response
-          );
-
-
-        addMessage(
-          data.reply,
-          'ai'
-        );
-
-
-        history.push({
-          role:
-            'assistant',
-
-          content:
-            data.reply
-        });
-
-
-        conversationEnded =
-          Boolean(
-            data.conversationEnded
-          );
-
-
-        if (
-          !conversationEnded
-        ) {
-
-          setComposerEnabled(
-            true
-          );
-
-
-          messageInput.focus();
-
-        }
-
-      } catch (error) {
-
-        showError(
-          `Could not start the conversation: ${error.message}`
-        );
-
-
-        setComposerEnabled(
-          false
-        );
-
-      } finally {
-
-        startChatButton.disabled =
-          false;
-
-
-        startChatButton.textContent =
-          'Chat';
-
-      }
-
-    }
-
-
-    // ------------------------------------------------------
-    // END CONVERSATION
-    // ------------------------------------------------------
-
-    function endConversation() {
-
-      history =
-        [];
-
-
-      conversationEnded =
-        false;
-
-
-      messages.innerHTML =
-        '';
-
-
-      messageInput.value =
-        '';
-
-
-      clearFeedback();
-
-
-      hideDictionaryTooltip(
-        0
-      );
-
-
+    if (!conversationEnded) {
       setComposerEnabled(
         true
       );
 
+      messageInput.focus();
+    }
 
-      messageInput.placeholder =
-        'Type your message in German...';
+  } catch (error) {
+    showError(
+      `Could not start the conversation: ${error.message}`
+    );
+
+    setComposerEnabled(
+      false
+    );
+
+  } finally {
+    startChatButton.disabled =
+      false;
+
+    startChatButton.textContent =
+      'Chat';
+  }
+}
 
 
-      showScreen(
-        homeScreen
-      );
+// ------------------------------------------------------
+// END CONVERSATION
+// ------------------------------------------------------
 
+function endConversation() {
+  history = [];
+
+  conversationEnded =
+    false;
+
+  messages.innerHTML =
+    '';
+
+  messageInput.value =
+    '';
+
+  clearFeedback();
+
+  hideDictionaryTooltip(0);
+
+  setComposerEnabled(true);
+
+  messageInput.placeholder =
+    'Type your message in German...';
+
+  showScreen(
+    homeScreen
+  );
+}
+
+
+// ------------------------------------------------------
+// PAGE EVENTS
+// ------------------------------------------------------
+
+document.addEventListener(
+  'click',
+  (event) => {
+    if (
+      !event.target.closest(
+        '.word-token'
+      )
+    ) {
+      hideDictionaryTooltip(0);
+    }
+  }
+);
+
+
+window.addEventListener(
+  'resize',
+  () => {
+    hideDictionaryTooltip(0);
+  }
+);
+
+
+messages.addEventListener(
+  'scroll',
+  () => {
+    hideDictionaryTooltip(0);
+  }
+);
+
+
+startChatButton.addEventListener(
+  'click',
+  startConversation
+);
+
+
+endChatButton.addEventListener(
+  'click',
+  endConversation
+);
+
+
+// ------------------------------------------------------
+// SEND USER MESSAGE
+// ------------------------------------------------------
+
+chatForm.addEventListener(
+  'submit',
+  async (event) => {
+    event.preventDefault();
+
+
+    if (conversationEnded) {
+      return;
     }
 
 
-    // ------------------------------------------------------
-    // PAGE EVENTS
-    // ------------------------------------------------------
+    const message =
+      messageInput
+        .value
+        .trim();
 
-    document.addEventListener(
-      'click',
-      (event) => {
 
-        if (
-          !event.target.closest(
-            '.word-token'
-          )
-        ) {
+    if (!message) {
+      return;
+    }
 
-          hideDictionaryTooltip(
-            0
-          );
 
-        }
+    const language =
+      languageSelect.value;
 
-      }
+    const scenario =
+      scenarioSelect.value;
+
+
+    const historyBeforeMessage =
+      [...history];
+
+
+    /*
+      User messages do not have LLM-generated
+      lookup metadata, so they fall back to
+      their visible surface words.
+    */
+
+    addMessage(
+      message,
+      'user'
     );
 
 
-    window.addEventListener(
-      'resize',
-      () => {
+    messageInput.value =
+      '';
 
-        hideDictionaryTooltip(
-          0
+    clearFeedback();
+
+    hideDictionaryTooltip(0);
+
+    setComposerEnabled(false);
+
+    sendButton.textContent =
+      'Sending...';
+
+
+    try {
+      const response =
+        await fetch(
+          `${API_BASE_URL}/api/chat`,
+          {
+            method: 'POST',
+
+            headers: {
+              'Content-Type':
+                'application/json'
+            },
+
+            body:
+              JSON.stringify({
+                language,
+                scenario,
+                message,
+                history:
+                  historyBeforeMessage
+              })
+          }
         );
 
-      }
-    );
 
-
-    messages.addEventListener(
-      'scroll',
-      () => {
-
-        hideDictionaryTooltip(
-          0
+      const data =
+        await readJsonResponse(
+          response
         );
 
-      }
-    );
+
+      history.push({
+        role: 'user',
+        content: message
+      });
 
 
-    startChatButton
-      .addEventListener(
-        'click',
-        startConversation
+      history.push({
+        role: 'assistant',
+        content: data.reply
+      });
+
+
+      /*
+        The visible German is unchanged.
+
+        The hidden lookup metadata is only
+        used when a learner hovers/taps a word.
+      */
+
+      addMessage(
+        data.reply,
+        'ai',
+        data.replyLookupForms,
+        data.replyPartsOfSpeech
       );
 
 
-    endChatButton
-      .addEventListener(
-        'click',
-        endConversation
+      showFeedback(
+        data.feedback
       );
 
 
-    // ------------------------------------------------------
-    // SEND MESSAGE
-    // ------------------------------------------------------
-
-    chatForm.addEventListener(
-      'submit',
-      async (event) => {
-
-        event.preventDefault();
-
-
-        if (
-          conversationEnded
-        ) {
-
-          return;
-
-        }
-
-
-        const message =
-          messageInput
-            .value
-            .trim();
-
-
-        if (!message) {
-          return;
-        }
-
-
-        const language =
-          languageSelect.value;
-
-
-        const scenario =
-          scenarioSelect.value;
-
-
-        /*
-          The newest user message is
-          deliberately NOT inserted into
-          history before the request.
-
-          The backend receives it separately
-          as "message", exactly as before.
-        */
-
-        const historyBeforeMessage =
-          [...history];
-
-
-        addMessage(
-          message,
-          'user'
+      conversationEnded =
+        Boolean(
+          data.conversationEnded
         );
 
 
-        messageInput.value =
-          '';
+      if (conversationEnded) {
+        messageInput.placeholder =
+          'Conversation ended.';
 
+        setComposerEnabled(false);
 
-        clearFeedback();
+      } else {
+        setComposerEnabled(true);
 
-
-        hideDictionaryTooltip(
-          0
-        );
-
-
-        setComposerEnabled(
-          false
-        );
-
-
-        sendButton.textContent =
-          'Sending...';
-
-
-        try {
-
-          const response =
-            await fetch(
-              `${API_BASE_URL}/api/chat`,
-              {
-                method:
-                  'POST',
-
-                headers: {
-                  'Content-Type':
-                    'application/json'
-                },
-
-                body:
-                  JSON.stringify({
-                    language,
-                    scenario,
-                    message,
-                    history:
-                      historyBeforeMessage
-                  })
-              }
-            );
-
-
-          const data =
-            await readJsonResponse(
-              response
-            );
-
-
-          history.push({
-            role:
-              'user',
-
-            content:
-              message
-          });
-
-
-          history.push({
-            role:
-              'assistant',
-
-            content:
-              data.reply
-          });
-
-
-          addMessage(
-            data.reply,
-            'ai'
-          );
-
-
-          showFeedback(
-            data.feedback
-          );
-
-
-          conversationEnded =
-            Boolean(
-              data.conversationEnded
-            );
-
-
-          if (
-            conversationEnded
-          ) {
-
-            messageInput.placeholder =
-              'Conversation ended.';
-
-
-            setComposerEnabled(
-              false
-            );
-
-          } else {
-
-            setComposerEnabled(
-              true
-            );
-
-
-            messageInput.focus();
-
-          }
-
-        } catch (error) {
-
-          showError(
-            `Could not get an AI response: ${error.message}`
-          );
-
-
-          setComposerEnabled(
-            true
-          );
-
-
-          messageInput.focus();
-
-        } finally {
-
-          sendButton.textContent =
-            'Send';
-
-
-          if (
-            conversationEnded
-          ) {
-
-            setComposerEnabled(
-              false
-            );
-
-          }
-
-        }
-
+        messageInput.focus();
       }
-    );
 
-  </script>
+    } catch (error) {
+      showError(
+        `Could not get an AI response: ${error.message}`
+      );
+
+      setComposerEnabled(true);
+
+      messageInput.focus();
+
+    } finally {
+      sendButton.textContent =
+        'Send';
+
+      if (conversationEnded) {
+        setComposerEnabled(false);
+      }
+    }
+  }
+);
+  
+</script>
 
 </body>
 </html>
