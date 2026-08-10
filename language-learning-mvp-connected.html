@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Language Learning</title>
+  <style>
+    :root {
+      --bg: #f4f7fb;
+      --surface: #ffffff;
+      --surface-soft: #f8fafc;
+      --text: #18212f;
+      --muted: #6f7b8c;
+      --border: #dce3ec;
+      --primary: #2856d8;
+      --primary-hover: #1e46b9;
+      --user-bubble: #2856d8;
+      --ai-bubble: #eef2f7;
+      --danger: #c73939;
+      --success: #267447;
+      --feedback-bg: #fffdf5;
+      --feedback-border: #eadfac;
+      --shadow: 0 18px 50px rgba(23, 35, 58, 0.09);
+      --radius: 20px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: linear-gradient(145deg, #f7f9fc 0%, #eef3fa 100%);
+      color: var(--text);
+    }
+
+    button,
+    select,
+    input {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    button:disabled,
+    input:disabled {
+      cursor: not-allowed;
+      opacity: 0.6;
+    }
+
+    .page {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 28px;
+    }
+
+    .app-shell {
+      width: min(1050px, 100%);
+      min-height: 680px;
+      background: var(--surface);
+      border: 1px solid rgba(220, 227, 236, 0.9);
+      border-radius: 28px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .screen {
+      display: none;
+      min-height: 680px;
+    }
+
+    .screen.active {
+      display: flex;
+    }
+
+    /* Home screen */
+    #homeScreen {
+      align-items: center;
+      justify-content: center;
+      padding: 56px 28px;
+    }
+
+    .home-card {
+      width: min(560px, 100%);
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 14px;
+      color: var(--primary);
+      font-size: 0.86rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2.3rem, 5vw, 4rem);
+      line-height: 1;
+      letter-spacing: -0.045em;
+    }
+
+    .intro {
+      margin: 18px 0 36px;
+      color: var(--muted);
+      font-size: 1.05rem;
+      line-height: 1.65;
+    }
+
+    .field {
+      margin-bottom: 22px;
+    }
+
+    .field label {
+      display: block;
+      margin-bottom: 9px;
+      font-size: 0.92rem;
+      font-weight: 700;
+    }
+
+    .select-wrap {
+      position: relative;
+    }
+
+    select {
+      width: 100%;
+      appearance: none;
+      padding: 15px 46px 15px 16px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: var(--surface);
+      color: var(--text);
+      outline: none;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    select:focus,
+    input:focus {
+      border-color: rgba(40, 86, 216, 0.65);
+      box-shadow: 0 0 0 4px rgba(40, 86, 216, 0.10);
+    }
+
+    .select-wrap::after {
+      content: "⌄";
+      position: absolute;
+      right: 16px;
+      top: 50%;
+      transform: translateY(-55%);
+      color: var(--muted);
+      pointer-events: none;
+      font-size: 1.1rem;
+    }
+
+    .primary-btn {
+      width: 100%;
+      border: none;
+      border-radius: 14px;
+      padding: 15px 18px;
+      background: var(--primary);
+      color: #fff;
+      font-weight: 750;
+      font-size: 1rem;
+      transition: background 0.2s ease, transform 0.15s ease;
+    }
+
+    .primary-btn:hover:not(:disabled) {
+      background: var(--primary-hover);
+    }
+
+    .primary-btn:active {
+      transform: translateY(1px);
+    }
+
+    /* Chat screen */
+    #chatScreen {
+      flex-direction: column;
+    }
+
+    .chat-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.96);
+    }
+
+    .chat-heading {
+      min-width: 0;
+    }
+
+    .chat-heading h2 {
+      margin: 0 0 5px;
+      font-size: 1.18rem;
+    }
+
+    .chat-heading p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.91rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .secondary-btn {
+      flex: 0 0 auto;
+      border: 1px solid #ecd1d1;
+      border-radius: 11px;
+      padding: 10px 14px;
+      background: #fffafa;
+      color: var(--danger);
+      font-weight: 700;
+    }
+
+    .secondary-btn:hover {
+      background: #fff2f2;
+    }
+
+    .chat-main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      background: var(--surface-soft);
+    }
+
+    .messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 30px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .message-row {
+      display: flex;
+      width: 100%;
+    }
+
+    .message-row.ai {
+      justify-content: flex-start;
+    }
+
+    .message-row.user {
+      justify-content: flex-end;
+    }
+
+    .message {
+      max-width: min(70%, 620px);
+      padding: 13px 16px;
+      border-radius: 16px;
+      line-height: 1.5;
+      word-wrap: break-word;
+    }
+
+    .message-row.ai .message {
+      background: var(--ai-bubble);
+      color: var(--text);
+      border-bottom-left-radius: 5px;
+    }
+
+    .message-row.user .message {
+      background: var(--user-bubble);
+      color: #fff;
+      border-bottom-right-radius: 5px;
+    }
+
+    .feedback-panel {
+      margin: 0 22px 14px;
+      padding: 14px 16px;
+      border: 1px solid var(--feedback-border);
+      border-radius: 14px;
+      background: var(--feedback-bg);
+    }
+
+    .feedback-panel.hidden {
+      display: none;
+    }
+
+    .feedback-title {
+      margin-bottom: 7px;
+      font-size: 0.82rem;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .feedback-panel p {
+      margin: 5px 0;
+      line-height: 1.5;
+    }
+
+    .feedback-ok {
+      color: var(--success);
+      font-weight: 700;
+    }
+
+    .feedback-error {
+      color: var(--danger);
+      font-weight: 700;
+    }
+
+    .composer {
+      display: flex;
+      gap: 12px;
+      padding: 18px 22px 22px;
+      border-top: 1px solid var(--border);
+      background: #fff;
+    }
+
+    .composer input {
+      flex: 1;
+      min-width: 0;
+      padding: 14px 16px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      outline: none;
+    }
+
+    .send-btn {
+      border: none;
+      border-radius: 14px;
+      padding: 0 20px;
+      background: var(--primary);
+      color: #fff;
+      font-weight: 750;
+    }
+
+    .send-btn:hover:not(:disabled) {
+      background: var(--primary-hover);
+    }
+
+    @media (max-width: 700px) {
+      .page {
+        padding: 0;
+      }
+
+      .app-shell,
+      .screen {
+        min-height: 100vh;
+        border-radius: 0;
+      }
+
+      #homeScreen {
+        padding: 34px 22px;
+      }
+
+      .chat-header {
+        align-items: flex-start;
+      }
+
+      .message {
+        max-width: 86%;
+      }
+
+      .messages {
+        padding: 22px 16px;
+      }
+
+      .feedback-panel {
+        margin: 0 14px 12px;
+      }
+
+      .composer {
+        padding: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="app-shell">
+      <!-- HOME / SELECTION SCREEN -->
+      <section id="homeScreen" class="screen active">
+        <div class="home-card">
+          <div class="eyebrow">Conversation practice</div>
+          <h1>Language Learning</h1>
+          <p class="intro">
+            Choose your language and a real-world scenario, then practise through a simple conversation.
+          </p>
+
+          <div class="field">
+            <label for="languageSelect">Language</label>
+            <div class="select-wrap">
+              <select id="languageSelect">
+                <option value="german">German</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="scenarioSelect">Scenario</label>
+            <div class="select-wrap">
+              <select id="scenarioSelect">
+                <option value="coffee">Ordering a coffee</option>
+                <option value="weekend">Talking about your weekend with a colleague</option>
+                <option value="directions">Giving a stranger directions</option>
+              </select>
+            </div>
+          </div>
+
+          <button id="startChatButton" class="primary-btn">Chat</button>
+        </div>
+      </section>
+
+      <!-- CHAT SCREEN -->
+      <section id="chatScreen" class="screen">
+        <header class="chat-header">
+          <div class="chat-heading">
+            <h2>German conversation</h2>
+            <p id="scenarioLabel">Scenario</p>
+          </div>
+          <button id="endChatButton" class="secondary-btn">End conversation</button>
+        </header>
+
+        <div class="chat-main">
+          <div id="messages" class="messages" aria-live="polite"></div>
+
+          <section id="feedbackPanel" class="feedback-panel hidden" aria-live="polite">
+            <div class="feedback-title">Feedback on your last message</div>
+            <div id="feedbackContent"></div>
+          </section>
+
+          <form id="chatForm" class="composer">
+            <input
+              id="messageInput"
+              type="text"
+              autocomplete="off"
+              placeholder="Type your message in German..."
+              aria-label="Chat message"
+            />
+            <button id="sendButton" class="send-btn" type="submit">Send</button>
+          </form>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <script>
+    const API_BASE_URL = 'https://learning-german.onrender.com';
+
+    const homeScreen = document.getElementById('homeScreen');
+    const chatScreen = document.getElementById('chatScreen');
+    const startChatButton = document.getElementById('startChatButton');
+    const endChatButton = document.getElementById('endChatButton');
+    const languageSelect = document.getElementById('languageSelect');
+    const scenarioSelect = document.getElementById('scenarioSelect');
+    const scenarioLabel = document.getElementById('scenarioLabel');
+    const chatForm = document.getElementById('chatForm');
+    const messageInput = document.getElementById('messageInput');
+    const sendButton = document.getElementById('sendButton');
+    const messages = document.getElementById('messages');
+    const feedbackPanel = document.getElementById('feedbackPanel');
+    const feedbackContent = document.getElementById('feedbackContent');
+
+    let history = [];
+    let conversationEnded = false;
+
+    function showScreen(screenToShow) {
+      homeScreen.classList.remove('active');
+      chatScreen.classList.remove('active');
+      screenToShow.classList.add('active');
+    }
+
+    function addMessage(text, sender) {
+      const row = document.createElement('div');
+      row.className = `message-row ${sender}`;
+
+      const bubble = document.createElement('div');
+      bubble.className = 'message';
+      bubble.textContent = text;
+
+      row.appendChild(bubble);
+      messages.appendChild(row);
+      messages.scrollTop = messages.scrollHeight;
+    }
+
+    function clearFeedback() {
+      feedbackContent.innerHTML = '';
+      feedbackPanel.classList.add('hidden');
+    }
+
+    function showFeedback(feedback) {
+      feedbackContent.innerHTML = '';
+      feedbackPanel.classList.remove('hidden');
+
+      if (!feedback || feedback.hasIssues === false) {
+        const text = document.createElement('p');
+        text.className = 'feedback-ok';
+        text.textContent = feedback?.explanation || 'No correction needed.';
+        feedbackContent.appendChild(text);
+        return;
+      }
+
+      const correction = document.createElement('p');
+      const correctionLabel = document.createElement('strong');
+      correctionLabel.textContent = 'Correction: ';
+      correction.appendChild(correctionLabel);
+      correction.appendChild(
+        document.createTextNode(feedback.correctedVersion || '')
+      );
+
+      const explanation = document.createElement('p');
+      explanation.textContent = feedback.explanation || '';
+
+      feedbackContent.appendChild(correction);
+      feedbackContent.appendChild(explanation);
+    }
+
+    function showError(message) {
+      feedbackContent.innerHTML = '';
+      feedbackPanel.classList.remove('hidden');
+
+      const text = document.createElement('p');
+      text.className = 'feedback-error';
+      text.textContent = message;
+
+      feedbackContent.appendChild(text);
+    }
+
+    function setComposerEnabled(enabled) {
+      messageInput.disabled = !enabled;
+      sendButton.disabled = !enabled;
+    }
+
+    async function readJsonResponse(response) {
+      let data;
+
+      try {
+        data = await response.json();
+      } catch {
+        throw new Error('The server returned an invalid response.');
+      }
+
+      if (!response.ok) {
+        throw new Error(data.error || 'The request failed.');
+      }
+
+      return data;
+    }
+
+    async function startConversation() {
+      const language = languageSelect.value;
+      const scenario = scenarioSelect.value;
+      const scenarioName = scenarioSelect.options[scenarioSelect.selectedIndex].text;
+
+      scenarioLabel.textContent = scenarioName;
+      messages.innerHTML = '';
+      clearFeedback();
+      history = [];
+      conversationEnded = false;
+
+      startChatButton.disabled = true;
+      startChatButton.textContent = 'Starting...';
+
+      showScreen(chatScreen);
+      setComposerEnabled(false);
+
+      try {
+        const response = await fetch(`${API_BASE_URL}/api/start`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            language,
+            scenario
+          })
+        });
+
+        const data = await readJsonResponse(response);
+
+        addMessage(data.reply, 'ai');
+
+        history.push({
+          role: 'assistant',
+          content: data.reply
+        });
+
+        conversationEnded = Boolean(data.conversationEnded);
+
+        if (!conversationEnded) {
+          setComposerEnabled(true);
+          messageInput.focus();
+        }
+      } catch (error) {
+        showError(`Could not start the conversation: ${error.message}`);
+        setComposerEnabled(false);
+      } finally {
+        startChatButton.disabled = false;
+        startChatButton.textContent = 'Chat';
+      }
+    }
+
+    function endConversation() {
+      history = [];
+      conversationEnded = false;
+      messages.innerHTML = '';
+      messageInput.value = '';
+      clearFeedback();
+      setComposerEnabled(true);
+      messageInput.placeholder = 'Type your message in German...';
+      showScreen(homeScreen);
+    }
+
+    startChatButton.addEventListener('click', startConversation);
+    endChatButton.addEventListener('click', endConversation);
+
+    chatForm.addEventListener('submit', async (event) => {
+      event.preventDefault();
+
+      if (conversationEnded) {
+        return;
+      }
+
+      const message = messageInput.value.trim();
+      if (!message) {
+        return;
+      }
+
+      const language = languageSelect.value;
+      const scenario = scenarioSelect.value;
+
+      // The backend expects history to exclude the newest user message.
+      const historyBeforeMessage = [...history];
+
+      addMessage(message, 'user');
+      messageInput.value = '';
+      clearFeedback();
+      setComposerEnabled(false);
+      sendButton.textContent = 'Sending...';
+
+      try {
+        const response = await fetch(`${API_BASE_URL}/api/chat`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            language,
+            scenario,
+            message,
+            history: historyBeforeMessage
+          })
+        });
+
+        const data = await readJsonResponse(response);
+
+        history.push({
+          role: 'user',
+          content: message
+        });
+
+        history.push({
+          role: 'assistant',
+          content: data.reply
+        });
+
+        addMessage(data.reply, 'ai');
+        showFeedback(data.feedback);
+
+        conversationEnded = Boolean(data.conversationEnded);
+
+        if (conversationEnded) {
+          messageInput.placeholder = 'Conversation ended.';
+          setComposerEnabled(false);
+        } else {
+          setComposerEnabled(true);
+          messageInput.focus();
+        }
+      } catch (error) {
+        showError(`Could not get an AI response: ${error.message}`);
+        setComposerEnabled(true);
+        messageInput.focus();
+      } finally {
+        sendButton.textContent = 'Send';
+
+        if (conversationEnded) {
+          setComposerEnabled(false);
+        }
+      }
+    });
+  </script>
+</body>
+</html>
