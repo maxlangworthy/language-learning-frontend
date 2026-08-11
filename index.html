@@ -175,9 +175,6 @@
     }
 
 
-    /* HOME */
-
-
     #homeScreen {
       align-items:
         center;
@@ -508,9 +505,6 @@
     }
 
 
-    /* CHAT */
-
-
     #chatScreen {
       flex-direction:
         column;
@@ -710,9 +704,6 @@
     }
 
 
-    /* GENERATED EXAMPLE */
-
-
     .example-label {
       margin-bottom:
         4px;
@@ -771,9 +762,6 @@
     }
 
 
-    /* WORDS */
-
-
     .word-token {
       border-bottom:
         1px dotted
@@ -809,7 +797,7 @@
     }
 
 
-    /* TOOLTIP */
+    /* DICTIONARY TOOLTIP */
 
 
     .dictionary-tooltip {
@@ -827,14 +815,14 @@
 
       max-width:
         min(
-          320px,
+          360px,
           calc(
             100vw - 24px
           )
         );
 
       padding:
-        11px 13px;
+        12px 14px;
 
       border:
         1px solid
@@ -882,10 +870,10 @@
 
     .tooltip-word {
       margin-bottom:
-        3px;
+        6px;
 
       font-size:
-        0.92rem;
+        0.95rem;
 
       font-weight:
         800;
@@ -903,9 +891,47 @@
     }
 
 
+    .tooltip-senses {
+      margin:
+        0;
+
+      padding-left:
+        20px;
+    }
+
+
+    .tooltip-senses li {
+      margin:
+        4px 0;
+
+      padding-left:
+        2px;
+    }
+
+
+    .tooltip-tags {
+      margin-left:
+        5px;
+
+      color:
+        rgba(
+          255,
+          255,
+          255,
+          0.62
+        );
+
+      font-size:
+        0.78rem;
+
+      font-style:
+        italic;
+    }
+
+
     .dictionary-meta {
       margin-top:
-        5px;
+        7px;
 
       color:
         rgba(
@@ -918,9 +944,6 @@
       font-size:
         0.77rem;
     }
-
-
-    /* FEEDBACK */
 
 
     .feedback-panel {
@@ -988,9 +1011,6 @@
       font-weight:
         700;
     }
-
-
-    /* COMPOSER */
 
 
     .composer {
@@ -1094,9 +1114,6 @@
     }
 
 
-    /* ATTRIBUTION */
-
-
     .data-credit {
       margin:
         18px 0 0;
@@ -1137,9 +1154,6 @@
       background:
         #fff;
     }
-
-
-    /* MOBILE */
 
 
     @media (
@@ -1248,9 +1262,6 @@
     <section class="app-shell">
 
 
-      <!-- HOME -->
-
-
       <section
         id="homeScreen"
         class="screen active"
@@ -1320,9 +1331,6 @@
 
 
           </div>
-
-
-          <!-- LANGUAGE LEVEL -->
 
 
           <div class="field">
@@ -1418,9 +1426,6 @@
 
 
           </div>
-
-
-          <!-- CUSTOM SCENARIO -->
 
 
           <div
@@ -1534,9 +1539,6 @@
       </section>
 
 
-      <!-- CHAT -->
-
-
       <section
         id="chatScreen"
         class="screen"
@@ -1548,15 +1550,21 @@
         >
 
 
-          <div class="chat-heading">
+          <div
+            class="chat-heading"
+          >
 
 
-            <h2 id="chatTitle">
+            <h2
+              id="chatTitle"
+            >
               Conversation
             </h2>
 
 
-            <p id="scenarioLabel">
+            <p
+              id="scenarioLabel"
+            >
               Scenario
             </p>
 
@@ -1575,7 +1583,9 @@
         </header>
 
 
-        <div class="chat-main">
+        <div
+          class="chat-main"
+        >
 
 
           <div
@@ -1592,7 +1602,9 @@
           >
 
 
-            <div class="feedback-title">
+            <div
+              class="feedback-title"
+            >
               Feedback on your last message
             </div>
 
@@ -1705,11 +1717,6 @@
 
     const MAX_CUSTOM_SCENARIO_LENGTH =
       2000;
-
-
-    // ----------------------------------------------------
-    // ELEMENTS
-    // ----------------------------------------------------
 
 
     const homeScreen =
@@ -1838,11 +1845,6 @@
       );
 
 
-    // ----------------------------------------------------
-    // STATE
-    // ----------------------------------------------------
-
-
     let history =
       [];
 
@@ -1888,13 +1890,14 @@
 
 
     // ----------------------------------------------------
-    // GENERAL
+    // General
     // ----------------------------------------------------
 
 
     function showScreen(
       screenToShow
     ) {
+
       homeScreen
         .classList
         .remove(
@@ -1914,66 +1917,79 @@
         .add(
           "active"
         );
+
     }
 
 
     function getSelectedLanguageName() {
+
       return languageSelect
         .options[
           languageSelect
             .selectedIndex
         ]
         .text;
+
     }
 
 
     function getSelectedLevelLabel() {
+
       return levelSelect
         .options[
           levelSelect
             .selectedIndex
         ]
         .text;
+
     }
 
 
     async function readJsonResponse(
       response
     ) {
+
       let data;
 
 
       try {
+
         data =
           await response.json();
 
       } catch {
+
         throw new Error(
           "The server returned an invalid response."
         );
+
       }
 
 
       if (
         !response.ok
       ) {
+
         throw new Error(
           data.error ||
           "The request failed."
         );
+
       }
 
 
       return data;
+
     }
 
 
     // ----------------------------------------------------
-    // CUSTOM SCENARIO
+    // Custom scenario
     // ----------------------------------------------------
 
 
     function updateCustomScenarioUI() {
+
       const isCustom =
         scenarioSelect.value ===
         "custom";
@@ -1990,14 +2006,18 @@
       if (
         !isCustom
       ) {
+
         customScenarioError
           .textContent =
             "";
+
       }
+
     }
 
 
     function updateCustomScenarioCounter() {
+
       const length =
         customScenarioInput
           .value
@@ -2014,15 +2034,20 @@
           .value
           .trim()
       ) {
+
         customScenarioError
           .textContent =
             "";
+
       }
+
     }
 
 
     function getActiveConversationPayload() {
+
       const payload = {
+
         language:
           activeLanguageId,
 
@@ -2031,6 +2056,7 @@
 
         scenario:
           activeScenarioKey,
+
       };
 
 
@@ -2038,37 +2064,44 @@
         activeScenarioKey ===
         "custom"
       ) {
+
         payload.customScenario =
           activeCustomScenario;
+
       }
 
 
       return payload;
+
     }
 
 
     // ----------------------------------------------------
-    // DICTIONARY
+    // Dictionary
     // ----------------------------------------------------
 
 
     function normalizeDictionaryKey(
       word
     ) {
+
       return word
         .normalize(
           "NFC"
         )
         .toLocaleLowerCase();
+
     }
 
 
     function splitLanguageText(
       text
     ) {
+
       return text.split(
         /(\p{L}[\p{L}\p{M}'’-]*)/gu
       );
+
     }
 
 
@@ -2078,6 +2111,7 @@
       partOfSpeech =
         ""
     ) {
+
       const cacheKey =
         `${languageId}|${normalizeDictionaryKey(
           lookupWord
@@ -2089,9 +2123,11 @@
           cacheKey
         )
       ) {
+
         return dictionaryCache.get(
           cacheKey
         );
+
       }
 
 
@@ -2110,10 +2146,12 @@
         partOfSpeech !==
           "other"
       ) {
+
         url +=
           `&pos=${encodeURIComponent(
             partOfSpeech
           )}`;
+
       }
 
 
@@ -2126,6 +2164,7 @@
           )
           .catch(
             () => ({
+
               language:
                 languageId,
 
@@ -2137,6 +2176,7 @@
 
               entries:
                 [],
+
             })
           );
 
@@ -2148,17 +2188,19 @@
 
 
       return request;
+
     }
 
 
     // ----------------------------------------------------
-    // TOOLTIP
+    // Tooltip
     // ----------------------------------------------------
 
 
     function positionDictionaryTooltip(
       target
     ) {
+
       const targetRect =
         target
           .getBoundingClientRect();
@@ -2200,11 +2242,14 @@
 
 
       if (
-        top < 10
+        top <
+        10
       ) {
+
         top =
           targetRect.bottom +
           margin;
+
       }
 
 
@@ -2218,12 +2263,14 @@
         .style
         .top =
           `${top}px`;
+
     }
 
 
     function showTooltipLoading(
       surfaceWord
     ) {
+
       dictionaryTooltip
         .innerHTML =
           "";
@@ -2261,6 +2308,110 @@
         title,
         loading
       );
+
+    }
+
+
+    /*
+      New dictionary format:
+
+      senses: [
+        {
+          meaning: "milk",
+          tags: []
+        },
+        {
+          meaning: "cum, semen",
+          tags: ["slang", "vulgar"]
+        }
+      ]
+    */
+
+    function getDisplaySenses(
+      entry
+    ) {
+
+      if (
+        Array.isArray(
+          entry?.senses
+        ) &&
+        entry.senses.length >
+          0
+      ) {
+
+        return entry.senses
+          .filter(
+            (
+              sense
+            ) =>
+              sense &&
+              typeof sense.meaning ===
+                "string" &&
+              sense.meaning.trim()
+          )
+          .map(
+            (
+              sense
+            ) => ({
+
+              meaning:
+                sense.meaning
+                  .trim(),
+
+              tags:
+                Array.isArray(
+                  sense.tags
+                )
+                  ? sense.tags.filter(
+                      (
+                        tag
+                      ) =>
+                        typeof tag ===
+                          "string" &&
+                        tag.trim()
+                    )
+                  : [],
+
+            })
+          );
+
+      }
+
+
+      /*
+        Backwards compatibility with
+        old API responses.
+      */
+
+      return (
+        Array.isArray(
+          entry?.meanings
+        )
+          ? entry.meanings
+          : []
+      )
+        .filter(
+          (
+            meaning
+          ) =>
+            typeof meaning ===
+              "string" &&
+            meaning.trim()
+        )
+        .map(
+          (
+            meaning
+          ) => ({
+
+            meaning:
+              meaning.trim(),
+
+            tags:
+              [],
+
+          })
+        );
+
     }
 
 
@@ -2269,6 +2420,7 @@
       surfaceWord,
       lookupWord
     ) {
+
       dictionaryTooltip
         .innerHTML =
           "";
@@ -2302,6 +2454,7 @@
         data.entries.length ===
           0
       ) {
+
         const unavailable =
           document.createElement(
             "div"
@@ -2323,6 +2476,7 @@
 
 
         return;
+
       }
 
 
@@ -2332,40 +2486,120 @@
         ];
 
 
-      const meanings =
-        Array.isArray(
-          entry.meanings
-        )
-          ? entry.meanings
-          : [];
-
-
-      const meaning =
-        document.createElement(
-          "div"
+      const senses =
+        getDisplaySenses(
+          entry
+        ).slice(
+          0,
+          5
         );
 
 
-      meaning.className =
-        "tooltip-meaning";
+      if (
+        senses.length ===
+        0
+      ) {
+
+        const unavailable =
+          document.createElement(
+            "div"
+          );
 
 
-      meaning.textContent =
-        meanings
-          .slice(
-            0,
-            3
-          )
-          .join(
-            "; "
-          ) ||
-        "Meaning unavailable.";
+        unavailable.className =
+          "tooltip-meaning";
 
 
-      dictionaryTooltip
-        .appendChild(
-          meaning
-        );
+        unavailable.textContent =
+          "Meaning unavailable.";
+
+
+        dictionaryTooltip
+          .appendChild(
+            unavailable
+          );
+
+      } else {
+
+        const list =
+          document.createElement(
+            "ol"
+          );
+
+
+        list.className =
+          "tooltip-senses";
+
+
+        for (
+          const sense
+          of senses
+        ) {
+
+          const item =
+            document.createElement(
+              "li"
+            );
+
+
+          const meaning =
+            document.createElement(
+              "span"
+            );
+
+
+          meaning.className =
+            "tooltip-meaning";
+
+
+          meaning.textContent =
+            sense.meaning;
+
+
+          item.appendChild(
+            meaning
+          );
+
+
+          if (
+            sense.tags.length >
+            0
+          ) {
+
+            const tags =
+              document.createElement(
+                "span"
+              );
+
+
+            tags.className =
+              "tooltip-tags";
+
+
+            tags.textContent =
+              `(${sense.tags.join(", ")})`;
+
+
+            item.appendChild(
+              tags
+            );
+
+          }
+
+
+          list.appendChild(
+            item
+          );
+
+        }
+
+
+        dictionaryTooltip
+          .appendChild(
+            list
+          );
+
+      }
 
 
       const metaParts =
@@ -2381,9 +2615,11 @@
           surfaceWord
         )
       ) {
+
         metaParts.push(
           `from ${lookupWord}`
         );
+
       }
 
 
@@ -2392,9 +2628,11 @@
         entry.partOfSpeech !==
           "unknown"
       ) {
+
         metaParts.push(
           entry.partOfSpeech
         );
+
       }
 
 
@@ -2402,6 +2640,7 @@
         metaParts.length >
         0
       ) {
+
         const meta =
           document.createElement(
             "div"
@@ -2422,7 +2661,9 @@
           .appendChild(
             meta
           );
+
       }
+
     }
 
 
@@ -2435,6 +2676,7 @@
       partOfSpeech =
         ""
     ) {
+
       clearTimeout(
         tooltipHideTimer
       );
@@ -2479,7 +2721,9 @@
         activeDictionaryWord !==
           target
       ) {
+
         return;
+
       }
 
 
@@ -2493,6 +2737,7 @@
       positionDictionaryTooltip(
         target
       );
+
     }
 
 
@@ -2500,6 +2745,7 @@
       delay =
         80
     ) {
+
       clearTimeout(
         tooltipHideTimer
       );
@@ -2508,6 +2754,7 @@
       tooltipHideTimer =
         setTimeout(
           () => {
+
             tooltipRequestToken +=
               1;
 
@@ -2521,20 +2768,23 @@
               .remove(
                 "visible"
               );
+
           },
           delay
         );
+
     }
 
 
     // ----------------------------------------------------
-    // WORD METADATA
+    // Word metadata
     // ----------------------------------------------------
 
 
     function createWordMetadataMatcher(
       replyWords
     ) {
+
       const metadata =
         Array.isArray(
           replyWords
@@ -2550,6 +2800,7 @@
       return function getMetadataForWord(
         visibleWord
       ) {
+
         const visibleKey =
           normalizeDictionaryKey(
             visibleWord
@@ -2566,6 +2817,7 @@
           i +=
             1
         ) {
+
           const item =
             metadata[i];
 
@@ -2575,25 +2827,25 @@
             typeof item.surface !==
               "string"
           ) {
+
             continue;
+
           }
 
 
-          const surfaceKey =
+          if (
             normalizeDictionaryKey(
               item.surface
-            );
-
-
-          if (
-            surfaceKey ===
+            ) ===
             visibleKey
           ) {
+
             cursor =
               i + 1;
 
 
             return {
+
               lookup:
                 typeof item.lookup ===
                   "string" &&
@@ -2606,25 +2858,27 @@
                   "string"
                   ? item.pos
                   : "other",
+
             };
+
           }
+
         }
 
 
         return {
+
           lookup:
             visibleWord,
 
           pos:
             "other",
+
         };
+
       };
+
     }
-
-
-    // ----------------------------------------------------
-    // INTERACTIVE TEXT
-    // ----------------------------------------------------
 
 
     function appendInteractiveLanguageText(
@@ -2634,6 +2888,7 @@
       replyWords =
         []
     ) {
+
       const parts =
         splitLanguageText(
           text
@@ -2650,10 +2905,13 @@
         const part
         of parts
       ) {
+
         if (
           !part
         ) {
+
           continue;
+
         }
 
 
@@ -2667,6 +2925,7 @@
         if (
           !isWord
         ) {
+
           container
             .appendChild(
               document
@@ -2677,6 +2936,7 @@
 
 
           continue;
+
         }
 
 
@@ -2684,14 +2944,6 @@
           getMetadataForWord(
             part
           );
-
-
-        const lookupWord =
-          metadata.lookup;
-
-
-        const partOfSpeech =
-          metadata.pos;
 
 
         const word =
@@ -2721,6 +2973,7 @@
         word.addEventListener(
           "mouseenter",
           () => {
+
             clearTimeout(
               tooltipHoverTimer
             );
@@ -2729,16 +2982,19 @@
             tooltipHoverTimer =
               setTimeout(
                 () => {
+
                   openDictionaryTooltip(
                     word,
                     languageId,
                     part,
-                    lookupWord,
-                    partOfSpeech
+                    metadata.lookup,
+                    metadata.pos
                   );
+
                 },
                 120
               );
+
           }
         );
 
@@ -2746,12 +3002,14 @@
         word.addEventListener(
           "mouseleave",
           () => {
+
             clearTimeout(
               tooltipHoverTimer
             );
 
 
             hideDictionaryTooltip();
+
           }
         );
 
@@ -2759,13 +3017,15 @@
         word.addEventListener(
           "focus",
           () => {
+
             openDictionaryTooltip(
               word,
               languageId,
               part,
-              lookupWord,
-              partOfSpeech
+              metadata.lookup,
+              metadata.pos
             );
+
           }
         );
 
@@ -2773,7 +3033,9 @@
         word.addEventListener(
           "blur",
           () => {
+
             hideDictionaryTooltip();
+
           }
         );
 
@@ -2783,6 +3045,7 @@
           (
             event
           ) => {
+
             event.stopPropagation();
 
 
@@ -2790,9 +3053,10 @@
               word,
               languageId,
               part,
-              lookupWord,
-              partOfSpeech
+              metadata.lookup,
+              metadata.pos
             );
+
           }
         );
 
@@ -2800,12 +3064,14 @@
         container.appendChild(
           word
         );
+
       }
+
     }
 
 
     // ----------------------------------------------------
-    // MESSAGE DISPLAY
+    // Messages
     // ----------------------------------------------------
 
 
@@ -2818,6 +3084,7 @@
       options =
         {}
     ) {
+
       const row =
         document.createElement(
           "div"
@@ -2841,6 +3108,7 @@
       if (
         options.isExample
       ) {
+
         const label =
           document.createElement(
             "div"
@@ -2858,6 +3126,7 @@
         bubble.appendChild(
           label
         );
+
       }
 
 
@@ -2883,6 +3152,7 @@
       if (
         options.translation
       ) {
+
         const translation =
           document.createElement(
             "div"
@@ -2900,6 +3170,7 @@
         bubble.appendChild(
           translation
         );
+
       }
 
 
@@ -2915,15 +3186,17 @@
 
       messages.scrollTop =
         messages.scrollHeight;
+
     }
 
 
     // ----------------------------------------------------
-    // FEEDBACK
+    // Feedback
     // ----------------------------------------------------
 
 
     function clearFeedback() {
+
       feedbackContent
         .innerHTML =
           "";
@@ -2934,12 +3207,14 @@
         .add(
           "hidden"
         );
+
     }
 
 
     function showFeedback(
       feedback
     ) {
+
       feedbackContent
         .innerHTML =
           "";
@@ -2957,6 +3232,7 @@
         feedback.hasIssues ===
           false
       ) {
+
         const text =
           document.createElement(
             "p"
@@ -2979,6 +3255,7 @@
 
 
         return;
+
       }
 
 
@@ -3026,12 +3303,14 @@
         correction,
         explanation
       );
+
     }
 
 
     function showError(
       message
     ) {
+
       feedbackContent
         .innerHTML =
           "";
@@ -3062,17 +3341,14 @@
         .appendChild(
           text
         );
+
     }
-
-
-    // ----------------------------------------------------
-    // COMPOSER
-    // ----------------------------------------------------
 
 
     function setComposerEnabled(
       enabled
     ) {
+
       messageInput.disabled =
         !enabled;
 
@@ -3083,15 +3359,17 @@
 
       exampleButton.disabled =
         !enabled;
+
     }
 
 
     // ----------------------------------------------------
-    // START CONVERSATION
+    // Start conversation
     // ----------------------------------------------------
 
 
     async function startConversation() {
+
       const languageId =
         languageSelect.value;
 
@@ -3120,6 +3398,7 @@
         scenarioKey ===
         "custom"
       ) {
+
         customScenario =
           customScenarioInput
             .value
@@ -3129,6 +3408,7 @@
         if (
           !customScenario
         ) {
+
           customScenarioError
             .textContent =
               "Please describe the conversation you want to practise.";
@@ -3139,6 +3419,7 @@
 
 
           return;
+
         }
 
 
@@ -3146,13 +3427,16 @@
           customScenario.length >
           MAX_CUSTOM_SCENARIO_LENGTH
         ) {
+
           customScenarioError
             .textContent =
               "Your scenario is longer than 2,000 characters.";
 
 
           return;
+
         }
+
       }
 
 
@@ -3235,6 +3519,7 @@
 
 
       const requestBody = {
+
         language:
           languageId,
 
@@ -3243,6 +3528,7 @@
 
         scenario:
           scenarioKey,
+
       };
 
 
@@ -3250,16 +3536,20 @@
         scenarioKey ===
         "custom"
       ) {
+
         requestBody.customScenario =
           customScenario;
+
       }
 
 
       try {
+
         const response =
           await fetch(
             `${API_BASE_URL}/api/start`,
             {
+
               method:
                 "POST",
 
@@ -3272,6 +3562,7 @@
                 JSON.stringify(
                   requestBody
                 ),
+
             }
           );
 
@@ -3291,11 +3582,13 @@
 
 
         history.push({
+
           role:
             "assistant",
 
           content:
             data.reply,
+
         });
 
 
@@ -3308,17 +3601,20 @@
         if (
           !conversationEnded
         ) {
+
           setComposerEnabled(
             true
           );
 
 
           messageInput.focus();
+
         }
 
       } catch (
         error
       ) {
+
         showError(
           `Could not start the conversation: ${error.message}`
         );
@@ -3329,22 +3625,21 @@
         );
 
       } finally {
+
         startChatButton.disabled =
           false;
 
 
         startChatButton.textContent =
           "Chat";
+
       }
+
     }
 
 
-    // ----------------------------------------------------
-    // END CONVERSATION
-    // ----------------------------------------------------
-
-
     function endConversation() {
+
       history =
         [];
 
@@ -3405,28 +3700,34 @@
       showScreen(
         homeScreen
       );
+
     }
 
 
     // ----------------------------------------------------
-    // GENERATE EXAMPLE RESPONSE
+    // Generate example
     // ----------------------------------------------------
 
 
     async function generateExampleResponse() {
+
       if (
         conversationEnded
       ) {
+
         return;
+
       }
 
 
       const requestBody = {
+
         ...getActiveConversationPayload(),
 
         history: [
           ...history
         ],
+
       };
 
 
@@ -3448,10 +3749,12 @@
 
 
       try {
+
         const response =
           await fetch(
             `${API_BASE_URL}/api/example`,
             {
+
               method:
                 "POST",
 
@@ -3464,6 +3767,7 @@
                 JSON.stringify(
                   requestBody
                 ),
+
             }
           );
 
@@ -3480,30 +3784,36 @@
           activeLanguageId,
           data.exampleWords,
           {
+
             isExample:
               true,
 
             translation:
               data.exampleTranslation,
+
           }
         );
 
 
         history.push({
+
           role:
             "user",
 
           content:
             data.exampleMessage,
+
         });
 
 
         history.push({
+
           role:
             "assistant",
 
           content:
             data.reply,
+
         });
 
 
@@ -3524,6 +3834,7 @@
         if (
           conversationEnded
         ) {
+
           messageInput.placeholder =
             "Conversation ended.";
 
@@ -3533,17 +3844,20 @@
           );
 
         } else {
+
           setComposerEnabled(
             true
           );
 
 
           messageInput.focus();
+
         }
 
       } catch (
         error
       ) {
+
         showError(
           `Could not generate an example response: ${error.message}`
         );
@@ -3557,6 +3871,7 @@
         messageInput.focus();
 
       } finally {
+
         exampleButton.textContent =
           "Generate example response";
 
@@ -3564,16 +3879,20 @@
         if (
           conversationEnded
         ) {
+
           setComposerEnabled(
             false
           );
+
         }
+
       }
+
     }
 
 
     // ----------------------------------------------------
-    // EVENTS
+    // Events
     // ----------------------------------------------------
 
 
@@ -3581,6 +3900,7 @@
       .addEventListener(
         "change",
         () => {
+
           updateCustomScenarioUI();
 
 
@@ -3588,14 +3908,19 @@
             scenarioSelect.value ===
             "custom"
           ) {
+
             setTimeout(
               () => {
+
                 customScenarioInput
                   .focus();
+
               },
               0
             );
+
           }
+
         }
       );
 
@@ -3612,15 +3937,19 @@
       (
         event
       ) => {
+
         if (
           !event.target.closest(
             ".word-token"
           )
         ) {
+
           hideDictionaryTooltip(
             0
           );
+
         }
+
       }
     );
 
@@ -3628,9 +3957,11 @@
     window.addEventListener(
       "resize",
       () => {
+
         hideDictionaryTooltip(
           0
         );
+
       }
     );
 
@@ -3638,9 +3969,11 @@
     messages.addEventListener(
       "scroll",
       () => {
+
         hideDictionaryTooltip(
           0
         );
+
       }
     );
 
@@ -3667,7 +4000,7 @@
 
 
     // ----------------------------------------------------
-    // NORMAL USER MESSAGE
+    // Normal user message
     // ----------------------------------------------------
 
 
@@ -3676,13 +4009,16 @@
       async (
         event
       ) => {
+
         event.preventDefault();
 
 
         if (
           conversationEnded
         ) {
+
           return;
+
         }
 
 
@@ -3695,7 +4031,9 @@
         if (
           !message
         ) {
+
           return;
+
         }
 
 
@@ -3734,20 +4072,24 @@
 
 
         const requestBody = {
+
           ...getActiveConversationPayload(),
 
           message,
 
           history:
             historyBeforeMessage,
+
         };
 
 
         try {
+
           const response =
             await fetch(
               `${API_BASE_URL}/api/chat`,
               {
+
                 method:
                   "POST",
 
@@ -3760,6 +4102,7 @@
                   JSON.stringify(
                     requestBody
                   ),
+
               }
             );
 
@@ -3771,20 +4114,24 @@
 
 
           history.push({
+
             role:
               "user",
 
             content:
               message,
+
           });
 
 
           history.push({
+
             role:
               "assistant",
 
             content:
               data.reply,
+
           });
 
 
@@ -3810,6 +4157,7 @@
           if (
             conversationEnded
           ) {
+
             messageInput.placeholder =
               "Conversation ended.";
 
@@ -3819,17 +4167,20 @@
             );
 
           } else {
+
             setComposerEnabled(
               true
             );
 
 
             messageInput.focus();
+
           }
 
         } catch (
           error
         ) {
+
           showError(
             `Could not get an AI response: ${error.message}`
           );
@@ -3843,6 +4194,7 @@
           messageInput.focus();
 
         } finally {
+
           sendButton.textContent =
             "Send";
 
@@ -3850,18 +4202,17 @@
           if (
             conversationEnded
           ) {
+
             setComposerEnabled(
               false
             );
+
           }
+
         }
+
       }
     );
-
-
-    // ----------------------------------------------------
-    // INITIAL PAGE STATE
-    // ----------------------------------------------------
 
 
     updateCustomScenarioUI();
