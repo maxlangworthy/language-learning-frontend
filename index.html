@@ -31,31 +31,18 @@
       --success: #267447;
       --feedback-bg: #fffdf5;
       --feedback-border: #eadfac;
-
-      --shadow:
-        0 18px 50px
-        rgba(
-          23,
-          35,
-          58,
-          0.09
-        );
+      --shadow: 0 18px 50px rgba(23, 35, 58, 0.09);
     }
 
 
     * {
-      box-sizing:
-        border-box;
+      box-sizing: border-box;
     }
 
 
     body {
-      margin:
-        0;
-
-      min-height:
-        100vh;
-
+      margin: 0;
+      min-height: 100vh;
       font-family:
         Inter,
         ui-sans-serif,
@@ -64,16 +51,13 @@
         BlinkMacSystemFont,
         "Segoe UI",
         sans-serif;
-
       background:
         linear-gradient(
           145deg,
           #f7f9fc 0%,
           #eef3fa 100%
         );
-
-      color:
-        var(--text);
+      color: var(--text);
     }
 
 
@@ -81,232 +65,133 @@
     select,
     input,
     textarea {
-      font:
-        inherit;
+      font: inherit;
     }
 
 
     button {
-      cursor:
-        pointer;
+      cursor: pointer;
     }
 
 
     button:disabled,
     input:disabled,
     textarea:disabled {
-      cursor:
-        not-allowed;
-
-      opacity:
-        0.6;
+      cursor: not-allowed;
+      opacity: 0.6;
     }
 
 
     .hidden {
-      display:
-        none !important;
+      display: none !important;
     }
 
 
     .page {
-      min-height:
-        100vh;
-
-      display:
-        flex;
-
-      align-items:
-        center;
-
-      justify-content:
-        center;
-
-      padding:
-        28px;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 28px;
     }
 
 
     .app-shell {
-      width:
-        min(
-          1050px,
-          100%
-        );
-
-      min-height:
-        680px;
-
-      background:
-        var(--surface);
-
+      width: min(1050px, 100%);
+      min-height: 680px;
+      background: var(--surface);
       border:
         1px solid
-        rgba(
-          220,
-          227,
-          236,
-          0.9
-        );
-
-      border-radius:
-        28px;
-
-      box-shadow:
-        var(--shadow);
-
-      overflow:
-        hidden;
+        rgba(220, 227, 236, 0.9);
+      border-radius: 28px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
     }
 
 
     .screen {
-      display:
-        none;
-
-      min-height:
-        680px;
+      display: none;
+      min-height: 680px;
     }
 
 
     .screen.active {
-      display:
-        flex;
+      display: flex;
     }
 
 
     #homeScreen {
-      align-items:
-        center;
-
-      justify-content:
-        center;
-
-      padding:
-        56px 28px;
+      align-items: center;
+      justify-content: center;
+      padding: 56px 28px;
     }
 
 
     .home-card {
-      width:
-        min(
-          620px,
-          100%
-        );
+      width: min(620px, 100%);
     }
 
 
     .eyebrow {
-      display:
-        inline-flex;
-
-      margin-bottom:
-        14px;
-
-      color:
-        var(--primary);
-
-      font-size:
-        0.86rem;
-
-      font-weight:
-        700;
-
-      letter-spacing:
-        0.08em;
-
-      text-transform:
-        uppercase;
+      display: inline-flex;
+      margin-bottom: 14px;
+      color: var(--primary);
+      font-size: 0.86rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
     }
 
 
     h1 {
-      margin:
-        0;
-
+      margin: 0;
       font-size:
         clamp(
           2.3rem,
           5vw,
           4rem
         );
-
-      line-height:
-        1;
-
-      letter-spacing:
-        -0.045em;
+      line-height: 1;
+      letter-spacing: -0.045em;
     }
 
 
     .intro {
-      margin:
-        18px 0 36px;
-
-      color:
-        var(--muted);
-
-      font-size:
-        1.05rem;
-
-      line-height:
-        1.65;
+      margin: 18px 0 36px;
+      color: var(--muted);
+      font-size: 1.05rem;
+      line-height: 1.65;
     }
 
 
     .field {
-      margin-bottom:
-        22px;
+      margin-bottom: 22px;
     }
 
 
     .field label,
     .custom-scenario-panel label {
-      display:
-        block;
-
-      margin-bottom:
-        9px;
-
-      font-size:
-        0.92rem;
-
-      font-weight:
-        700;
+      display: block;
+      margin-bottom: 9px;
+      font-size: 0.92rem;
+      font-weight: 700;
     }
 
 
     .select-wrap {
-      position:
-        relative;
+      position: relative;
     }
 
 
     select {
-      width:
-        100%;
-
-      appearance:
-        none;
-
-      padding:
-        15px 46px 15px 16px;
-
-      border:
-        1px solid
-        var(--border);
-
-      border-radius:
-        14px;
-
-      background:
-        var(--surface);
-
-      color:
-        var(--text);
-
-      outline:
-        none;
+      width: 100%;
+      appearance: none;
+      padding: 15px 46px 15px 16px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: var(--surface);
+      color: var(--text);
+      outline: none;
     }
 
 
@@ -333,410 +218,210 @@
 
 
     .select-wrap::after {
-      content:
-        "⌄";
-
-      position:
-        absolute;
-
-      right:
-        16px;
-
-      top:
-        50%;
-
-      transform:
-        translateY(
-          -55%
-        );
-
-      color:
-        var(--muted);
-
-      pointer-events:
-        none;
+      content: "⌄";
+      position: absolute;
+      right: 16px;
+      top: 50%;
+      transform: translateY(-55%);
+      color: var(--muted);
+      pointer-events: none;
     }
 
 
     .custom-scenario-panel {
-      margin:
-        -4px 0 22px;
-
-      padding:
-        16px;
-
-      border:
-        1px solid
-        var(--border);
-
-      border-radius:
-        16px;
-
-      background:
-        var(--surface-soft);
+      margin: -4px 0 22px;
+      padding: 16px;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      background: var(--surface-soft);
     }
 
 
     .custom-scenario-help {
-      margin:
-        0 0 11px;
-
-      color:
-        var(--muted);
-
-      font-size:
-        0.84rem;
-
-      line-height:
-        1.45;
+      margin: 0 0 11px;
+      color: var(--muted);
+      font-size: 0.84rem;
+      line-height: 1.45;
     }
 
 
     .custom-scenario-panel textarea {
-      display:
-        block;
-
-      width:
-        100%;
-
-      min-height:
-        150px;
-
-      resize:
-        vertical;
-
-      padding:
-        14px 15px;
-
-      border:
-        1px solid
-        var(--border);
-
-      border-radius:
-        12px;
-
-      background:
-        #fff;
-
-      color:
-        var(--text);
-
-      line-height:
-        1.5;
-
-      outline:
-        none;
+      display: block;
+      width: 100%;
+      min-height: 150px;
+      resize: vertical;
+      padding: 14px 15px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: #fff;
+      color: var(--text);
+      line-height: 1.5;
+      outline: none;
     }
 
 
     .custom-scenario-footer {
-      display:
-        flex;
-
-      justify-content:
-        space-between;
-
-      gap:
-        12px;
-
-      margin-top:
-        7px;
-
-      min-height:
-        19px;
-
-      font-size:
-        0.78rem;
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: 7px;
+      min-height: 19px;
+      font-size: 0.78rem;
     }
 
 
     .custom-scenario-error {
-      color:
-        var(--danger);
-
-      font-weight:
-        650;
+      color: var(--danger);
+      font-weight: 650;
     }
 
 
     .character-counter {
-      margin-left:
-        auto;
-
-      color:
-        var(--muted);
-
-      white-space:
-        nowrap;
+      margin-left: auto;
+      color: var(--muted);
+      white-space: nowrap;
     }
 
 
     .primary-btn {
-      width:
-        100%;
-
-      border:
-        none;
-
-      border-radius:
-        14px;
-
-      padding:
-        15px 18px;
-
-      background:
-        var(--primary);
-
-      color:
-        #fff;
-
-      font-weight:
-        750;
-
-      font-size:
-        1rem;
+      width: 100%;
+      border: none;
+      border-radius: 14px;
+      padding: 15px 18px;
+      background: var(--primary);
+      color: #fff;
+      font-weight: 750;
+      font-size: 1rem;
     }
 
 
     .primary-btn:hover:not(:disabled),
     .send-btn:hover:not(:disabled) {
-      background:
-        var(--primary-hover);
+      background: var(--primary-hover);
     }
 
 
     #chatScreen {
-      flex-direction:
-        column;
+      flex-direction: column;
     }
 
 
     .chat-header {
-      display:
-        flex;
-
-      align-items:
-        center;
-
-      justify-content:
-        space-between;
-
-      gap:
-        20px;
-
-      padding:
-        20px 24px;
-
-      border-bottom:
-        1px solid
-        var(--border);
-
-      background:
-        rgba(
-          255,
-          255,
-          255,
-          0.96
-        );
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.96);
     }
 
 
     .chat-heading {
-      min-width:
-        0;
+      min-width: 0;
     }
 
 
     .chat-heading h2 {
-      margin:
-        0 0 5px;
-
-      font-size:
-        1.18rem;
+      margin: 0 0 5px;
+      font-size: 1.18rem;
     }
 
 
     .chat-heading p {
-      margin:
-        0;
-
-      color:
-        var(--muted);
-
-      font-size:
-        0.91rem;
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.91rem;
     }
 
 
     .secondary-btn {
-      flex:
-        0 0 auto;
-
-      border:
-        1px solid
-        #ecd1d1;
-
-      border-radius:
-        11px;
-
-      padding:
-        10px 14px;
-
-      background:
-        #fffafa;
-
-      color:
-        var(--danger);
-
-      font-weight:
-        700;
+      flex: 0 0 auto;
+      border: 1px solid #ecd1d1;
+      border-radius: 11px;
+      padding: 10px 14px;
+      background: #fffafa;
+      color: var(--danger);
+      font-weight: 700;
     }
 
 
     .secondary-btn:hover {
-      background:
-        #fff2f2;
+      background: #fff2f2;
     }
 
 
     .chat-main {
-      flex:
-        1;
-
-      display:
-        flex;
-
-      flex-direction:
-        column;
-
-      min-height:
-        0;
-
-      background:
-        var(--surface-soft);
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      background: var(--surface-soft);
     }
 
 
     .messages {
-      flex:
-        1;
-
-      overflow-y:
-        auto;
-
-      padding:
-        30px;
-
-      display:
-        flex;
-
-      flex-direction:
-        column;
-
-      gap:
-        16px;
+      flex: 1;
+      overflow-y: auto;
+      padding: 30px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
     }
 
 
     .message-row {
-      display:
-        flex;
-
-      width:
-        100%;
+      display: flex;
+      width: 100%;
     }
 
 
     .message-row.ai {
-      justify-content:
-        flex-start;
+      justify-content: flex-start;
     }
 
 
     .message-row.user {
-      justify-content:
-        flex-end;
+      justify-content: flex-end;
     }
 
 
     .message {
-      max-width:
-        min(
-          70%,
-          620px
-        );
-
-      padding:
-        13px 16px;
-
-      border-radius:
-        16px;
-
-      line-height:
-        1.5;
-
-      word-wrap:
-        break-word;
+      max-width: min(70%, 620px);
+      padding: 13px 16px;
+      border-radius: 16px;
+      line-height: 1.5;
+      word-wrap: break-word;
     }
 
 
     .message-row.ai .message {
-      background:
-        var(--ai-bubble);
-
-      color:
-        var(--text);
-
-      border-bottom-left-radius:
-        5px;
+      background: var(--ai-bubble);
+      color: var(--text);
+      border-bottom-left-radius: 5px;
     }
 
 
     .message-row.user .message {
-      background:
-        var(--user-bubble);
-
-      color:
-        #fff;
-
-      border-bottom-right-radius:
-        5px;
+      background: var(--user-bubble);
+      color: #fff;
+      border-bottom-right-radius: 5px;
     }
 
 
     .example-label {
-      margin-bottom:
-        4px;
-
-      font-size:
-        0.72rem;
-
-      font-weight:
-        800;
-
-      letter-spacing:
-        0.05em;
-
-      text-transform:
-        uppercase;
-
-      color:
-        rgba(
-          255,
-          255,
-          255,
-          0.72
-        );
+      margin-bottom: 4px;
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.72);
     }
 
 
     .example-translation {
-      margin-top:
-        8px;
-
-      padding-top:
-        8px;
-
+      margin-top: 8px;
+      padding-top: 8px;
       border-top:
         1px solid
         rgba(
@@ -745,20 +430,9 @@
           255,
           0.22
         );
-
-      font-size:
-        0.82rem;
-
-      line-height:
-        1.4;
-
-      color:
-        rgba(
-          255,
-          255,
-          255,
-          0.82
-        );
+      font-size: 0.82rem;
+      line-height: 1.4;
+      color: rgba(255, 255, 255, 0.82);
     }
 
 
@@ -771,12 +445,8 @@
           47,
           0.42
         );
-
-      cursor:
-        help;
-
-      outline:
-        none;
+      cursor: help;
+      outline: none;
     }
 
 
@@ -792,27 +462,15 @@
 
 
     .word-token:focus {
-      border-bottom-style:
-        solid;
+      border-bottom-style: solid;
     }
 
 
-    /* DICTIONARY TOOLTIP */
-
-
     .dictionary-tooltip {
-      display:
-        none;
-
-      position:
-        fixed;
-
-      z-index:
-        9999;
-
-      width:
-        max-content;
-
+      display: none;
+      position: fixed;
+      z-index: 9999;
+      width: max-content;
       max-width:
         min(
           360px,
@@ -820,10 +478,7 @@
             100vw - 24px
           )
         );
-
-      padding:
-        12px 14px;
-
+      padding: 12px 14px;
       border:
         1px solid
         rgba(
@@ -832,16 +487,9 @@
           47,
           0.13
         );
-
-      border-radius:
-        12px;
-
-      background:
-        #18212f;
-
-      color:
-        #fff;
-
+      border-radius: 12px;
+      background: #18212f;
+      color: #fff;
       box-shadow:
         0 12px 32px
         rgba(
@@ -850,214 +498,160 @@
           58,
           0.22
         );
-
-      font-size:
-        0.86rem;
-
-      line-height:
-        1.4;
-
-      pointer-events:
-        none;
+      font-size: 0.86rem;
+      line-height: 1.4;
+      pointer-events: none;
     }
 
 
     .dictionary-tooltip.visible {
-      display:
-        block;
+      display: block;
     }
 
 
     .tooltip-word {
-      margin-bottom:
-        6px;
-
-      font-size:
-        0.95rem;
-
-      font-weight:
-        800;
+      margin-bottom: 6px;
+      font-size: 0.95rem;
+      font-weight: 800;
     }
 
 
     .tooltip-meaning {
-      color:
-        rgba(
-          255,
-          255,
-          255,
-          0.94
-        );
+      color: rgba(255, 255, 255, 0.94);
     }
 
 
     .tooltip-senses {
-      margin:
-        0;
-
-      padding-left:
-        20px;
+      margin: 0;
+      padding-left: 20px;
     }
 
 
     .tooltip-senses li {
-      margin:
-        4px 0;
-
-      padding-left:
-        2px;
+      margin: 4px 0;
+      padding-left: 2px;
     }
 
 
     .tooltip-tags {
-      margin-left:
-        5px;
-
-      color:
-        rgba(
-          255,
-          255,
-          255,
-          0.62
-        );
-
-      font-size:
-        0.78rem;
-
-      font-style:
-        italic;
+      margin-left: 5px;
+      color: rgba(255, 255, 255, 0.62);
+      font-size: 0.78rem;
+      font-style: italic;
     }
 
 
     .dictionary-meta {
-      margin-top:
-        7px;
-
-      color:
-        rgba(
-          255,
-          255,
-          255,
-          0.68
-        );
-
-      font-size:
-        0.77rem;
+      margin-top: 7px;
+      color: rgba(255, 255, 255, 0.68);
+      font-size: 0.77rem;
     }
 
 
     .feedback-panel {
-      margin:
-        0 22px 14px;
-
-      padding:
-        14px 16px;
-
-      border:
-        1px solid
-        var(--feedback-border);
-
-      border-radius:
-        14px;
-
-      background:
-        var(--feedback-bg);
+      margin: 0 22px 14px;
+      padding: 14px 16px;
+      border: 1px solid var(--feedback-border);
+      border-radius: 14px;
+      background: var(--feedback-bg);
     }
 
 
     .feedback-title {
-      margin-bottom:
-        7px;
-
-      font-size:
-        0.82rem;
-
-      font-weight:
-        800;
-
-      letter-spacing:
-        0.06em;
-
-      text-transform:
-        uppercase;
-
-      color:
-        var(--muted);
+      margin-bottom: 7px;
+      font-size: 0.82rem;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--muted);
     }
 
 
     .feedback-panel p {
-      margin:
-        5px 0;
-
-      line-height:
-        1.5;
+      margin: 5px 0;
+      line-height: 1.5;
     }
 
 
     .feedback-ok {
-      color:
-        var(--success);
-
-      font-weight:
-        700;
+      color: var(--success);
+      font-weight: 700;
     }
 
 
     .feedback-error {
-      color:
-        var(--danger);
+      color: var(--danger);
+      font-weight: 700;
+    }
 
-      font-weight:
-        700;
+
+    .composer-area {
+      border-top: 1px solid var(--border);
+      background: #fff;
+    }
+
+
+    .special-character-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      padding: 12px 22px 0;
+    }
+
+
+    .special-character-label {
+      width: 100%;
+      margin-bottom: 1px;
+      color: var(--muted);
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+
+
+    .special-character-button {
+      min-width: 34px;
+      height: 32px;
+      padding: 0 8px;
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      background: var(--surface-soft);
+      color: var(--text);
+      font-weight: 650;
+    }
+
+
+    .special-character-button:hover:not(:disabled) {
+      border-color:
+        rgba(
+          40,
+          86,
+          216,
+          0.38
+        );
+      background: #eef3ff;
+      color: var(--primary);
     }
 
 
     .composer {
-      display:
-        flex;
-
-      gap:
-        10px;
-
-      padding:
-        18px 22px 22px;
-
-      border-top:
-        1px solid
-        var(--border);
-
-      background:
-        #fff;
+      display: flex;
+      gap: 10px;
+      padding: 12px 22px 22px;
     }
 
 
     .composer input {
-      flex:
-        1 1 260px;
-
-      min-width:
-        0;
-
-      padding:
-        14px 16px;
-
-      border:
-        1px solid
-        var(--border);
-
-      border-radius:
-        14px;
-
-      outline:
-        none;
+      flex: 1 1 260px;
+      min-width: 0;
+      padding: 14px 16px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      outline: none;
     }
 
 
     .example-btn {
-      flex:
-        0 0 auto;
-
+      flex: 0 0 auto;
       border:
         1px solid
         rgba(
@@ -1066,93 +660,50 @@
           216,
           0.28
         );
-
-      border-radius:
-        14px;
-
-      padding:
-        0 16px;
-
-      background:
-        #f4f7ff;
-
-      color:
-        var(--primary);
-
-      font-weight:
-        750;
+      border-radius: 14px;
+      padding: 0 16px;
+      background: #f4f7ff;
+      color: var(--primary);
+      font-weight: 750;
     }
 
 
     .example-btn:hover:not(:disabled) {
-      background:
-        #eaf0ff;
+      background: #eaf0ff;
     }
 
 
     .send-btn {
-      flex:
-        0 0 auto;
-
-      border:
-        none;
-
-      border-radius:
-        14px;
-
-      padding:
-        0 20px;
-
-      background:
-        var(--primary);
-
-      color:
-        #fff;
-
-      font-weight:
-        750;
+      flex: 0 0 auto;
+      border: none;
+      border-radius: 14px;
+      padding: 0 20px;
+      background: var(--primary);
+      color: #fff;
+      font-weight: 750;
     }
 
 
     .data-credit {
-      margin:
-        18px 0 0;
-
-      color:
-        var(--muted);
-
-      font-size:
-        0.74rem;
-
-      line-height:
-        1.5;
-
-      text-align:
-        center;
+      margin: 18px 0 0;
+      color: var(--muted);
+      font-size: 0.74rem;
+      line-height: 1.5;
+      text-align: center;
     }
 
 
     .data-credit a {
-      color:
-        inherit;
-
-      text-decoration:
-        underline;
-
-      text-underline-offset:
-        2px;
+      color: inherit;
+      text-decoration: underline;
+      text-underline-offset: 2px;
     }
 
 
     .chat-credit {
-      margin:
-        0;
-
-      padding:
-        0 22px 10px;
-
-      background:
-        #fff;
+      margin: 0;
+      padding: 0 22px 10px;
+      background: #fff;
     }
 
 
@@ -1162,88 +713,76 @@
     ) {
 
       .page {
-        padding:
-          0;
+        padding: 0;
       }
 
 
       .app-shell,
       .screen {
-        min-height:
-          100vh;
-
-        border-radius:
-          0;
+        min-height: 100vh;
+        border-radius: 0;
       }
 
 
       #homeScreen {
-        padding:
-          34px 22px;
+        padding: 34px 22px;
       }
 
 
       .chat-header {
-        align-items:
-          flex-start;
+        align-items: flex-start;
       }
 
 
       .message {
-        max-width:
-          86%;
+        max-width: 86%;
       }
 
 
       .messages {
-        padding:
-          22px 16px;
+        padding: 22px 16px;
       }
 
 
       .feedback-panel {
-        margin:
-          0 14px 12px;
+        margin: 0 14px 12px;
+      }
+
+
+      .special-character-bar {
+        padding: 10px 14px 0;
       }
 
 
       .composer {
-        padding:
-          14px;
-
-        flex-wrap:
-          wrap;
+        padding: 12px 14px 14px;
+        flex-wrap: wrap;
       }
 
 
       .composer input {
-        flex-basis:
-          100%;
+        flex-basis: 100%;
       }
 
 
       .example-btn,
       .send-btn {
-        min-height:
-          46px;
+        min-height: 46px;
       }
 
 
       .example-btn {
-        flex:
-          1 1 auto;
+        flex: 1 1 auto;
       }
 
 
       .send-btn {
-        flex:
-          0 0 auto;
+        flex: 0 0 auto;
       }
 
 
       .chat-credit {
-        padding:
-          0 14px 8px;
+        padding: 0 14px 8px;
       }
 
     }
@@ -1255,21 +794,16 @@
 
 <body>
 
-
   <main class="page">
 
-
     <section class="app-shell">
-
 
       <section
         id="homeScreen"
         class="screen active"
       >
 
-
         <div class="home-card">
-
 
           <div class="eyebrow">
             Conversation practice
@@ -1289,7 +823,6 @@
 
           <div class="field">
 
-
             <label
               for="languageSelect"
             >
@@ -1298,7 +831,6 @@
 
 
             <div class="select-wrap">
-
 
               <select
                 id="languageSelect"
@@ -1324,17 +856,22 @@
                   French
                 </option>
 
+                <option value="mandarin_pinyin">
+                  Mandarin Chinese (Pinyin)
+                </option>
+
+                <option value="japanese_romaji">
+                  Japanese (Romaji)
+                </option>
+
               </select>
 
-
             </div>
-
 
           </div>
 
 
           <div class="field">
-
 
             <label
               for="levelSelect"
@@ -1344,7 +881,6 @@
 
 
             <div class="select-wrap">
-
 
               <select
                 id="levelSelect"
@@ -1379,15 +915,12 @@
 
               </select>
 
-
             </div>
-
 
           </div>
 
 
           <div class="field">
-
 
             <label
               for="scenarioSelect"
@@ -1397,7 +930,6 @@
 
 
             <div class="select-wrap">
-
 
               <select
                 id="scenarioSelect"
@@ -1421,9 +953,7 @@
 
               </select>
 
-
             </div>
-
 
           </div>
 
@@ -1432,7 +962,6 @@
             id="customScenarioPanel"
             class="custom-scenario-panel hidden"
           >
-
 
             <label
               for="customScenarioInput"
@@ -1457,7 +986,6 @@
 
             <div class="custom-scenario-footer">
 
-
               <div
                 id="customScenarioError"
                 class="custom-scenario-error"
@@ -1471,9 +999,7 @@
                 0 / 2000
               </div>
 
-
             </div>
-
 
           </div>
 
@@ -1532,9 +1058,7 @@
 
           </p>
 
-
         </div>
-
 
       </section>
 
@@ -1544,16 +1068,9 @@
         class="screen"
       >
 
+        <header class="chat-header">
 
-        <header
-          class="chat-header"
-        >
-
-
-          <div
-            class="chat-heading"
-          >
-
+          <div class="chat-heading">
 
             <h2
               id="chatTitle"
@@ -1568,7 +1085,6 @@
               Scenario
             </p>
 
-
           </div>
 
 
@@ -1579,14 +1095,10 @@
             End conversation
           </button>
 
-
         </header>
 
 
-        <div
-          class="chat-main"
-        >
-
+        <div class="chat-main">
 
           <div
             id="messages"
@@ -1601,10 +1113,7 @@
             aria-live="polite"
           >
 
-
-            <div
-              class="feedback-title"
-            >
+            <div class="feedback-title">
               Feedback on your last message
             </div>
 
@@ -1613,49 +1122,55 @@
               id="feedbackContent"
             ></div>
 
-
           </section>
 
 
-          <form
-            id="chatForm"
-            class="composer"
-          >
+          <div class="composer-area">
+
+            <div
+              id="specialCharacterBar"
+              class="special-character-bar hidden"
+              aria-label="Special characters"
+            ></div>
 
 
-            <input
-              id="messageInput"
-              type="text"
-              autocomplete="off"
-              placeholder="Type your message..."
-              aria-label="Chat message"
-            />
-
-
-            <button
-              id="exampleButton"
-              class="example-btn"
-              type="button"
+            <form
+              id="chatForm"
+              class="composer"
             >
-              Generate example response
-            </button>
+
+              <input
+                id="messageInput"
+                type="text"
+                autocomplete="off"
+                placeholder="Type your message..."
+                aria-label="Chat message"
+              />
 
 
-            <button
-              id="sendButton"
-              class="send-btn"
-              type="submit"
-            >
-              Send
-            </button>
+              <button
+                id="exampleButton"
+                class="example-btn"
+                type="button"
+              >
+                Generate example response
+              </button>
 
 
-          </form>
+              <button
+                id="sendButton"
+                class="send-btn"
+                type="submit"
+              >
+                Send
+              </button>
+
+            </form>
+
+          </div>
 
 
-          <p
-            class="data-credit chat-credit"
-          >
+          <p class="data-credit chat-credit">
 
             Dictionary data:
 
@@ -1689,15 +1204,11 @@
 
           </p>
 
-
         </div>
-
 
       </section>
 
-
     </section>
-
 
   </main>
 
@@ -1717,6 +1228,118 @@
 
     const MAX_CUSTOM_SCENARIO_LENGTH =
       2000;
+
+
+    const DICTIONARY_ENABLED_LANGUAGES =
+      new Set([
+        "german",
+        "italian",
+        "spanish",
+        "afrikaans",
+        "french",
+      ]);
+
+
+    const SPECIAL_CHARACTERS = {
+
+      german: [
+        "ä",
+        "ö",
+        "ü",
+        "ß"
+      ],
+
+
+      italian: [
+        "à",
+        "è",
+        "é",
+        "ì",
+        "ò",
+        "ù"
+      ],
+
+
+      spanish: [
+        "á",
+        "é",
+        "í",
+        "ó",
+        "ú",
+        "ü",
+        "ñ",
+        "¿",
+        "¡"
+      ],
+
+
+      afrikaans: [
+        "ê",
+        "ë",
+        "ï",
+        "ô",
+        "û"
+      ],
+
+
+      french: [
+        "à",
+        "â",
+        "æ",
+        "ç",
+        "é",
+        "è",
+        "ê",
+        "ë",
+        "î",
+        "ï",
+        "ô",
+        "œ",
+        "ù",
+        "û",
+        "ü",
+        "ÿ"
+      ],
+
+
+      mandarin_pinyin: [
+        "ā",
+        "á",
+        "ǎ",
+        "à",
+        "ē",
+        "é",
+        "ě",
+        "è",
+        "ī",
+        "í",
+        "ǐ",
+        "ì",
+        "ō",
+        "ó",
+        "ǒ",
+        "ò",
+        "ū",
+        "ú",
+        "ǔ",
+        "ù",
+        "ǖ",
+        "ǘ",
+        "ǚ",
+        "ǜ",
+        "ü"
+      ],
+
+
+      japanese_romaji: [
+        "ā",
+        "ī",
+        "ū",
+        "ē",
+        "ō"
+      ],
+
+    };
 
 
     const homeScreen =
@@ -1842,6 +1465,12 @@
     const dictionaryTooltip =
       document.getElementById(
         "dictionaryTooltip"
+      );
+
+
+    const specialCharacterBar =
+      document.getElementById(
+        "specialCharacterBar"
       );
 
 
@@ -1979,6 +1608,199 @@
 
 
       return data;
+
+    }
+
+
+    // ----------------------------------------------------
+    // Special-character keyboard
+    // ----------------------------------------------------
+
+
+    function insertSpecialCharacter(
+      character
+    ) {
+
+      if (
+        messageInput.disabled
+      ) {
+
+        return;
+
+      }
+
+
+      const start =
+        Number.isInteger(
+          messageInput.selectionStart
+        )
+          ? messageInput.selectionStart
+          : messageInput.value.length;
+
+
+      const end =
+        Number.isInteger(
+          messageInput.selectionEnd
+        )
+          ? messageInput.selectionEnd
+          : start;
+
+
+      messageInput.setRangeText(
+        character,
+        start,
+        end,
+        "end"
+      );
+
+
+      messageInput.focus();
+
+    }
+
+
+    function renderSpecialCharacterBar(
+      languageId
+    ) {
+
+      specialCharacterBar.innerHTML =
+        "";
+
+
+      const characters =
+        SPECIAL_CHARACTERS[
+          languageId
+        ] ||
+        [];
+
+
+      if (
+        characters.length ===
+        0
+      ) {
+
+        specialCharacterBar
+          .classList
+          .add(
+            "hidden"
+          );
+
+
+        return;
+
+      }
+
+
+      const label =
+        document.createElement(
+          "div"
+        );
+
+
+      label.className =
+        "special-character-label";
+
+
+      label.textContent =
+        "Characters you may not have on your keyboard";
+
+
+      specialCharacterBar
+        .appendChild(
+          label
+        );
+
+
+      for (
+        const character
+        of characters
+      ) {
+
+        const button =
+          document.createElement(
+            "button"
+          );
+
+
+        button.type =
+          "button";
+
+
+        button.className =
+          "special-character-button";
+
+
+        button.textContent =
+          character;
+
+
+        button.setAttribute(
+          "aria-label",
+          `Insert ${character}`
+        );
+
+
+        button.addEventListener(
+          "mousedown",
+          (
+            event
+          ) => {
+
+            event.preventDefault();
+
+          }
+        );
+
+
+        button.addEventListener(
+          "click",
+          () => {
+
+            insertSpecialCharacter(
+              character
+            );
+
+          }
+        );
+
+
+        specialCharacterBar
+          .appendChild(
+            button
+          );
+
+      }
+
+
+      specialCharacterBar
+        .classList
+        .remove(
+          "hidden"
+        );
+
+    }
+
+
+    function setCharacterBarEnabled(
+      enabled
+    ) {
+
+      const buttons =
+        specialCharacterBar
+          .querySelectorAll(
+            "button"
+          );
+
+
+      for (
+        const button
+        of buttons
+      ) {
+
+        button.disabled =
+          !enabled;
+
+      }
 
     }
 
@@ -2271,9 +2093,8 @@
       surfaceWord
     ) {
 
-      dictionaryTooltip
-        .innerHTML =
-          "";
+      dictionaryTooltip.innerHTML =
+        "";
 
 
       const title =
@@ -2311,21 +2132,6 @@
 
     }
 
-
-    /*
-      New dictionary format:
-
-      senses: [
-        {
-          meaning: "milk",
-          tags: []
-        },
-        {
-          meaning: "cum, semen",
-          tags: ["slang", "vulgar"]
-        }
-      ]
-    */
 
     function getDisplaySenses(
       entry
@@ -2378,11 +2184,6 @@
       }
 
 
-      /*
-        Backwards compatibility with
-        old API responses.
-      */
-
       return (
         Array.isArray(
           entry?.meanings
@@ -2421,9 +2222,8 @@
       lookupWord
     ) {
 
-      dictionaryTooltip
-        .innerHTML =
-          "";
+      dictionaryTooltip.innerHTML =
+        "";
 
 
       const title =
@@ -2819,7 +2619,9 @@
         ) {
 
           const item =
-            metadata[i];
+            metadata[
+              i
+            ];
 
 
           if (
@@ -2888,6 +2690,21 @@
       replyWords =
         []
     ) {
+
+      if (
+        !DICTIONARY_ENABLED_LANGUAGES.has(
+          languageId
+        )
+      ) {
+
+        container.textContent =
+          text;
+
+
+        return;
+
+      }
+
 
       const parts =
         splitLanguageText(
@@ -3197,9 +3014,8 @@
 
     function clearFeedback() {
 
-      feedbackContent
-        .innerHTML =
-          "";
+      feedbackContent.innerHTML =
+        "";
 
 
       feedbackPanel
@@ -3215,9 +3031,8 @@
       feedback
     ) {
 
-      feedbackContent
-        .innerHTML =
-          "";
+      feedbackContent.innerHTML =
+        "";
 
 
       feedbackPanel
@@ -3311,9 +3126,8 @@
       message
     ) {
 
-      feedbackContent
-        .innerHTML =
-          "";
+      feedbackContent.innerHTML =
+        "";
 
 
       feedbackPanel
@@ -3359,6 +3173,11 @@
 
       exampleButton.disabled =
         !enabled;
+
+
+      setCharacterBarEnabled(
+        enabled
+      );
 
     }
 
@@ -3498,6 +3317,11 @@
 
       conversationEnded =
         false;
+
+
+      renderSpecialCharacterBar(
+        languageId
+      );
 
 
       startChatButton.disabled =
@@ -3682,6 +3506,17 @@
 
       scenarioLabel.textContent =
         "Scenario";
+
+
+      specialCharacterBar.innerHTML =
+        "";
+
+
+      specialCharacterBar
+        .classList
+        .add(
+          "hidden"
+        );
 
 
       clearFeedback();
@@ -3999,11 +3834,6 @@
       );
 
 
-    // ----------------------------------------------------
-    // Normal user message
-    // ----------------------------------------------------
-
-
     chatForm.addEventListener(
       "submit",
       async (
@@ -4220,7 +4050,6 @@
     updateCustomScenarioCounter();
 
   </script>
-
 
 </body>
 
