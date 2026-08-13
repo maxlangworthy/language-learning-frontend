@@ -1,11 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Language Learning</title>
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+
+  <title>
+    Language Learning
+  </title>
+
 
   <style>
+
     :root {
       --surface: #ffffff;
       --surface-soft: #f8fafc;
@@ -23,13 +34,16 @@
       --shadow: 0 18px 50px rgba(23, 35, 58, 0.09);
     }
 
+
     * {
       box-sizing: border-box;
     }
 
+
     body {
       margin: 0;
       min-height: 100vh;
+
       font-family:
         Inter,
         ui-sans-serif,
@@ -38,14 +52,17 @@
         BlinkMacSystemFont,
         "Segoe UI",
         sans-serif;
+
       background:
         linear-gradient(
           145deg,
           #f7f9fc 0%,
           #eef3fa 100%
         );
+
       color: var(--text);
     }
+
 
     button,
     select,
@@ -54,20 +71,25 @@
       font: inherit;
     }
 
+
     button {
       cursor: pointer;
     }
 
+
     button:disabled,
+    select:disabled,
     input:disabled,
     textarea:disabled {
       cursor: not-allowed;
       opacity: 0.6;
     }
 
+
     .hidden {
       display: none !important;
     }
+
 
     .page {
       min-height: 100vh;
@@ -77,26 +99,36 @@
       padding: 28px;
     }
 
+
     .app-shell {
       width: min(1050px, 100%);
       min-height: 680px;
+
       background: var(--surface);
+
       border:
         1px solid
         rgba(220, 227, 236, 0.9);
+
       border-radius: 28px;
-      box-shadow: var(--shadow);
+
+      box-shadow:
+        var(--shadow);
+
       overflow: hidden;
     }
+
 
     .screen {
       display: none;
       min-height: 680px;
     }
 
+
     .screen.active {
       display: flex;
     }
+
 
     #homeScreen {
       align-items: center;
@@ -104,65 +136,94 @@
       padding: 56px 28px;
     }
 
+
     .home-card {
       width: min(620px, 100%);
     }
 
+
     .eyebrow {
       display: inline-flex;
       margin-bottom: 14px;
+
       color: var(--primary);
+
       font-size: 0.86rem;
       font-weight: 700;
       letter-spacing: 0.08em;
       text-transform: uppercase;
     }
 
+
     h1 {
       margin: 0;
+
       font-size:
         clamp(
           2.3rem,
           5vw,
           4rem
         );
+
       line-height: 1;
       letter-spacing: -0.045em;
     }
 
+
     .intro {
       margin: 18px 0 36px;
+
       color: var(--muted);
+
       font-size: 1.05rem;
       line-height: 1.65;
     }
+
 
     .field {
       margin-bottom: 22px;
     }
 
+
     .field label,
     .custom-scenario-panel label {
       display: block;
       margin-bottom: 9px;
+
       font-size: 0.92rem;
       font-weight: 700;
     }
+
 
     .select-wrap {
       position: relative;
     }
 
+
     select {
       width: 100%;
+
       appearance: none;
-      padding: 15px 46px 15px 16px;
-      border: 1px solid var(--border);
+
+      padding:
+        15px
+        46px
+        15px
+        16px;
+
+      border:
+        1px solid
+        var(--border);
+
       border-radius: 14px;
+
       background: var(--surface);
+
       color: var(--text);
+
       outline: none;
     }
+
 
     select:focus,
     input:focus,
@@ -185,187 +246,333 @@
         );
     }
 
+
     .select-wrap::after {
       content: "⌄";
+
       position: absolute;
+
       right: 16px;
       top: 50%;
-      transform: translateY(-55%);
+
+      transform:
+        translateY(-55%);
+
       color: var(--muted);
+
       pointer-events: none;
     }
 
+
     .custom-scenario-panel {
       margin: -4px 0 22px;
+
       padding: 16px;
-      border: 1px solid var(--border);
+
+      border:
+        1px solid
+        var(--border);
+
       border-radius: 16px;
-      background: var(--surface-soft);
+
+      background:
+        var(--surface-soft);
     }
+
 
     .custom-scenario-help {
       margin: 0 0 11px;
+
       color: var(--muted);
+
       font-size: 0.84rem;
       line-height: 1.45;
     }
 
+
     .custom-scenario-panel textarea {
       display: block;
+
       width: 100%;
+
       min-height: 150px;
+
       resize: vertical;
+
       padding: 14px 15px;
-      border: 1px solid var(--border);
+
+      border:
+        1px solid
+        var(--border);
+
       border-radius: 12px;
+
       background: #fff;
+
       color: var(--text);
+
       line-height: 1.5;
+
       outline: none;
     }
+
 
     .custom-scenario-footer {
       display: flex;
       justify-content: space-between;
+
       gap: 12px;
+
       margin-top: 7px;
+
       min-height: 19px;
+
       font-size: 0.78rem;
     }
+
 
     .custom-scenario-error {
       color: var(--danger);
       font-weight: 650;
     }
 
+
     .character-counter {
       margin-left: auto;
+
       color: var(--muted);
+
       white-space: nowrap;
     }
 
+
+    .home-error {
+      margin: 0 0 18px;
+
+      padding: 12px 14px;
+
+      border:
+        1px solid
+        #ecd1d1;
+
+      border-radius: 12px;
+
+      background: #fffafa;
+
+      color: var(--danger);
+
+      font-size: 0.9rem;
+      line-height: 1.45;
+    }
+
+
     .primary-btn {
       width: 100%;
+
       border: none;
+
       border-radius: 14px;
+
       padding: 15px 18px;
+
       background: var(--primary);
+
       color: #fff;
+
       font-weight: 750;
       font-size: 1rem;
     }
 
+
     .primary-btn:hover:not(:disabled),
     .send-btn:hover:not(:disabled) {
-      background: var(--primary-hover);
+      background:
+        var(--primary-hover);
     }
+
 
     #chatScreen {
       flex-direction: column;
     }
 
+
     .chat-header {
       display: flex;
+
       align-items: center;
       justify-content: space-between;
+
       gap: 20px;
+
       padding: 20px 24px;
-      border-bottom: 1px solid var(--border);
-      background: rgba(255, 255, 255, 0.96);
+
+      border-bottom:
+        1px solid
+        var(--border);
+
+      background:
+        rgba(
+          255,
+          255,
+          255,
+          0.96
+        );
     }
+
 
     .chat-heading {
       min-width: 0;
     }
+
 
     .chat-heading h2 {
       margin: 0 0 5px;
       font-size: 1.18rem;
     }
 
+
     .chat-heading p {
       margin: 0;
+
       color: var(--muted);
+
       font-size: 0.91rem;
     }
 
+
     .secondary-btn {
       flex: 0 0 auto;
-      border: 1px solid #ecd1d1;
+
+      border:
+        1px solid
+        #ecd1d1;
+
       border-radius: 11px;
+
       padding: 10px 14px;
+
       background: #fffafa;
+
       color: var(--danger);
+
       font-weight: 700;
     }
+
 
     .secondary-btn:hover {
       background: #fff2f2;
     }
 
+
     .chat-main {
       flex: 1;
+
       display: flex;
       flex-direction: column;
+
       min-height: 0;
-      background: var(--surface-soft);
+
+      background:
+        var(--surface-soft);
     }
+
 
     .messages {
       flex: 1;
+
       overflow-y: auto;
+
       padding: 30px;
+
       display: flex;
       flex-direction: column;
+
       gap: 16px;
     }
+
 
     .message-row {
       display: flex;
       width: 100%;
     }
 
+
     .message-row.ai {
       justify-content: flex-start;
     }
+
 
     .message-row.user {
       justify-content: flex-end;
     }
 
+
     .message {
-      max-width: min(70%, 620px);
+      max-width:
+        min(
+          70%,
+          620px
+        );
+
       padding: 13px 16px;
+
       border-radius: 16px;
+
       line-height: 1.5;
+
       word-wrap: break-word;
-      unicode-bidi: plaintext;
+
+      unicode-bidi:
+        plaintext;
     }
+
 
     .message-row.ai .message {
-      background: var(--ai-bubble);
-      color: var(--text);
-      border-bottom-left-radius: 5px;
+      background:
+        var(--ai-bubble);
+
+      color:
+        var(--text);
+
+      border-bottom-left-radius:
+        5px;
     }
 
+
     .message-row.user .message {
-      background: var(--user-bubble);
+      background:
+        var(--user-bubble);
+
       color: #fff;
-      border-bottom-right-radius: 5px;
+
+      border-bottom-right-radius:
+        5px;
     }
+
 
     .example-label {
       margin-bottom: 4px;
+
       font-size: 0.72rem;
       font-weight: 800;
       letter-spacing: 0.05em;
       text-transform: uppercase;
-      color: rgba(255, 255, 255, 0.72);
+
+      color:
+        rgba(
+          255,
+          255,
+          255,
+          0.72
+        );
     }
+
 
     .example-translation {
       margin-top: 8px;
+
       padding-top: 8px;
+
       border-top:
         1px solid
         rgba(
@@ -374,12 +581,23 @@
           255,
           0.22
         );
+
       font-size: 0.82rem;
       line-height: 1.4;
-      color: rgba(255, 255, 255, 0.82);
+
+      color:
+        rgba(
+          255,
+          255,
+          255,
+          0.82
+        );
+
       direction: ltr;
+
       text-align: left;
     }
+
 
     .word-token {
       border-bottom:
@@ -390,11 +608,15 @@
           47,
           0.42
         );
+
       cursor: help;
+
       outline: none;
     }
 
-    .message-row.user .word-token {
+
+    .message-row.user
+    .word-token {
       border-bottom-color:
         rgba(
           255,
@@ -404,15 +626,21 @@
         );
     }
 
+
     .word-token:focus {
       border-bottom-style: solid;
     }
 
+
     .dictionary-tooltip {
       display: none;
+
       position: fixed;
+
       z-index: 9999;
+
       width: max-content;
+
       max-width:
         min(
           360px,
@@ -420,7 +648,9 @@
             100vw - 24px
           )
         );
+
       padding: 12px 14px;
+
       border:
         1px solid
         rgba(
@@ -429,9 +659,13 @@
           47,
           0.13
         );
+
       border-radius: 12px;
+
       background: #18212f;
+
       color: #fff;
+
       box-shadow:
         0 12px 32px
         rgba(
@@ -440,112 +674,226 @@
           58,
           0.22
         );
+
       font-size: 0.86rem;
       line-height: 1.4;
+
       pointer-events: none;
+
       direction: ltr;
+
       text-align: left;
     }
+
 
     .dictionary-tooltip.visible {
       display: block;
     }
 
+
     .tooltip-word {
       margin-bottom: 6px;
+
       font-size: 0.95rem;
       font-weight: 800;
     }
 
+
     .tooltip-meaning {
-      color: rgba(255, 255, 255, 0.94);
+      color:
+        rgba(
+          255,
+          255,
+          255,
+          0.94
+        );
     }
+
 
     .tooltip-senses {
       margin: 0;
+
       padding-left: 20px;
     }
 
+
     .tooltip-senses li {
       margin: 4px 0;
+
       padding-left: 2px;
     }
 
+
     .tooltip-tags {
       margin-left: 5px;
-      color: rgba(255, 255, 255, 0.62);
+
+      color:
+        rgba(
+          255,
+          255,
+          255,
+          0.62
+        );
+
       font-size: 0.78rem;
+
       font-style: italic;
     }
 
+
     .dictionary-meta {
       margin-top: 7px;
-      color: rgba(255, 255, 255, 0.68);
+
+      color:
+        rgba(
+          255,
+          255,
+          255,
+          0.68
+        );
+
       font-size: 0.77rem;
     }
 
+
     .feedback-panel {
-      margin: 0 22px 14px;
-      padding: 14px 16px;
-      border: 1px solid var(--feedback-border);
-      border-radius: 14px;
-      background: var(--feedback-bg);
+      margin:
+        0
+        22px
+        14px;
+
+      padding:
+        14px
+        16px;
+
+      border:
+        1px solid
+        var(--feedback-border);
+
+      border-radius:
+        14px;
+
+      background:
+        var(--feedback-bg);
     }
 
+
     .feedback-title {
-      margin-bottom: 7px;
-      font-size: 0.82rem;
-      font-weight: 800;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      color: var(--muted);
+      margin-bottom:
+        7px;
+
+      font-size:
+        0.82rem;
+
+      font-weight:
+        800;
+
+      letter-spacing:
+        0.06em;
+
+      text-transform:
+        uppercase;
+
+      color:
+        var(--muted);
     }
+
 
     .feedback-panel p {
       margin: 5px 0;
-      line-height: 1.5;
+
+      line-height:
+        1.5;
     }
+
 
     .feedback-ok {
-      color: var(--success);
-      font-weight: 700;
+      color:
+        var(--success);
+
+      font-weight:
+        700;
     }
+
 
     .feedback-error {
-      color: var(--danger);
-      font-weight: 700;
+      color:
+        var(--danger);
+
+      font-weight:
+        700;
     }
 
+
     .composer-area {
-      border-top: 1px solid var(--border);
-      background: #fff;
+      border-top:
+        1px solid
+        var(--border);
+
+      background:
+        #fff;
     }
+
 
     .special-character-bar {
       display: flex;
+
       flex-wrap: wrap;
+
       gap: 6px;
-      padding: 12px 22px 0;
+
+      padding:
+        12px
+        22px
+        0;
     }
+
 
     .special-character-label {
       width: 100%;
-      margin-bottom: 1px;
-      color: var(--muted);
-      font-size: 0.75rem;
-      font-weight: 700;
+
+      margin-bottom:
+        1px;
+
+      color:
+        var(--muted);
+
+      font-size:
+        0.75rem;
+
+      font-weight:
+        700;
     }
 
+
     .special-character-button {
-      min-width: 34px;
-      height: 32px;
-      padding: 0 8px;
-      border: 1px solid var(--border);
-      border-radius: 9px;
-      background: var(--surface-soft);
-      color: var(--text);
-      font-weight: 650;
+      min-width:
+        34px;
+
+      height:
+        32px;
+
+      padding:
+        0
+        8px;
+
+      border:
+        1px solid
+        var(--border);
+
+      border-radius:
+        9px;
+
+      background:
+        var(--surface-soft);
+
+      color:
+        var(--text);
+
+      font-weight:
+        650;
     }
+
 
     .special-character-button:hover:not(:disabled) {
       border-color:
@@ -555,28 +903,59 @@
           216,
           0.38
         );
-      background: #eef3ff;
-      color: var(--primary);
+
+      background:
+        #eef3ff;
+
+      color:
+        var(--primary);
     }
+
 
     .composer {
       display: flex;
+
       gap: 10px;
-      padding: 12px 22px 22px;
+
+      padding:
+        12px
+        22px
+        22px;
     }
+
 
     .composer input {
-      flex: 1 1 260px;
+      flex:
+        1
+        1
+        260px;
+
       min-width: 0;
-      padding: 14px 16px;
-      border: 1px solid var(--border);
-      border-radius: 14px;
+
+      padding:
+        14px
+        16px;
+
+      border:
+        1px solid
+        var(--border);
+
+      border-radius:
+        14px;
+
       outline: none;
-      unicode-bidi: plaintext;
+
+      unicode-bidi:
+        plaintext;
     }
 
+
     .example-btn {
-      flex: 0 0 auto;
+      flex:
+        0
+        0
+        auto;
+
       border:
         1px solid
         rgba(
@@ -585,267 +964,346 @@
           216,
           0.28
         );
-      border-radius: 14px;
-      padding: 0 16px;
-      background: #f4f7ff;
-      color: var(--primary);
-      font-weight: 750;
+
+      border-radius:
+        14px;
+
+      padding:
+        0
+        16px;
+
+      background:
+        #f4f7ff;
+
+      color:
+        var(--primary);
+
+      font-weight:
+        750;
     }
+
 
     .example-btn:hover:not(:disabled) {
-      background: #eaf0ff;
+      background:
+        #eaf0ff;
     }
+
 
     .send-btn {
-      flex: 0 0 auto;
+      flex:
+        0
+        0
+        auto;
+
       border: none;
-      border-radius: 14px;
-      padding: 0 20px;
-      background: var(--primary);
-      color: #fff;
-      font-weight: 750;
+
+      border-radius:
+        14px;
+
+      padding:
+        0
+        20px;
+
+      background:
+        var(--primary);
+
+      color:
+        #fff;
+
+      font-weight:
+        750;
     }
 
+
     .data-credit {
-      margin: 18px 0 0;
-      color: var(--muted);
-      font-size: 0.74rem;
-      line-height: 1.5;
-      text-align: center;
+      margin:
+        18px
+        0
+        0;
+
+      color:
+        var(--muted);
+
+      font-size:
+        0.74rem;
+
+      line-height:
+        1.5;
+
+      text-align:
+        center;
     }
+
 
     .data-credit a {
       color: inherit;
-      text-decoration: underline;
-      text-underline-offset: 2px;
+
+      text-decoration:
+        underline;
+
+      text-underline-offset:
+        2px;
     }
+
 
     .chat-credit {
       margin: 0;
-      padding: 0 22px 10px;
-      background: #fff;
+
+      padding:
+        0
+        22px
+        10px;
+
+      background:
+        #fff;
     }
+
 
     @media (
       max-width:
         760px
     ) {
+
       .page {
         padding: 0;
       }
 
+
       .app-shell,
       .screen {
-        min-height: 100vh;
-        border-radius: 0;
+        min-height:
+          100vh;
+
+        border-radius:
+          0;
       }
+
 
       #homeScreen {
-        padding: 34px 22px;
+        padding:
+          34px
+          22px;
       }
+
 
       .chat-header {
-        align-items: flex-start;
+        align-items:
+          flex-start;
       }
+
 
       .message {
-        max-width: 86%;
+        max-width:
+          86%;
       }
+
 
       .messages {
-        padding: 22px 16px;
+        padding:
+          22px
+          16px;
       }
+
 
       .feedback-panel {
-        margin: 0 14px 12px;
+        margin:
+          0
+          14px
+          12px;
       }
+
 
       .special-character-bar {
-        padding: 10px 14px 0;
+        padding:
+          10px
+          14px
+          0;
       }
+
 
       .composer {
-        padding: 12px 14px 14px;
-        flex-wrap: wrap;
+        padding:
+          12px
+          14px
+          14px;
+
+        flex-wrap:
+          wrap;
       }
 
+
       .composer input {
-        flex-basis: 100%;
+        flex-basis:
+          100%;
       }
+
 
       .example-btn,
       .send-btn {
-        min-height: 46px;
+        min-height:
+          46px;
       }
+
 
       .example-btn {
-        flex: 1 1 auto;
+        flex:
+          1
+          1
+          auto;
       }
+
 
       .send-btn {
-        flex: 0 0 auto;
+        flex:
+          0
+          0
+          auto;
       }
+
 
       .chat-credit {
-        padding: 0 14px 8px;
+        padding:
+          0
+          14px
+          8px;
       }
+
     }
+
   </style>
+
 </head>
 
+
 <body>
+
   <main class="page">
+
     <section class="app-shell">
+
 
       <section
         id="homeScreen"
         class="screen active"
       >
+
         <div class="home-card">
+
 
           <div class="eyebrow">
             Conversation practice
           </div>
 
+
           <h1>
             Language Learning
           </h1>
+
 
           <p class="intro">
             Choose your language and level, then select a scenario
             or create your own conversation.
           </p>
 
+
+          <div
+            id="homeError"
+            class="home-error hidden"
+          ></div>
+
+
           <div class="field">
-            <label for="languageSelect">
+
+            <label
+              for="languageSelect"
+            >
               Language
             </label>
 
+
             <div class="select-wrap">
-              <select id="languageSelect">
 
-                <option value="german">
-                  German
-                </option>
+              <select
+                id="languageSelect"
+                disabled
+              >
 
-                <option value="italian">
-                  Italian
-                </option>
-
-                <option value="spanish">
-                  Spanish
-                </option>
-
-                <option value="afrikaans">
-                  Afrikaans
-                </option>
-
-                <option value="french">
-                  French
-                </option>
-
-                <option value="russian">
-                  Russian
-                </option>
-
-                <option value="arabic">
-                  Arabic
-                </option>
-
-                <option value="turkish">
-                  Turkish
-                </option>
-
-                <option value="greek">
-                  Greek
-                </option>
-
-                <option value="mandarin_pinyin">
-                  Mandarin Chinese (Pinyin)
-                </option>
-
-                <option value="japanese_romaji">
-                  Japanese (Romaji)
+                <option>
+                  Loading languages...
                 </option>
 
               </select>
+
             </div>
+
           </div>
 
+
           <div class="field">
-            <label for="levelSelect">
+
+            <label
+              for="levelSelect"
+            >
               Language level
             </label>
 
+
             <div class="select-wrap">
-              <select id="levelSelect">
 
-                <option value="a1">
-                  A1 — Beginner
-                </option>
+              <select
+                id="levelSelect"
+                disabled
+              >
 
-                <option value="a2">
-                  A2 — Elementary
-                </option>
-
-                <option
-                  value="b1"
-                  selected
-                >
-                  B1 — Intermediate
-                </option>
-
-                <option value="b2">
-                  B2 — Upper-intermediate
-                </option>
-
-                <option value="c1">
-                  C1 — Advanced
-                </option>
-
-                <option value="c2">
-                  C2 — Proficient
+                <option>
+                  Loading levels...
                 </option>
 
               </select>
+
             </div>
+
           </div>
 
+
           <div class="field">
-            <label for="scenarioSelect">
+
+            <label
+              for="scenarioSelect"
+            >
               Scenario
             </label>
 
+
             <div class="select-wrap">
-              <select id="scenarioSelect">
 
-                <option value="coffee">
-                  Ordering a coffee
-                </option>
+              <select
+                id="scenarioSelect"
+                disabled
+              >
 
-                <option value="weekend">
-                  Talking about your weekend with a colleague
-                </option>
-
-                <option value="directions">
-                  Giving a stranger directions
-                </option>
-
-                <option value="custom">
-                  Custom scenario...
+                <option>
+                  Loading scenarios...
                 </option>
 
               </select>
+
             </div>
+
           </div>
+
 
           <div
             id="customScenarioPanel"
             class="custom-scenario-panel hidden"
           >
-            <label for="customScenarioInput">
+
+            <label
+              for="customScenarioInput"
+            >
               Describe your scenario
             </label>
+
 
             <p class="custom-scenario-help">
               Describe what you want to talk about, who you want
@@ -853,11 +1311,13 @@
               or any details you want included.
             </p>
 
+
             <textarea
               id="customScenarioInput"
               maxlength="2000"
               placeholder="For example: I want to have a casual conversation about pets. Ask me what pets I have now, what they are like, what pets I have had in the past, and what animals I would like to have in the future. Tell me about your pets too and ask natural follow-up questions."
             ></textarea>
+
 
             <div class="custom-scenario-footer">
 
@@ -865,6 +1325,7 @@
                 id="customScenarioError"
                 class="custom-scenario-error"
               ></div>
+
 
               <div
                 id="customScenarioCounter"
@@ -874,16 +1335,21 @@
               </div>
 
             </div>
+
           </div>
+
 
           <button
             id="startChatButton"
             class="primary-btn"
+            disabled
           >
-            Chat
+            Loading...
           </button>
 
+
           <p class="data-credit">
+
             Dictionary data derived from
 
             <a
@@ -925,9 +1391,13 @@
             >
               CC BY-SA 4.0
             </a>.
+
           </p>
+
         </div>
+
       </section>
+
 
       <section
         id="chatScreen"
@@ -942,11 +1412,13 @@
               Conversation
             </h2>
 
+
             <p id="scenarioLabel">
               Scenario
             </p>
 
           </div>
+
 
           <button
             id="endChatButton"
@@ -957,7 +1429,9 @@
 
         </header>
 
+
         <div class="chat-main">
+
 
           <div
             id="messages"
@@ -965,25 +1439,34 @@
             aria-live="polite"
           ></div>
 
+
           <section
             id="feedbackPanel"
             class="feedback-panel hidden"
             aria-live="polite"
           >
+
             <div class="feedback-title">
               Feedback on your last message
             </div>
 
-            <div id="feedbackContent"></div>
+
+            <div
+              id="feedbackContent"
+            ></div>
+
           </section>
 
+
           <div class="composer-area">
+
 
             <div
               id="specialCharacterBar"
               class="special-character-bar hidden"
               aria-label="Special characters"
             ></div>
+
 
             <form
               id="chatForm"
@@ -999,6 +1482,7 @@
                 aria-label="Chat message"
               />
 
+
               <button
                 id="exampleButton"
                 class="example-btn"
@@ -1006,6 +1490,7 @@
               >
                 Generate example response
               </button>
+
 
               <button
                 id="sendButton"
@@ -1019,7 +1504,9 @@
 
           </div>
 
+
           <p class="data-credit chat-credit">
+
             Dictionary data:
 
             <a
@@ -1049,13 +1536,17 @@
             >
               CC BY-SA 4.0
             </a>.
+
           </p>
 
         </div>
+
       </section>
 
     </section>
+
   </main>
+
 
   <div
     id="dictionaryTooltip"
@@ -1063,258 +1554,11 @@
     role="tooltip"
   ></div>
 
+
   <script>
 
     const API_BASE_URL =
       "https://api.plainbetter.co.uk";
-
-
-    const MAX_CUSTOM_SCENARIO_LENGTH =
-      2000;
-
-
-    const DICTIONARY_ENABLED_LANGUAGES =
-      new Set([
-        "german",
-        "italian",
-        "spanish",
-        "afrikaans",
-        "french",
-        "russian",
-        "arabic",
-        "turkish",
-        "greek",
-      ]);
-
-
-    const SPECIAL_CHARACTERS = {
-
-      german: [
-        "ä",
-        "ö",
-        "ü",
-        "ß"
-      ],
-
-
-      italian: [
-        "à",
-        "è",
-        "é",
-        "ì",
-        "ò",
-        "ù"
-      ],
-
-
-      spanish: [
-        "á",
-        "é",
-        "í",
-        "ó",
-        "ú",
-        "ü",
-        "ñ",
-        "¿",
-        "¡"
-      ],
-
-
-      afrikaans: [
-        "ê",
-        "ë",
-        "ï",
-        "ô",
-        "û"
-      ],
-
-
-      french: [
-        "à",
-        "â",
-        "æ",
-        "ç",
-        "é",
-        "è",
-        "ê",
-        "ë",
-        "î",
-        "ï",
-        "ô",
-        "œ",
-        "ù",
-        "û",
-        "ü",
-        "ÿ"
-      ],
-
-
-      russian: [
-        "а",
-        "б",
-        "в",
-        "г",
-        "д",
-        "е",
-        "ё",
-        "ж",
-        "з",
-        "и",
-        "й",
-        "к",
-        "л",
-        "м",
-        "н",
-        "о",
-        "п",
-        "р",
-        "с",
-        "т",
-        "у",
-        "ф",
-        "х",
-        "ц",
-        "ч",
-        "ш",
-        "щ",
-        "ъ",
-        "ы",
-        "ь",
-        "э",
-        "ю",
-        "я"
-      ],
-
-
-      arabic: [
-        "ا",
-        "ب",
-        "ت",
-        "ث",
-        "ج",
-        "ح",
-        "خ",
-        "د",
-        "ذ",
-        "ر",
-        "ز",
-        "س",
-        "ش",
-        "ص",
-        "ض",
-        "ط",
-        "ظ",
-        "ع",
-        "غ",
-        "ف",
-        "ق",
-        "ك",
-        "ل",
-        "م",
-        "ن",
-        "ه",
-        "و",
-        "ي",
-        "ء",
-        "أ",
-        "إ",
-        "آ",
-        "ؤ",
-        "ئ",
-        "ة",
-        "ى"
-      ],
-
-
-      turkish: [
-        "ç",
-        "ğ",
-        "ı",
-        "İ",
-        "ö",
-        "ş",
-        "ü"
-      ],
-
-
-      greek: [
-        "α",
-        "β",
-        "γ",
-        "δ",
-        "ε",
-        "ζ",
-        "η",
-        "θ",
-        "ι",
-        "κ",
-        "λ",
-        "μ",
-        "ν",
-        "ξ",
-        "ο",
-        "π",
-        "ρ",
-        "σ",
-        "ς",
-        "τ",
-        "υ",
-        "φ",
-        "χ",
-        "ψ",
-        "ω",
-        "ά",
-        "έ",
-        "ή",
-        "ί",
-        "ό",
-        "ύ",
-        "ώ",
-        "ϊ",
-        "ΐ",
-        "ϋ",
-        "ΰ"
-      ],
-
-
-      mandarin_pinyin: [
-        "ā",
-        "á",
-        "ǎ",
-        "à",
-        "ē",
-        "é",
-        "ě",
-        "è",
-        "ī",
-        "í",
-        "ǐ",
-        "ì",
-        "ō",
-        "ó",
-        "ǒ",
-        "ò",
-        "ū",
-        "ú",
-        "ǔ",
-        "ù",
-        "ǖ",
-        "ǘ",
-        "ǚ",
-        "ǜ",
-        "ü"
-      ],
-
-
-      japanese_romaji: [
-        "ā",
-        "ī",
-        "ū",
-        "ē",
-        "ō"
-      ],
-
-    };
 
 
     const homeScreen =
@@ -1326,6 +1570,12 @@
     const chatScreen =
       document.getElementById(
         "chatScreen"
+      );
+
+
+    const homeError =
+      document.getElementById(
+        "homeError"
       );
 
 
@@ -1449,6 +1699,18 @@
       );
 
 
+    let appConfig =
+      null;
+
+
+    let languageById =
+      new Map();
+
+
+    let maxCustomScenarioLength =
+      2000;
+
+
     let history =
       [];
 
@@ -1493,6 +1755,11 @@
       0;
 
 
+    // ----------------------------------------------------
+    // General
+    // ----------------------------------------------------
+
+
     function showScreen(
       screenToShow
     ) {
@@ -1516,30 +1783,6 @@
         .add(
           "active"
         );
-
-    }
-
-
-    function getSelectedLanguageName() {
-
-      return languageSelect
-        .options[
-          languageSelect
-            .selectedIndex
-        ]
-        .text;
-
-    }
-
-
-    function getSelectedLevelLabel() {
-
-      return levelSelect
-        .options[
-          levelSelect
-            .selectedIndex
-        ]
-        .text;
 
     }
 
@@ -1580,6 +1823,300 @@
       return data;
 
     }
+
+
+    // ----------------------------------------------------
+    // Load languages/scenarios from backend
+    // ----------------------------------------------------
+
+
+    function populateSelect(
+      select,
+      items,
+      selectedId =
+        null
+    ) {
+
+      select.innerHTML =
+        "";
+
+
+      for (
+        const item
+        of items
+      ) {
+
+        const option =
+          document.createElement(
+            "option"
+          );
+
+
+        option.value =
+          item.id;
+
+
+        option.textContent =
+          item.name;
+
+
+        if (
+          item.id ===
+          selectedId
+        ) {
+
+          option.selected =
+            true;
+
+        }
+
+
+        select.appendChild(
+          option
+        );
+
+      }
+
+    }
+
+
+    async function loadAppConfig() {
+
+      startChatButton.disabled =
+        true;
+
+
+      startChatButton.textContent =
+        "Loading...";
+
+
+      homeError
+        .classList
+        .add(
+          "hidden"
+        );
+
+
+      homeError.textContent =
+        "";
+
+
+      try {
+
+        const response =
+          await fetch(
+            `${API_BASE_URL}/api/config`,
+            {
+              cache:
+                "no-store",
+            }
+          );
+
+
+        const data =
+          await readJsonResponse(
+            response
+          );
+
+
+        if (
+          !Array.isArray(
+            data.languages
+          ) ||
+          data.languages.length ===
+            0 ||
+          !Array.isArray(
+            data.levels
+          ) ||
+          data.levels.length ===
+            0 ||
+          !Array.isArray(
+            data.scenarios
+          ) ||
+          data.scenarios.length ===
+            0
+        ) {
+
+          throw new Error(
+            "The app configuration is incomplete."
+          );
+
+        }
+
+
+        appConfig =
+          data;
+
+
+        languageById =
+          new Map(
+            data.languages.map(
+              (
+                language
+              ) => [
+                language.id,
+                language,
+              ]
+            )
+          );
+
+
+        maxCustomScenarioLength =
+          Number(
+            data.limits
+              ?.customScenarioMaxLength
+          ) ||
+          2000;
+
+
+        populateSelect(
+          languageSelect,
+          data.languages
+        );
+
+
+        populateSelect(
+          levelSelect,
+          data.levels,
+          data.defaultLevel ||
+            "b1"
+        );
+
+
+        populateSelect(
+          scenarioSelect,
+          data.scenarios
+        );
+
+
+        const customOption =
+          document.createElement(
+            "option"
+          );
+
+
+        customOption.value =
+          "custom";
+
+
+        customOption.textContent =
+          "Custom scenario...";
+
+
+        scenarioSelect
+          .appendChild(
+            customOption
+          );
+
+
+        customScenarioInput.maxLength =
+          maxCustomScenarioLength;
+
+
+        languageSelect.disabled =
+          false;
+
+
+        levelSelect.disabled =
+          false;
+
+
+        scenarioSelect.disabled =
+          false;
+
+
+        startChatButton.disabled =
+          false;
+
+
+        startChatButton.textContent =
+          "Chat";
+
+
+        updateCustomScenarioUI();
+
+        updateCustomScenarioCounter();
+
+      } catch (
+        error
+      ) {
+
+        homeError.textContent =
+          `Could not load the app configuration: ${error.message}`;
+
+
+        homeError
+          .classList
+          .remove(
+            "hidden"
+          );
+
+
+        startChatButton.disabled =
+          true;
+
+
+        startChatButton.textContent =
+          "Unavailable";
+
+      }
+
+    }
+
+
+    function getSelectedLanguageConfig() {
+
+      return (
+        languageById.get(
+          languageSelect.value
+        ) ||
+        null
+      );
+
+    }
+
+
+    function getActiveLanguageConfig() {
+
+      return (
+        languageById.get(
+          activeLanguageId
+        ) ||
+        null
+      );
+
+    }
+
+
+    function getSelectedLanguageName() {
+
+      return (
+        getSelectedLanguageConfig()
+          ?.name ||
+        languageSelect.value
+      );
+
+    }
+
+
+    function getSelectedLevelLabel() {
+
+      return (
+        levelSelect
+          .options[
+            levelSelect
+              .selectedIndex
+          ]
+          ?.text ||
+        levelSelect.value
+      );
+
+    }
+
+
+    // ----------------------------------------------------
+    // Special characters
+    // ----------------------------------------------------
 
 
     function insertSpecialCharacter(
@@ -1632,11 +2169,19 @@
         "";
 
 
-      const characters =
-        SPECIAL_CHARACTERS[
+      const language =
+        languageById.get(
           languageId
-        ] ||
-        [];
+        );
+
+
+      const characters =
+        Array.isArray(
+          language
+            ?.specialCharacters
+        )
+          ? language.specialCharacters
+          : [];
 
 
       if (
@@ -1750,16 +2295,12 @@
       enabled
     ) {
 
-      const buttons =
-        specialCharacterBar
-          .querySelectorAll(
-            "button"
-          );
-
-
       for (
         const button
-        of buttons
+        of specialCharacterBar
+          .querySelectorAll(
+            "button"
+          )
       ) {
 
         button.disabled =
@@ -1768,6 +2309,11 @@
       }
 
     }
+
+
+    // ----------------------------------------------------
+    // Custom scenario
+    // ----------------------------------------------------
 
 
     function updateCustomScenarioUI() {
@@ -1789,9 +2335,8 @@
         !isCustom
       ) {
 
-        customScenarioError
-          .textContent =
-            "";
+        customScenarioError.textContent =
+          "";
 
       }
 
@@ -1806,9 +2351,8 @@
           .length;
 
 
-      customScenarioCounter
-        .textContent =
-          `${length} / ${MAX_CUSTOM_SCENARIO_LENGTH}`;
+      customScenarioCounter.textContent =
+        `${length} / ${maxCustomScenarioLength}`;
 
 
       if (
@@ -1817,9 +2361,8 @@
           .trim()
       ) {
 
-        customScenarioError
-          .textContent =
-            "";
+        customScenarioError.textContent =
+          "";
 
       }
 
@@ -1856,6 +2399,11 @@
       return payload;
 
     }
+
+
+    // ----------------------------------------------------
+    // Dictionary
+    // ----------------------------------------------------
 
 
     function normalizeDictionaryKey(
@@ -1972,6 +2520,11 @@
     }
 
 
+    // ----------------------------------------------------
+    // Tooltip
+    // ----------------------------------------------------
+
+
     function positionDictionaryTooltip(
       target
     ) {
@@ -2028,16 +2581,12 @@
       }
 
 
-      dictionaryTooltip
-        .style
-        .left =
-          `${left}px`;
+      dictionaryTooltip.style.left =
+        `${left}px`;
 
 
-      dictionaryTooltip
-        .style
-        .top =
-          `${top}px`;
+      dictionaryTooltip.style.top =
+        `${top}px`;
 
     }
 
@@ -2118,8 +2667,7 @@
             ) => ({
 
               meaning:
-                sense.meaning
-                  .trim(),
+                sense.meaning.trim(),
 
               tags:
                 Array.isArray(
@@ -2566,6 +3114,11 @@
     }
 
 
+    // ----------------------------------------------------
+    // AI word metadata
+    // ----------------------------------------------------
+
+
     function createWordMetadataMatcher(
       replyWords
     ) {
@@ -2628,7 +3181,8 @@
           ) {
 
             cursor =
-              i + 1;
+              i +
+              1;
 
 
             return {
@@ -2676,14 +3230,20 @@
         []
     ) {
 
+      const language =
+        languageById.get(
+          languageId
+        );
+
+
       container.dir =
+        language?.direction ||
         "auto";
 
 
       if (
-        !DICTIONARY_ENABLED_LANGUAGES.has(
-          languageId
-        )
+        !language
+          ?.dictionaryEnabled
       ) {
 
         container.textContent =
@@ -2732,13 +3292,11 @@
           !isWord
         ) {
 
-          container
-            .appendChild(
-              document
-                .createTextNode(
-                  part
-                )
-            );
+          container.appendChild(
+            document.createTextNode(
+              part
+            )
+          );
 
 
           continue;
@@ -2876,6 +3434,11 @@
     }
 
 
+    // ----------------------------------------------------
+    // Messages
+    // ----------------------------------------------------
+
+
     function addMessage(
       text,
       sender,
@@ -2907,6 +3470,9 @@
 
 
       bubble.dir =
+        languageById.get(
+          languageId
+        )?.direction ||
         "auto";
 
 
@@ -2993,6 +3559,11 @@
         messages.scrollHeight;
 
     }
+
+
+    // ----------------------------------------------------
+    // Feedback
+    // ----------------------------------------------------
 
 
     function clearFeedback() {
@@ -3085,6 +3656,8 @@
 
 
       correctedText.dir =
+        getActiveLanguageConfig()
+          ?.direction ||
         "auto";
 
 
@@ -3177,7 +3750,21 @@
     }
 
 
+    // ----------------------------------------------------
+    // Start
+    // ----------------------------------------------------
+
+
     async function startConversation() {
+
+      if (
+        !appConfig
+      ) {
+
+        return;
+
+      }
+
 
       const languageId =
         languageSelect.value;
@@ -3218,13 +3805,11 @@
           !customScenario
         ) {
 
-          customScenarioError
-            .textContent =
-              "Please describe the conversation you want to practise.";
+          customScenarioError.textContent =
+            "Please describe the conversation you want to practise.";
 
 
-          customScenarioInput
-            .focus();
+          customScenarioInput.focus();
 
 
           return;
@@ -3234,12 +3819,11 @@
 
         if (
           customScenario.length >
-          MAX_CUSTOM_SCENARIO_LENGTH
+          maxCustomScenarioLength
         ) {
 
-          customScenarioError
-            .textContent =
-              "Your scenario is longer than 2,000 characters.";
+          customScenarioError.textContent =
+            `Your scenario is longer than ${maxCustomScenarioLength.toLocaleString()} characters.`;
 
 
           return;
@@ -3277,6 +3861,10 @@
         customScenario;
 
 
+      const language =
+        getActiveLanguageConfig();
+
+
       chatTitle.textContent =
         `${languageName} conversation`;
 
@@ -3287,6 +3875,11 @@
 
       messageInput.placeholder =
         `Type your message in ${languageName}...`;
+
+
+      messageInput.dir =
+        language?.direction ||
+        "auto";
 
 
       messages.innerHTML =
@@ -3490,6 +4083,10 @@
         "Type your message...";
 
 
+      messageInput.dir =
+        "auto";
+
+
       chatTitle.textContent =
         "Conversation";
 
@@ -3527,6 +4124,11 @@
       );
 
     }
+
+
+    // ----------------------------------------------------
+    // Generate example
+    // ----------------------------------------------------
 
 
     async function generateExampleResponse() {
@@ -3711,6 +4313,11 @@
     }
 
 
+    // ----------------------------------------------------
+    // Events
+    // ----------------------------------------------------
+
+
     scenarioSelect
       .addEventListener(
         "change",
@@ -3727,8 +4334,7 @@
             setTimeout(
               () => {
 
-                customScenarioInput
-                  .focus();
+                customScenarioInput.focus();
 
               },
               0
@@ -3793,25 +4399,22 @@
     );
 
 
-    startChatButton
-      .addEventListener(
-        "click",
-        startConversation
-      );
+    startChatButton.addEventListener(
+      "click",
+      startConversation
+    );
 
 
-    endChatButton
-      .addEventListener(
-        "click",
-        endConversation
-      );
+    endChatButton.addEventListener(
+      "click",
+      endConversation
+    );
 
 
-    exampleButton
-      .addEventListener(
-        "click",
-        generateExampleResponse
-      );
+    exampleButton.addEventListener(
+      "click",
+      generateExampleResponse
+    );
 
 
     chatForm.addEventListener(
@@ -4025,10 +4628,13 @@
     );
 
 
-    updateCustomScenarioUI();
+    // Load the app's languages, levels and scenarios
+    // from the backend when the page opens.
 
-    updateCustomScenarioCounter();
+    loadAppConfig();
 
   </script>
+
 </body>
+
 </html>
