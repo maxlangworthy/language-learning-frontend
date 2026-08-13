@@ -1,67 +1,4034 @@
-# Dictionary data: attribution and licence
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Language Learning</title>
 
-The word-lookup feature uses dictionary data derived from the English-language edition of Wiktionary and extracted/processed by Wiktextract / Kaikki.org.
+  <style>
+    :root {
+      --surface: #ffffff;
+      --surface-soft: #f8fafc;
+      --text: #18212f;
+      --muted: #6f7b8c;
+      --border: #dce3ec;
+      --primary: #2856d8;
+      --primary-hover: #1e46b9;
+      --user-bubble: #2856d8;
+      --ai-bubble: #eef2f7;
+      --danger: #c73939;
+      --success: #267447;
+      --feedback-bg: #fffdf5;
+      --feedback-border: #eadfac;
+      --shadow: 0 18px 50px rgba(23, 35, 58, 0.09);
+    }
 
-## Languages currently using local dictionary data
+    * {
+      box-sizing: border-box;
+    }
 
-- German (`de`)
-- Italian (`it`)
-- Spanish (`es`)
-- Afrikaans (`af`)
-- French (`fr`)
-- Russian (`ru`)
-- Arabic (`ar`)
-- Turkish (`tr`)
-- Greek (`el`)
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family:
+        Inter,
+        ui-sans-serif,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+      background:
+        linear-gradient(
+          145deg,
+          #f7f9fc 0%,
+          #eef3fa 100%
+        );
+      color: var(--text);
+    }
 
-Mandarin Chinese (Pinyin) and Japanese (Romaji) currently do not use the local Kaikki dictionary lookup feature.
+    button,
+    select,
+    input,
+    textarea {
+      font: inherit;
+    }
 
-## Sources
+    button {
+      cursor: pointer;
+    }
 
-- English Wiktionary contributors: https://en.wiktionary.org/
-- Wiktextract: https://github.com/tatuylonen/wiktextract
-- Kaikki.org machine-readable dictionaries: https://kaikki.org/dictionary/
-- German: https://kaikki.org/dictionary/German/
-- Italian: https://kaikki.org/dictionary/Italian/
-- Spanish: https://kaikki.org/dictionary/Spanish/
-- Afrikaans: https://kaikki.org/dictionary/Afrikaans/
-- French: https://kaikki.org/dictionary/French/
-- Russian: https://kaikki.org/dictionary/Russian/
-- Arabic: https://kaikki.org/dictionary/Arabic/
-- Turkish: https://kaikki.org/dictionary/Turkish/
-- Greek: https://kaikki.org/dictionary/Greek/
+    button:disabled,
+    input:disabled,
+    textarea:disabled {
+      cursor: not-allowed;
+      opacity: 0.6;
+    }
 
-The build script downloads the configured Kaikki exports at deployment time, so the exact upstream extraction/dump date can change between deployments.
+    .hidden {
+      display: none !important;
+    }
 
-## Modifications made by this project
+    .page {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 28px;
+    }
 
-The source data is transformed into reduced SQLite lookup databases for language-learning word tooltips. Depending on the source entry, the transformation can:
+    .app-shell {
+      width: min(1050px, 100%);
+      min-height: 680px;
+      background: var(--surface);
+      border:
+        1px solid
+        rgba(220, 227, 236, 0.9);
+      border-radius: 28px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
 
-- keep entries for the configured target language only;
-- keep single-token lexical entries suitable for per-word lookup;
-- remove non-word items such as punctuation, symbols, prefixes and suffixes;
-- keep the surface word and part of speech;
-- keep a limited number of English glosses/senses and selected sense tags;
-- keep `form_of` lemma links for inflected forms;
-- expand additional conjugated/declined single-word forms from Wiktextract `forms` tables and link them back to their lemma;
-- keep a limited set of grammatical tags for inflected forms;
-- discard material not needed by the app, including audio, etymology, quotations, categories, links, examples and most other metadata;
-- normalise an additional lower-case lookup key for efficient matching.
+    .screen {
+      display: none;
+      min-height: 680px;
+    }
 
-The generated SQLite databases are therefore modified/adapted forms of the source dictionary data.
+    .screen.active {
+      display: flex;
+    }
 
-## Licence
+    #homeScreen {
+      align-items: center;
+      justify-content: center;
+      padding: 56px 28px;
+    }
 
-Kaikki.org states that its extracted data is made available under the same licences as Wiktionary. The English Wiktionary copyright information identifies its text licensing, including Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0), alongside GFDL terms where applicable.
+    .home-card {
+      width: min(620px, 100%);
+    }
 
-For this project, dictionary-derived data and dictionary-derived outputs are provided under **CC BY-SA 4.0**. This notice does not apply that licence to the application's independently written source code, interface, branding, prompts or other original material unless explicitly stated.
+    .eyebrow {
+      display: inline-flex;
+      margin-bottom: 14px;
+      color: var(--primary);
+      font-size: 0.86rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
 
-- CC BY-SA 4.0: https://creativecommons.org/licenses/by-sa/4.0/
-- Wiktionary copyright information: https://en.wiktionary.org/wiki/Wiktionary:Copyrights
-- Kaikki.org licence information: https://kaikki.org/dictionary/
+    h1 {
+      margin: 0;
+      font-size:
+        clamp(
+          2.3rem,
+          5vw,
+          4rem
+        );
+      line-height: 1;
+      letter-spacing: -0.045em;
+    }
 
-Attribution must not imply that Wiktionary contributors, Wikimedia, Wiktextract or Kaikki.org endorse this application.
+    .intro {
+      margin: 18px 0 36px;
+      color: var(--muted);
+      font-size: 1.05rem;
+      line-height: 1.65;
+    }
 
-## Commercial use note
+    .field {
+      margin-bottom: 22px;
+    }
 
-CC BY-SA 4.0 permits commercial reuse provided its terms are followed, including attribution and ShareAlike obligations for adaptations. This file and the visible attribution in the frontend are intended to preserve the relevant source, licence and modification notices. They are not legal advice; before a commercial launch, the product owner should review the applicable licence terms and obtain legal advice if needed.
+    .field label,
+    .custom-scenario-panel label {
+      display: block;
+      margin-bottom: 9px;
+      font-size: 0.92rem;
+      font-weight: 700;
+    }
+
+    .select-wrap {
+      position: relative;
+    }
+
+    select {
+      width: 100%;
+      appearance: none;
+      padding: 15px 46px 15px 16px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: var(--surface);
+      color: var(--text);
+      outline: none;
+    }
+
+    select:focus,
+    input:focus,
+    textarea:focus {
+      border-color:
+        rgba(
+          40,
+          86,
+          216,
+          0.65
+        );
+
+      box-shadow:
+        0 0 0 4px
+        rgba(
+          40,
+          86,
+          216,
+          0.10
+        );
+    }
+
+    .select-wrap::after {
+      content: "⌄";
+      position: absolute;
+      right: 16px;
+      top: 50%;
+      transform: translateY(-55%);
+      color: var(--muted);
+      pointer-events: none;
+    }
+
+    .custom-scenario-panel {
+      margin: -4px 0 22px;
+      padding: 16px;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      background: var(--surface-soft);
+    }
+
+    .custom-scenario-help {
+      margin: 0 0 11px;
+      color: var(--muted);
+      font-size: 0.84rem;
+      line-height: 1.45;
+    }
+
+    .custom-scenario-panel textarea {
+      display: block;
+      width: 100%;
+      min-height: 150px;
+      resize: vertical;
+      padding: 14px 15px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: #fff;
+      color: var(--text);
+      line-height: 1.5;
+      outline: none;
+    }
+
+    .custom-scenario-footer {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: 7px;
+      min-height: 19px;
+      font-size: 0.78rem;
+    }
+
+    .custom-scenario-error {
+      color: var(--danger);
+      font-weight: 650;
+    }
+
+    .character-counter {
+      margin-left: auto;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    .primary-btn {
+      width: 100%;
+      border: none;
+      border-radius: 14px;
+      padding: 15px 18px;
+      background: var(--primary);
+      color: #fff;
+      font-weight: 750;
+      font-size: 1rem;
+    }
+
+    .primary-btn:hover:not(:disabled),
+    .send-btn:hover:not(:disabled) {
+      background: var(--primary-hover);
+    }
+
+    #chatScreen {
+      flex-direction: column;
+    }
+
+    .chat-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.96);
+    }
+
+    .chat-heading {
+      min-width: 0;
+    }
+
+    .chat-heading h2 {
+      margin: 0 0 5px;
+      font-size: 1.18rem;
+    }
+
+    .chat-heading p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.91rem;
+    }
+
+    .secondary-btn {
+      flex: 0 0 auto;
+      border: 1px solid #ecd1d1;
+      border-radius: 11px;
+      padding: 10px 14px;
+      background: #fffafa;
+      color: var(--danger);
+      font-weight: 700;
+    }
+
+    .secondary-btn:hover {
+      background: #fff2f2;
+    }
+
+    .chat-main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      background: var(--surface-soft);
+    }
+
+    .messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 30px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .message-row {
+      display: flex;
+      width: 100%;
+    }
+
+    .message-row.ai {
+      justify-content: flex-start;
+    }
+
+    .message-row.user {
+      justify-content: flex-end;
+    }
+
+    .message {
+      max-width: min(70%, 620px);
+      padding: 13px 16px;
+      border-radius: 16px;
+      line-height: 1.5;
+      word-wrap: break-word;
+      unicode-bidi: plaintext;
+    }
+
+    .message-row.ai .message {
+      background: var(--ai-bubble);
+      color: var(--text);
+      border-bottom-left-radius: 5px;
+    }
+
+    .message-row.user .message {
+      background: var(--user-bubble);
+      color: #fff;
+      border-bottom-right-radius: 5px;
+    }
+
+    .example-label {
+      margin-bottom: 4px;
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.72);
+    }
+
+    .example-translation {
+      margin-top: 8px;
+      padding-top: 8px;
+      border-top:
+        1px solid
+        rgba(
+          255,
+          255,
+          255,
+          0.22
+        );
+      font-size: 0.82rem;
+      line-height: 1.4;
+      color: rgba(255, 255, 255, 0.82);
+      direction: ltr;
+      text-align: left;
+    }
+
+    .word-token {
+      border-bottom:
+        1px dotted
+        rgba(
+          24,
+          33,
+          47,
+          0.42
+        );
+      cursor: help;
+      outline: none;
+    }
+
+    .message-row.user .word-token {
+      border-bottom-color:
+        rgba(
+          255,
+          255,
+          255,
+          0.68
+        );
+    }
+
+    .word-token:focus {
+      border-bottom-style: solid;
+    }
+
+    .dictionary-tooltip {
+      display: none;
+      position: fixed;
+      z-index: 9999;
+      width: max-content;
+      max-width:
+        min(
+          360px,
+          calc(
+            100vw - 24px
+          )
+        );
+      padding: 12px 14px;
+      border:
+        1px solid
+        rgba(
+          24,
+          33,
+          47,
+          0.13
+        );
+      border-radius: 12px;
+      background: #18212f;
+      color: #fff;
+      box-shadow:
+        0 12px 32px
+        rgba(
+          23,
+          35,
+          58,
+          0.22
+        );
+      font-size: 0.86rem;
+      line-height: 1.4;
+      pointer-events: none;
+      direction: ltr;
+      text-align: left;
+    }
+
+    .dictionary-tooltip.visible {
+      display: block;
+    }
+
+    .tooltip-word {
+      margin-bottom: 6px;
+      font-size: 0.95rem;
+      font-weight: 800;
+    }
+
+    .tooltip-meaning {
+      color: rgba(255, 255, 255, 0.94);
+    }
+
+    .tooltip-senses {
+      margin: 0;
+      padding-left: 20px;
+    }
+
+    .tooltip-senses li {
+      margin: 4px 0;
+      padding-left: 2px;
+    }
+
+    .tooltip-tags {
+      margin-left: 5px;
+      color: rgba(255, 255, 255, 0.62);
+      font-size: 0.78rem;
+      font-style: italic;
+    }
+
+    .dictionary-meta {
+      margin-top: 7px;
+      color: rgba(255, 255, 255, 0.68);
+      font-size: 0.77rem;
+    }
+
+    .feedback-panel {
+      margin: 0 22px 14px;
+      padding: 14px 16px;
+      border: 1px solid var(--feedback-border);
+      border-radius: 14px;
+      background: var(--feedback-bg);
+    }
+
+    .feedback-title {
+      margin-bottom: 7px;
+      font-size: 0.82rem;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .feedback-panel p {
+      margin: 5px 0;
+      line-height: 1.5;
+    }
+
+    .feedback-ok {
+      color: var(--success);
+      font-weight: 700;
+    }
+
+    .feedback-error {
+      color: var(--danger);
+      font-weight: 700;
+    }
+
+    .composer-area {
+      border-top: 1px solid var(--border);
+      background: #fff;
+    }
+
+    .special-character-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      padding: 12px 22px 0;
+    }
+
+    .special-character-label {
+      width: 100%;
+      margin-bottom: 1px;
+      color: var(--muted);
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+
+    .special-character-button {
+      min-width: 34px;
+      height: 32px;
+      padding: 0 8px;
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      background: var(--surface-soft);
+      color: var(--text);
+      font-weight: 650;
+    }
+
+    .special-character-button:hover:not(:disabled) {
+      border-color:
+        rgba(
+          40,
+          86,
+          216,
+          0.38
+        );
+      background: #eef3ff;
+      color: var(--primary);
+    }
+
+    .composer {
+      display: flex;
+      gap: 10px;
+      padding: 12px 22px 22px;
+    }
+
+    .composer input {
+      flex: 1 1 260px;
+      min-width: 0;
+      padding: 14px 16px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      outline: none;
+      unicode-bidi: plaintext;
+    }
+
+    .example-btn {
+      flex: 0 0 auto;
+      border:
+        1px solid
+        rgba(
+          40,
+          86,
+          216,
+          0.28
+        );
+      border-radius: 14px;
+      padding: 0 16px;
+      background: #f4f7ff;
+      color: var(--primary);
+      font-weight: 750;
+    }
+
+    .example-btn:hover:not(:disabled) {
+      background: #eaf0ff;
+    }
+
+    .send-btn {
+      flex: 0 0 auto;
+      border: none;
+      border-radius: 14px;
+      padding: 0 20px;
+      background: var(--primary);
+      color: #fff;
+      font-weight: 750;
+    }
+
+    .data-credit {
+      margin: 18px 0 0;
+      color: var(--muted);
+      font-size: 0.74rem;
+      line-height: 1.5;
+      text-align: center;
+    }
+
+    .data-credit a {
+      color: inherit;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    .chat-credit {
+      margin: 0;
+      padding: 0 22px 10px;
+      background: #fff;
+    }
+
+    @media (
+      max-width:
+        760px
+    ) {
+      .page {
+        padding: 0;
+      }
+
+      .app-shell,
+      .screen {
+        min-height: 100vh;
+        border-radius: 0;
+      }
+
+      #homeScreen {
+        padding: 34px 22px;
+      }
+
+      .chat-header {
+        align-items: flex-start;
+      }
+
+      .message {
+        max-width: 86%;
+      }
+
+      .messages {
+        padding: 22px 16px;
+      }
+
+      .feedback-panel {
+        margin: 0 14px 12px;
+      }
+
+      .special-character-bar {
+        padding: 10px 14px 0;
+      }
+
+      .composer {
+        padding: 12px 14px 14px;
+        flex-wrap: wrap;
+      }
+
+      .composer input {
+        flex-basis: 100%;
+      }
+
+      .example-btn,
+      .send-btn {
+        min-height: 46px;
+      }
+
+      .example-btn {
+        flex: 1 1 auto;
+      }
+
+      .send-btn {
+        flex: 0 0 auto;
+      }
+
+      .chat-credit {
+        padding: 0 14px 8px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="page">
+    <section class="app-shell">
+
+      <section
+        id="homeScreen"
+        class="screen active"
+      >
+        <div class="home-card">
+
+          <div class="eyebrow">
+            Conversation practice
+          </div>
+
+          <h1>
+            Language Learning
+          </h1>
+
+          <p class="intro">
+            Choose your language and level, then select a scenario
+            or create your own conversation.
+          </p>
+
+          <div class="field">
+            <label for="languageSelect">
+              Language
+            </label>
+
+            <div class="select-wrap">
+              <select id="languageSelect">
+
+                <option value="german">
+                  German
+                </option>
+
+                <option value="italian">
+                  Italian
+                </option>
+
+                <option value="spanish">
+                  Spanish
+                </option>
+
+                <option value="afrikaans">
+                  Afrikaans
+                </option>
+
+                <option value="french">
+                  French
+                </option>
+
+                <option value="russian">
+                  Russian
+                </option>
+
+                <option value="arabic">
+                  Arabic
+                </option>
+
+                <option value="turkish">
+                  Turkish
+                </option>
+
+                <option value="greek">
+                  Greek
+                </option>
+
+                <option value="mandarin_pinyin">
+                  Mandarin Chinese (Pinyin)
+                </option>
+
+                <option value="japanese_romaji">
+                  Japanese (Romaji)
+                </option>
+
+              </select>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="levelSelect">
+              Language level
+            </label>
+
+            <div class="select-wrap">
+              <select id="levelSelect">
+
+                <option value="a1">
+                  A1 — Beginner
+                </option>
+
+                <option value="a2">
+                  A2 — Elementary
+                </option>
+
+                <option
+                  value="b1"
+                  selected
+                >
+                  B1 — Intermediate
+                </option>
+
+                <option value="b2">
+                  B2 — Upper-intermediate
+                </option>
+
+                <option value="c1">
+                  C1 — Advanced
+                </option>
+
+                <option value="c2">
+                  C2 — Proficient
+                </option>
+
+              </select>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="scenarioSelect">
+              Scenario
+            </label>
+
+            <div class="select-wrap">
+              <select id="scenarioSelect">
+
+                <option value="coffee">
+                  Ordering a coffee
+                </option>
+
+                <option value="weekend">
+                  Talking about your weekend with a colleague
+                </option>
+
+                <option value="directions">
+                  Giving a stranger directions
+                </option>
+
+                <option value="custom">
+                  Custom scenario...
+                </option>
+
+              </select>
+            </div>
+          </div>
+
+          <div
+            id="customScenarioPanel"
+            class="custom-scenario-panel hidden"
+          >
+            <label for="customScenarioInput">
+              Describe your scenario
+            </label>
+
+            <p class="custom-scenario-help">
+              Describe what you want to talk about, who you want
+              the AI to be, where the conversation takes place,
+              or any details you want included.
+            </p>
+
+            <textarea
+              id="customScenarioInput"
+              maxlength="2000"
+              placeholder="For example: I want to have a casual conversation about pets. Ask me what pets I have now, what they are like, what pets I have had in the past, and what animals I would like to have in the future. Tell me about your pets too and ask natural follow-up questions."
+            ></textarea>
+
+            <div class="custom-scenario-footer">
+
+              <div
+                id="customScenarioError"
+                class="custom-scenario-error"
+              ></div>
+
+              <div
+                id="customScenarioCounter"
+                class="character-counter"
+              >
+                0 / 2000
+              </div>
+
+            </div>
+          </div>
+
+          <button
+            id="startChatButton"
+            class="primary-btn"
+          >
+            Chat
+          </button>
+
+          <p class="data-credit">
+            Dictionary data derived from
+
+            <a
+              href="https://en.wiktionary.org/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              English Wiktionary contributors
+            </a>,
+
+            extracted via
+
+            <a
+              href="https://github.com/tatuylonen/wiktextract"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Wiktextract
+            </a>
+
+            /
+
+            <a
+              href="https://kaikki.org/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Kaikki.org
+            </a>
+
+            and reduced for this app.
+
+            Dictionary-derived data is provided under
+
+            <a
+              href="https://creativecommons.org/licenses/by-sa/4.0/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              CC BY-SA 4.0
+            </a>.
+          </p>
+        </div>
+      </section>
+
+      <section
+        id="chatScreen"
+        class="screen"
+      >
+
+        <header class="chat-header">
+
+          <div class="chat-heading">
+
+            <h2 id="chatTitle">
+              Conversation
+            </h2>
+
+            <p id="scenarioLabel">
+              Scenario
+            </p>
+
+          </div>
+
+          <button
+            id="endChatButton"
+            class="secondary-btn"
+          >
+            End conversation
+          </button>
+
+        </header>
+
+        <div class="chat-main">
+
+          <div
+            id="messages"
+            class="messages"
+            aria-live="polite"
+          ></div>
+
+          <section
+            id="feedbackPanel"
+            class="feedback-panel hidden"
+            aria-live="polite"
+          >
+            <div class="feedback-title">
+              Feedback on your last message
+            </div>
+
+            <div id="feedbackContent"></div>
+          </section>
+
+          <div class="composer-area">
+
+            <div
+              id="specialCharacterBar"
+              class="special-character-bar hidden"
+              aria-label="Special characters"
+            ></div>
+
+            <form
+              id="chatForm"
+              class="composer"
+            >
+
+              <input
+                id="messageInput"
+                type="text"
+                autocomplete="off"
+                dir="auto"
+                placeholder="Type your message..."
+                aria-label="Chat message"
+              />
+
+              <button
+                id="exampleButton"
+                class="example-btn"
+                type="button"
+              >
+                Generate example response
+              </button>
+
+              <button
+                id="sendButton"
+                class="send-btn"
+                type="submit"
+              >
+                Send
+              </button>
+
+            </form>
+
+          </div>
+
+          <p class="data-credit chat-credit">
+            Dictionary data:
+
+            <a
+              href="https://en.wiktionary.org/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              English Wiktionary
+            </a>
+
+            via
+
+            <a
+              href="https://kaikki.org/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Kaikki.org
+            </a>,
+
+            modified for this app and provided under
+
+            <a
+              href="https://creativecommons.org/licenses/by-sa/4.0/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              CC BY-SA 4.0
+            </a>.
+          </p>
+
+        </div>
+      </section>
+
+    </section>
+  </main>
+
+  <div
+    id="dictionaryTooltip"
+    class="dictionary-tooltip"
+    role="tooltip"
+  ></div>
+
+  <script>
+
+    const API_BASE_URL =
+      "https://api.plainbetter.co.uk";
+
+
+    const MAX_CUSTOM_SCENARIO_LENGTH =
+      2000;
+
+
+    const DICTIONARY_ENABLED_LANGUAGES =
+      new Set([
+        "german",
+        "italian",
+        "spanish",
+        "afrikaans",
+        "french",
+        "russian",
+        "arabic",
+        "turkish",
+        "greek",
+      ]);
+
+
+    const SPECIAL_CHARACTERS = {
+
+      german: [
+        "ä",
+        "ö",
+        "ü",
+        "ß"
+      ],
+
+
+      italian: [
+        "à",
+        "è",
+        "é",
+        "ì",
+        "ò",
+        "ù"
+      ],
+
+
+      spanish: [
+        "á",
+        "é",
+        "í",
+        "ó",
+        "ú",
+        "ü",
+        "ñ",
+        "¿",
+        "¡"
+      ],
+
+
+      afrikaans: [
+        "ê",
+        "ë",
+        "ï",
+        "ô",
+        "û"
+      ],
+
+
+      french: [
+        "à",
+        "â",
+        "æ",
+        "ç",
+        "é",
+        "è",
+        "ê",
+        "ë",
+        "î",
+        "ï",
+        "ô",
+        "œ",
+        "ù",
+        "û",
+        "ü",
+        "ÿ"
+      ],
+
+
+      russian: [
+        "а",
+        "б",
+        "в",
+        "г",
+        "д",
+        "е",
+        "ё",
+        "ж",
+        "з",
+        "и",
+        "й",
+        "к",
+        "л",
+        "м",
+        "н",
+        "о",
+        "п",
+        "р",
+        "с",
+        "т",
+        "у",
+        "ф",
+        "х",
+        "ц",
+        "ч",
+        "ш",
+        "щ",
+        "ъ",
+        "ы",
+        "ь",
+        "э",
+        "ю",
+        "я"
+      ],
+
+
+      arabic: [
+        "ا",
+        "ب",
+        "ت",
+        "ث",
+        "ج",
+        "ح",
+        "خ",
+        "د",
+        "ذ",
+        "ر",
+        "ز",
+        "س",
+        "ش",
+        "ص",
+        "ض",
+        "ط",
+        "ظ",
+        "ع",
+        "غ",
+        "ف",
+        "ق",
+        "ك",
+        "ل",
+        "م",
+        "ن",
+        "ه",
+        "و",
+        "ي",
+        "ء",
+        "أ",
+        "إ",
+        "آ",
+        "ؤ",
+        "ئ",
+        "ة",
+        "ى"
+      ],
+
+
+      turkish: [
+        "ç",
+        "ğ",
+        "ı",
+        "İ",
+        "ö",
+        "ş",
+        "ü"
+      ],
+
+
+      greek: [
+        "α",
+        "β",
+        "γ",
+        "δ",
+        "ε",
+        "ζ",
+        "η",
+        "θ",
+        "ι",
+        "κ",
+        "λ",
+        "μ",
+        "ν",
+        "ξ",
+        "ο",
+        "π",
+        "ρ",
+        "σ",
+        "ς",
+        "τ",
+        "υ",
+        "φ",
+        "χ",
+        "ψ",
+        "ω",
+        "ά",
+        "έ",
+        "ή",
+        "ί",
+        "ό",
+        "ύ",
+        "ώ",
+        "ϊ",
+        "ΐ",
+        "ϋ",
+        "ΰ"
+      ],
+
+
+      mandarin_pinyin: [
+        "ā",
+        "á",
+        "ǎ",
+        "à",
+        "ē",
+        "é",
+        "ě",
+        "è",
+        "ī",
+        "í",
+        "ǐ",
+        "ì",
+        "ō",
+        "ó",
+        "ǒ",
+        "ò",
+        "ū",
+        "ú",
+        "ǔ",
+        "ù",
+        "ǖ",
+        "ǘ",
+        "ǚ",
+        "ǜ",
+        "ü"
+      ],
+
+
+      japanese_romaji: [
+        "ā",
+        "ī",
+        "ū",
+        "ē",
+        "ō"
+      ],
+
+    };
+
+
+    const homeScreen =
+      document.getElementById(
+        "homeScreen"
+      );
+
+
+    const chatScreen =
+      document.getElementById(
+        "chatScreen"
+      );
+
+
+    const startChatButton =
+      document.getElementById(
+        "startChatButton"
+      );
+
+
+    const endChatButton =
+      document.getElementById(
+        "endChatButton"
+      );
+
+
+    const languageSelect =
+      document.getElementById(
+        "languageSelect"
+      );
+
+
+    const levelSelect =
+      document.getElementById(
+        "levelSelect"
+      );
+
+
+    const scenarioSelect =
+      document.getElementById(
+        "scenarioSelect"
+      );
+
+
+    const customScenarioPanel =
+      document.getElementById(
+        "customScenarioPanel"
+      );
+
+
+    const customScenarioInput =
+      document.getElementById(
+        "customScenarioInput"
+      );
+
+
+    const customScenarioCounter =
+      document.getElementById(
+        "customScenarioCounter"
+      );
+
+
+    const customScenarioError =
+      document.getElementById(
+        "customScenarioError"
+      );
+
+
+    const chatTitle =
+      document.getElementById(
+        "chatTitle"
+      );
+
+
+    const scenarioLabel =
+      document.getElementById(
+        "scenarioLabel"
+      );
+
+
+    const chatForm =
+      document.getElementById(
+        "chatForm"
+      );
+
+
+    const messageInput =
+      document.getElementById(
+        "messageInput"
+      );
+
+
+    const exampleButton =
+      document.getElementById(
+        "exampleButton"
+      );
+
+
+    const sendButton =
+      document.getElementById(
+        "sendButton"
+      );
+
+
+    const messages =
+      document.getElementById(
+        "messages"
+      );
+
+
+    const feedbackPanel =
+      document.getElementById(
+        "feedbackPanel"
+      );
+
+
+    const feedbackContent =
+      document.getElementById(
+        "feedbackContent"
+      );
+
+
+    const dictionaryTooltip =
+      document.getElementById(
+        "dictionaryTooltip"
+      );
+
+
+    const specialCharacterBar =
+      document.getElementById(
+        "specialCharacterBar"
+      );
+
+
+    let history =
+      [];
+
+
+    let conversationEnded =
+      false;
+
+
+    let activeLanguageId =
+      null;
+
+
+    let activeLevelId =
+      null;
+
+
+    let activeScenarioKey =
+      null;
+
+
+    let activeCustomScenario =
+      "";
+
+
+    const dictionaryCache =
+      new Map();
+
+
+    let activeDictionaryWord =
+      null;
+
+
+    let tooltipHideTimer =
+      null;
+
+
+    let tooltipHoverTimer =
+      null;
+
+
+    let tooltipRequestToken =
+      0;
+
+
+    function showScreen(
+      screenToShow
+    ) {
+
+      homeScreen
+        .classList
+        .remove(
+          "active"
+        );
+
+
+      chatScreen
+        .classList
+        .remove(
+          "active"
+        );
+
+
+      screenToShow
+        .classList
+        .add(
+          "active"
+        );
+
+    }
+
+
+    function getSelectedLanguageName() {
+
+      return languageSelect
+        .options[
+          languageSelect
+            .selectedIndex
+        ]
+        .text;
+
+    }
+
+
+    function getSelectedLevelLabel() {
+
+      return levelSelect
+        .options[
+          levelSelect
+            .selectedIndex
+        ]
+        .text;
+
+    }
+
+
+    async function readJsonResponse(
+      response
+    ) {
+
+      let data;
+
+
+      try {
+
+        data =
+          await response.json();
+
+      } catch {
+
+        throw new Error(
+          "The server returned an invalid response."
+        );
+
+      }
+
+
+      if (
+        !response.ok
+      ) {
+
+        throw new Error(
+          data.error ||
+          "The request failed."
+        );
+
+      }
+
+
+      return data;
+
+    }
+
+
+    function insertSpecialCharacter(
+      character
+    ) {
+
+      if (
+        messageInput.disabled
+      ) {
+
+        return;
+
+      }
+
+
+      const start =
+        Number.isInteger(
+          messageInput.selectionStart
+        )
+          ? messageInput.selectionStart
+          : messageInput.value.length;
+
+
+      const end =
+        Number.isInteger(
+          messageInput.selectionEnd
+        )
+          ? messageInput.selectionEnd
+          : start;
+
+
+      messageInput.setRangeText(
+        character,
+        start,
+        end,
+        "end"
+      );
+
+
+      messageInput.focus();
+
+    }
+
+
+    function renderSpecialCharacterBar(
+      languageId
+    ) {
+
+      specialCharacterBar.innerHTML =
+        "";
+
+
+      const characters =
+        SPECIAL_CHARACTERS[
+          languageId
+        ] ||
+        [];
+
+
+      if (
+        characters.length ===
+        0
+      ) {
+
+        specialCharacterBar
+          .classList
+          .add(
+            "hidden"
+          );
+
+
+        return;
+
+      }
+
+
+      const label =
+        document.createElement(
+          "div"
+        );
+
+
+      label.className =
+        "special-character-label";
+
+
+      label.textContent =
+        "Characters you may not have on your keyboard";
+
+
+      specialCharacterBar
+        .appendChild(
+          label
+        );
+
+
+      for (
+        const character
+        of characters
+      ) {
+
+        const button =
+          document.createElement(
+            "button"
+          );
+
+
+        button.type =
+          "button";
+
+
+        button.className =
+          "special-character-button";
+
+
+        button.textContent =
+          character;
+
+
+        button.setAttribute(
+          "aria-label",
+          `Insert ${character}`
+        );
+
+
+        button.addEventListener(
+          "mousedown",
+          (
+            event
+          ) => {
+
+            event.preventDefault();
+
+          }
+        );
+
+
+        button.addEventListener(
+          "click",
+          () => {
+
+            insertSpecialCharacter(
+              character
+            );
+
+          }
+        );
+
+
+        specialCharacterBar
+          .appendChild(
+            button
+          );
+
+      }
+
+
+      specialCharacterBar
+        .classList
+        .remove(
+          "hidden"
+        );
+
+    }
+
+
+    function setCharacterBarEnabled(
+      enabled
+    ) {
+
+      const buttons =
+        specialCharacterBar
+          .querySelectorAll(
+            "button"
+          );
+
+
+      for (
+        const button
+        of buttons
+      ) {
+
+        button.disabled =
+          !enabled;
+
+      }
+
+    }
+
+
+    function updateCustomScenarioUI() {
+
+      const isCustom =
+        scenarioSelect.value ===
+        "custom";
+
+
+      customScenarioPanel
+        .classList
+        .toggle(
+          "hidden",
+          !isCustom
+        );
+
+
+      if (
+        !isCustom
+      ) {
+
+        customScenarioError
+          .textContent =
+            "";
+
+      }
+
+    }
+
+
+    function updateCustomScenarioCounter() {
+
+      const length =
+        customScenarioInput
+          .value
+          .length;
+
+
+      customScenarioCounter
+        .textContent =
+          `${length} / ${MAX_CUSTOM_SCENARIO_LENGTH}`;
+
+
+      if (
+        customScenarioInput
+          .value
+          .trim()
+      ) {
+
+        customScenarioError
+          .textContent =
+            "";
+
+      }
+
+    }
+
+
+    function getActiveConversationPayload() {
+
+      const payload = {
+
+        language:
+          activeLanguageId,
+
+        level:
+          activeLevelId,
+
+        scenario:
+          activeScenarioKey,
+
+      };
+
+
+      if (
+        activeScenarioKey ===
+        "custom"
+      ) {
+
+        payload.customScenario =
+          activeCustomScenario;
+
+      }
+
+
+      return payload;
+
+    }
+
+
+    function normalizeDictionaryKey(
+      word
+    ) {
+
+      return word
+        .normalize(
+          "NFC"
+        )
+        .toLocaleLowerCase();
+
+    }
+
+
+    function splitLanguageText(
+      text
+    ) {
+
+      return text.split(
+        /(\p{L}[\p{L}\p{M}'’-]*)/gu
+      );
+
+    }
+
+
+    async function getWordMeaning(
+      languageId,
+      lookupWord,
+      partOfSpeech =
+        ""
+    ) {
+
+      const cacheKey =
+        `${languageId}|${normalizeDictionaryKey(
+          lookupWord
+        )}|${partOfSpeech}`;
+
+
+      if (
+        dictionaryCache.has(
+          cacheKey
+        )
+      ) {
+
+        return dictionaryCache.get(
+          cacheKey
+        );
+
+      }
+
+
+      let url =
+        `${API_BASE_URL}/api/word` +
+        `?language=${encodeURIComponent(
+          languageId
+        )}` +
+        `&word=${encodeURIComponent(
+          lookupWord
+        )}`;
+
+
+      if (
+        partOfSpeech &&
+        partOfSpeech !==
+          "other"
+      ) {
+
+        url +=
+          `&pos=${encodeURIComponent(
+            partOfSpeech
+          )}`;
+
+      }
+
+
+      const request =
+        fetch(
+          url
+        )
+          .then(
+            readJsonResponse
+          )
+          .catch(
+            () => ({
+
+              language:
+                languageId,
+
+              word:
+                lookupWord,
+
+              found:
+                false,
+
+              entries:
+                [],
+
+              lookupError:
+                true,
+
+            })
+          );
+
+
+      dictionaryCache.set(
+        cacheKey,
+        request
+      );
+
+
+      return request;
+
+    }
+
+
+    function positionDictionaryTooltip(
+      target
+    ) {
+
+      const targetRect =
+        target
+          .getBoundingClientRect();
+
+
+      const tooltipRect =
+        dictionaryTooltip
+          .getBoundingClientRect();
+
+
+      const margin =
+        8;
+
+
+      let left =
+        targetRect.left +
+        (
+          targetRect.width -
+          tooltipRect.width
+        ) / 2;
+
+
+      let top =
+        targetRect.top -
+        tooltipRect.height -
+        margin;
+
+
+      left =
+        Math.max(
+          10,
+          Math.min(
+            left,
+            window.innerWidth -
+            tooltipRect.width -
+            10
+          )
+        );
+
+
+      if (
+        top <
+        10
+      ) {
+
+        top =
+          targetRect.bottom +
+          margin;
+
+      }
+
+
+      dictionaryTooltip
+        .style
+        .left =
+          `${left}px`;
+
+
+      dictionaryTooltip
+        .style
+        .top =
+          `${top}px`;
+
+    }
+
+
+    function showTooltipLoading(
+      surfaceWord
+    ) {
+
+      dictionaryTooltip.innerHTML =
+        "";
+
+
+      const title =
+        document.createElement(
+          "div"
+        );
+
+
+      title.className =
+        "tooltip-word";
+
+
+      title.dir =
+        "auto";
+
+
+      title.textContent =
+        surfaceWord;
+
+
+      const loading =
+        document.createElement(
+          "div"
+        );
+
+
+      loading.className =
+        "tooltip-meaning";
+
+
+      loading.textContent =
+        "Looking up…";
+
+
+      dictionaryTooltip.append(
+        title,
+        loading
+      );
+
+    }
+
+
+    function getDisplaySenses(
+      entry
+    ) {
+
+      if (
+        Array.isArray(
+          entry?.senses
+        ) &&
+        entry.senses.length >
+          0
+      ) {
+
+        return entry.senses
+          .filter(
+            (
+              sense
+            ) =>
+              sense &&
+              typeof sense.meaning ===
+                "string" &&
+              sense.meaning.trim()
+          )
+          .map(
+            (
+              sense
+            ) => ({
+
+              meaning:
+                sense.meaning
+                  .trim(),
+
+              tags:
+                Array.isArray(
+                  sense.tags
+                )
+                  ? sense.tags.filter(
+                      (
+                        tag
+                      ) =>
+                        typeof tag ===
+                          "string" &&
+                        tag.trim()
+                    )
+                  : [],
+
+            })
+          );
+
+      }
+
+
+      return (
+        Array.isArray(
+          entry?.meanings
+        )
+          ? entry.meanings
+          : []
+      )
+        .filter(
+          (
+            meaning
+          ) =>
+            typeof meaning ===
+              "string" &&
+            meaning.trim()
+        )
+        .map(
+          (
+            meaning
+          ) => ({
+
+            meaning:
+              meaning.trim(),
+
+            tags:
+              [],
+
+          })
+        );
+
+    }
+
+
+    function renderDictionaryTooltip(
+      data,
+      surfaceWord,
+      lookupWord
+    ) {
+
+      dictionaryTooltip.innerHTML =
+        "";
+
+
+      const title =
+        document.createElement(
+          "div"
+        );
+
+
+      title.className =
+        "tooltip-word";
+
+
+      title.dir =
+        "auto";
+
+
+      title.textContent =
+        surfaceWord;
+
+
+      dictionaryTooltip
+        .appendChild(
+          title
+        );
+
+
+      if (
+        data?.lookupError
+      ) {
+
+        const unavailable =
+          document.createElement(
+            "div"
+          );
+
+
+        unavailable.className =
+          "tooltip-meaning";
+
+
+        unavailable.textContent =
+          "Dictionary lookup unavailable.";
+
+
+        dictionaryTooltip
+          .appendChild(
+            unavailable
+          );
+
+
+        return;
+
+      }
+
+
+      if (
+        !data?.found ||
+        !Array.isArray(
+          data.entries
+        ) ||
+        data.entries.length ===
+          0
+      ) {
+
+        const unavailable =
+          document.createElement(
+            "div"
+          );
+
+
+        unavailable.className =
+          "tooltip-meaning";
+
+
+        unavailable.textContent =
+          "Meaning not found.";
+
+
+        dictionaryTooltip
+          .appendChild(
+            unavailable
+          );
+
+
+        return;
+
+      }
+
+
+      const entry =
+        data.entries[
+          0
+        ];
+
+
+      const senses =
+        getDisplaySenses(
+          entry
+        ).slice(
+          0,
+          5
+        );
+
+
+      if (
+        senses.length ===
+        0
+      ) {
+
+        const unavailable =
+          document.createElement(
+            "div"
+          );
+
+
+        unavailable.className =
+          "tooltip-meaning";
+
+
+        unavailable.textContent =
+          "Meaning unavailable.";
+
+
+        dictionaryTooltip
+          .appendChild(
+            unavailable
+          );
+
+      } else {
+
+        const list =
+          document.createElement(
+            "ol"
+          );
+
+
+        list.className =
+          "tooltip-senses";
+
+
+        for (
+          const sense
+          of senses
+        ) {
+
+          const item =
+            document.createElement(
+              "li"
+            );
+
+
+          const meaning =
+            document.createElement(
+              "span"
+            );
+
+
+          meaning.className =
+            "tooltip-meaning";
+
+
+          meaning.textContent =
+            sense.meaning;
+
+
+          item.appendChild(
+            meaning
+          );
+
+
+          if (
+            sense.tags.length >
+            0
+          ) {
+
+            const tags =
+              document.createElement(
+                "span"
+              );
+
+
+            tags.className =
+              "tooltip-tags";
+
+
+            tags.textContent =
+              ` (${sense.tags.join(", ")})`;
+
+
+            item.appendChild(
+              tags
+            );
+
+          }
+
+
+          list.appendChild(
+            item
+          );
+
+        }
+
+
+        dictionaryTooltip
+          .appendChild(
+            list
+          );
+
+      }
+
+
+      const metaParts =
+        [];
+
+
+      if (
+        lookupWord &&
+        normalizeDictionaryKey(
+          lookupWord
+        ) !==
+        normalizeDictionaryKey(
+          surfaceWord
+        )
+      ) {
+
+        metaParts.push(
+          `from ${lookupWord}`
+        );
+
+      }
+
+
+      if (
+        entry.partOfSpeech &&
+        entry.partOfSpeech !==
+          "unknown"
+      ) {
+
+        metaParts.push(
+          entry.partOfSpeech
+        );
+
+      }
+
+
+      if (
+        metaParts.length >
+        0
+      ) {
+
+        const meta =
+          document.createElement(
+            "div"
+          );
+
+
+        meta.className =
+          "dictionary-meta";
+
+
+        meta.textContent =
+          metaParts.join(
+            " · "
+          );
+
+
+        dictionaryTooltip
+          .appendChild(
+            meta
+          );
+
+      }
+
+    }
+
+
+    async function openDictionaryTooltip(
+      target,
+      languageId,
+      surfaceWord,
+      lookupWord =
+        surfaceWord,
+      partOfSpeech =
+        ""
+    ) {
+
+      clearTimeout(
+        tooltipHideTimer
+      );
+
+
+      activeDictionaryWord =
+        target;
+
+
+      const requestToken =
+        ++tooltipRequestToken;
+
+
+      showTooltipLoading(
+        surfaceWord
+      );
+
+
+      dictionaryTooltip
+        .classList
+        .add(
+          "visible"
+        );
+
+
+      positionDictionaryTooltip(
+        target
+      );
+
+
+      const data =
+        await getWordMeaning(
+          languageId,
+          lookupWord,
+          partOfSpeech
+        );
+
+
+      if (
+        requestToken !==
+          tooltipRequestToken ||
+        activeDictionaryWord !==
+          target
+      ) {
+
+        return;
+
+      }
+
+
+      renderDictionaryTooltip(
+        data,
+        surfaceWord,
+        lookupWord
+      );
+
+
+      positionDictionaryTooltip(
+        target
+      );
+
+    }
+
+
+    function hideDictionaryTooltip(
+      delay =
+        80
+    ) {
+
+      clearTimeout(
+        tooltipHideTimer
+      );
+
+
+      tooltipHideTimer =
+        setTimeout(
+          () => {
+
+            tooltipRequestToken +=
+              1;
+
+
+            activeDictionaryWord =
+              null;
+
+
+            dictionaryTooltip
+              .classList
+              .remove(
+                "visible"
+              );
+
+          },
+          delay
+        );
+
+    }
+
+
+    function createWordMetadataMatcher(
+      replyWords
+    ) {
+
+      const metadata =
+        Array.isArray(
+          replyWords
+        )
+          ? replyWords
+          : [];
+
+
+      let cursor =
+        0;
+
+
+      return function getMetadataForWord(
+        visibleWord
+      ) {
+
+        const visibleKey =
+          normalizeDictionaryKey(
+            visibleWord
+          );
+
+
+        for (
+          let i =
+            cursor;
+
+          i <
+            metadata.length;
+
+          i +=
+            1
+        ) {
+
+          const item =
+            metadata[
+              i
+            ];
+
+
+          if (
+            !item ||
+            typeof item.surface !==
+              "string"
+          ) {
+
+            continue;
+
+          }
+
+
+          if (
+            normalizeDictionaryKey(
+              item.surface
+            ) ===
+            visibleKey
+          ) {
+
+            cursor =
+              i + 1;
+
+
+            return {
+
+              lookup:
+                typeof item.lookup ===
+                  "string" &&
+                item.lookup.trim()
+                  ? item.lookup
+                  : visibleWord,
+
+              pos:
+                typeof item.pos ===
+                  "string"
+                  ? item.pos
+                  : "other",
+
+            };
+
+          }
+
+        }
+
+
+        return {
+
+          lookup:
+            visibleWord,
+
+          pos:
+            "other",
+
+        };
+
+      };
+
+    }
+
+
+    function appendInteractiveLanguageText(
+      container,
+      text,
+      languageId,
+      replyWords =
+        []
+    ) {
+
+      container.dir =
+        "auto";
+
+
+      if (
+        !DICTIONARY_ENABLED_LANGUAGES.has(
+          languageId
+        )
+      ) {
+
+        container.textContent =
+          text;
+
+
+        return;
+
+      }
+
+
+      const parts =
+        splitLanguageText(
+          text
+        );
+
+
+      const getMetadataForWord =
+        createWordMetadataMatcher(
+          replyWords
+        );
+
+
+      for (
+        const part
+        of parts
+      ) {
+
+        if (
+          !part
+        ) {
+
+          continue;
+
+        }
+
+
+        const isWord =
+          /^\p{L}[\p{L}\p{M}'’-]*$/u
+            .test(
+              part
+            );
+
+
+        if (
+          !isWord
+        ) {
+
+          container
+            .appendChild(
+              document
+                .createTextNode(
+                  part
+                )
+            );
+
+
+          continue;
+
+        }
+
+
+        const metadata =
+          getMetadataForWord(
+            part
+          );
+
+
+        const word =
+          document.createElement(
+            "span"
+          );
+
+
+        word.className =
+          "word-token";
+
+
+        word.textContent =
+          part;
+
+
+        word.tabIndex =
+          0;
+
+
+        word.setAttribute(
+          "aria-label",
+          `${part}: show English meaning`
+        );
+
+
+        word.addEventListener(
+          "mouseenter",
+          () => {
+
+            clearTimeout(
+              tooltipHoverTimer
+            );
+
+
+            tooltipHoverTimer =
+              setTimeout(
+                () => {
+
+                  openDictionaryTooltip(
+                    word,
+                    languageId,
+                    part,
+                    metadata.lookup,
+                    metadata.pos
+                  );
+
+                },
+                120
+              );
+
+          }
+        );
+
+
+        word.addEventListener(
+          "mouseleave",
+          () => {
+
+            clearTimeout(
+              tooltipHoverTimer
+            );
+
+
+            hideDictionaryTooltip();
+
+          }
+        );
+
+
+        word.addEventListener(
+          "focus",
+          () => {
+
+            openDictionaryTooltip(
+              word,
+              languageId,
+              part,
+              metadata.lookup,
+              metadata.pos
+            );
+
+          }
+        );
+
+
+        word.addEventListener(
+          "blur",
+          () => {
+
+            hideDictionaryTooltip();
+
+          }
+        );
+
+
+        word.addEventListener(
+          "click",
+          (
+            event
+          ) => {
+
+            event.stopPropagation();
+
+
+            openDictionaryTooltip(
+              word,
+              languageId,
+              part,
+              metadata.lookup,
+              metadata.pos
+            );
+
+          }
+        );
+
+
+        container.appendChild(
+          word
+        );
+
+      }
+
+    }
+
+
+    function addMessage(
+      text,
+      sender,
+      languageId,
+      replyWords =
+        [],
+      options =
+        {}
+    ) {
+
+      const row =
+        document.createElement(
+          "div"
+        );
+
+
+      row.className =
+        `message-row ${sender}`;
+
+
+      const bubble =
+        document.createElement(
+          "div"
+        );
+
+
+      bubble.className =
+        "message";
+
+
+      bubble.dir =
+        "auto";
+
+
+      if (
+        options.isExample
+      ) {
+
+        const label =
+          document.createElement(
+            "div"
+          );
+
+
+        label.className =
+          "example-label";
+
+
+        label.textContent =
+          "Example response";
+
+
+        bubble.appendChild(
+          label
+        );
+
+      }
+
+
+      const textContainer =
+        document.createElement(
+          "div"
+        );
+
+
+      appendInteractiveLanguageText(
+        textContainer,
+        text,
+        languageId,
+        replyWords
+      );
+
+
+      bubble.appendChild(
+        textContainer
+      );
+
+
+      if (
+        options.translation
+      ) {
+
+        const translation =
+          document.createElement(
+            "div"
+          );
+
+
+        translation.className =
+          "example-translation";
+
+
+        translation.textContent =
+          `English: ${options.translation}`;
+
+
+        bubble.appendChild(
+          translation
+        );
+
+      }
+
+
+      row.appendChild(
+        bubble
+      );
+
+
+      messages.appendChild(
+        row
+      );
+
+
+      messages.scrollTop =
+        messages.scrollHeight;
+
+    }
+
+
+    function clearFeedback() {
+
+      feedbackContent.innerHTML =
+        "";
+
+
+      feedbackPanel
+        .classList
+        .add(
+          "hidden"
+        );
+
+    }
+
+
+    function showFeedback(
+      feedback
+    ) {
+
+      feedbackContent.innerHTML =
+        "";
+
+
+      feedbackPanel
+        .classList
+        .remove(
+          "hidden"
+        );
+
+
+      if (
+        !feedback ||
+        feedback.hasIssues ===
+          false
+      ) {
+
+        const text =
+          document.createElement(
+            "p"
+          );
+
+
+        text.className =
+          "feedback-ok";
+
+
+        text.textContent =
+          feedback?.explanation ||
+          "No correction needed.";
+
+
+        feedbackContent
+          .appendChild(
+            text
+          );
+
+
+        return;
+
+      }
+
+
+      const correction =
+        document.createElement(
+          "p"
+        );
+
+
+      const label =
+        document.createElement(
+          "strong"
+        );
+
+
+      label.textContent =
+        "Correction: ";
+
+
+      correction.appendChild(
+        label
+      );
+
+
+      const correctedText =
+        document.createElement(
+          "span"
+        );
+
+
+      correctedText.dir =
+        "auto";
+
+
+      correctedText.textContent =
+        feedback.correctedVersion ||
+        "";
+
+
+      correction.appendChild(
+        correctedText
+      );
+
+
+      const explanation =
+        document.createElement(
+          "p"
+        );
+
+
+      explanation.textContent =
+        feedback.explanation ||
+        "";
+
+
+      feedbackContent.append(
+        correction,
+        explanation
+      );
+
+    }
+
+
+    function showError(
+      message
+    ) {
+
+      feedbackContent.innerHTML =
+        "";
+
+
+      feedbackPanel
+        .classList
+        .remove(
+          "hidden"
+        );
+
+
+      const text =
+        document.createElement(
+          "p"
+        );
+
+
+      text.className =
+        "feedback-error";
+
+
+      text.textContent =
+        message;
+
+
+      feedbackContent
+        .appendChild(
+          text
+        );
+
+    }
+
+
+    function setComposerEnabled(
+      enabled
+    ) {
+
+      messageInput.disabled =
+        !enabled;
+
+
+      sendButton.disabled =
+        !enabled;
+
+
+      exampleButton.disabled =
+        !enabled;
+
+
+      setCharacterBarEnabled(
+        enabled
+      );
+
+    }
+
+
+    async function startConversation() {
+
+      const languageId =
+        languageSelect.value;
+
+
+      const languageName =
+        getSelectedLanguageName();
+
+
+      const levelId =
+        levelSelect.value;
+
+
+      const levelLabel =
+        getSelectedLevelLabel();
+
+
+      const scenarioKey =
+        scenarioSelect.value;
+
+
+      let customScenario =
+        "";
+
+
+      if (
+        scenarioKey ===
+        "custom"
+      ) {
+
+        customScenario =
+          customScenarioInput
+            .value
+            .trim();
+
+
+        if (
+          !customScenario
+        ) {
+
+          customScenarioError
+            .textContent =
+              "Please describe the conversation you want to practise.";
+
+
+          customScenarioInput
+            .focus();
+
+
+          return;
+
+        }
+
+
+        if (
+          customScenario.length >
+          MAX_CUSTOM_SCENARIO_LENGTH
+        ) {
+
+          customScenarioError
+            .textContent =
+              "Your scenario is longer than 2,000 characters.";
+
+
+          return;
+
+        }
+
+      }
+
+
+      const scenarioName =
+        scenarioKey ===
+          "custom"
+          ? "Custom scenario"
+          : scenarioSelect
+              .options[
+                scenarioSelect
+                  .selectedIndex
+              ]
+              .text;
+
+
+      activeLanguageId =
+        languageId;
+
+
+      activeLevelId =
+        levelId;
+
+
+      activeScenarioKey =
+        scenarioKey;
+
+
+      activeCustomScenario =
+        customScenario;
+
+
+      chatTitle.textContent =
+        `${languageName} conversation`;
+
+
+      scenarioLabel.textContent =
+        `${scenarioName} · ${levelLabel}`;
+
+
+      messageInput.placeholder =
+        `Type your message in ${languageName}...`;
+
+
+      messages.innerHTML =
+        "";
+
+
+      clearFeedback();
+
+
+      hideDictionaryTooltip(
+        0
+      );
+
+
+      history =
+        [];
+
+
+      conversationEnded =
+        false;
+
+
+      renderSpecialCharacterBar(
+        languageId
+      );
+
+
+      startChatButton.disabled =
+        true;
+
+
+      startChatButton.textContent =
+        "Starting...";
+
+
+      showScreen(
+        chatScreen
+      );
+
+
+      setComposerEnabled(
+        false
+      );
+
+
+      const requestBody = {
+
+        language:
+          languageId,
+
+        level:
+          levelId,
+
+        scenario:
+          scenarioKey,
+
+      };
+
+
+      if (
+        scenarioKey ===
+        "custom"
+      ) {
+
+        requestBody.customScenario =
+          customScenario;
+
+      }
+
+
+      try {
+
+        const response =
+          await fetch(
+            `${API_BASE_URL}/api/start`,
+            {
+
+              method:
+                "POST",
+
+              headers: {
+                "Content-Type":
+                  "application/json",
+              },
+
+              body:
+                JSON.stringify(
+                  requestBody
+                ),
+
+            }
+          );
+
+
+        const data =
+          await readJsonResponse(
+            response
+          );
+
+
+        addMessage(
+          data.reply,
+          "ai",
+          languageId,
+          data.replyWords
+        );
+
+
+        history.push({
+
+          role:
+            "assistant",
+
+          content:
+            data.reply,
+
+        });
+
+
+        conversationEnded =
+          Boolean(
+            data.conversationEnded
+          );
+
+
+        if (
+          !conversationEnded
+        ) {
+
+          setComposerEnabled(
+            true
+          );
+
+
+          messageInput.focus();
+
+        }
+
+      } catch (
+        error
+      ) {
+
+        showError(
+          `Could not start the conversation: ${error.message}`
+        );
+
+
+        setComposerEnabled(
+          false
+        );
+
+      } finally {
+
+        startChatButton.disabled =
+          false;
+
+
+        startChatButton.textContent =
+          "Chat";
+
+      }
+
+    }
+
+
+    function endConversation() {
+
+      history =
+        [];
+
+
+      conversationEnded =
+        false;
+
+
+      activeLanguageId =
+        null;
+
+
+      activeLevelId =
+        null;
+
+
+      activeScenarioKey =
+        null;
+
+
+      activeCustomScenario =
+        "";
+
+
+      messages.innerHTML =
+        "";
+
+
+      messageInput.value =
+        "";
+
+
+      messageInput.placeholder =
+        "Type your message...";
+
+
+      chatTitle.textContent =
+        "Conversation";
+
+
+      scenarioLabel.textContent =
+        "Scenario";
+
+
+      specialCharacterBar.innerHTML =
+        "";
+
+
+      specialCharacterBar
+        .classList
+        .add(
+          "hidden"
+        );
+
+
+      clearFeedback();
+
+
+      hideDictionaryTooltip(
+        0
+      );
+
+
+      setComposerEnabled(
+        true
+      );
+
+
+      showScreen(
+        homeScreen
+      );
+
+    }
+
+
+    async function generateExampleResponse() {
+
+      if (
+        conversationEnded
+      ) {
+
+        return;
+
+      }
+
+
+      const requestBody = {
+
+        ...getActiveConversationPayload(),
+
+        history: [
+          ...history
+        ],
+
+      };
+
+
+      clearFeedback();
+
+
+      hideDictionaryTooltip(
+        0
+      );
+
+
+      setComposerEnabled(
+        false
+      );
+
+
+      exampleButton.textContent =
+        "Generating...";
+
+
+      try {
+
+        const response =
+          await fetch(
+            `${API_BASE_URL}/api/example`,
+            {
+
+              method:
+                "POST",
+
+              headers: {
+                "Content-Type":
+                  "application/json",
+              },
+
+              body:
+                JSON.stringify(
+                  requestBody
+                ),
+
+            }
+          );
+
+
+        const data =
+          await readJsonResponse(
+            response
+          );
+
+
+        addMessage(
+          data.exampleMessage,
+          "user",
+          activeLanguageId,
+          data.exampleWords,
+          {
+
+            isExample:
+              true,
+
+            translation:
+              data.exampleTranslation,
+
+          }
+        );
+
+
+        history.push({
+
+          role:
+            "user",
+
+          content:
+            data.exampleMessage,
+
+        });
+
+
+        history.push({
+
+          role:
+            "assistant",
+
+          content:
+            data.reply,
+
+        });
+
+
+        addMessage(
+          data.reply,
+          "ai",
+          activeLanguageId,
+          data.replyWords
+        );
+
+
+        conversationEnded =
+          Boolean(
+            data.conversationEnded
+          );
+
+
+        if (
+          conversationEnded
+        ) {
+
+          messageInput.placeholder =
+            "Conversation ended.";
+
+
+          setComposerEnabled(
+            false
+          );
+
+        } else {
+
+          setComposerEnabled(
+            true
+          );
+
+
+          messageInput.focus();
+
+        }
+
+      } catch (
+        error
+      ) {
+
+        showError(
+          `Could not generate an example response: ${error.message}`
+        );
+
+
+        setComposerEnabled(
+          true
+        );
+
+
+        messageInput.focus();
+
+      } finally {
+
+        exampleButton.textContent =
+          "Generate example response";
+
+
+        if (
+          conversationEnded
+        ) {
+
+          setComposerEnabled(
+            false
+          );
+
+        }
+
+      }
+
+    }
+
+
+    scenarioSelect
+      .addEventListener(
+        "change",
+        () => {
+
+          updateCustomScenarioUI();
+
+
+          if (
+            scenarioSelect.value ===
+            "custom"
+          ) {
+
+            setTimeout(
+              () => {
+
+                customScenarioInput
+                  .focus();
+
+              },
+              0
+            );
+
+          }
+
+        }
+      );
+
+
+    customScenarioInput
+      .addEventListener(
+        "input",
+        updateCustomScenarioCounter
+      );
+
+
+    document.addEventListener(
+      "click",
+      (
+        event
+      ) => {
+
+        if (
+          !event.target.closest(
+            ".word-token"
+          )
+        ) {
+
+          hideDictionaryTooltip(
+            0
+          );
+
+        }
+
+      }
+    );
+
+
+    window.addEventListener(
+      "resize",
+      () => {
+
+        hideDictionaryTooltip(
+          0
+        );
+
+      }
+    );
+
+
+    messages.addEventListener(
+      "scroll",
+      () => {
+
+        hideDictionaryTooltip(
+          0
+        );
+
+      }
+    );
+
+
+    startChatButton
+      .addEventListener(
+        "click",
+        startConversation
+      );
+
+
+    endChatButton
+      .addEventListener(
+        "click",
+        endConversation
+      );
+
+
+    exampleButton
+      .addEventListener(
+        "click",
+        generateExampleResponse
+      );
+
+
+    chatForm.addEventListener(
+      "submit",
+      async (
+        event
+      ) => {
+
+        event.preventDefault();
+
+
+        if (
+          conversationEnded
+        ) {
+
+          return;
+
+        }
+
+
+        const message =
+          messageInput
+            .value
+            .trim();
+
+
+        if (
+          !message
+        ) {
+
+          return;
+
+        }
+
+
+        const historyBeforeMessage =
+          [
+            ...history
+          ];
+
+
+        addMessage(
+          message,
+          "user",
+          activeLanguageId
+        );
+
+
+        messageInput.value =
+          "";
+
+
+        clearFeedback();
+
+
+        hideDictionaryTooltip(
+          0
+        );
+
+
+        setComposerEnabled(
+          false
+        );
+
+
+        sendButton.textContent =
+          "Sending...";
+
+
+        const requestBody = {
+
+          ...getActiveConversationPayload(),
+
+          message,
+
+          history:
+            historyBeforeMessage,
+
+        };
+
+
+        try {
+
+          const response =
+            await fetch(
+              `${API_BASE_URL}/api/chat`,
+              {
+
+                method:
+                  "POST",
+
+                headers: {
+                  "Content-Type":
+                    "application/json",
+                },
+
+                body:
+                  JSON.stringify(
+                    requestBody
+                  ),
+
+              }
+            );
+
+
+          const data =
+            await readJsonResponse(
+              response
+            );
+
+
+          history.push({
+
+            role:
+              "user",
+
+            content:
+              message,
+
+          });
+
+
+          history.push({
+
+            role:
+              "assistant",
+
+            content:
+              data.reply,
+
+          });
+
+
+          addMessage(
+            data.reply,
+            "ai",
+            activeLanguageId,
+            data.replyWords
+          );
+
+
+          showFeedback(
+            data.feedback
+          );
+
+
+          conversationEnded =
+            Boolean(
+              data.conversationEnded
+            );
+
+
+          if (
+            conversationEnded
+          ) {
+
+            messageInput.placeholder =
+              "Conversation ended.";
+
+
+            setComposerEnabled(
+              false
+            );
+
+          } else {
+
+            setComposerEnabled(
+              true
+            );
+
+
+            messageInput.focus();
+
+          }
+
+        } catch (
+          error
+        ) {
+
+          showError(
+            `Could not get an AI response: ${error.message}`
+          );
+
+
+          setComposerEnabled(
+            true
+          );
+
+
+          messageInput.focus();
+
+        } finally {
+
+          sendButton.textContent =
+            "Send";
+
+
+          if (
+            conversationEnded
+          ) {
+
+            setComposerEnabled(
+              false
+            );
+
+          }
+
+        }
+
+      }
+    );
+
+
+    updateCustomScenarioUI();
+
+    updateCustomScenarioCounter();
+
+  </script>
+</body>
+</html>
