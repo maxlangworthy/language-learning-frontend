@@ -1,22 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
   <meta charset="UTF-8" />
-
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  />
-
-  <title>
-    Language Learning
-  </title>
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Language Learning</title>
 
   <style>
-
     :root {
       --surface: #ffffff;
       --surface-soft: #f8fafc;
@@ -34,11 +23,9 @@
       --shadow: 0 18px 50px rgba(23, 35, 58, 0.09);
     }
 
-
     * {
       box-sizing: border-box;
     }
-
 
     body {
       margin: 0;
@@ -63,7 +50,6 @@
       color: var(--text);
     }
 
-
     button,
     select,
     input,
@@ -71,11 +57,9 @@
       font: inherit;
     }
 
-
     button {
       cursor: pointer;
     }
-
 
     button:disabled,
     select:disabled,
@@ -85,20 +69,19 @@
       opacity: 0.6;
     }
 
-
     .hidden {
       display: none !important;
     }
 
-
     .page {
       min-height: 100vh;
+
       display: flex;
       align-items: center;
       justify-content: center;
+
       padding: 28px;
     }
-
 
     .app-shell {
       width: min(1050px, 100%);
@@ -118,32 +101,119 @@
       overflow: hidden;
     }
 
+    .account-bar {
+      min-height: 54px;
+
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+
+      gap: 10px;
+
+      padding:
+        9px
+        18px;
+
+      border-bottom:
+        1px solid
+        var(--border);
+
+      background:
+        rgba(
+          255,
+          255,
+          255,
+          0.97
+        );
+    }
+
+    .account-controls {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+
+      gap: 9px;
+
+      min-width: 0;
+    }
+
+    .account-email {
+      max-width: 260px;
+
+      overflow: hidden;
+
+      text-overflow: ellipsis;
+
+      white-space: nowrap;
+
+      color: var(--muted);
+
+      font-size: 0.86rem;
+    }
+
+    .account-btn {
+      border:
+        1px solid
+        var(--border);
+
+      border-radius: 10px;
+
+      padding:
+        8px
+        12px;
+
+      background: #fff;
+
+      color: var(--text);
+
+      font-weight: 700;
+    }
+
+    .account-btn:hover:not(:disabled) {
+      background:
+        var(--surface-soft);
+    }
+
+    .account-btn.primary-small {
+      border-color:
+        var(--primary);
+
+      background:
+        var(--primary);
+
+      color: #fff;
+    }
+
+    .account-btn.primary-small:hover:not(:disabled) {
+      background:
+        var(--primary-hover);
+    }
 
     .screen {
       display: none;
-      min-height: 680px;
+      min-height: 626px;
     }
-
 
     .screen.active {
       display: flex;
     }
 
-
     #homeScreen {
       align-items: center;
       justify-content: center;
-      padding: 56px 28px;
-    }
 
+      padding:
+        56px
+        28px;
+    }
 
     .home-card {
       width: min(620px, 100%);
     }
 
-
     .eyebrow {
       display: inline-flex;
+
       margin-bottom: 14px;
 
       color: var(--primary);
@@ -153,7 +223,6 @@
       letter-spacing: 0.08em;
       text-transform: uppercase;
     }
-
 
     h1 {
       margin: 0;
@@ -166,39 +235,42 @@
         );
 
       line-height: 1;
+
       letter-spacing: -0.045em;
     }
 
-
     .intro {
-      margin: 18px 0 36px;
+      margin:
+        18px
+        0
+        36px;
 
       color: var(--muted);
 
       font-size: 1.05rem;
+
       line-height: 1.65;
     }
-
 
     .field {
       margin-bottom: 22px;
     }
 
-
     .field label,
-    .custom-scenario-panel label {
+    .custom-scenario-panel label,
+    .auth-field label {
       display: block;
+
       margin-bottom: 9px;
 
       font-size: 0.92rem;
+
       font-weight: 700;
     }
-
 
     .select-wrap {
       position: relative;
     }
-
 
     select {
       width: 100%;
@@ -217,13 +289,13 @@
 
       border-radius: 14px;
 
-      background: var(--surface);
+      background:
+        var(--surface);
 
       color: var(--text);
 
       outline: none;
     }
-
 
     select:focus,
     input:focus,
@@ -237,7 +309,10 @@
         );
 
       box-shadow:
-        0 0 0 4px
+        0
+        0
+        0
+        4px
         rgba(
           40,
           86,
@@ -246,13 +321,13 @@
         );
     }
 
-
     .select-wrap::after {
       content: "⌄";
 
       position: absolute;
 
       right: 16px;
+
       top: 50%;
 
       transform:
@@ -263,9 +338,11 @@
       pointer-events: none;
     }
 
-
     .custom-scenario-panel {
-      margin: -4px 0 22px;
+      margin:
+        -4px
+        0
+        22px;
 
       padding: 16px;
 
@@ -279,16 +356,18 @@
         var(--surface-soft);
     }
 
-
     .custom-scenario-help {
-      margin: 0 0 11px;
+      margin:
+        0
+        0
+        11px;
 
       color: var(--muted);
 
       font-size: 0.84rem;
+
       line-height: 1.45;
     }
-
 
     .custom-scenario-panel textarea {
       display: block;
@@ -299,7 +378,9 @@
 
       resize: vertical;
 
-      padding: 14px 15px;
+      padding:
+        14px
+        15px;
 
       border:
         1px solid
@@ -316,9 +397,9 @@
       outline: none;
     }
 
-
     .custom-scenario-footer {
       display: flex;
+
       justify-content: space-between;
 
       gap: 12px;
@@ -330,12 +411,11 @@
       font-size: 0.78rem;
     }
 
-
     .custom-scenario-error {
       color: var(--danger);
+
       font-weight: 650;
     }
-
 
     .character-counter {
       margin-left: auto;
@@ -345,11 +425,15 @@
       white-space: nowrap;
     }
 
-
     .home-error {
-      margin: 0 0 18px;
+      margin:
+        0
+        0
+        18px;
 
-      padding: 12px 14px;
+      padding:
+        12px
+        14px;
 
       border:
         1px solid
@@ -357,14 +441,16 @@
 
       border-radius: 12px;
 
-      background: #fffafa;
+      background:
+        #fffafa;
 
-      color: var(--danger);
+      color:
+        var(--danger);
 
       font-size: 0.9rem;
+
       line-height: 1.45;
     }
-
 
     .primary-btn {
       width: 100%;
@@ -373,16 +459,19 @@
 
       border-radius: 14px;
 
-      padding: 15px 18px;
+      padding:
+        15px
+        18px;
 
-      background: var(--primary);
+      background:
+        var(--primary);
 
       color: #fff;
 
       font-weight: 750;
+
       font-size: 1rem;
     }
-
 
     .primary-btn:hover:not(:disabled),
     .send-btn:hover:not(:disabled) {
@@ -390,11 +479,9 @@
         var(--primary-hover);
     }
 
-
     #chatScreen {
       flex-direction: column;
     }
-
 
     .chat-header {
       display: flex;
@@ -404,7 +491,9 @@
 
       gap: 20px;
 
-      padding: 20px 24px;
+      padding:
+        20px
+        24px;
 
       border-bottom:
         1px solid
@@ -419,17 +508,18 @@
         );
     }
 
-
     .chat-heading {
       min-width: 0;
     }
 
-
     .chat-heading h2 {
-      margin: 0 0 5px;
+      margin:
+        0
+        0
+        5px;
+
       font-size: 1.18rem;
     }
-
 
     .chat-heading p {
       margin: 0;
@@ -439,9 +529,11 @@
       font-size: 0.91rem;
     }
 
-
     .secondary-btn {
-      flex: 0 0 auto;
+      flex:
+        0
+        0
+        auto;
 
       border:
         1px solid
@@ -449,25 +541,29 @@
 
       border-radius: 11px;
 
-      padding: 10px 14px;
+      padding:
+        10px
+        14px;
 
-      background: #fffafa;
+      background:
+        #fffafa;
 
-      color: var(--danger);
+      color:
+        var(--danger);
 
       font-weight: 700;
     }
 
-
     .secondary-btn:hover {
-      background: #fff2f2;
+      background:
+        #fff2f2;
     }
-
 
     .chat-main {
       flex: 1;
 
       display: flex;
+
       flex-direction: column;
 
       min-height: 0;
@@ -475,7 +571,6 @@
       background:
         var(--surface-soft);
     }
-
 
     .messages {
       flex: 1;
@@ -485,27 +580,25 @@
       padding: 30px;
 
       display: flex;
+
       flex-direction: column;
 
       gap: 16px;
     }
 
-
     .message-row {
       display: flex;
+
       width: 100%;
     }
-
 
     .message-row.ai {
       justify-content: flex-start;
     }
 
-
     .message-row.user {
       justify-content: flex-end;
     }
-
 
     .message {
       max-width:
@@ -514,7 +607,9 @@
           620px
         );
 
-      padding: 13px 16px;
+      padding:
+        13px
+        16px;
 
       border-radius: 16px;
 
@@ -525,7 +620,6 @@
       unicode-bidi:
         plaintext;
     }
-
 
     .message-row.ai .message {
       background:
@@ -538,7 +632,6 @@
         5px;
     }
 
-
     .message-row.user .message {
       background:
         var(--user-bubble);
@@ -549,13 +642,15 @@
         5px;
     }
 
-
     .example-label {
       margin-bottom: 4px;
 
       font-size: 0.72rem;
+
       font-weight: 800;
+
       letter-spacing: 0.05em;
+
       text-transform: uppercase;
 
       color:
@@ -566,7 +661,6 @@
           0.72
         );
     }
-
 
     .example-translation {
       margin-top: 8px;
@@ -583,6 +677,7 @@
         );
 
       font-size: 0.82rem;
+
       line-height: 1.4;
 
       color:
@@ -597,7 +692,6 @@
 
       text-align: left;
     }
-
 
     .word-token {
       border-bottom:
@@ -614,9 +708,7 @@
       outline: none;
     }
 
-
-    .message-row.user
-    .word-token {
+    .message-row.user .word-token {
       border-bottom-color:
         rgba(
           255,
@@ -626,11 +718,9 @@
         );
     }
 
-
     .word-token:focus {
       border-bottom-style: solid;
     }
-
 
     .dictionary-tooltip {
       display: none;
@@ -649,7 +739,9 @@
           )
         );
 
-      padding: 12px 14px;
+      padding:
+        12px
+        14px;
 
       border:
         1px solid
@@ -667,7 +759,9 @@
       color: #fff;
 
       box-shadow:
-        0 12px 32px
+        0
+        12px
+        32px
         rgba(
           23,
           35,
@@ -676,6 +770,7 @@
         );
 
       font-size: 0.86rem;
+
       line-height: 1.4;
 
       pointer-events: none;
@@ -685,19 +780,17 @@
       text-align: left;
     }
 
-
     .dictionary-tooltip.visible {
       display: block;
     }
-
 
     .tooltip-word {
       margin-bottom: 6px;
 
       font-size: 0.95rem;
+
       font-weight: 800;
     }
-
 
     .tooltip-meaning {
       color:
@@ -709,20 +802,19 @@
         );
     }
 
-
     .tooltip-senses {
       margin: 0;
 
       padding-left: 20px;
     }
 
-
     .tooltip-senses li {
-      margin: 4px 0;
+      margin:
+        4px
+        0;
 
       padding-left: 2px;
     }
-
 
     .tooltip-tags {
       margin-left: 5px;
@@ -740,7 +832,6 @@
       font-style: italic;
     }
 
-
     .dictionary-meta {
       margin-top: 7px;
 
@@ -754,7 +845,6 @@
 
       font-size: 0.77rem;
     }
-
 
     .feedback-panel {
       margin:
@@ -770,70 +860,56 @@
         1px solid
         var(--feedback-border);
 
-      border-radius:
-        14px;
+      border-radius: 14px;
 
       background:
         var(--feedback-bg);
     }
 
-
     .feedback-title {
-      margin-bottom:
-        7px;
+      margin-bottom: 7px;
 
-      font-size:
-        0.82rem;
+      font-size: 0.82rem;
 
-      font-weight:
-        800;
+      font-weight: 800;
 
-      letter-spacing:
-        0.06em;
+      letter-spacing: 0.06em;
 
-      text-transform:
-        uppercase;
+      text-transform: uppercase;
 
       color:
         var(--muted);
     }
 
-
     .feedback-panel p {
-      margin: 5px 0;
+      margin:
+        5px
+        0;
 
-      line-height:
-        1.5;
+      line-height: 1.5;
     }
-
 
     .feedback-ok {
       color:
         var(--success);
 
-      font-weight:
-        700;
+      font-weight: 700;
     }
-
 
     .feedback-error {
       color:
         var(--danger);
 
-      font-weight:
-        700;
+      font-weight: 700;
     }
-
 
     .composer-area {
       border-top:
         1px solid
         var(--border);
 
-      background:
-        #fff;
+      background: #fff;
     }
-
 
     .special-character-bar {
       display: flex;
@@ -848,30 +924,22 @@
         0;
     }
 
-
     .special-character-label {
       width: 100%;
 
-      margin-bottom:
-        1px;
+      margin-bottom: 1px;
 
-      color:
-        var(--muted);
+      color: var(--muted);
 
-      font-size:
-        0.75rem;
+      font-size: 0.75rem;
 
-      font-weight:
-        700;
+      font-weight: 700;
     }
 
-
     .special-character-button {
-      min-width:
-        34px;
+      min-width: 34px;
 
-      height:
-        32px;
+      height: 32px;
 
       padding:
         0
@@ -881,8 +949,7 @@
         1px solid
         var(--border);
 
-      border-radius:
-        9px;
+      border-radius: 9px;
 
       background:
         var(--surface-soft);
@@ -890,10 +957,8 @@
       color:
         var(--text);
 
-      font-weight:
-        650;
+      font-weight: 650;
     }
-
 
     .special-character-button:hover:not(:disabled) {
       border-color:
@@ -911,7 +976,6 @@
         var(--primary);
     }
 
-
     .composer {
       display: flex;
 
@@ -922,7 +986,6 @@
         22px
         22px;
     }
-
 
     .composer input {
       flex:
@@ -940,15 +1003,13 @@
         1px solid
         var(--border);
 
-      border-radius:
-        14px;
+      border-radius: 14px;
 
       outline: none;
 
       unicode-bidi:
         plaintext;
     }
-
 
     .example-btn {
       flex:
@@ -965,8 +1026,7 @@
           0.28
         );
 
-      border-radius:
-        14px;
+      border-radius: 14px;
 
       padding:
         0
@@ -978,16 +1038,13 @@
       color:
         var(--primary);
 
-      font-weight:
-        750;
+      font-weight: 750;
     }
-
 
     .example-btn:hover:not(:disabled) {
       background:
         #eaf0ff;
     }
-
 
     .send-btn {
       flex:
@@ -997,8 +1054,7 @@
 
       border: none;
 
-      border-radius:
-        14px;
+      border-radius: 14px;
 
       padding:
         0
@@ -1007,13 +1063,10 @@
       background:
         var(--primary);
 
-      color:
-        #fff;
+      color: #fff;
 
-      font-weight:
-        750;
+      font-weight: 750;
     }
-
 
     .data-credit {
       margin:
@@ -1024,27 +1077,20 @@
       color:
         var(--muted);
 
-      font-size:
-        0.74rem;
+      font-size: 0.74rem;
 
-      line-height:
-        1.5;
+      line-height: 1.5;
 
-      text-align:
-        center;
+      text-align: center;
     }
-
 
     .data-credit a {
       color: inherit;
 
-      text-decoration:
-        underline;
+      text-decoration: underline;
 
-      text-underline-offset:
-        2px;
+      text-underline-offset: 2px;
     }
-
 
     .chat-credit {
       margin: 0;
@@ -1054,30 +1100,248 @@
         22px
         10px;
 
-      background:
-        #fff;
+      background: #fff;
     }
 
+    .auth-modal {
+      position: fixed;
+
+      inset: 0;
+
+      z-index: 10000;
+
+      display: flex;
+
+      align-items: center;
+      justify-content: center;
+
+      padding: 20px;
+
+      background:
+        rgba(
+          16,
+          24,
+          40,
+          0.48
+        );
+    }
+
+    .auth-card {
+      position: relative;
+
+      width:
+        min(
+          440px,
+          100%
+        );
+
+      padding: 26px;
+
+      border-radius: 20px;
+
+      background: #fff;
+
+      box-shadow:
+        0
+        24px
+        70px
+        rgba(
+          16,
+          24,
+          40,
+          0.24
+        );
+    }
+
+    .auth-close {
+      position: absolute;
+
+      top: 12px;
+
+      right: 14px;
+
+      width: 34px;
+
+      height: 34px;
+
+      border: none;
+
+      border-radius: 50%;
+
+      background: transparent;
+
+      color:
+        var(--muted);
+
+      font-size: 1.45rem;
+
+      line-height: 1;
+    }
+
+    .auth-close:hover {
+      background:
+        var(--surface-soft);
+    }
+
+    .auth-card h2 {
+      margin:
+        0
+        42px
+        6px
+        0;
+
+      font-size: 1.45rem;
+    }
+
+    .auth-subtitle {
+      margin:
+        0
+        0
+        20px;
+
+      color:
+        var(--muted);
+
+      font-size: 0.92rem;
+
+      line-height: 1.5;
+    }
+
+    .auth-tabs {
+      display: grid;
+
+      grid-template-columns:
+        1fr
+        1fr;
+
+      gap: 6px;
+
+      margin-bottom: 20px;
+
+      padding: 4px;
+
+      border-radius: 12px;
+
+      background:
+        var(--surface-soft);
+    }
+
+    .auth-tab {
+      border: none;
+
+      border-radius: 9px;
+
+      padding:
+        9px
+        10px;
+
+      background: transparent;
+
+      color:
+        var(--muted);
+
+      font-weight: 750;
+    }
+
+    .auth-tab.active {
+      background: #fff;
+
+      color:
+        var(--text);
+
+      box-shadow:
+        0
+        1px
+        3px
+        rgba(
+          16,
+          24,
+          40,
+          0.08
+        );
+    }
+
+    .auth-field {
+      margin-bottom: 15px;
+    }
+
+    .auth-field input {
+      width: 100%;
+
+      padding:
+        13px
+        14px;
+
+      border:
+        1px solid
+        var(--border);
+
+      border-radius: 12px;
+
+      color:
+        var(--text);
+
+      outline: none;
+    }
+
+    .auth-submit {
+      margin-top: 4px;
+    }
+
+    .auth-message {
+      min-height: 22px;
+
+      margin:
+        14px
+        0
+        0;
+
+      font-size: 0.86rem;
+
+      line-height: 1.45;
+    }
+
+    .auth-message.error {
+      color:
+        var(--danger);
+    }
+
+    .auth-message.success {
+      color:
+        var(--success);
+    }
 
     @media (
       max-width:
         760px
     ) {
-
       .page {
         padding: 0;
       }
 
-
       .app-shell,
       .screen {
         min-height:
-          100vh;
+          calc(
+            100vh - 54px
+          );
 
-        border-radius:
-          0;
+        border-radius: 0;
       }
 
+      .app-shell {
+        min-height: 100vh;
+      }
+
+      .account-bar {
+        padding:
+          8px
+          12px;
+      }
+
+      .account-email {
+        max-width: 150px;
+      }
 
       #homeScreen {
         padding:
@@ -1085,25 +1349,19 @@
           22px;
       }
 
-
       .chat-header {
-        align-items:
-          flex-start;
+        align-items: flex-start;
       }
-
 
       .message {
-        max-width:
-          86%;
+        max-width: 86%;
       }
-
 
       .messages {
         padding:
           22px
           16px;
       }
-
 
       .feedback-panel {
         margin:
@@ -1112,7 +1370,6 @@
           12px;
       }
 
-
       .special-character-bar {
         padding:
           10px
@@ -1120,30 +1377,23 @@
           0;
       }
 
-
       .composer {
         padding:
           12px
           14px
           14px;
 
-        flex-wrap:
-          wrap;
+        flex-wrap: wrap;
       }
-
 
       .composer input {
-        flex-basis:
-          100%;
+        flex-basis: 100%;
       }
-
 
       .example-btn,
       .send-btn {
-        min-height:
-          46px;
+        min-height: 46px;
       }
-
 
       .example-btn {
         flex:
@@ -1152,14 +1402,12 @@
           auto;
       }
 
-
       .send-btn {
         flex:
           0
           0
           auto;
       }
-
 
       .chat-credit {
         padding:
@@ -1168,18 +1416,71 @@
           8px;
       }
 
+      .auth-card {
+        padding:
+          24px
+          20px
+          20px;
+      }
     }
-
   </style>
-
 </head>
 
-
 <body>
-
   <main class="page">
 
     <section class="app-shell">
+
+      <div
+        class="account-bar"
+        aria-label="Account"
+      >
+
+        <div
+          id="signedOutControls"
+          class="account-controls"
+        >
+
+          <button
+            id="loginButton"
+            class="account-btn"
+            type="button"
+          >
+            Log In
+          </button>
+
+          <button
+            id="signupButton"
+            class="account-btn primary-small"
+            type="button"
+          >
+            Sign Up
+          </button>
+
+        </div>
+
+
+        <div
+          id="signedInControls"
+          class="account-controls hidden"
+        >
+
+          <span
+            id="accountEmail"
+            class="account-email"
+          ></span>
+
+          <button
+            id="logoutButton"
+            class="account-btn"
+            type="button"
+          >
+            Log Out
+          </button>
+
+        </div>
+
+      </div>
 
 
       <section
@@ -1188,7 +1489,6 @@
       >
 
         <div class="home-card">
-
 
           <div class="eyebrow">
             Conversation practice
@@ -1220,7 +1520,6 @@
               Language
             </label>
 
-
             <div class="select-wrap">
 
               <select
@@ -1247,7 +1546,6 @@
               Language level
             </label>
 
-
             <div class="select-wrap">
 
               <select
@@ -1273,7 +1571,6 @@
             >
               Scenario
             </label>
-
 
             <div class="select-wrap">
 
@@ -1412,7 +1709,6 @@
               Conversation
             </h2>
 
-
             <p id="scenarioLabel">
               Scenario
             </p>
@@ -1432,7 +1728,6 @@
 
         <div class="chat-main">
 
-
           <div
             id="messages"
             class="messages"
@@ -1450,7 +1745,6 @@
               Feedback on your last message
             </div>
 
-
             <div
               id="feedbackContent"
             ></div>
@@ -1459,7 +1753,6 @@
 
 
           <div class="composer-area">
-
 
             <div
               id="specialCharacterBar"
@@ -1555,10 +1848,167 @@
   ></div>
 
 
+  <div
+    id="authModal"
+    class="auth-modal hidden"
+    aria-hidden="true"
+  >
+
+    <section
+      class="auth-card"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="authModalTitle"
+    >
+
+      <button
+        id="authCloseButton"
+        class="auth-close"
+        type="button"
+        aria-label="Close"
+      >
+        ×
+      </button>
+
+
+      <h2 id="authModalTitle">
+        Log in
+      </h2>
+
+
+      <p
+        id="authSubtitle"
+        class="auth-subtitle"
+      >
+        Log in to your PlainBetter account.
+      </p>
+
+
+      <div
+        class="auth-tabs"
+        role="tablist"
+        aria-label="Account action"
+      >
+
+        <button
+          id="loginTab"
+          class="auth-tab active"
+          type="button"
+          role="tab"
+          aria-selected="true"
+        >
+          Log In
+        </button>
+
+
+        <button
+          id="signupTab"
+          class="auth-tab"
+          type="button"
+          role="tab"
+          aria-selected="false"
+        >
+          Sign Up
+        </button>
+
+      </div>
+
+
+      <form id="authForm">
+
+        <div class="auth-field">
+
+          <label
+            for="authEmail"
+          >
+            Email
+          </label>
+
+          <input
+            id="authEmail"
+            type="email"
+            autocomplete="email"
+            required
+          />
+
+        </div>
+
+
+        <div class="auth-field">
+
+          <label
+            for="authPassword"
+          >
+            Password
+          </label>
+
+          <input
+            id="authPassword"
+            type="password"
+            autocomplete="current-password"
+            required
+          />
+
+        </div>
+
+
+        <button
+          id="authSubmitButton"
+          class="primary-btn auth-submit"
+          type="submit"
+        >
+          Log In
+        </button>
+
+
+        <div
+          id="authMessage"
+          class="auth-message"
+          aria-live="polite"
+        ></div>
+
+      </form>
+
+    </section>
+
+  </div>
+
+
+  <script
+    src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+  ></script>
+
+
   <script>
 
     const API_BASE_URL =
       "https://api.plainbetter.co.uk";
+
+
+    const SUPABASE_URL =
+      "https://kfpdxalufjqmwmfqwpwv.supabase.co";
+
+
+    const SUPABASE_PUBLISHABLE_KEY =
+      "sb_publishable_p1ktbEl02SmIYMxOexx8Lw_KdllADUn";
+
+
+    const AUTH_REDIRECT_URL =
+      "https://plainbetter.co.uk";
+
+
+    const supabaseClient =
+      window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_PUBLISHABLE_KEY,
+        {
+          auth: {
+            persistSession: true,
+            autoRefreshToken: true,
+            detectSessionInUrl: true,
+          },
+        }
+      );
 
 
     const homeScreen =
@@ -1699,6 +2149,108 @@
       );
 
 
+    const signedOutControls =
+      document.getElementById(
+        "signedOutControls"
+      );
+
+
+    const signedInControls =
+      document.getElementById(
+        "signedInControls"
+      );
+
+
+    const accountEmail =
+      document.getElementById(
+        "accountEmail"
+      );
+
+
+    const loginButton =
+      document.getElementById(
+        "loginButton"
+      );
+
+
+    const signupButton =
+      document.getElementById(
+        "signupButton"
+      );
+
+
+    const logoutButton =
+      document.getElementById(
+        "logoutButton"
+      );
+
+
+    const authModal =
+      document.getElementById(
+        "authModal"
+      );
+
+
+    const authCloseButton =
+      document.getElementById(
+        "authCloseButton"
+      );
+
+
+    const authModalTitle =
+      document.getElementById(
+        "authModalTitle"
+      );
+
+
+    const authSubtitle =
+      document.getElementById(
+        "authSubtitle"
+      );
+
+
+    const loginTab =
+      document.getElementById(
+        "loginTab"
+      );
+
+
+    const signupTab =
+      document.getElementById(
+        "signupTab"
+      );
+
+
+    const authForm =
+      document.getElementById(
+        "authForm"
+      );
+
+
+    const authEmail =
+      document.getElementById(
+        "authEmail"
+      );
+
+
+    const authPassword =
+      document.getElementById(
+        "authPassword"
+      );
+
+
+    const authSubmitButton =
+      document.getElementById(
+        "authSubmitButton"
+      );
+
+
+    const authMessage =
+      document.getElementById(
+        "authMessage"
+      );
+
+
     let appConfig =
       null;
 
@@ -1733,6 +2285,14 @@
 
     let activeCustomScenario =
       "";
+
+
+    let currentSession =
+      null;
+
+
+    let authMode =
+      "login";
 
 
     const dictionaryCache =
@@ -1826,7 +2386,484 @@
 
 
     // ----------------------------------------------------
-    // Load languages/scenarios from backend
+    // Supabase authentication
+    // ----------------------------------------------------
+
+
+    function updateAuthUI(
+      session
+    ) {
+
+      currentSession =
+        session ||
+        null;
+
+
+      const user =
+        currentSession?.user ||
+        null;
+
+
+      signedOutControls
+        .classList
+        .toggle(
+          "hidden",
+          Boolean(
+            user
+          )
+        );
+
+
+      signedInControls
+        .classList
+        .toggle(
+          "hidden",
+          !user
+        );
+
+
+      accountEmail.textContent =
+        user?.email ||
+        "Signed in";
+
+
+      accountEmail.title =
+        user?.email ||
+        "";
+
+    }
+
+
+    function setAuthMessage(
+      message =
+        "",
+      type =
+        ""
+    ) {
+
+      authMessage.textContent =
+        message;
+
+
+      authMessage.className =
+        "auth-message";
+
+
+      if (
+        type
+      ) {
+
+        authMessage
+          .classList
+          .add(
+            type
+          );
+
+      }
+
+    }
+
+
+    function setAuthMode(
+      mode
+    ) {
+
+      authMode =
+        mode ===
+        "signup"
+          ? "signup"
+          : "login";
+
+
+      const isSignup =
+        authMode ===
+        "signup";
+
+
+      loginTab
+        .classList
+        .toggle(
+          "active",
+          !isSignup
+        );
+
+
+      signupTab
+        .classList
+        .toggle(
+          "active",
+          isSignup
+        );
+
+
+      loginTab.setAttribute(
+        "aria-selected",
+        String(
+          !isSignup
+        )
+      );
+
+
+      signupTab.setAttribute(
+        "aria-selected",
+        String(
+          isSignup
+        )
+      );
+
+
+      authModalTitle.textContent =
+        isSignup
+          ? "Create account"
+          : "Log in";
+
+
+      authSubtitle.textContent =
+        isSignup
+          ? "Create a PlainBetter account with your email and password."
+          : "Log in to your PlainBetter account.";
+
+
+      authSubmitButton.textContent =
+        isSignup
+          ? "Sign Up"
+          : "Log In";
+
+
+      authPassword.autocomplete =
+        isSignup
+          ? "new-password"
+          : "current-password";
+
+
+      setAuthMessage();
+
+    }
+
+
+    function openAuthModal(
+      mode
+    ) {
+
+      setAuthMode(
+        mode
+      );
+
+
+      authModal
+        .classList
+        .remove(
+          "hidden"
+        );
+
+
+      authModal.setAttribute(
+        "aria-hidden",
+        "false"
+      );
+
+
+      document.body.style.overflow =
+        "hidden";
+
+
+      setTimeout(
+        () =>
+          authEmail.focus(),
+        0
+      );
+
+    }
+
+
+    function closeAuthModal() {
+
+      authModal
+        .classList
+        .add(
+          "hidden"
+        );
+
+
+      authModal.setAttribute(
+        "aria-hidden",
+        "true"
+      );
+
+
+      document.body.style.overflow =
+        "";
+
+
+      authForm.reset();
+
+
+      setAuthMessage();
+
+    }
+
+
+    async function handleAuthSubmit(
+      event
+    ) {
+
+      event.preventDefault();
+
+
+      const email =
+        authEmail
+          .value
+          .trim();
+
+
+      const password =
+        authPassword.value;
+
+
+      if (
+        !email ||
+        !password
+      ) {
+
+        return;
+
+      }
+
+
+      authSubmitButton.disabled =
+        true;
+
+
+      authSubmitButton.textContent =
+        authMode ===
+        "signup"
+          ? "Creating account..."
+          : "Logging in...";
+
+
+      setAuthMessage();
+
+
+      try {
+
+        if (
+          authMode ===
+          "signup"
+        ) {
+
+          const {
+            data,
+            error,
+          } =
+            await supabaseClient
+              .auth
+              .signUp({
+
+                email,
+
+                password,
+
+                options: {
+
+                  emailRedirectTo:
+                    AUTH_REDIRECT_URL,
+
+                },
+
+              });
+
+
+          if (
+            error
+          ) {
+
+            throw error;
+
+          }
+
+
+          if (
+            data.session
+          ) {
+
+            setAuthMessage(
+              "Account created and you are signed in.",
+              "success"
+            );
+
+
+            setTimeout(
+              closeAuthModal,
+              700
+            );
+
+          } else {
+
+            setAuthMessage(
+              "Account created. Check your email and click the confirmation link, then return to PlainBetter.",
+              "success"
+            );
+
+          }
+
+        } else {
+
+          const {
+            error,
+          } =
+            await supabaseClient
+              .auth
+              .signInWithPassword({
+
+                email,
+
+                password,
+
+              });
+
+
+          if (
+            error
+          ) {
+
+            throw error;
+
+          }
+
+
+          setAuthMessage(
+            "Logged in.",
+            "success"
+          );
+
+
+          setTimeout(
+            closeAuthModal,
+            500
+          );
+
+        }
+
+      } catch (
+        error
+      ) {
+
+        setAuthMessage(
+          error?.message ||
+          "Authentication failed. Please try again.",
+          "error"
+        );
+
+      } finally {
+
+        authSubmitButton.disabled =
+          false;
+
+
+        authSubmitButton.textContent =
+          authMode ===
+          "signup"
+            ? "Sign Up"
+            : "Log In";
+
+      }
+
+    }
+
+
+    async function logOut() {
+
+      logoutButton.disabled =
+        true;
+
+
+      logoutButton.textContent =
+        "Logging out...";
+
+
+      const {
+        error,
+      } =
+        await supabaseClient
+          .auth
+          .signOut();
+
+
+      logoutButton.disabled =
+        false;
+
+
+      logoutButton.textContent =
+        "Log Out";
+
+
+      if (
+        error
+      ) {
+
+        alert(
+          `Could not log out: ${error.message}`
+        );
+
+      }
+
+    }
+
+
+    async function initializeAuth() {
+
+      const {
+        data,
+        error,
+      } =
+        await supabaseClient
+          .auth
+          .getSession();
+
+
+      if (
+        error
+      ) {
+
+        console.error(
+          "Could not restore Supabase session",
+          error
+        );
+
+
+        updateAuthUI(
+          null
+        );
+
+      } else {
+
+        updateAuthUI(
+          data.session
+        );
+
+      }
+
+
+      supabaseClient
+        .auth
+        .onAuthStateChange(
+          (
+            event,
+            session
+          ) => {
+
+            updateAuthUI(
+              session
+            );
+
+          }
+        );
+
+    }
+
+
+    // ----------------------------------------------------
+    // Backend configuration
     // ----------------------------------------------------
 
 
@@ -2034,6 +3071,7 @@
 
 
         updateCustomScenarioUI();
+
 
         updateCustomScenarioCounter();
 
@@ -3115,7 +4153,7 @@
 
 
     // ----------------------------------------------------
-    // AI word metadata
+    // Word metadata
     // ----------------------------------------------------
 
 
@@ -3751,7 +4789,7 @@
 
 
     // ----------------------------------------------------
-    // Start
+    // Start conversation
     // ----------------------------------------------------
 
 
@@ -3961,8 +4999,10 @@
                 "POST",
 
               headers: {
+
                 "Content-Type":
                   "application/json",
+
               },
 
               body:
@@ -4181,8 +5221,10 @@
                 "POST",
 
               headers: {
+
                 "Content-Type":
                   "application/json",
+
               },
 
               body:
@@ -4417,6 +5459,115 @@
     );
 
 
+    loginButton.addEventListener(
+      "click",
+      () => {
+
+        openAuthModal(
+          "login"
+        );
+
+      }
+    );
+
+
+    signupButton.addEventListener(
+      "click",
+      () => {
+
+        openAuthModal(
+          "signup"
+        );
+
+      }
+    );
+
+
+    logoutButton.addEventListener(
+      "click",
+      logOut
+    );
+
+
+    authCloseButton.addEventListener(
+      "click",
+      closeAuthModal
+    );
+
+
+    loginTab.addEventListener(
+      "click",
+      () => {
+
+        setAuthMode(
+          "login"
+        );
+
+      }
+    );
+
+
+    signupTab.addEventListener(
+      "click",
+      () => {
+
+        setAuthMode(
+          "signup"
+        );
+
+      }
+    );
+
+
+    authForm.addEventListener(
+      "submit",
+      handleAuthSubmit
+    );
+
+
+    authModal.addEventListener(
+      "click",
+      (
+        event
+      ) => {
+
+        if (
+          event.target ===
+          authModal
+        ) {
+
+          closeAuthModal();
+
+        }
+
+      }
+    );
+
+
+    document.addEventListener(
+      "keydown",
+      (
+        event
+      ) => {
+
+        if (
+          event.key ===
+            "Escape" &&
+          !authModal
+            .classList
+            .contains(
+              "hidden"
+            )
+        ) {
+
+          closeAuthModal();
+
+        }
+
+      }
+    );
+
+
     chatForm.addEventListener(
       "submit",
       async (
@@ -4507,8 +5658,10 @@
                   "POST",
 
                 headers: {
+
                   "Content-Type":
                     "application/json",
+
                 },
 
                 body:
@@ -4628,13 +5781,11 @@
     );
 
 
-    // Load the app's languages, levels and scenarios
-    // from the backend when the page opens.
-
     loadAppConfig();
+
+    initializeAuth();
 
   </script>
 
 </body>
-
 </html>
