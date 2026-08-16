@@ -261,15 +261,15 @@
 
       z-index: 120;
 
-      width: 82px;
-      height: 137px;
+      width: 92px;
+      height: 148px;
 
-      margin-left: -41px;
+      margin-left: -46px;
 
       pointer-events: none;
 
       transform-origin:
-        41px 1px;
+        27px 1px;
 
       animation:
         plainbetterSwing 4.2s ease-in-out infinite;
@@ -314,6 +314,17 @@
       stroke: var(--navy-dark);
 
       stroke-width: 4;
+    }
+
+    .hanger-phone {
+      fill: var(--white);
+
+      stroke: var(--navy-dark);
+
+      stroke-width: 3.5;
+
+      rx: 2.5;
+      ry: 2.5;
     }
 
     @keyframes plainbetterSwing {
@@ -2244,13 +2255,13 @@
       .bar-hanger {
         left: 44%;
 
-        width: 70px;
-        height: 117px;
+        width: 78px;
+        height: 126px;
 
-        margin-left: -35px;
+        margin-left: -39px;
 
         transform-origin:
-          35px 1px;
+          23px 1px;
       }
     }
 
@@ -2294,13 +2305,13 @@
       .bar-hanger {
         left: 36%;
 
-        width: 58px;
-        height: 97px;
+        width: 66px;
+        height: 108px;
 
-        margin-left: -29px;
+        margin-left: -33px;
 
         transform-origin:
-          29px 1px;
+          19px 1px;
 
         opacity: .92;
       }
@@ -2578,78 +2589,81 @@
       </button>
 
 
-      <!-- Stylised PlainBetter stick figure -->
       <div
         class="bar-hanger"
         aria-hidden="true"
       >
 
         <svg
-          viewBox="0 0 82 137"
+          viewBox="0 0 92 148"
           xmlns="http://www.w3.org/2000/svg"
         >
-
-          <!-- gripping hand -->
           <circle
             class="hanger-hand"
-            cx="41"
+            cx="27"
             cy="4"
             r="5"
           />
 
-          <!-- hanging arm -->
           <path
             class="hanger-line"
-            d="M41 8
-               C40 19, 39 29, 37 41
-               C35 49, 34 54, 32 59"
+            d="M27 8
+               C27 20, 28 32, 30 45
+               C31 56, 33 67, 35 81"
           />
 
-          <!-- head -->
           <circle
             class="hanger-head"
-            cx="34"
+            cx="47"
             cy="69"
             r="12"
           />
 
-          <!-- torso -->
           <path
             class="hanger-line"
-            d="M34 81
-               C35 92, 37 101, 39 111"
+            d="M35 81
+               C43 83, 50 86, 58 90"
           />
 
-          <!-- free arm -->
           <path
             class="hanger-line"
-            d="M35 87
-               C46 89, 53 93, 59 101
-               C62 104, 66 105, 70 103"
+            d="M46 81
+               C48 92, 51 102, 53 114"
           />
 
-          <!-- free hand -->
+          <path
+            class="hanger-line"
+            d="M58 90
+               C62 83, 66 76, 69 69"
+          />
+
           <circle
             class="hanger-hand"
-            cx="72"
-            cy="102"
+            cx="69"
+            cy="69"
             r="4"
           />
 
-          <!-- left leg -->
-          <path
-            class="hanger-line"
-            d="M39 111
-               C32 118, 28 126, 24 133"
+          <rect
+            class="hanger-phone"
+            x="61"
+            y="54"
+            width="10"
+            height="17"
+            transform="rotate(12 66 62.5)"
           />
 
-          <!-- right leg -->
           <path
             class="hanger-line"
-            d="M39 111
-               C47 118, 53 124, 59 130"
+            d="M53 114
+               C45 121, 39 130, 35 139"
           />
 
+          <path
+            class="hanger-line"
+            d="M53 114
+               C61 121, 68 128, 74 136"
+          />
         </svg>
 
       </div>
