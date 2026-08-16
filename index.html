@@ -1,35 +1,85 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PlainBetter — Language Learning</title>
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+
+  <title>
+    PlainBetter — Language Learning
+  </title>
+
 
   <style>
+
     :root {
-      --bg: #f3f6fb;
-      --surface: #fff;
-      --soft: #f8fafc;
-      --text: #18212f;
-      --muted: #6f7b8c;
-      --border: #dce3ec;
-      --primary: #2856d8;
-      --primary2: #1e46b9;
-      --danger: #c73939;
-      --success: #267447;
-      --ai: #eef2f7;
-      --feedback: #fffdf5;
-      --feedback-border: #eadfac;
-      --shadow: 0 18px 50px rgba(23, 35, 58, .09);
+
+      --surface:
+        #fff;
+
+      --soft:
+        #f8fafc;
+
+      --text:
+        #18212f;
+
+      --muted:
+        #6f7b8c;
+
+      --border:
+        #dce3ec;
+
+      --primary:
+        #2856d8;
+
+      --primary-hover:
+        #1e46b9;
+
+      --danger:
+        #c73939;
+
+      --success:
+        #267447;
+
+      --ai:
+        #eef2f7;
+
+      --feedback:
+        #fffdf5;
+
+      --feedback-border:
+        #eadfac;
+
+      --shadow:
+        0 18px 50px
+        rgba(
+          23,
+          35,
+          58,
+          .09
+        );
+
     }
+
 
     * {
-      box-sizing: border-box;
+      box-sizing:
+        border-box;
     }
 
+
     body {
-      margin: 0;
-      min-height: 100vh;
+
+      margin:
+        0;
+
+      min-height:
+        100vh;
+
       font-family:
         Inter,
         ui-sans-serif,
@@ -38,1029 +88,2614 @@
         BlinkMacSystemFont,
         "Segoe UI",
         sans-serif;
-      background: linear-gradient(145deg, #f7f9fc, #eef3fa);
-      color: var(--text);
+
+      background:
+        linear-gradient(
+          145deg,
+          #f7f9fc,
+          #eef3fa
+        );
+
+      color:
+        var(--text);
+
     }
+
 
     button,
     select,
     input,
     textarea {
-      font: inherit;
+      font:
+        inherit;
     }
 
+
     button {
-      cursor: pointer;
+      cursor:
+        pointer;
     }
+
 
     button:disabled,
     select:disabled,
     input:disabled,
     textarea:disabled {
-      cursor: not-allowed;
-      opacity: .6;
+
+      cursor:
+        not-allowed;
+
+      opacity:
+        .6;
+
     }
+
 
     .hidden {
-      display: none !important;
+      display:
+        none !important;
     }
+
 
     .page {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 28px;
+
+      min-height:
+        100vh;
+
+      display:
+        flex;
+
+      align-items:
+        center;
+
+      justify-content:
+        center;
+
+      padding:
+        28px;
+
     }
+
 
     .shell {
-      width: min(1080px, 100%);
-      min-height: 700px;
-      background: var(--surface);
-      border: 1px solid rgba(220, 227, 236, .9);
-      border-radius: 28px;
-      box-shadow: var(--shadow);
-      overflow: hidden;
+
+      width:
+        min(
+          1080px,
+          100%
+        );
+
+      min-height:
+        700px;
+
+      background:
+        var(--surface);
+
+      border:
+        1px solid
+        rgba(
+          220,
+          227,
+          236,
+          .9
+        );
+
+      border-radius:
+        28px;
+
+      box-shadow:
+        var(--shadow);
+
+      overflow:
+        hidden;
+
     }
 
+
     .topbar {
-      min-height: 56px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      padding: 9px 18px;
-      border-bottom: 1px solid var(--border);
-      background: rgba(255, 255, 255, .97);
+
+      min-height:
+        56px;
+
+      display:
+        flex;
+
+      align-items:
+        center;
+
+      justify-content:
+        space-between;
+
+      gap:
+        12px;
+
+      padding:
+        9px
+        18px;
+
+      border-bottom:
+        1px solid
+        var(--border);
+
+      background:
+        rgba(
+          255,
+          255,
+          255,
+          .97
+        );
+
     }
+
 
     .top-left,
     .top-right {
-      display: flex;
-      align-items: center;
-      gap: 9px;
-      min-width: 0;
+
+      display:
+        flex;
+
+      align-items:
+        center;
+
+      gap:
+        9px;
+
+      min-width:
+        0;
+
     }
+
 
     .email {
-      max-width: 250px;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      color: var(--muted);
-      font-size: .86rem;
+
+      max-width:
+        250px;
+
+      overflow:
+        hidden;
+
+      text-overflow:
+        ellipsis;
+
+      white-space:
+        nowrap;
+
+      color:
+        var(--muted);
+
+      font-size:
+        .86rem;
+
     }
+
 
     .btn {
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 8px 12px;
-      background: #fff;
-      color: var(--text);
-      font-weight: 700;
+
+      border:
+        1px solid
+        var(--border);
+
+      border-radius:
+        10px;
+
+      padding:
+        8px
+        12px;
+
+      background:
+        #fff;
+
+      color:
+        var(--text);
+
+      font-weight:
+        700;
+
     }
+
 
     .btn:hover:not(:disabled) {
-      background: var(--soft);
+      background:
+        var(--soft);
     }
+
 
     .btn.primary {
-      border-color: var(--primary);
-      background: var(--primary);
-      color: #fff;
+
+      border-color:
+        var(--primary);
+
+      background:
+        var(--primary);
+
+      color:
+        #fff;
+
     }
+
 
     .btn.primary:hover:not(:disabled) {
-      background: var(--primary2);
+      background:
+        var(--primary-hover);
     }
+
 
     .btn.danger {
-      border-color: #ecd1d1;
-      background: #fffafa;
-      color: var(--danger);
+
+      border-color:
+        #ecd1d1;
+
+      background:
+        #fffafa;
+
+      color:
+        var(--danger);
+
     }
+
 
     .screen {
-      display: none;
-      min-height: 644px;
+
+      display:
+        none;
+
+      min-height:
+        644px;
+
     }
+
 
     .screen.active {
-      display: flex;
+      display:
+        flex;
     }
+
 
     .center-screen {
-      align-items: center;
-      justify-content: center;
-      padding: 52px 28px;
+
+      align-items:
+        center;
+
+      justify-content:
+        center;
+
+      padding:
+        52px
+        28px;
+
     }
+
+
+    .column-screen {
+
+      flex-direction:
+        column;
+
+      background:
+        var(--soft);
+
+    }
+
 
     .card {
-      width: min(650px, 100%);
+      width:
+        min(
+          650px,
+          100%
+        );
     }
+
 
     .eyebrow {
-      display: inline-flex;
-      margin-bottom: 14px;
-      color: var(--primary);
-      font-size: .84rem;
-      font-weight: 800;
-      letter-spacing: .08em;
-      text-transform: uppercase;
+
+      display:
+        inline-flex;
+
+      margin-bottom:
+        14px;
+
+      color:
+        var(--primary);
+
+      font-size:
+        .84rem;
+
+      font-weight:
+        800;
+
+      letter-spacing:
+        .08em;
+
+      text-transform:
+        uppercase;
+
     }
 
+
     h1 {
-      margin: 0;
-      font-size: clamp(2.25rem, 5vw, 4rem);
-      line-height: 1;
-      letter-spacing: -.045em;
+
+      margin:
+        0;
+
+      font-size:
+        clamp(
+          2.25rem,
+          5vw,
+          4rem
+        );
+
+      line-height:
+        1;
+
+      letter-spacing:
+        -.045em;
+
     }
+
 
     h2,
     h3 {
-      margin-top: 0;
+      margin-top:
+        0;
     }
+
 
     .intro {
-      margin: 18px 0 34px;
-      color: var(--muted);
-      font-size: 1.03rem;
-      line-height: 1.6;
+
+      margin:
+        18px
+        0
+        34px;
+
+      color:
+        var(--muted);
+
+      font-size:
+        1.03rem;
+
+      line-height:
+        1.6;
+
     }
+
 
     .tiles {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
+
+      display:
+        grid;
+
+      grid-template-columns:
+        1fr
+        1fr;
+
+      gap:
+        16px;
+
     }
+
 
     .tile {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      text-align: left;
-      padding: 22px;
-      border: 1px solid var(--border);
-      border-radius: 18px;
-      background: #fff;
-      color: var(--text);
-      box-shadow: 0 7px 24px rgba(23, 35, 58, .05);
+
+      display:
+        flex;
+
+      align-items:
+        center;
+
+      gap:
+        16px;
+
+      text-align:
+        left;
+
+      padding:
+        22px;
+
+      border:
+        1px solid
+        var(--border);
+
+      border-radius:
+        18px;
+
+      background:
+        #fff;
+
+      color:
+        var(--text);
+
+      box-shadow:
+        0 7px 24px
+        rgba(
+          23,
+          35,
+          58,
+          .05
+        );
+
     }
+
 
     .tile:hover {
-      transform: translateY(-1px);
-      border-color: rgba(40, 86, 216, .35);
-      box-shadow: 0 12px 30px rgba(23, 35, 58, .08);
+
+      transform:
+        translateY(
+          -1px
+        );
+
+      border-color:
+        rgba(
+          40,
+          86,
+          216,
+          .35
+        );
+
+      box-shadow:
+        0 12px 30px
+        rgba(
+          23,
+          35,
+          58,
+          .08
+        );
+
     }
+
 
     .tile-icon {
-      width: 52px;
-      height: 52px;
-      border-radius: 14px;
-      display: grid;
-      place-items: center;
-      background: #eef3ff;
-      color: var(--primary);
-      font-size: 1.35rem;
-      font-weight: 800;
-      flex: 0 0 auto;
+
+      width:
+        52px;
+
+      height:
+        52px;
+
+      border-radius:
+        14px;
+
+      display:
+        grid;
+
+      place-items:
+        center;
+
+      background:
+        #eef3ff;
+
+      color:
+        var(--primary);
+
+      font-size:
+        1.35rem;
+
+      font-weight:
+        800;
+
+      flex:
+        0
+        0
+        auto;
+
     }
+
 
     .tile-copy {
-      display: flex;
-      flex-direction: column;
-      gap: 5px;
+
+      display:
+        flex;
+
+      flex-direction:
+        column;
+
+      gap:
+        5px;
+
     }
+
 
     .tile-copy strong {
-      font-size: 1.05rem;
+      font-size:
+        1.05rem;
     }
+
 
     .tile-copy small {
-      color: var(--muted);
-      line-height: 1.4;
+
+      color:
+        var(--muted);
+
+      line-height:
+        1.4;
+
     }
+
 
     .tile-arrow {
-      margin-left: auto;
-      color: var(--primary);
-      font-weight: 900;
+
+      margin-left:
+        auto;
+
+      color:
+        var(--primary);
+
+      font-weight:
+        900;
+
     }
+
 
     .backlink {
-      border: 0;
-      background: transparent;
-      color: var(--primary);
-      font-weight: 750;
-      padding: 0;
-      margin-bottom: 22px;
+
+      border:
+        0;
+
+      background:
+        transparent;
+
+      color:
+        var(--primary);
+
+      font-weight:
+        750;
+
+      padding:
+        0;
+
+      margin-bottom:
+        22px;
+
     }
+
 
     .backlink:hover {
-      text-decoration: underline;
+      text-decoration:
+        underline;
     }
+
 
     .field {
-      margin-bottom: 20px;
+      margin-bottom:
+        20px;
     }
+
 
     .field label {
-      display: block;
-      margin-bottom: 8px;
-      font-size: .92rem;
-      font-weight: 750;
+
+      display:
+        block;
+
+      margin-bottom:
+        8px;
+
+      font-size:
+        .92rem;
+
+      font-weight:
+        750;
+
     }
+
 
     .field-help {
-      margin: 7px 0 0;
-      color: var(--muted);
-      font-size: .82rem;
-      line-height: 1.45;
+
+      margin:
+        7px
+        0
+        0;
+
+      color:
+        var(--muted);
+
+      font-size:
+        .82rem;
+
+      line-height:
+        1.45;
+
     }
+
 
     .select-wrap {
-      position: relative;
+      position:
+        relative;
     }
 
+
     .select-wrap::after {
-      content: "⌄";
-      position: absolute;
-      right: 16px;
-      top: 50%;
-      transform: translateY(-55%);
-      color: var(--muted);
-      pointer-events: none;
+
+      content:
+        "⌄";
+
+      position:
+        absolute;
+
+      right:
+        16px;
+
+      top:
+        50%;
+
+      transform:
+        translateY(
+          -55%
+        );
+
+      color:
+        var(--muted);
+
+      pointer-events:
+        none;
+
     }
+
 
     select,
     input,
     textarea {
-      width: 100%;
-      border: 1px solid var(--border);
-      border-radius: 13px;
-      background: #fff;
-      color: var(--text);
-      outline: none;
+
+      width:
+        100%;
+
+      border:
+        1px solid
+        var(--border);
+
+      border-radius:
+        13px;
+
+      background:
+        #fff;
+
+      color:
+        var(--text);
+
+      outline:
+        none;
+
     }
+
 
     select {
-      appearance: none;
-      padding: 14px 44px 14px 15px;
+
+      appearance:
+        none;
+
+      padding:
+        14px
+        44px
+        14px
+        15px;
+
     }
+
 
     input {
-      padding: 13px 15px;
+      padding:
+        13px
+        15px;
     }
 
+
     textarea {
-      padding: 13px 15px;
-      min-height: 145px;
-      resize: vertical;
-      line-height: 1.5;
+
+      padding:
+        13px
+        15px;
+
+      min-height:
+        145px;
+
+      resize:
+        vertical;
+
+      line-height:
+        1.5;
+
     }
+
 
     select:focus,
     input:focus,
     textarea:focus {
-      border-color: rgba(40, 86, 216, .65);
-      box-shadow: 0 0 0 4px rgba(40, 86, 216, .1);
+
+      border-color:
+        rgba(
+          40,
+          86,
+          216,
+          .65
+        );
+
+      box-shadow:
+        0 0 0 4px
+        rgba(
+          40,
+          86,
+          216,
+          .1
+        );
+
     }
+
 
     .custom {
-      padding: 15px;
-      border: 1px solid var(--border);
-      border-radius: 15px;
-      background: var(--soft);
-      margin: -2px 0 20px;
+
+      padding:
+        15px;
+
+      border:
+        1px solid
+        var(--border);
+
+      border-radius:
+        15px;
+
+      background:
+        var(--soft);
+
+      margin:
+        -2px
+        0
+        20px;
+
     }
+
 
     .custom-footer {
-      display: flex;
-      justify-content: space-between;
-      gap: 10px;
-      margin-top: 7px;
-      color: var(--muted);
-      font-size: .78rem;
+
+      display:
+        flex;
+
+      justify-content:
+        space-between;
+
+      gap:
+        10px;
+
+      margin-top:
+        7px;
+
+      color:
+        var(--muted);
+
+      font-size:
+        .78rem;
+
     }
+
 
     .error {
-      color: var(--danger);
-      font-weight: 650;
+
+      color:
+        var(--danger);
+
+      font-weight:
+        650;
+
     }
+
 
     .notice {
-      padding: 12px 14px;
-      border: 1px solid #ecd1d1;
-      border-radius: 12px;
-      background: #fffafa;
-      color: var(--danger);
-      font-size: .9rem;
-      line-height: 1.45;
-      margin-bottom: 18px;
+
+      padding:
+        12px
+        14px;
+
+      border:
+        1px solid
+        #ecd1d1;
+
+      border-radius:
+        12px;
+
+      background:
+        #fffafa;
+
+      color:
+        var(--danger);
+
+      font-size:
+        .9rem;
+
+      line-height:
+        1.45;
+
+      margin-bottom:
+        18px;
+
     }
+
 
     .big-btn {
-      width: 100%;
-      border: 0;
-      border-radius: 14px;
-      padding: 14px 18px;
-      background: var(--primary);
-      color: #fff;
-      font-weight: 800;
+
+      width:
+        100%;
+
+      border:
+        0;
+
+      border-radius:
+        14px;
+
+      padding:
+        14px
+        18px;
+
+      background:
+        var(--primary);
+
+      color:
+        #fff;
+
+      font-weight:
+        800;
+
     }
+
 
     .big-btn:hover:not(:disabled) {
-      background: var(--primary2);
+      background:
+        var(--primary-hover);
     }
+
 
     .header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 18px;
-      padding: 19px 23px;
-      border-bottom: 1px solid var(--border);
-      background: #fff;
+
+      display:
+        flex;
+
+      align-items:
+        center;
+
+      justify-content:
+        space-between;
+
+      gap:
+        18px;
+
+      padding:
+        19px
+        23px;
+
+      border-bottom:
+        1px solid
+        var(--border);
+
+      background:
+        #fff;
+
     }
+
 
     .header h2 {
-      margin: 0 0 4px;
-      font-size: 1.18rem;
+
+      margin:
+        0
+        0
+        4px;
+
+      font-size:
+        1.18rem;
+
     }
+
 
     .header p {
-      margin: 0;
-      color: var(--muted);
-      font-size: .9rem;
+
+      margin:
+        0;
+
+      color:
+        var(--muted);
+
+      font-size:
+        .9rem;
+
     }
 
-    .column-screen {
-      flex-direction: column;
-      background: var(--soft);
-    }
 
     .chat-main {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      min-height: 0;
+
+      flex:
+        1;
+
+      display:
+        flex;
+
+      flex-direction:
+        column;
+
+      min-height:
+        0;
+
     }
+
 
     .messages {
-      flex: 1;
-      overflow-y: auto;
-      padding: 28px;
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
+
+      flex:
+        1;
+
+      overflow-y:
+        auto;
+
+      padding:
+        28px;
+
+      display:
+        flex;
+
+      flex-direction:
+        column;
+
+      gap:
+        15px;
+
     }
+
 
     .row {
-      display: flex;
-      width: 100%;
+
+      display:
+        flex;
+
+      width:
+        100%;
+
     }
+
 
     .row.ai {
-      justify-content: flex-start;
+      justify-content:
+        flex-start;
     }
+
 
     .row.user {
-      justify-content: flex-end;
+      justify-content:
+        flex-end;
     }
+
 
     .bubble {
-      max-width: min(72%, 630px);
-      padding: 12px 15px;
-      border-radius: 16px;
-      line-height: 1.5;
-      word-break: break-word;
-      unicode-bidi: plaintext;
+
+      max-width:
+        min(
+          72%,
+          630px
+        );
+
+      padding:
+        12px
+        15px;
+
+      border-radius:
+        16px;
+
+      line-height:
+        1.5;
+
+      word-break:
+        break-word;
+
+      unicode-bidi:
+        plaintext;
+
     }
+
 
     .row.ai .bubble {
-      background: var(--ai);
-      border-bottom-left-radius: 5px;
+
+      background:
+        var(--ai);
+
+      border-bottom-left-radius:
+        5px;
+
     }
+
 
     .row.user .bubble {
-      background: var(--primary);
-      color: #fff;
-      border-bottom-right-radius: 5px;
+
+      background:
+        var(--primary);
+
+      color:
+        #fff;
+
+      border-bottom-right-radius:
+        5px;
+
     }
+
 
     .example-label {
-      font-size: .7rem;
-      font-weight: 800;
-      letter-spacing: .05em;
-      text-transform: uppercase;
-      opacity: .72;
-      margin-bottom: 4px;
+
+      font-size:
+        .7rem;
+
+      font-weight:
+        800;
+
+      letter-spacing:
+        .05em;
+
+      text-transform:
+        uppercase;
+
+      opacity:
+        .72;
+
+      margin-bottom:
+        4px;
+
     }
+
 
     .translation {
-      margin-top: 8px;
-      padding-top: 8px;
-      border-top: 1px solid rgba(255, 255, 255, .22);
-      font-size: .82rem;
-      opacity: .85;
-      direction: ltr;
-      text-align: left;
+
+      margin-top:
+        8px;
+
+      padding-top:
+        8px;
+
+      border-top:
+        1px solid
+        rgba(
+          255,
+          255,
+          255,
+          .22
+        );
+
+      font-size:
+        .82rem;
+
+      opacity:
+        .85;
+
+      direction:
+        ltr;
+
+      text-align:
+        left;
+
     }
+
 
     .feedback {
-      margin: 0 20px 12px;
-      padding: 13px 15px;
-      border: 1px solid var(--feedback-border);
-      border-radius: 13px;
-      background: var(--feedback);
+
+      margin:
+        0
+        20px
+        12px;
+
+      padding:
+        13px
+        15px;
+
+      border:
+        1px solid
+        var(--feedback-border);
+
+      border-radius:
+        13px;
+
+      background:
+        var(--feedback);
+
     }
+
 
     .feedback-title {
-      font-size: .78rem;
-      font-weight: 800;
-      letter-spacing: .05em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 6px;
+
+      font-size:
+        .78rem;
+
+      font-weight:
+        800;
+
+      letter-spacing:
+        .05em;
+
+      text-transform:
+        uppercase;
+
+      color:
+        var(--muted);
+
+      margin-bottom:
+        6px;
+
     }
+
 
     .feedback p {
-      margin: 5px 0;
-      line-height: 1.45;
+
+      margin:
+        5px
+        0;
+
+      line-height:
+        1.45;
+
     }
+
 
     .ok {
-      color: var(--success);
-      font-weight: 700;
+
+      color:
+        var(--success);
+
+      font-weight:
+        700;
+
     }
+
 
     .composer-area {
-      border-top: 1px solid var(--border);
-      background: #fff;
+
+      border-top:
+        1px solid
+        var(--border);
+
+      background:
+        #fff;
+
     }
+
 
     .chars {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      padding: 10px 20px 0;
+
+      display:
+        flex;
+
+      flex-wrap:
+        wrap;
+
+      gap:
+        6px;
+
+      padding:
+        10px
+        20px
+        0;
+
     }
+
 
     .chars-label {
-      width: 100%;
-      color: var(--muted);
-      font-size: .74rem;
-      font-weight: 700;
+
+      width:
+        100%;
+
+      color:
+        var(--muted);
+
+      font-size:
+        .74rem;
+
+      font-weight:
+        700;
+
     }
+
 
     .char-btn {
-      min-width: 33px;
-      height: 31px;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      background: var(--soft);
-      font-weight: 650;
+
+      min-width:
+        33px;
+
+      height:
+        31px;
+
+      border:
+        1px solid
+        var(--border);
+
+      border-radius:
+        8px;
+
+      background:
+        var(--soft);
+
+      font-weight:
+        650;
+
     }
+
 
     .composer {
-      display: flex;
-      gap: 9px;
-      padding: 11px 20px 20px;
+
+      display:
+        flex;
+
+      gap:
+        9px;
+
+      padding:
+        11px
+        20px
+        20px;
+
     }
 
+
     .composer input {
-      flex: 1;
+      flex:
+        1;
     }
+
 
     .send,
     .example {
-      border-radius: 13px;
-      padding: 0 16px;
-      font-weight: 750;
+
+      border-radius:
+        13px;
+
+      padding:
+        0
+        16px;
+
+      font-weight:
+        750;
+
     }
+
 
     .send {
-      border: 0;
-      background: var(--primary);
-      color: #fff;
+
+      border:
+        0;
+
+      background:
+        var(--primary);
+
+      color:
+        #fff;
+
     }
+
 
     .example {
-      border: 1px solid rgba(40, 86, 216, .28);
-      background: #f4f7ff;
-      color: var(--primary);
+
+      border:
+        1px solid
+        rgba(
+          40,
+          86,
+          216,
+          .28
+        );
+
+      background:
+        #f4f7ff;
+
+      color:
+        var(--primary);
+
     }
+
 
     .word {
-      border-bottom: 1px dotted currentColor;
-      cursor: help;
-      outline: none;
+
+      border-bottom:
+        1px dotted
+        currentColor;
+
+      cursor:
+        help;
+
+      outline:
+        none;
+
     }
+
 
     .tooltip {
-      display: none;
-      position: fixed;
-      z-index: 9999;
-      width: max-content;
-      max-width: min(370px, calc(100vw - 24px));
-      padding: 12px 14px;
-      border-radius: 12px;
-      background: #18212f;
-      color: #fff;
-      box-shadow: 0 12px 32px rgba(23, 35, 58, .22);
-      font-size: .86rem;
-      line-height: 1.4;
-      pointer-events: none;
+
+      display:
+        none;
+
+      position:
+        fixed;
+
+      z-index:
+        9999;
+
+      width:
+        max-content;
+
+      max-width:
+        min(
+          370px,
+          calc(
+            100vw -
+            24px
+          )
+        );
+
+      padding:
+        12px
+        14px;
+
+      border-radius:
+        12px;
+
+      background:
+        #18212f;
+
+      color:
+        #fff;
+
+      box-shadow:
+        0 12px 32px
+        rgba(
+          23,
+          35,
+          58,
+          .22
+        );
+
+      font-size:
+        .86rem;
+
+      line-height:
+        1.4;
+
+      pointer-events:
+        none;
+
     }
+
 
     .tooltip.visible {
-      display: block;
+      display:
+        block;
     }
+
 
     .tip-title {
-      font-weight: 800;
-      margin-bottom: 6px;
+
+      font-weight:
+        800;
+
+      margin-bottom:
+        6px;
+
     }
+
 
     .tip-list {
-      margin: 0;
-      padding-left: 20px;
+
+      margin:
+        0;
+
+      padding-left:
+        20px;
+
     }
+
 
     .tip-list li {
-      margin: 4px 0;
+      margin:
+        4px
+        0;
     }
+
 
     .tip-tags {
-      opacity: .62;
-      font-size: .77rem;
-      font-style: italic;
+
+      opacity:
+        .62;
+
+      font-size:
+        .77rem;
+
+      font-style:
+        italic;
+
     }
+
 
     .tip-meta {
-      margin-top: 7px;
-      opacity: .68;
-      font-size: .77rem;
+
+      margin-top:
+        7px;
+
+      opacity:
+        .68;
+
+      font-size:
+        .77rem;
+
     }
+
 
     .utility {
-      flex: 1;
-      padding: 30px 26px;
+
+      flex:
+        1;
+
+      padding:
+        30px
+        26px;
+
     }
+
 
     .utility-card {
-      width: min(760px, 100%);
-      margin: 0 auto;
-      padding: 24px;
-      border: 1px solid var(--border);
-      border-radius: 18px;
-      background: #fff;
-      box-shadow: 0 8px 28px rgba(23, 35, 58, .05);
+
+      width:
+        min(
+          760px,
+          100%
+        );
+
+      margin:
+        0
+        auto;
+
+      padding:
+        24px;
+
+      border:
+        1px solid
+        var(--border);
+
+      border-radius:
+        18px;
+
+      background:
+        #fff;
+
+      box-shadow:
+        0 8px 28px
+        rgba(
+          23,
+          35,
+          58,
+          .05
+        );
+
     }
 
+
     .utility-message {
-      color: var(--muted);
-      line-height: 1.5;
+
+      color:
+        var(--muted);
+
+      line-height:
+        1.5;
+
     }
+
 
     .lang-list,
     .recent-list {
-      display: grid;
-      gap: 9px;
+
+      display:
+        grid;
+
+      gap:
+        9px;
+
     }
+
 
     .lang-btn,
     .recent-btn {
-      width: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 14px;
-      padding: 13px 14px;
-      border: 1px solid var(--border);
-      border-radius: 11px;
-      background: #fff;
-      text-align: left;
-      color: var(--text);
-      font-weight: 700;
+
+      width:
+        100%;
+
+      display:
+        flex;
+
+      align-items:
+        center;
+
+      justify-content:
+        space-between;
+
+      gap:
+        14px;
+
+      padding:
+        13px
+        14px;
+
+      border:
+        1px solid
+        var(--border);
+
+      border-radius:
+        11px;
+
+      background:
+        #fff;
+
+      text-align:
+        left;
+
+      color:
+        var(--text);
+
+      font-weight:
+        700;
+
     }
+
 
     .lang-btn:hover,
     .recent-btn:hover {
-      background: #f8faff;
-      border-color: rgba(40, 86, 216, .3);
+
+      background:
+        #f8faff;
+
+      border-color:
+        rgba(
+          40,
+          86,
+          216,
+          .3
+        );
+
     }
+
+
+    .lang-copy {
+
+      display:
+        flex;
+
+      flex-direction:
+        column;
+
+      gap:
+        3px;
+
+      min-width:
+        0;
+
+    }
+
+
+    .lang-copy small {
+
+      color:
+        var(--muted);
+
+      font-size:
+        .78rem;
+
+      font-weight:
+        600;
+
+    }
+
+
+    .lang-vocab-count {
+
+      color:
+        var(--primary);
+
+      white-space:
+        nowrap;
+
+    }
+
 
     .overall {
-      display: flex;
-      justify-content: space-between;
-      gap: 16px;
-      margin-top: 17px;
-      padding-top: 17px;
-      border-top: 1px solid var(--border);
-      font-weight: 800;
+
+      display:
+        flex;
+
+      justify-content:
+        space-between;
+
+      gap:
+        16px;
+
+      margin-top:
+        17px;
+
+      padding-top:
+        17px;
+
+      border-top:
+        1px solid
+        var(--border);
+
+      font-weight:
+        800;
+
     }
+
 
     .count {
-      color: var(--primary);
+      color:
+        var(--primary);
     }
+
+
+    .legacy-note {
+
+      color:
+        var(--muted);
+
+      font-weight:
+        700;
+
+    }
+
 
     .detail-top {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 14px;
+
+      display:
+        flex;
+
+      align-items:
+        flex-start;
+
+      justify-content:
+        space-between;
+
+      gap:
+        14px;
+
     }
+
 
     .linkbtn {
-      border: 0;
-      background: transparent;
-      color: var(--primary);
-      font-weight: 750;
-      padding: 0;
+
+      border:
+        0;
+
+      background:
+        transparent;
+
+      color:
+        var(--primary);
+
+      font-weight:
+        750;
+
+      padding:
+        0;
+
     }
+
 
     .vocab-list {
-      list-style: none;
-      padding: 0;
-      margin: 17px 0 0;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px 12px;
+
+      list-style:
+        none;
+
+      padding:
+        0;
+
+      margin:
+        17px
+        0
+        0;
+
+      display:
+        grid;
+
+      grid-template-columns:
+        1fr
+        1fr;
+
+      gap:
+        8px
+        12px;
+
     }
+
 
     .vocab-item {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      padding: 9px 10px;
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      background: var(--soft);
+
+      display:
+        flex;
+
+      align-items:
+        center;
+
+      justify-content:
+        space-between;
+
+      gap:
+        10px;
+
+      padding:
+        9px
+        10px;
+
+      border:
+        1px solid
+        var(--border);
+
+      border-radius:
+        10px;
+
+      background:
+        var(--soft);
+
     }
+
 
     .delete-word {
-      border: 1px solid #ecd1d1;
-      border-radius: 8px;
-      padding: 5px 8px;
-      background: #fffafa;
-      color: var(--danger);
-      font-size: .76rem;
-      font-weight: 700;
+
+      border:
+        1px solid
+        #ecd1d1;
+
+      border-radius:
+        8px;
+
+      padding:
+        5px
+        8px;
+
+      background:
+        #fffafa;
+
+      color:
+        var(--danger);
+
+      font-size:
+        .76rem;
+
+      font-weight:
+        700;
+
     }
+
 
     .recent-btn {
-      display: block;
+      display:
+        block;
     }
+
 
     .recent-top {
-      display: flex;
-      justify-content: space-between;
-      gap: 12px;
+
+      display:
+        flex;
+
+      justify-content:
+        space-between;
+
+      gap:
+        12px;
+
     }
+
 
     .recent-time {
-      color: var(--muted);
-      font-size: .76rem;
-      font-weight: 600;
+
+      color:
+        var(--muted);
+
+      font-size:
+        .76rem;
+
+      font-weight:
+        600;
+
     }
+
 
     .recent-meta {
-      margin-top: 4px;
-      color: var(--muted);
-      font-size: .82rem;
+
+      margin-top:
+        4px;
+
+      color:
+        var(--muted);
+
+      font-size:
+        .82rem;
+
     }
+
 
     .recent-preview {
-      margin-top: 7px;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      font-size: .9rem;
+
+      margin-top:
+        7px;
+
+      overflow:
+        hidden;
+
+      text-overflow:
+        ellipsis;
+
+      white-space:
+        nowrap;
+
+      font-size:
+        .9rem;
+
     }
+
 
     .recent-messages {
-      display: flex;
-      flex-direction: column;
-      gap: 13px;
-      padding: 15px;
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      background: var(--soft);
+
+      display:
+        flex;
+
+      flex-direction:
+        column;
+
+      gap:
+        13px;
+
+      padding:
+        15px;
+
+      border:
+        1px solid
+        var(--border);
+
+      border-radius:
+        14px;
+
+      background:
+        var(--soft);
+
     }
+
 
     .stored-feedback {
-      align-self: flex-end;
-      width: min(82%, 650px);
-      padding: 10px 12px;
-      border: 1px solid var(--feedback-border);
-      border-radius: 10px;
-      background: var(--feedback);
-      font-size: .82rem;
+
+      align-self:
+        flex-end;
+
+      width:
+        min(
+          82%,
+          650px
+        );
+
+      padding:
+        10px
+        12px;
+
+      border:
+        1px solid
+        var(--feedback-border);
+
+      border-radius:
+        10px;
+
+      background:
+        var(--feedback);
+
+      font-size:
+        .82rem;
+
     }
+
 
     .stored-feedback p {
-      margin: 3px 0;
+      margin:
+        3px
+        0;
     }
+
 
     .retention {
-      margin-top: 16px;
-      color: var(--muted);
-      font-size: .77rem;
-      line-height: 1.45;
+
+      margin-top:
+        16px;
+
+      color:
+        var(--muted);
+
+      font-size:
+        .77rem;
+
+      line-height:
+        1.45;
+
     }
+
 
     .quiz-wrap {
-      flex: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 30px;
+
+      flex:
+        1;
+
+      display:
+        flex;
+
+      align-items:
+        center;
+
+      justify-content:
+        center;
+
+      padding:
+        30px;
+
     }
+
 
     .quiz-card {
-      width: min(650px, 100%);
-      padding: 25px;
-      border: 1px solid var(--border);
-      border-radius: 18px;
-      background: #fff;
+
+      width:
+        min(
+          650px,
+          100%
+        );
+
+      padding:
+        25px;
+
+      border:
+        1px solid
+        var(--border);
+
+      border-radius:
+        18px;
+
+      background:
+        #fff;
+
     }
+
 
     .quiz-status {
-      display: flex;
-      justify-content: space-between;
-      gap: 14px;
-      color: var(--muted);
-      font-size: .84rem;
-      font-weight: 700;
+
+      display:
+        flex;
+
+      justify-content:
+        space-between;
+
+      gap:
+        14px;
+
+      color:
+        var(--muted);
+
+      font-size:
+        .84rem;
+
+      font-weight:
+        700;
+
     }
+
 
     .prompt-label {
-      margin-top: 26px;
-      color: var(--muted);
-      font-size: .76rem;
-      text-transform: uppercase;
-      letter-spacing: .06em;
-      font-weight: 800;
+
+      margin-top:
+        26px;
+
+      color:
+        var(--muted);
+
+      font-size:
+        .76rem;
+
+      text-transform:
+        uppercase;
+
+      letter-spacing:
+        .06em;
+
+      font-weight:
+        800;
+
     }
+
 
     .prompt {
-      margin: 9px 0 8px;
-      font-size: 1.65rem;
-      font-weight: 800;
-      line-height: 1.25;
+
+      margin:
+        9px
+        0
+        8px;
+
+      font-size:
+        1.65rem;
+
+      font-weight:
+        800;
+
+      line-height:
+        1.25;
+
     }
+
 
     .pos {
-      display: inline-flex;
-      padding: 4px 8px;
-      border-radius: 999px;
-      background: var(--soft);
-      color: var(--muted);
-      font-size: .76rem;
+
+      display:
+        inline-flex;
+
+      padding:
+        4px
+        8px;
+
+      border-radius:
+        999px;
+
+      background:
+        var(--soft);
+
+      color:
+        var(--muted);
+
+      font-size:
+        .76rem;
+
     }
+
 
     .options {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      margin-top: 24px;
+
+      display:
+        grid;
+
+      grid-template-columns:
+        1fr
+        1fr;
+
+      gap:
+        10px;
+
+      margin-top:
+        24px;
+
     }
+
 
     .option {
-      padding: 13px;
-      border: 1px solid var(--border);
-      border-radius: 11px;
-      background: #fff;
-      color: var(--text);
-      font-weight: 700;
+
+      padding:
+        13px;
+
+      border:
+        1px solid
+        var(--border);
+
+      border-radius:
+        11px;
+
+      background:
+        #fff;
+
+      color:
+        var(--text);
+
+      font-weight:
+        700;
+
     }
+
 
     .option:hover:not(:disabled) {
-      background: #f6f8ff;
-      border-color: rgba(40, 86, 216, .35);
+
+      background:
+        #f6f8ff;
+
+      border-color:
+        rgba(
+          40,
+          86,
+          216,
+          .35
+        );
+
     }
+
 
     .option.good {
-      border-color: #9fd0b2;
-      background: #f2fbf5;
-      color: var(--success);
+
+      border-color:
+        #9fd0b2;
+
+      background:
+        #f2fbf5;
+
+      color:
+        var(--success);
+
     }
+
 
     .option.bad {
-      border-color: #e8abab;
-      background: #fff5f5;
-      color: var(--danger);
+
+      border-color:
+        #e8abab;
+
+      background:
+        #fff5f5;
+
+      color:
+        var(--danger);
+
     }
+
 
     .hardcore {
-      margin-top: 24px;
+      margin-top:
+        24px;
     }
+
 
     .hardcore-row {
-      display: flex;
-      gap: 9px;
+
+      display:
+        flex;
+
+      gap:
+        9px;
+
     }
+
 
     .hardcore-row input {
-      flex: 1;
+      flex:
+        1;
     }
+
 
     .answer-feedback {
-      margin: 18px 0 12px;
-      padding: 11px 13px;
-      border-radius: 11px;
-      font-weight: 700;
-      line-height: 1.4;
+
+      margin:
+        18px
+        0
+        12px;
+
+      padding:
+        11px
+        13px;
+
+      border-radius:
+        11px;
+
+      font-weight:
+        700;
+
+      line-height:
+        1.4;
+
     }
+
 
     .answer-feedback.good {
-      background: #f2fbf5;
-      color: var(--success);
-      border: 1px solid #b9ddc6;
+
+      background:
+        #f2fbf5;
+
+      color:
+        var(--success);
+
+      border:
+        1px solid
+        #b9ddc6;
+
     }
+
 
     .answer-feedback.bad {
-      background: #fff5f5;
-      color: var(--danger);
-      border: 1px solid #ebc1c1;
+
+      background:
+        #fff5f5;
+
+      color:
+        var(--danger);
+
+      border:
+        1px solid
+        #ebc1c1;
+
     }
+
 
     .final-score {
-      font-size: 1.25rem;
-      font-weight: 800;
+
+      font-size:
+        1.25rem;
+
+      font-weight:
+        800;
+
     }
+
 
     .auth-modal {
-      position: fixed;
-      inset: 0;
-      z-index: 10000;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-      background: rgba(16, 24, 40, .48);
+
+      position:
+        fixed;
+
+      inset:
+        0;
+
+      z-index:
+        10000;
+
+      display:
+        flex;
+
+      align-items:
+        center;
+
+      justify-content:
+        center;
+
+      padding:
+        20px;
+
+      background:
+        rgba(
+          16,
+          24,
+          40,
+          .48
+        );
+
     }
+
 
     .auth-card {
-      position: relative;
-      width: min(440px, 100%);
-      padding: 25px;
-      border-radius: 19px;
-      background: #fff;
-      box-shadow: 0 24px 70px rgba(16, 24, 40, .24);
+
+      position:
+        relative;
+
+      width:
+        min(
+          440px,
+          100%
+        );
+
+      padding:
+        25px;
+
+      border-radius:
+        19px;
+
+      background:
+        #fff;
+
+      box-shadow:
+        0 24px 70px
+        rgba(
+          16,
+          24,
+          40,
+          .24
+        );
+
     }
+
 
     .auth-close {
-      position: absolute;
-      top: 11px;
-      right: 13px;
-      width: 34px;
-      height: 34px;
-      border: 0;
-      border-radius: 50%;
-      background: transparent;
-      color: var(--muted);
-      font-size: 1.4rem;
+
+      position:
+        absolute;
+
+      top:
+        11px;
+
+      right:
+        13px;
+
+      width:
+        34px;
+
+      height:
+        34px;
+
+      border:
+        0;
+
+      border-radius:
+        50%;
+
+      background:
+        transparent;
+
+      color:
+        var(--muted);
+
+      font-size:
+        1.4rem;
+
     }
+
 
     .auth-tabs {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 5px;
-      padding: 4px;
-      border-radius: 11px;
-      background: var(--soft);
-      margin: 18px 0;
+
+      display:
+        grid;
+
+      grid-template-columns:
+        1fr
+        1fr;
+
+      gap:
+        5px;
+
+      padding:
+        4px;
+
+      border-radius:
+        11px;
+
+      background:
+        var(--soft);
+
+      margin:
+        18px
+        0;
+
     }
+
 
     .tab {
-      border: 0;
-      border-radius: 8px;
-      padding: 9px;
-      background: transparent;
-      color: var(--muted);
-      font-weight: 750;
+
+      border:
+        0;
+
+      border-radius:
+        8px;
+
+      padding:
+        9px;
+
+      background:
+        transparent;
+
+      color:
+        var(--muted);
+
+      font-weight:
+        750;
+
     }
+
 
     .tab.active {
-      background: #fff;
-      color: var(--text);
-      box-shadow: 0 1px 3px rgba(16, 24, 40, .08);
+
+      background:
+        #fff;
+
+      color:
+        var(--text);
+
+      box-shadow:
+        0 1px 3px
+        rgba(
+          16,
+          24,
+          40,
+          .08
+        );
+
     }
+
 
     .auth-msg {
-      min-height: 20px;
-      margin-top: 12px;
-      font-size: .85rem;
+
+      min-height:
+        20px;
+
+      margin-top:
+        12px;
+
+      font-size:
+        .85rem;
+
     }
+
 
     .credit {
-      color: var(--muted);
-      font-size: .72rem;
-      text-align: center;
-      line-height: 1.45;
-      margin-top: 17px;
+
+      color:
+        var(--muted);
+
+      font-size:
+        .72rem;
+
+      text-align:
+        center;
+
+      line-height:
+        1.45;
+
+      margin-top:
+        17px;
+
     }
+
 
     .credit a {
-      color: inherit;
+      color:
+        inherit;
     }
 
-    @media (max-width: 760px) {
+
+    @media (
+      max-width:
+        760px
+    ) {
+
       .page {
-        padding: 0;
+        padding:
+          0;
       }
+
 
       .shell {
-        min-height: 100vh;
-        border-radius: 0;
+
+        min-height:
+          100vh;
+
+        border-radius:
+          0;
+
       }
+
 
       .screen {
-        min-height: calc(100vh - 56px);
+        min-height:
+          calc(
+            100vh -
+            56px
+          );
       }
 
+
       .center-screen {
-        padding: 34px 18px;
+        padding:
+          34px
+          18px;
       }
+
 
       .tiles,
       .options,
       .vocab-list {
-        grid-template-columns: 1fr;
+        grid-template-columns:
+          1fr;
       }
+
 
       .topbar {
-        padding: 8px 10px;
+        padding:
+          8px
+          10px;
       }
+
 
       .email {
-        max-width: 105px;
+        max-width:
+          105px;
       }
+
 
       .messages {
-        padding: 20px 14px;
+        padding:
+          20px
+          14px;
       }
+
 
       .bubble {
-        max-width: 88%;
+        max-width:
+          88%;
       }
+
 
       .composer {
-        padding: 10px 12px 13px;
-        flex-wrap: wrap;
+
+        padding:
+          10px
+          12px
+          13px;
+
+        flex-wrap:
+          wrap;
+
       }
+
 
       .composer input {
-        flex-basis: 100%;
+        flex-basis:
+          100%;
       }
+
 
       .example {
-        flex: 1;
-        min-height: 44px;
+
+        flex:
+          1;
+
+        min-height:
+          44px;
+
       }
+
 
       .send {
-        min-height: 44px;
+        min-height:
+          44px;
       }
+
 
       .header {
-        padding: 16px 14px;
-        align-items: flex-start;
+
+        padding:
+          16px
+          14px;
+
+        align-items:
+          flex-start;
+
       }
 
+
       .utility {
-        padding: 20px 12px;
+        padding:
+          20px
+          12px;
       }
+
 
       .utility-card,
       .quiz-card {
-        padding: 18px 14px;
+        padding:
+          18px
+          14px;
       }
+
 
       .quiz-wrap {
-        padding: 20px 12px;
+        padding:
+          20px
+          12px;
       }
+
 
       .hardcore-row {
-        flex-direction: column;
+        flex-direction:
+          column;
       }
+
 
       .recent-top {
-        flex-direction: column;
-        gap: 3px;
+
+        flex-direction:
+          column;
+
+        gap:
+          3px;
+
       }
+
     }
+
   </style>
+
 </head>
 
+
 <body>
+
 
 <main class="page">
 
   <section class="shell">
+
 
     <div class="topbar">
 
@@ -1076,6 +2711,7 @@
 
       </div>
 
+
       <div
         id="signedOut"
         class="top-right"
@@ -1084,18 +2720,22 @@
         <button
           id="loginBtn"
           class="btn"
+          type="button"
         >
           Log In
         </button>
 
+
         <button
           id="signupBtn"
           class="btn primary"
+          type="button"
         >
           Sign Up
         </button>
 
       </div>
+
 
       <div
         id="signedIn"
@@ -1107,16 +2747,20 @@
           class="email"
         ></span>
 
+
         <button
           id="statsBtn"
           class="btn"
+          type="button"
         >
           Stats
         </button>
 
+
         <button
           id="logoutBtn"
           class="btn"
+          type="button"
         >
           Log Out
         </button>
@@ -1145,11 +2789,13 @@
           Choose how you want to practise.
         </p>
 
+
         <div class="tiles">
 
           <button
             id="chatTile"
             class="tile"
+            type="button"
           >
 
             <span class="tile-icon">
@@ -1178,6 +2824,7 @@
           <button
             id="vocabTile"
             class="tile"
+            type="button"
           >
 
             <span class="tile-icon">
@@ -1219,30 +2866,36 @@
         <button
           class="backlink"
           data-home
+          type="button"
         >
           ← Language Learning
         </button>
+
 
         <div class="eyebrow">
           Chat
         </div>
 
+
         <h1>
           Conversation Practice
         </h1>
 
+
         <p class="intro">
           Choose your language and level, then select a scenario or create your own.
         </p>
+
 
         <div
           id="chatSetupError"
           class="notice hidden"
         ></div>
 
+
         <div class="field">
 
-          <label>
+          <label for="languageSelect">
             Language
           </label>
 
@@ -1252,9 +2905,11 @@
               id="languageSelect"
               disabled
             >
+
               <option>
                 Loading…
               </option>
+
             </select>
 
           </div>
@@ -1264,7 +2919,7 @@
 
         <div class="field">
 
-          <label>
+          <label for="levelSelect">
             Language level
           </label>
 
@@ -1274,9 +2929,11 @@
               id="levelSelect"
               disabled
             >
+
               <option>
                 Loading…
               </option>
+
             </select>
 
           </div>
@@ -1286,7 +2943,7 @@
 
         <div class="field">
 
-          <label>
+          <label for="scenarioSelect">
             Scenario
           </label>
 
@@ -1296,9 +2953,11 @@
               id="scenarioSelect"
               disabled
             >
+
               <option>
                 Loading…
               </option>
+
             </select>
 
           </div>
@@ -1313,9 +2972,10 @@
 
           <div class="field">
 
-            <label>
+            <label for="customScenario">
               Describe your scenario
             </label>
+
 
             <textarea
               id="customScenario"
@@ -1324,6 +2984,7 @@
             ></textarea>
 
           </div>
+
 
           <div class="custom-footer">
 
@@ -1344,6 +3005,7 @@
         <button
           id="startChatBtn"
           class="big-btn"
+          type="button"
           disabled
         >
           Loading…
@@ -1357,6 +3019,7 @@
           <a
             href="https://en.wiktionary.org/"
             target="_blank"
+            rel="noopener noreferrer"
           >
             English Wiktionary
           </a>
@@ -1366,6 +3029,7 @@
           <a
             href="https://kaikki.org/"
             target="_blank"
+            rel="noopener noreferrer"
           >
             Kaikki.org
           </a>,
@@ -1389,21 +3053,26 @@
         <button
           class="backlink"
           data-home
+          type="button"
         >
           ← Language Learning
         </button>
+
 
         <div class="eyebrow">
           Vocabulary Test
         </div>
 
+
         <h1>
           Vocabulary Test
         </h1>
 
+
         <p class="intro">
           Choose which words to test and how difficult you want the test to be.
         </p>
+
 
         <div
           id="vocabSetupError"
@@ -1413,7 +3082,7 @@
 
         <div class="field">
 
-          <label>
+          <label for="vocabLanguage">
             Language
           </label>
 
@@ -1423,9 +3092,11 @@
               id="vocabLanguage"
               disabled
             >
+
               <option>
                 Loading…
               </option>
+
             </select>
 
           </div>
@@ -1435,19 +3106,38 @@
 
         <div class="field">
 
-          <label>
+          <label for="vocabCount">
             Number of words
           </label>
 
           <div class="select-wrap">
 
             <select id="vocabCount">
-              <option>5</option>
-              <option selected>10</option>
-              <option>15</option>
-              <option>20</option>
-              <option>25</option>
-              <option>30</option>
+
+              <option>
+                5
+              </option>
+
+              <option selected>
+                10
+              </option>
+
+              <option>
+                15
+              </option>
+
+              <option>
+                20
+              </option>
+
+              <option>
+                25
+              </option>
+
+              <option>
+                30
+              </option>
+
             </select>
 
           </div>
@@ -1457,7 +3147,7 @@
 
         <div class="field">
 
-          <label>
+          <label for="vocabSource">
             Words
           </label>
 
@@ -1481,6 +3171,7 @@
 
           </div>
 
+
           <p
             id="sourceHelp"
             class="field-help"
@@ -1491,7 +3182,7 @@
 
         <div class="field">
 
-          <label>
+          <label for="quizMode">
             Test mode
           </label>
 
@@ -1511,6 +3202,7 @@
 
           </div>
 
+
           <p
             id="modeHelp"
             class="field-help"
@@ -1522,10 +3214,12 @@
         <button
           id="startVocabBtn"
           class="big-btn"
+          type="button"
           disabled
         >
           Loading…
         </button>
+
 
         <p class="field-help">
           My vocabulary and New vocabulary require a logged-in account. Random tests work without logging in.
@@ -1555,9 +3249,11 @@
 
         </div>
 
+
         <button
           id="endChatBtn"
           class="btn danger"
+          type="button"
         >
           End conversation
         </button>
@@ -1570,12 +3266,14 @@
         <div
           id="messages"
           class="messages"
+          aria-live="polite"
         ></div>
 
 
         <section
           id="feedback"
           class="feedback hidden"
+          aria-live="polite"
         >
 
           <div class="feedback-title">
@@ -1594,6 +3292,7 @@
             class="chars hidden"
           ></div>
 
+
           <form
             id="chatForm"
             class="composer"
@@ -1605,7 +3304,8 @@
               autocomplete="off"
               dir="auto"
               placeholder="Type your message…"
-            >
+            />
+
 
             <button
               id="exampleBtn"
@@ -1614,6 +3314,7 @@
             >
               Generate example response
             </button>
+
 
             <button
               id="sendBtn"
@@ -1651,9 +3352,11 @@
 
         </div>
 
+
         <button
           id="endTestBtn"
           class="btn"
+          type="button"
         >
           End test
         </button>
@@ -1685,15 +3388,18 @@
             English meaning
           </div>
 
+
           <div
             id="prompt"
             class="prompt"
           ></div>
 
+
           <div
             id="pos"
             class="pos hidden"
           ></div>
+
 
           <div
             id="options"
@@ -1706,11 +3412,14 @@
             class="hardcore hidden"
           >
 
-            <label>
+            <label for="hardcoreInput">
+
               <strong>
                 Type the dictionary lemma
               </strong>
+
             </label>
+
 
             <div class="hardcore-row">
 
@@ -1719,7 +3428,8 @@
                 autocomplete="off"
                 spellcheck="false"
                 placeholder="Type your answer exactly…"
-              >
+              />
+
 
               <button
                 class="send"
@@ -1729,6 +3439,7 @@
               </button>
 
             </div>
+
 
             <p class="field-help">
               Capitalisation matters. If the dictionary accepts multiple lemmas, any accepted lemma is correct.
@@ -1742,9 +3453,11 @@
             class="answer-feedback hidden"
           ></div>
 
+
           <button
             id="nextWordBtn"
             class="big-btn hidden"
+            type="button"
           >
             Next word
           </button>
@@ -1761,23 +3474,28 @@
             Finished
           </div>
 
+
           <h2>
             Vocabulary test complete
           </h2>
+
 
           <p
             id="finalScore"
             class="final-score"
           ></p>
 
+
           <p
             id="finalNote"
             class="utility-message"
           ></p>
 
+
           <button
             id="backToVocabBtn"
             class="big-btn"
+            type="button"
           >
             Back to Vocabulary Test
           </button>
@@ -1803,14 +3521,16 @@
           </h2>
 
           <p>
-            Vocabulary recorded from successful language use and Hardcore recall.
+            Vocabulary and chat practice by language.
           </p>
 
         </div>
 
+
         <button
           id="closeStatsBtn"
           class="btn"
+          type="button"
         >
           Back
         </button>
@@ -1829,9 +3549,11 @@
             My Stats
           </div>
 
+
           <h3>
-            Vocabulary
+            Languages
           </h3>
+
 
           <p
             id="statsMessage"
@@ -1840,10 +3562,12 @@
             Loading…
           </p>
 
+
           <div
             id="statsLanguages"
             class="lang-list hidden"
           ></div>
+
 
           <div
             id="overall"
@@ -1859,6 +3583,44 @@
               class="count"
             >
               0
+            </span>
+
+          </div>
+
+
+          <div
+            id="chatTimeOverall"
+            class="overall hidden"
+          >
+
+            <span>
+              Total chat time
+            </span>
+
+            <span
+              id="chatTimeValue"
+              class="count"
+            >
+              0s
+            </span>
+
+          </div>
+
+
+          <div
+            id="unallocatedTimeOverall"
+            class="overall hidden"
+          >
+
+            <span class="legacy-note">
+              Earlier chat time not assigned to a language
+            </span>
+
+            <span
+              id="unallocatedTimeValue"
+              class="count"
+            >
+              0s
             </span>
 
           </div>
@@ -1883,19 +3645,23 @@
 
             </div>
 
+
             <button
               id="statsBackBtn"
               class="linkbtn"
+              type="button"
             >
               ← All languages
             </button>
 
           </div>
 
+
           <p
             id="statsLangMessage"
             class="utility-message"
           ></p>
+
 
           <ul
             id="vocabList"
@@ -1928,9 +3694,11 @@
 
         </div>
 
+
         <button
           id="closeRecentBtn"
           class="btn"
+          type="button"
         >
           Back
         </button>
@@ -1949,19 +3717,23 @@
             Recent Conversations
           </div>
 
+
           <h3>
             Your recent chats
           </h3>
+
 
           <p
             id="recentMessage"
             class="utility-message"
           ></p>
 
+
           <div
             id="recentList"
             class="recent-list"
           ></div>
+
 
           <p class="retention">
             Stored locally in this browser, limited to 20 conversations and removed after 30 days. Account-linked synchronisation can be added later.
@@ -1992,14 +3764,17 @@
 
             </div>
 
+
             <button
               id="recentBackBtn"
               class="linkbtn"
+              type="button"
             >
               ← All conversations
             </button>
 
           </div>
+
 
           <div
             id="recentMessages"
@@ -2020,26 +3795,37 @@
 <div
   id="tooltip"
   class="tooltip"
+  role="tooltip"
 ></div>
 
 
 <div
   id="authModal"
   class="auth-modal hidden"
+  aria-hidden="true"
 >
 
-  <section class="auth-card">
+  <section
+    class="auth-card"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="authTitle"
+  >
 
     <button
       id="authClose"
       class="auth-close"
+      type="button"
+      aria-label="Close"
     >
       ×
     </button>
 
+
     <h2 id="authTitle">
       Log in
     </h2>
+
 
     <p
       id="authSubtitle"
@@ -2048,11 +3834,13 @@
       Log in to your PlainBetter account.
     </p>
 
+
     <div class="auth-tabs">
 
       <button
         id="loginTab"
         class="tab active"
+        type="button"
       >
         Log In
       </button>
@@ -2060,6 +3848,7 @@
       <button
         id="signupTab"
         class="tab"
+        type="button"
       >
         Sign Up
       </button>
@@ -2071,7 +3860,7 @@
 
       <div class="field">
 
-        <label>
+        <label for="authEmail">
           Email
         </label>
 
@@ -2080,14 +3869,14 @@
           type="email"
           autocomplete="email"
           required
-        >
+        />
 
       </div>
 
 
       <div class="field">
 
-        <label>
+        <label for="authPassword">
           Password
         </label>
 
@@ -2096,7 +3885,7 @@
           type="password"
           autocomplete="current-password"
           required
-        >
+        />
 
       </div>
 
@@ -2104,13 +3893,16 @@
       <button
         id="authSubmit"
         class="big-btn"
+        type="submit"
       >
         Log In
       </button>
 
+
       <div
         id="authMsg"
         class="auth-msg"
+        aria-live="polite"
       ></div>
 
     </form>
@@ -2120,7 +3912,10 @@
 </div>
 
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script
+  src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+></script>
+
 
 <script>
 
@@ -2141,11 +3936,20 @@ const supabaseClient =
     SUPABASE_URL,
     SUPABASE_KEY,
     {
+
       auth: {
-        persistSession: true,
-        autoRefreshToken: true,
-        detectSessionInUrl: true,
+
+        persistSession:
+          true,
+
+        autoRefreshToken:
+          true,
+
+        detectSessionInUrl:
+          true,
+
       },
+
     }
   );
 
@@ -2288,7 +4092,7 @@ let requestToken =
 
 
 // ---------------------------------------------------------
-// Screen and chat-time handling
+// Screen / chat-time handling
 // ---------------------------------------------------------
 
 
@@ -2333,18 +4137,6 @@ function resumeTimer() {
       performance.now();
 
   }
-
-}
-
-
-function resetTimer() {
-
-  pauseTimer();
-
-  chatMs =
-    0;
-
-  resumeTimer();
 
 }
 
@@ -2430,7 +4222,7 @@ function activeScreen() {
 
 
 // ---------------------------------------------------------
-// HTTP/auth helpers
+// HTTP/auth
 // ---------------------------------------------------------
 
 
@@ -2477,8 +4269,10 @@ function authHeaders() {
   return session
     ?.access_token
       ? {
+
           Authorization:
             `Bearer ${session.access_token}`,
+
         }
       : {};
 
@@ -2530,11 +4324,6 @@ async function requiredToken() {
 }
 
 
-// ---------------------------------------------------------
-// Authentication
-// ---------------------------------------------------------
-
-
 function setAuth(
   newSession
 ) {
@@ -2568,14 +4357,12 @@ function setAuth(
 
 
   $("emailLabel").textContent =
-    user
-      ?.email ||
+    user?.email ||
     "";
 
 
   $("emailLabel").title =
-    user
-      ?.email ||
+    user?.email ||
     "";
 
 
@@ -2679,6 +4466,13 @@ function openAuth(
     );
 
 
+  $("authModal")
+    .setAttribute(
+      "aria-hidden",
+      "false"
+    );
+
+
   document.body.style.overflow =
     "hidden";
 
@@ -2698,6 +4492,13 @@ function closeAuth() {
     .classList
     .add(
       "hidden"
+    );
+
+
+  $("authModal")
+    .setAttribute(
+      "aria-hidden",
+      "true"
     );
 
 
@@ -2774,8 +4575,10 @@ async function submitAuth(
             password,
 
             options: {
+
               emailRedirectTo:
                 "https://plainbetter.co.uk",
+
             },
 
           });
@@ -2929,7 +4732,7 @@ async function initAuth() {
 
 
 // ---------------------------------------------------------
-// Configuration
+// Config
 // ---------------------------------------------------------
 
 
@@ -2990,8 +4793,10 @@ async function loadConfig() {
         await fetch(
           `${API}/api/config`,
           {
+
             cache:
               "no-store",
+
           }
         )
       );
@@ -3178,28 +4983,14 @@ function updateVocabHelp() {
     $("vocabSource").value;
 
 
-  if (
+  $("sourceHelp").textContent =
     source ===
-    "my_vocab"
-  ) {
-
-    $("sourceHelp").textContent =
-      "Tests words already recorded in your vocabulary. No AI call is needed.";
-
-  } else if (
-    source ===
-    "new_vocab"
-  ) {
-
-    $("sourceHelp").textContent =
-      "AI reviews your recorded vocabulary and selects useful dictionary words it believes you should learn next.";
-
-  } else {
-
-    $("sourceHelp").textContent =
-      "Randomly selects words directly from the local dictionary. No AI call is needed.";
-
-  }
+      "my_vocab"
+        ? "Tests words already recorded in your vocabulary. No AI call is needed."
+        : source ===
+            "new_vocab"
+              ? "AI reviews your recorded vocabulary and selects useful dictionary words it believes you should learn next."
+              : "Randomly selects words directly from the local dictionary. No AI call is needed.";
 
 
   $("modeHelp").textContent =
@@ -3212,7 +5003,7 @@ function updateVocabHelp() {
 
 
 // ---------------------------------------------------------
-// Chat keyboard and helpers
+// Special-character keyboard
 // ---------------------------------------------------------
 
 
@@ -3660,6 +5451,7 @@ function appendLanguageText(
 
           event.stopPropagation();
 
+
           open();
 
         };
@@ -3706,7 +5498,7 @@ async function dictionaryLookup(
   if (
     pos &&
     pos !==
-    "other"
+      "other"
   ) {
 
     url +=
@@ -3724,11 +5516,15 @@ async function dictionaryLookup(
       )
       .catch(
         () => ({
+
           found:
             false,
+
           entries: [],
+
           lookupError:
             true,
+
         })
       );
 
@@ -3951,8 +5747,11 @@ async function openTooltip(
               []
             ).map(
               meaning => ({
+
                 meaning,
+
                 tags: [],
+
               })
             )
     ).slice(
@@ -4127,7 +5926,7 @@ function hideTooltip(
 
 
 // ---------------------------------------------------------
-// Live conversation rendering
+// Chat rendering
 // ---------------------------------------------------------
 
 
@@ -4403,7 +6202,7 @@ function showChatError(
 
 
 // ---------------------------------------------------------
-// Browser recent conversations
+// Browser Recent Conversations
 // ---------------------------------------------------------
 
 
@@ -4675,21 +6474,24 @@ function recentFeedback(
 function recentEnded() {
 
   if (
-    currentRecent
+    !currentRecent
   ) {
 
-    currentRecent.conversationEnded =
-      true;
-
-
-    currentRecent.endedAt =
-      new Date()
-        .toISOString();
-
-
-    saveRecentRecord();
+    return;
 
   }
+
+
+  currentRecent.conversationEnded =
+    true;
+
+
+  currentRecent.endedAt =
+    new Date()
+      .toISOString();
+
+
+  saveRecentRecord();
 
 }
 
@@ -4718,11 +6520,13 @@ function formatDate(
   return date.toLocaleString(
     undefined,
     {
+
       dateStyle:
         "medium",
 
       timeStyle:
         "short",
+
     }
   );
 
@@ -4869,6 +6673,10 @@ function renderRecentList() {
         "recent-btn";
 
 
+      button.type =
+        "button";
+
+
       const preview =
         conversation.messages
           ?.find(
@@ -4891,7 +6699,9 @@ function renderRecentList() {
             <strong></strong>
             <span class="recent-time"></span>
           </div>
+
           <div class="recent-meta"></div>
+
           <div class="recent-preview"></div>
         `;
 
@@ -5030,7 +6840,12 @@ function renderRecentDetail(
 
 
       row.className =
-        `row ${message.sender === "user" ? "user" : "ai"}`;
+        `row ${
+          message.sender ===
+          "user"
+            ? "user"
+            : "ai"
+        }`;
 
 
       bubble.className =
@@ -5159,8 +6974,71 @@ function closeRecent() {
 
 
 // ---------------------------------------------------------
-// Vocabulary Stats
+// Stats
 // ---------------------------------------------------------
+
+
+function formatChatDuration(
+  totalSeconds
+) {
+
+  const seconds =
+    Math.max(
+      0,
+      Math.floor(
+        Number(
+          totalSeconds
+        ) ||
+        0
+      )
+    );
+
+
+  const hours =
+    Math.floor(
+      seconds /
+      3600
+    );
+
+
+  const minutes =
+    Math.floor(
+      (
+        seconds %
+        3600
+      ) /
+      60
+    );
+
+
+  const remainingSeconds =
+    seconds %
+    60;
+
+
+  if (
+    hours >
+    0
+  ) {
+
+    return `${hours}h ${minutes}m`;
+
+  }
+
+
+  if (
+    minutes >
+    0
+  ) {
+
+    return `${minutes}m ${remainingSeconds}s`;
+
+  }
+
+
+  return `${remainingSeconds}s`;
+
+}
 
 
 async function loadStats() {
@@ -5201,6 +7079,20 @@ async function loadStats() {
     );
 
 
+  $("chatTimeOverall")
+    .classList
+    .add(
+      "hidden"
+    );
+
+
+  $("unallocatedTimeOverall")
+    .classList
+    .add(
+      "hidden"
+    );
+
+
   message.className =
     "utility-message";
 
@@ -5220,12 +7112,17 @@ async function loadStats() {
         await fetch(
           `${API}/api/vocabulary`,
           {
+
             headers: {
+
               Authorization:
                 `Bearer ${token}`,
+
             },
+
             cache:
               "no-store",
+
           }
         )
       );
@@ -5237,7 +7134,7 @@ async function loadStats() {
     ) {
 
       message.textContent =
-        "You do not have any saved vocabulary yet.";
+        "You do not have any saved vocabulary or recorded language chat time yet.";
 
     } else {
 
@@ -5258,16 +7155,24 @@ async function loadStats() {
             "lang-btn";
 
 
+          button.type =
+            "button";
+
+
           button.innerHTML =
             `
-              <span></span>
-              <span class="count"></span>
+              <span class="lang-copy">
+                <strong></strong>
+                <small></small>
+              </span>
+
+              <span class="lang-vocab-count"></span>
             `;
 
 
           button
             .querySelector(
-              "span"
+              "strong"
             )
             .textContent =
               language.name;
@@ -5275,10 +7180,18 @@ async function loadStats() {
 
           button
             .querySelector(
-              ".count"
+              "small"
             )
             .textContent =
-              language.count;
+              `Chat time: ${formatChatDuration(language.chatSeconds)}`;
+
+
+          button
+            .querySelector(
+              ".lang-vocab-count"
+            )
+            .textContent =
+              `${language.count} word${language.count === 1 ? "" : "s"}`;
 
 
           button.onclick =
@@ -5317,6 +7230,41 @@ async function loadStats() {
       .remove(
         "hidden"
       );
+
+
+    $("chatTimeValue").textContent =
+      formatChatDuration(
+        data.totalChatSeconds
+      );
+
+
+    $("chatTimeOverall")
+      .classList
+      .remove(
+        "hidden"
+      );
+
+
+    if (
+      Number(
+        data.unallocatedChatSeconds
+      ) >
+      0
+    ) {
+
+      $("unallocatedTimeValue").textContent =
+        formatChatDuration(
+          data.unallocatedChatSeconds
+        );
+
+
+      $("unallocatedTimeOverall")
+        .classList
+        .remove(
+          "hidden"
+        );
+
+    }
 
   } catch (
     error
@@ -5380,22 +7328,31 @@ async function loadStatsLanguage(
         await fetch(
           `${API}/api/vocabulary?language=${encodeURIComponent(languageId)}`,
           {
+
             headers: {
+
               Authorization:
                 `Bearer ${token}`,
+
             },
+
             cache:
               "no-store",
+
           }
         )
       );
 
 
-    $("statsLangMessage").textContent =
+    const vocabText =
       data.items
         ?.length
-          ? `${data.items.length} saved vocabulary item${data.items.length === 1 ? "" : "s"}.`
-          : "No saved vocabulary for this language yet.";
+          ? `${data.items.length} saved vocabulary item${data.items.length === 1 ? "" : "s"}`
+          : "No saved vocabulary yet";
+
+
+    $("statsLangMessage").textContent =
+      `${vocabText} · Chat time: ${formatChatDuration(data.chatSeconds)}.`;
 
 
     (
@@ -5487,6 +7444,7 @@ async function loadStatsLanguage(
 
             event.stopPropagation();
 
+
             open();
 
           };
@@ -5500,6 +7458,10 @@ async function loadStatsLanguage(
 
         deleteButton.className =
           "delete-word";
+
+
+        deleteButton.type =
+          "button";
 
 
         deleteButton.textContent =
@@ -5844,8 +7806,10 @@ async function startChat() {
               "POST",
 
             headers: {
+
               "Content-Type":
                 "application/json",
+
             },
 
             body:
@@ -6044,8 +8008,10 @@ async function generateExample() {
               "POST",
 
             headers: {
+
               "Content-Type":
                 "application/json",
+
             },
 
             body:
@@ -6197,7 +8163,7 @@ async function generateExample() {
 
 
 // ---------------------------------------------------------
-// Vocabulary Test
+// Vocabulary test
 // ---------------------------------------------------------
 
 
@@ -6229,11 +8195,11 @@ async function startVocabTest() {
 
 
   if (
-    (
-      sourceMode ===
-        "my_vocab" ||
-      sourceMode ===
-        "new_vocab"
+    [
+      "my_vocab",
+      "new_vocab",
+    ].includes(
+      sourceMode
     ) &&
     !session
       ?.user
@@ -6510,6 +8476,10 @@ function renderQuestion() {
 
         button.className =
           "option";
+
+
+        button.type =
+          "button";
 
 
         button.textContent =
@@ -6804,6 +8774,7 @@ function nextQuestion() {
 
     finishTest();
 
+
     return;
 
   }
@@ -6876,7 +8847,7 @@ function leaveTest() {
 
 
 // ---------------------------------------------------------
-// Navigation and events
+// Navigation/events
 // ---------------------------------------------------------
 
 
@@ -7291,6 +9262,7 @@ $("chatForm").onsubmit =
             message,
 
         },
+
         {
 
           role:
@@ -7349,21 +9321,13 @@ $("chatForm").onsubmit =
     ) {
 
       /*
-        If the request failed, don't lose the measured time.
-        Put it back into the current interval so it can be
-        submitted with the next successful learner message.
+        Preserve measured time if the API request itself fails.
       */
 
       chatMs +=
         seconds *
         1000;
 
-
-      /*
-        Also remove the failed message from Recent
-        Conversations because it never successfully became
-        part of the AI conversation.
-      */
 
       if (
         currentRecent &&
@@ -7411,11 +9375,14 @@ $("chatForm").onsubmit =
 
 readRecent();
 
+
 loadConfig();
+
 
 initAuth();
 
 </script>
+
 
 </body>
 </html>
