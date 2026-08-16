@@ -166,6 +166,7 @@
     }
 
 
+
     /* =====================================================
        TOP NAVIGATION
        ===================================================== */
@@ -205,6 +206,9 @@
 
     .topbar-inner {
 
+      position:
+        relative;
+
       width:
         min(1500px, 100%);
 
@@ -232,8 +236,7 @@
     }
 
 
-    .top-left,
-    .top-right {
+    .top-left {
 
       display:
         flex;
@@ -245,7 +248,7 @@
         12px;
 
       min-width:
-        0;
+        120px;
 
     }
 
@@ -255,13 +258,96 @@
       margin-left:
         auto;
 
+      display:
+        flex;
+
+      align-items:
+        center;
+
+      justify-content:
+        flex-end;
+
+      gap:
+        12px;
+
+      min-width:
+        0;
+
+    }
+
+
+    .auth-actions {
+
+      display:
+        flex;
+
+      align-items:
+        center;
+
+      gap:
+        12px;
+
+    }
+
+
+    .top-brand {
+
+      position:
+        absolute;
+
+      left:
+        50%;
+
+      top:
+        50%;
+
+      transform:
+        translate(-50%, -50%);
+
+      border:
+        0;
+
+      padding:
+        4px 12px;
+
+      background:
+        transparent;
+
+      color:
+        var(--white);
+
+      font-family:
+        "Crimson Pro",
+        Georgia,
+        serif;
+
+      font-size:
+        1.75rem;
+
+      font-weight:
+        500;
+
+      letter-spacing:
+        -.02em;
+
+      white-space:
+        nowrap;
+
+    }
+
+
+    .top-brand:hover {
+
+      opacity:
+        .88;
+
     }
 
 
     .topbar .email {
 
       max-width:
-        260px;
+        230px;
 
       overflow:
         hidden;
@@ -340,6 +426,7 @@
     }
 
 
+
     /* =====================================================
        GENERAL PAGE STRUCTURE
        ===================================================== */
@@ -400,6 +487,7 @@
     }
 
 
+
     /* =====================================================
        HOME
        ===================================================== */
@@ -448,7 +536,7 @@
         -.045em;
 
       font-weight:
-        700;
+        500;
 
     }
 
@@ -475,9 +563,6 @@
 
     .mode-grid {
 
-      flex:
-        1;
-
       width:
         min(1340px, calc(100% - 72px));
 
@@ -494,7 +579,7 @@
         24px;
 
       min-height:
-        390px;
+        292px;
 
     }
 
@@ -517,10 +602,10 @@
         center;
 
       min-height:
-        390px;
+        292px;
 
       padding:
-        55px;
+        36px 55px;
 
       border:
         1px solid rgba(24, 58, 82, .17);
@@ -619,16 +704,16 @@
     .mode-icon {
 
       width:
-        78px;
+        70px;
 
       height:
-        78px;
+        70px;
 
       margin-bottom:
-        24px;
+        18px;
 
       border-radius:
-        20px;
+        18px;
 
       display:
         grid;
@@ -643,7 +728,7 @@
         var(--white);
 
       font-size:
-        2rem;
+        1.8rem;
 
       font-weight:
         700;
@@ -671,7 +756,7 @@
         block;
 
       margin-bottom:
-        9px;
+        8px;
 
       font-size:
         2rem;
@@ -680,7 +765,7 @@
         1;
 
       font-weight:
-        700;
+        600;
 
     }
 
@@ -694,7 +779,7 @@
         1.1rem;
 
       line-height:
-        1.45;
+        1.42;
 
       font-weight:
         400;
@@ -705,13 +790,13 @@
     .mode-enter {
 
       margin-top:
-        23px;
+        17px;
 
       font-size:
-        1.25rem;
+        1.2rem;
 
       font-weight:
-        700;
+        600;
 
       transition:
         transform .2s ease;
@@ -725,6 +810,7 @@
         translateX(4px);
 
     }
+
 
 
     /* =====================================================
@@ -755,7 +841,7 @@
         .88rem;
 
       font-weight:
-        700;
+        600;
 
       letter-spacing:
         .10em;
@@ -784,7 +870,7 @@
         -.035em;
 
       font-weight:
-        700;
+        400;
 
     }
 
@@ -799,7 +885,7 @@
         var(--navy);
 
       font-weight:
-        700;
+        500;
 
     }
 
@@ -841,7 +927,7 @@
         .98rem;
 
       font-weight:
-        700;
+        600;
 
     }
 
@@ -1023,7 +1109,7 @@
         var(--danger);
 
       font-weight:
-        650;
+        600;
 
     }
 
@@ -1078,7 +1164,7 @@
         var(--white);
 
       font-weight:
-        700;
+        600;
 
       box-shadow:
         0 8px 19px rgba(16, 43, 62, .16);
@@ -1129,6 +1215,7 @@
     }
 
 
+
     /* =====================================================
        LIVE CHAT
        ===================================================== */
@@ -1168,6 +1255,9 @@
       font-size:
         1.65rem;
 
+      font-weight:
+        500;
+
     }
 
 
@@ -1203,7 +1293,7 @@
         var(--navy);
 
       font-weight:
-        700;
+        600;
 
       transition:
         transform .16s ease,
@@ -1307,7 +1397,7 @@
         .82rem;
 
       font-weight:
-        700;
+        600;
 
       letter-spacing:
         .06em;
@@ -1346,7 +1436,7 @@
         var(--success);
 
       font-weight:
-        700;
+        600;
 
     }
 
@@ -1361,6 +1451,21 @@
 
       flex-direction:
         column;
+
+      overflow:
+        hidden;
+
+      border:
+        1px solid rgba(24, 58, 82, .12);
+
+      border-radius:
+        19px;
+
+      background:
+        rgba(255, 255, 255, .94);
+
+      box-shadow:
+        0 12px 31px rgba(16, 43, 62, .09);
 
     }
 
@@ -1377,7 +1482,7 @@
         auto;
 
       padding:
-        8px 5px 24px;
+        27px 25px 28px;
 
       display:
         flex;
@@ -1387,6 +1492,9 @@
 
       gap:
         15px;
+
+      background:
+        rgba(255, 255, 255, .97);
 
     }
 
@@ -1447,7 +1555,7 @@
     .row.ai .bubble {
 
       background:
-        rgba(255, 255, 255, .88);
+        var(--ochre);
 
       color:
         var(--navy);
@@ -1469,6 +1577,9 @@
       color:
         var(--white);
 
+      border:
+        1px solid var(--navy);
+
       border-bottom-right-radius:
         5px;
 
@@ -1484,7 +1595,7 @@
         .73rem;
 
       font-weight:
-        700;
+        600;
 
       letter-spacing:
         .05em;
@@ -1526,11 +1637,14 @@
 
     .composer-area {
 
-      padding-top:
-        13px;
+      padding:
+        14px 18px 18px;
 
       border-top:
-        1px solid rgba(24, 58, 82, .18);
+        1px solid rgba(24, 58, 82, .12);
+
+      background:
+        rgba(255, 255, 255, .98);
 
     }
 
@@ -1564,7 +1678,7 @@
         .79rem;
 
       font-weight:
-        700;
+        600;
 
     }
 
@@ -1590,7 +1704,7 @@
         var(--navy);
 
       font-weight:
-        700;
+        600;
 
     }
 
@@ -1624,7 +1738,7 @@
         0 16px;
 
       font-weight:
-        700;
+        600;
 
     }
 
@@ -1663,6 +1777,7 @@
         var(--navy);
 
     }
+
 
 
     /* =====================================================
@@ -1742,7 +1857,7 @@
         6px;
 
       font-weight:
-        700;
+        600;
 
     }
 
@@ -1792,6 +1907,7 @@
         .8rem;
 
     }
+
 
 
     /* =====================================================
@@ -1860,7 +1976,7 @@
         .9rem;
 
       font-weight:
-        700;
+        600;
 
     }
 
@@ -1883,7 +1999,7 @@
         .06em;
 
       font-weight:
-        700;
+        600;
 
     }
 
@@ -1897,7 +2013,7 @@
         1.74rem;
 
       font-weight:
-        700;
+        500;
 
       line-height:
         1.25;
@@ -1963,7 +2079,7 @@
         var(--navy);
 
       font-weight:
-        700;
+        600;
 
       transition:
         background .15s ease,
@@ -2050,7 +2166,7 @@
         11px;
 
       font-weight:
-        700;
+        600;
 
       line-height:
         1.4;
@@ -2092,9 +2208,10 @@
         1.3rem;
 
       font-weight:
-        700;
+        500;
 
     }
+
 
 
     /* =====================================================
@@ -2199,7 +2316,7 @@
         var(--navy);
 
       font-weight:
-        700;
+        600;
 
     }
 
@@ -2242,7 +2359,7 @@
         .83rem;
 
       font-weight:
-        600;
+        500;
 
     }
 
@@ -2279,7 +2396,7 @@
         1px solid rgba(24, 58, 82, .13);
 
       font-weight:
-        700;
+        600;
 
     }
 
@@ -2298,7 +2415,7 @@
         rgba(24, 58, 82, .65);
 
       font-weight:
-        700;
+        600;
 
     }
 
@@ -2335,7 +2452,7 @@
         var(--navy);
 
       font-weight:
-        700;
+        600;
 
     }
 
@@ -2413,7 +2530,7 @@
         .79rem;
 
       font-weight:
-        700;
+        600;
 
     }
 
@@ -2449,7 +2566,7 @@
         .81rem;
 
       font-weight:
-        600;
+        500;
 
     }
 
@@ -2509,7 +2626,7 @@
         14px;
 
       background:
-        rgba(248, 241, 222, .58);
+        rgba(255, 255, 255, .94);
 
     }
 
@@ -2563,6 +2680,7 @@
         1.45;
 
     }
+
 
 
     /* =====================================================
@@ -2704,7 +2822,7 @@
         rgba(24, 58, 82, .64);
 
       font-weight:
-        700;
+        600;
 
     }
 
@@ -2737,9 +2855,35 @@
     }
 
 
+
     /* =====================================================
        MOBILE
        ===================================================== */
+
+
+    @media (
+      max-width:
+        900px
+    ) {
+
+
+      .top-brand {
+
+        display:
+          none !important;
+
+      }
+
+
+      .topbar .email {
+
+        display:
+          none;
+
+      }
+
+
+    }
 
 
     @media (
@@ -2776,21 +2920,30 @@
       }
 
 
+      .top-left {
+
+        min-width:
+          auto;
+
+      }
+
+
+      .top-right,
+      .auth-actions {
+
+        gap:
+          6px;
+
+      }
+
+
       .nav-btn {
 
         padding:
           9px 11px;
 
         font-size:
-          .9rem;
-
-      }
-
-
-      .topbar .email {
-
-        display:
-          none;
+          .88rem;
 
       }
 
@@ -2848,10 +3001,10 @@
       .mode-tile {
 
         min-height:
-          280px;
+          230px;
 
         padding:
-          35px 24px;
+          30px 24px;
 
       }
 
@@ -2907,6 +3060,9 @@
 
         max-height:
           none;
+
+        padding:
+          20px 15px;
 
       }
 
@@ -3006,20 +3162,20 @@
 
       }
 
+
     }
 
 
     @media (
       max-width:
-        520px
+        620px
     ) {
 
 
-      .top-left,
-      .top-right {
+      .topbar-inner {
 
-        gap:
-          6px;
+        align-items:
+          center;
 
       }
 
@@ -3027,10 +3183,18 @@
       .nav-btn {
 
         padding:
-          8px 9px;
+          8px 8px;
 
         font-size:
-          .83rem;
+          .78rem;
+
+      }
+
+
+      #recentBtn {
+
+        font-size:
+          .74rem;
 
       }
 
@@ -3058,7 +3222,9 @@
 
       }
 
+
     }
+
 
   </style>
 
@@ -3075,19 +3241,11 @@
 
   <header class="topbar">
 
+
     <div class="topbar-inner">
 
 
       <div class="top-left">
-
-
-        <button
-          id="recentBtn"
-          class="nav-btn"
-          type="button"
-        >
-          Recent Conversations
-        </button>
 
 
         <button
@@ -3102,61 +3260,85 @@
       </div>
 
 
-      <div
-        id="signedOut"
-        class="top-right"
+      <button
+        id="topBrand"
+        class="top-brand hidden"
+        type="button"
       >
+        PlainBetter
+      </button>
+
+
+      <div class="top-right">
 
 
         <button
-          id="loginBtn"
+          id="recentBtn"
           class="nav-btn"
           type="button"
         >
-          Log In
+          Recent Conversations
         </button>
 
 
-        <button
-          id="signupBtn"
-          class="nav-btn emphasis"
-          type="button"
+        <div
+          id="signedOut"
+          class="auth-actions"
         >
-          Sign Up
-        </button>
 
 
-      </div>
+          <button
+            id="loginBtn"
+            class="nav-btn"
+            type="button"
+          >
+            Log In
+          </button>
 
 
-      <div
-        id="signedIn"
-        class="top-right hidden"
-      >
+          <button
+            id="signupBtn"
+            class="nav-btn emphasis"
+            type="button"
+          >
+            Sign Up
+          </button>
 
 
-        <span
-          id="emailLabel"
-          class="email"
-        ></span>
+        </div>
 
 
-        <button
-          id="statsBtn"
-          class="nav-btn"
-          type="button"
+        <div
+          id="signedIn"
+          class="auth-actions hidden"
         >
-          Stats
-        </button>
 
 
-        <button
-          id="logoutBtn"
-          class="nav-btn"
-          type="button"
-        >
-          Log Out
-        </button>
+          <span
+            id="emailLabel"
+            class="email"
+          ></span>
+
+
+          <button
+            id="statsBtn"
+            class="nav-btn"
+            type="button"
+          >
+            Stats
+          </button>
+
+
+          <button
+            id="logoutBtn"
+            class="nav-btn"
+            type="button"
+          >
+            Log Out
+          </button>
+
+
+        </div>
 
 
       </div>
@@ -3164,7 +3346,9 @@
 
     </div>
 
+
   </header>
+
 
 
   <main class="app">
@@ -3276,6 +3460,7 @@
 
 
     </section>
+
 
 
     <!-- ===================================================
@@ -3487,6 +3672,7 @@
     </section>
 
 
+
     <!-- ===================================================
          VOCAB SETUP
          =================================================== -->
@@ -3564,29 +3750,12 @@
 
             <select id="vocabCount">
 
-              <option>
-                5
-              </option>
-
-              <option selected>
-                10
-              </option>
-
-              <option>
-                15
-              </option>
-
-              <option>
-                20
-              </option>
-
-              <option>
-                25
-              </option>
-
-              <option>
-                30
-              </option>
+              <option>5</option>
+              <option selected>10</option>
+              <option>15</option>
+              <option>20</option>
+              <option>25</option>
+              <option>30</option>
 
             </select>
 
@@ -3694,6 +3863,7 @@
     </section>
 
 
+
     <!-- ===================================================
          LIVE CHAT
          =================================================== -->
@@ -3763,6 +3933,7 @@
         </section>
 
 
+
         <div class="chat-main">
 
 
@@ -3828,6 +3999,7 @@
 
 
     </section>
+
 
 
     <!-- ===================================================
@@ -4029,6 +4201,7 @@
     </section>
 
 
+
     <!-- ===================================================
          STATS
          =================================================== -->
@@ -4198,6 +4371,7 @@
     </section>
 
 
+
     <!-- ===================================================
          RECENT CONVERSATIONS
          =================================================== -->
@@ -4307,16 +4481,13 @@
   </main>
 
 
-  <!-- ===================================================
-       TOOLTIP
-       =================================================== -->
-
 
   <div
     id="tooltip"
     class="tooltip"
     role="tooltip"
   ></div>
+
 
 
   <!-- ===================================================
@@ -4452,9 +4623,11 @@
   </div>
 
 
+
   <script
     src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
   ></script>
+
 
 
   <script>
@@ -4636,6 +4809,7 @@
       0;
 
 
+
     // =====================================================
     // SCREEN / TIMER
     // =====================================================
@@ -4749,15 +4923,15 @@
         screens.home;
 
 
-      $("recentBtn")
+      $("topBackBtn")
         .classList
         .toggle(
           "hidden",
-          !home
+          home
         );
 
 
-      $("topBackBtn")
+      $("topBrand")
         .classList
         .toggle(
           "hidden",
@@ -4781,6 +4955,7 @@
         screens.vocabSetup
       ) {
 
+
         $("topBackBtn").textContent =
           "← Home";
 
@@ -4789,6 +4964,7 @@
         screen ===
         screens.chat
       ) {
+
 
         $("topBackBtn").textContent =
           "← Chat setup";
@@ -4799,14 +4975,17 @@
         screens.vocabTest
       ) {
 
+
         $("topBackBtn").textContent =
           "← Vocabulary setup";
 
 
       } else {
 
+
         $("topBackBtn").textContent =
           "← Back";
+
 
       }
 
@@ -4878,6 +5057,7 @@
 
 
     }
+
 
 
     // =====================================================
@@ -5459,6 +5639,7 @@
     }
 
 
+
     // =====================================================
     // CONFIG
     // =====================================================
@@ -5761,6 +5942,7 @@
     }
 
 
+
     // =====================================================
     // SPECIAL CHARACTERS
     // =====================================================
@@ -5981,6 +6163,7 @@
 
 
     }
+
 
 
     // =====================================================
@@ -6798,6 +6981,7 @@
     }
 
 
+
     // =====================================================
     // CHAT RENDERING
     // =====================================================
@@ -7100,6 +7284,7 @@
 
 
     }
+
 
 
     // =====================================================
@@ -7956,6 +8141,7 @@
     }
 
 
+
     // =====================================================
     // STATS
     // =====================================================
@@ -8655,6 +8841,7 @@
     }
 
 
+
     // =====================================================
     // CHAT
     // =====================================================
@@ -9264,6 +9451,7 @@
 
 
     }
+
 
 
     // =====================================================
@@ -10038,6 +10226,7 @@
     }
 
 
+
     // =====================================================
     // NAVIGATION
     // =====================================================
@@ -10054,6 +10243,13 @@
       () =>
         show(
           screens.vocabSetup
+        );
+
+
+    $("topBrand").onclick =
+      () =>
+        show(
+          screens.home
         );
 
 
@@ -10413,6 +10609,7 @@
     );
 
 
+
     // =====================================================
     // SEND CHAT MESSAGE
     // =====================================================
@@ -10696,6 +10893,7 @@
 
 
       };
+
 
 
     // =====================================================
