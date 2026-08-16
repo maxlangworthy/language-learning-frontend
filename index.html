@@ -7,7 +7,7 @@
 
   <style>
     :root {
-      --surface: #ffffff;
+      --surface: #fff;
       --surface-soft: #f8fafc;
       --text: #18212f;
       --muted: #6f7b8c;
@@ -20,7 +20,7 @@
       --success: #267447;
       --feedback-bg: #fffdf5;
       --feedback-border: #eadfac;
-      --shadow: 0 18px 50px rgba(23, 35, 58, 0.09);
+      --shadow: 0 18px 50px rgba(23, 35, 58, .09);
     }
 
     * {
@@ -30,7 +30,6 @@
     body {
       margin: 0;
       min-height: 100vh;
-
       font-family:
         Inter,
         ui-sans-serif,
@@ -66,7 +65,7 @@
     input:disabled,
     textarea:disabled {
       cursor: not-allowed;
-      opacity: 0.6;
+      opacity: .6;
     }
 
     .hidden {
@@ -75,118 +74,71 @@
 
     .page {
       min-height: 100vh;
-
       display: flex;
       align-items: center;
       justify-content: center;
-
       padding: 28px;
     }
 
     .app-shell {
       width: min(1050px, 100%);
       min-height: 680px;
-
       background: var(--surface);
-
-      border:
-        1px solid
-        rgba(220, 227, 236, 0.9);
-
+      border: 1px solid rgba(220, 227, 236, .9);
       border-radius: 28px;
-
-      box-shadow:
-        var(--shadow);
-
+      box-shadow: var(--shadow);
       overflow: hidden;
     }
 
     .account-bar {
       min-height: 54px;
-
       display: flex;
       align-items: center;
       justify-content: flex-end;
-
       gap: 10px;
-
-      padding:
-        9px
-        18px;
-
-      border-bottom:
-        1px solid
-        var(--border);
-
-      background:
-        rgba(
-          255,
-          255,
-          255,
-          0.97
-        );
+      padding: 9px 18px;
+      border-bottom: 1px solid var(--border);
+      background: rgba(255, 255, 255, .97);
     }
 
     .account-controls {
       display: flex;
       align-items: center;
       justify-content: flex-end;
-
       gap: 9px;
-
       min-width: 0;
     }
 
     .account-email {
       max-width: 260px;
-
       overflow: hidden;
-
       text-overflow: ellipsis;
-
       white-space: nowrap;
-
       color: var(--muted);
-
-      font-size: 0.86rem;
+      font-size: .86rem;
     }
 
     .account-btn {
-      border:
-        1px solid
-        var(--border);
-
+      border: 1px solid var(--border);
       border-radius: 10px;
-
-      padding:
-        8px
-        12px;
-
+      padding: 8px 12px;
       background: #fff;
-
       color: var(--text);
-
       font-weight: 700;
     }
 
     .account-btn:hover:not(:disabled) {
-      background:
-        var(--surface-soft);
+      background: var(--surface-soft);
     }
 
     .account-btn.primary-small {
-      border-color:
-        var(--primary);
-
-      background:
-        var(--primary);
-
+      border-color: var(--primary);
+      background: var(--primary);
       color: #fff;
     }
 
     .account-btn.primary-small:hover:not(:disabled) {
-      background:
-        var(--primary-hover);
+      background: var(--primary-hover);
     }
 
     .screen {
@@ -201,54 +153,35 @@
     #homeScreen {
       align-items: center;
       justify-content: center;
-
-      padding:
-        56px
-        28px;
+      padding: 56px 28px;
     }
 
     .home-card {
       width: min(620px, 100%);
     }
 
-    .eyebrow {
+    .eyebrow,
+    .stats-eyebrow {
       display: inline-flex;
-
       margin-bottom: 14px;
-
       color: var(--primary);
-
-      font-size: 0.86rem;
+      font-size: .86rem;
       font-weight: 700;
-      letter-spacing: 0.08em;
+      letter-spacing: .08em;
       text-transform: uppercase;
     }
 
     h1 {
       margin: 0;
-
-      font-size:
-        clamp(
-          2.3rem,
-          5vw,
-          4rem
-        );
-
+      font-size: clamp(2.3rem, 5vw, 4rem);
       line-height: 1;
-
-      letter-spacing: -0.045em;
+      letter-spacing: -.045em;
     }
 
     .intro {
-      margin:
-        18px
-        0
-        36px;
-
+      margin: 18px 0 36px;
       color: var(--muted);
-
       font-size: 1.05rem;
-
       line-height: 1.65;
     }
 
@@ -260,11 +193,8 @@
     .custom-scenario-panel label,
     .auth-field label {
       display: block;
-
       margin-bottom: 9px;
-
-      font-size: 0.92rem;
-
+      font-size: .92rem;
       font-weight: 700;
     }
 
@@ -274,321 +204,174 @@
 
     select {
       width: 100%;
-
       appearance: none;
-
-      padding:
-        15px
-        46px
-        15px
-        16px;
-
-      border:
-        1px solid
-        var(--border);
-
+      padding: 15px 46px 15px 16px;
+      border: 1px solid var(--border);
       border-radius: 14px;
-
-      background:
-        var(--surface);
-
+      background: var(--surface);
       color: var(--text);
-
       outline: none;
+    }
+
+    .select-wrap::after {
+      content: "⌄";
+      position: absolute;
+      right: 16px;
+      top: 50%;
+      transform: translateY(-55%);
+      color: var(--muted);
+      pointer-events: none;
     }
 
     select:focus,
     input:focus,
     textarea:focus {
-      border-color:
-        rgba(
-          40,
-          86,
-          216,
-          0.65
-        );
-
-      box-shadow:
-        0
-        0
-        0
-        4px
-        rgba(
-          40,
-          86,
-          216,
-          0.10
-        );
-    }
-
-    .select-wrap::after {
-      content: "⌄";
-
-      position: absolute;
-
-      right: 16px;
-
-      top: 50%;
-
-      transform:
-        translateY(-55%);
-
-      color: var(--muted);
-
-      pointer-events: none;
+      border-color: rgba(40, 86, 216, .65);
+      box-shadow: 0 0 0 4px rgba(40, 86, 216, .1);
     }
 
     .custom-scenario-panel {
-      margin:
-        -4px
-        0
-        22px;
-
+      margin: -4px 0 22px;
       padding: 16px;
-
-      border:
-        1px solid
-        var(--border);
-
+      border: 1px solid var(--border);
       border-radius: 16px;
-
-      background:
-        var(--surface-soft);
+      background: var(--surface-soft);
     }
 
     .custom-scenario-help {
-      margin:
-        0
-        0
-        11px;
-
+      margin: 0 0 11px;
       color: var(--muted);
-
-      font-size: 0.84rem;
-
+      font-size: .84rem;
       line-height: 1.45;
     }
 
     .custom-scenario-panel textarea {
       display: block;
-
       width: 100%;
-
       min-height: 150px;
-
       resize: vertical;
-
-      padding:
-        14px
-        15px;
-
-      border:
-        1px solid
-        var(--border);
-
+      padding: 14px 15px;
+      border: 1px solid var(--border);
       border-radius: 12px;
-
       background: #fff;
-
       color: var(--text);
-
       line-height: 1.5;
-
       outline: none;
     }
 
     .custom-scenario-footer {
       display: flex;
-
       justify-content: space-between;
-
       gap: 12px;
-
       margin-top: 7px;
-
       min-height: 19px;
-
-      font-size: 0.78rem;
+      font-size: .78rem;
     }
 
     .custom-scenario-error {
       color: var(--danger);
-
       font-weight: 650;
     }
 
     .character-counter {
       margin-left: auto;
-
       color: var(--muted);
-
       white-space: nowrap;
     }
 
     .home-error {
-      margin:
-        0
-        0
-        18px;
-
-      padding:
-        12px
-        14px;
-
-      border:
-        1px solid
-        #ecd1d1;
-
+      margin: 0 0 18px;
+      padding: 12px 14px;
+      border: 1px solid #ecd1d1;
       border-radius: 12px;
-
-      background:
-        #fffafa;
-
-      color:
-        var(--danger);
-
-      font-size: 0.9rem;
-
+      background: #fffafa;
+      color: var(--danger);
+      font-size: .9rem;
       line-height: 1.45;
     }
 
     .primary-btn {
       width: 100%;
-
       border: none;
-
       border-radius: 14px;
-
-      padding:
-        15px
-        18px;
-
-      background:
-        var(--primary);
-
+      padding: 15px 18px;
+      background: var(--primary);
       color: #fff;
-
       font-weight: 750;
-
       font-size: 1rem;
     }
 
     .primary-btn:hover:not(:disabled),
     .send-btn:hover:not(:disabled) {
-      background:
-        var(--primary-hover);
+      background: var(--primary-hover);
     }
 
-    #chatScreen {
+    #chatScreen,
+    .stats-screen {
       flex-direction: column;
     }
 
-    .chat-header {
+    .chat-header,
+    .stats-header {
       display: flex;
-
       align-items: center;
       justify-content: space-between;
-
       gap: 20px;
-
-      padding:
-        20px
-        24px;
-
-      border-bottom:
-        1px solid
-        var(--border);
-
-      background:
-        rgba(
-          255,
-          255,
-          255,
-          0.96
-        );
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--border);
+      background: rgba(255, 255, 255, .96);
     }
 
     .chat-heading {
       min-width: 0;
     }
 
-    .chat-heading h2 {
-      margin:
-        0
-        0
-        5px;
-
+    .chat-heading h2,
+    .stats-header h2 {
+      margin: 0 0 5px;
       font-size: 1.18rem;
     }
 
-    .chat-heading p {
+    .chat-heading p,
+    .stats-header p {
       margin: 0;
-
       color: var(--muted);
-
-      font-size: 0.91rem;
+      font-size: .91rem;
     }
 
     .secondary-btn {
-      flex:
-        0
-        0
-        auto;
-
-      border:
-        1px solid
-        #ecd1d1;
-
+      flex: 0 0 auto;
+      border: 1px solid #ecd1d1;
       border-radius: 11px;
-
-      padding:
-        10px
-        14px;
-
-      background:
-        #fffafa;
-
-      color:
-        var(--danger);
-
+      padding: 10px 14px;
+      background: #fffafa;
+      color: var(--danger);
       font-weight: 700;
     }
 
     .secondary-btn:hover {
-      background:
-        #fff2f2;
+      background: #fff2f2;
     }
 
     .chat-main {
       flex: 1;
-
       display: flex;
-
       flex-direction: column;
-
       min-height: 0;
-
-      background:
-        var(--surface-soft);
+      background: var(--surface-soft);
     }
 
     .messages {
       flex: 1;
-
       overflow-y: auto;
-
       padding: 30px;
-
       display: flex;
-
       flex-direction: column;
-
       gap: 16px;
     }
 
     .message-row {
       display: flex;
-
       width: 100%;
     }
 
@@ -601,121 +384,54 @@
     }
 
     .message {
-      max-width:
-        min(
-          70%,
-          620px
-        );
-
-      padding:
-        13px
-        16px;
-
+      max-width: min(70%, 620px);
+      padding: 13px 16px;
       border-radius: 16px;
-
       line-height: 1.5;
-
       word-wrap: break-word;
-
-      unicode-bidi:
-        plaintext;
+      unicode-bidi: plaintext;
     }
 
     .message-row.ai .message {
-      background:
-        var(--ai-bubble);
-
-      color:
-        var(--text);
-
-      border-bottom-left-radius:
-        5px;
+      background: var(--ai-bubble);
+      color: var(--text);
+      border-bottom-left-radius: 5px;
     }
 
     .message-row.user .message {
-      background:
-        var(--user-bubble);
-
+      background: var(--user-bubble);
       color: #fff;
-
-      border-bottom-right-radius:
-        5px;
+      border-bottom-right-radius: 5px;
     }
 
     .example-label {
       margin-bottom: 4px;
-
-      font-size: 0.72rem;
-
+      font-size: .72rem;
       font-weight: 800;
-
-      letter-spacing: 0.05em;
-
+      letter-spacing: .05em;
       text-transform: uppercase;
-
-      color:
-        rgba(
-          255,
-          255,
-          255,
-          0.72
-        );
+      color: rgba(255, 255, 255, .72);
     }
 
     .example-translation {
       margin-top: 8px;
-
       padding-top: 8px;
-
-      border-top:
-        1px solid
-        rgba(
-          255,
-          255,
-          255,
-          0.22
-        );
-
-      font-size: 0.82rem;
-
+      border-top: 1px solid rgba(255, 255, 255, .22);
+      font-size: .82rem;
       line-height: 1.4;
-
-      color:
-        rgba(
-          255,
-          255,
-          255,
-          0.82
-        );
-
+      color: rgba(255, 255, 255, .82);
       direction: ltr;
-
       text-align: left;
     }
 
     .word-token {
-      border-bottom:
-        1px dotted
-        rgba(
-          24,
-          33,
-          47,
-          0.42
-        );
-
+      border-bottom: 1px dotted rgba(24, 33, 47, .42);
       cursor: help;
-
       outline: none;
     }
 
     .message-row.user .word-token {
-      border-bottom-color:
-        rgba(
-          255,
-          255,
-          255,
-          0.68
-        );
+      border-bottom-color: rgba(255, 255, 255, .68);
     }
 
     .word-token:focus {
@@ -724,59 +440,20 @@
 
     .dictionary-tooltip {
       display: none;
-
       position: fixed;
-
       z-index: 9999;
-
       width: max-content;
-
-      max-width:
-        min(
-          360px,
-          calc(
-            100vw - 24px
-          )
-        );
-
-      padding:
-        12px
-        14px;
-
-      border:
-        1px solid
-        rgba(
-          24,
-          33,
-          47,
-          0.13
-        );
-
+      max-width: min(360px, calc(100vw - 24px));
+      padding: 12px 14px;
+      border: 1px solid rgba(24, 33, 47, .13);
       border-radius: 12px;
-
       background: #18212f;
-
       color: #fff;
-
-      box-shadow:
-        0
-        12px
-        32px
-        rgba(
-          23,
-          35,
-          58,
-          0.22
-        );
-
-      font-size: 0.86rem;
-
+      box-shadow: 0 12px 32px rgba(23, 35, 58, .22);
+      font-size: .86rem;
       line-height: 1.4;
-
       pointer-events: none;
-
       direction: ltr;
-
       text-align: left;
     }
 
@@ -786,479 +463,239 @@
 
     .tooltip-word {
       margin-bottom: 6px;
-
-      font-size: 0.95rem;
-
+      font-size: .95rem;
       font-weight: 800;
     }
 
     .tooltip-meaning {
-      color:
-        rgba(
-          255,
-          255,
-          255,
-          0.94
-        );
+      color: rgba(255, 255, 255, .94);
     }
 
     .tooltip-senses {
       margin: 0;
-
       padding-left: 20px;
     }
 
     .tooltip-senses li {
-      margin:
-        4px
-        0;
-
+      margin: 4px 0;
       padding-left: 2px;
     }
 
     .tooltip-tags {
       margin-left: 5px;
-
-      color:
-        rgba(
-          255,
-          255,
-          255,
-          0.62
-        );
-
-      font-size: 0.78rem;
-
+      color: rgba(255, 255, 255, .62);
+      font-size: .78rem;
       font-style: italic;
     }
 
     .dictionary-meta {
       margin-top: 7px;
-
-      color:
-        rgba(
-          255,
-          255,
-          255,
-          0.68
-        );
-
-      font-size: 0.77rem;
+      color: rgba(255, 255, 255, .68);
+      font-size: .77rem;
     }
 
     .feedback-panel {
-      margin:
-        0
-        22px
-        14px;
-
-      padding:
-        14px
-        16px;
-
-      border:
-        1px solid
-        var(--feedback-border);
-
+      margin: 0 22px 14px;
+      padding: 14px 16px;
+      border: 1px solid var(--feedback-border);
       border-radius: 14px;
-
-      background:
-        var(--feedback-bg);
+      background: var(--feedback-bg);
     }
 
     .feedback-title {
       margin-bottom: 7px;
-
-      font-size: 0.82rem;
-
+      font-size: .82rem;
       font-weight: 800;
-
-      letter-spacing: 0.06em;
-
+      letter-spacing: .06em;
       text-transform: uppercase;
-
-      color:
-        var(--muted);
+      color: var(--muted);
     }
 
     .feedback-panel p {
-      margin:
-        5px
-        0;
-
+      margin: 5px 0;
       line-height: 1.5;
     }
 
     .feedback-ok {
-      color:
-        var(--success);
-
+      color: var(--success);
       font-weight: 700;
     }
 
     .feedback-error {
-      color:
-        var(--danger);
-
+      color: var(--danger);
       font-weight: 700;
     }
 
     .composer-area {
-      border-top:
-        1px solid
-        var(--border);
-
+      border-top: 1px solid var(--border);
       background: #fff;
     }
 
     .special-character-bar {
       display: flex;
-
       flex-wrap: wrap;
-
       gap: 6px;
-
-      padding:
-        12px
-        22px
-        0;
+      padding: 12px 22px 0;
     }
 
     .special-character-label {
       width: 100%;
-
       margin-bottom: 1px;
-
       color: var(--muted);
-
-      font-size: 0.75rem;
-
+      font-size: .75rem;
       font-weight: 700;
     }
 
     .special-character-button {
       min-width: 34px;
-
       height: 32px;
-
-      padding:
-        0
-        8px;
-
-      border:
-        1px solid
-        var(--border);
-
+      padding: 0 8px;
+      border: 1px solid var(--border);
       border-radius: 9px;
-
-      background:
-        var(--surface-soft);
-
-      color:
-        var(--text);
-
+      background: var(--surface-soft);
+      color: var(--text);
       font-weight: 650;
     }
 
     .special-character-button:hover:not(:disabled) {
-      border-color:
-        rgba(
-          40,
-          86,
-          216,
-          0.38
-        );
-
-      background:
-        #eef3ff;
-
-      color:
-        var(--primary);
+      border-color: rgba(40, 86, 216, .38);
+      background: #eef3ff;
+      color: var(--primary);
     }
 
     .composer {
       display: flex;
-
       gap: 10px;
-
-      padding:
-        12px
-        22px
-        22px;
+      padding: 12px 22px 22px;
     }
 
     .composer input {
-      flex:
-        1
-        1
-        260px;
-
+      flex: 1 1 260px;
       min-width: 0;
-
-      padding:
-        14px
-        16px;
-
-      border:
-        1px solid
-        var(--border);
-
+      padding: 14px 16px;
+      border: 1px solid var(--border);
       border-radius: 14px;
-
       outline: none;
-
-      unicode-bidi:
-        plaintext;
+      unicode-bidi: plaintext;
     }
 
     .example-btn {
-      flex:
-        0
-        0
-        auto;
-
-      border:
-        1px solid
-        rgba(
-          40,
-          86,
-          216,
-          0.28
-        );
-
+      flex: 0 0 auto;
+      border: 1px solid rgba(40, 86, 216, .28);
       border-radius: 14px;
-
-      padding:
-        0
-        16px;
-
-      background:
-        #f4f7ff;
-
-      color:
-        var(--primary);
-
+      padding: 0 16px;
+      background: #f4f7ff;
+      color: var(--primary);
       font-weight: 750;
     }
 
     .example-btn:hover:not(:disabled) {
-      background:
-        #eaf0ff;
+      background: #eaf0ff;
     }
 
     .send-btn {
-      flex:
-        0
-        0
-        auto;
-
+      flex: 0 0 auto;
       border: none;
-
       border-radius: 14px;
-
-      padding:
-        0
-        20px;
-
-      background:
-        var(--primary);
-
+      padding: 0 20px;
+      background: var(--primary);
       color: #fff;
-
       font-weight: 750;
     }
 
     .data-credit {
-      margin:
-        18px
-        0
-        0;
-
-      color:
-        var(--muted);
-
-      font-size: 0.74rem;
-
+      margin: 18px 0 0;
+      color: var(--muted);
+      font-size: .74rem;
       line-height: 1.5;
-
       text-align: center;
     }
 
     .data-credit a {
       color: inherit;
-
       text-decoration: underline;
-
       text-underline-offset: 2px;
     }
 
     .chat-credit {
       margin: 0;
-
-      padding:
-        0
-        22px
-        10px;
-
+      padding: 0 22px 10px;
       background: #fff;
     }
 
     .auth-modal {
       position: fixed;
-
       inset: 0;
-
       z-index: 10000;
-
       display: flex;
-
       align-items: center;
       justify-content: center;
-
       padding: 20px;
-
-      background:
-        rgba(
-          16,
-          24,
-          40,
-          0.48
-        );
+      background: rgba(16, 24, 40, .48);
     }
 
     .auth-card {
       position: relative;
-
-      width:
-        min(
-          440px,
-          100%
-        );
-
+      width: min(440px, 100%);
       padding: 26px;
-
       border-radius: 20px;
-
       background: #fff;
-
-      box-shadow:
-        0
-        24px
-        70px
-        rgba(
-          16,
-          24,
-          40,
-          0.24
-        );
+      box-shadow: 0 24px 70px rgba(16, 24, 40, .24);
     }
 
     .auth-close {
       position: absolute;
-
       top: 12px;
-
       right: 14px;
-
       width: 34px;
-
       height: 34px;
-
       border: none;
-
       border-radius: 50%;
-
       background: transparent;
-
-      color:
-        var(--muted);
-
+      color: var(--muted);
       font-size: 1.45rem;
-
       line-height: 1;
     }
 
     .auth-close:hover {
-      background:
-        var(--surface-soft);
+      background: var(--surface-soft);
     }
 
     .auth-card h2 {
-      margin:
-        0
-        42px
-        6px
-        0;
-
+      margin: 0 42px 6px 0;
       font-size: 1.45rem;
     }
 
     .auth-subtitle {
-      margin:
-        0
-        0
-        20px;
-
-      color:
-        var(--muted);
-
-      font-size: 0.92rem;
-
+      margin: 0 0 20px;
+      color: var(--muted);
+      font-size: .92rem;
       line-height: 1.5;
     }
 
     .auth-tabs {
       display: grid;
-
-      grid-template-columns:
-        1fr
-        1fr;
-
+      grid-template-columns: 1fr 1fr;
       gap: 6px;
-
       margin-bottom: 20px;
-
       padding: 4px;
-
       border-radius: 12px;
-
-      background:
-        var(--surface-soft);
+      background: var(--surface-soft);
     }
 
     .auth-tab {
       border: none;
-
       border-radius: 9px;
-
-      padding:
-        9px
-        10px;
-
+      padding: 9px 10px;
       background: transparent;
-
-      color:
-        var(--muted);
-
+      color: var(--muted);
       font-weight: 750;
     }
 
     .auth-tab.active {
       background: #fff;
-
-      color:
-        var(--text);
-
-      box-shadow:
-        0
-        1px
-        3px
-        rgba(
-          16,
-          24,
-          40,
-          0.08
-        );
+      color: var(--text);
+      box-shadow: 0 1px 3px rgba(16, 24, 40, .08);
     }
 
     .auth-field {
@@ -1267,20 +704,10 @@
 
     .auth-field input {
       width: 100%;
-
-      padding:
-        13px
-        14px;
-
-      border:
-        1px solid
-        var(--border);
-
+      padding: 13px 14px;
+      border: 1px solid var(--border);
       border-radius: 12px;
-
-      color:
-        var(--text);
-
+      color: var(--text);
       outline: none;
     }
 
@@ -1290,42 +717,147 @@
 
     .auth-message {
       min-height: 22px;
-
-      margin:
-        14px
-        0
-        0;
-
-      font-size: 0.86rem;
-
+      margin: 14px 0 0;
+      font-size: .86rem;
       line-height: 1.45;
     }
 
     .auth-message.error {
-      color:
-        var(--danger);
+      color: var(--danger);
     }
 
     .auth-message.success {
-      color:
-        var(--success);
+      color: var(--success);
     }
 
-    @media (
-      max-width:
-        760px
-    ) {
+    .stats-screen {
+      background: var(--surface-soft);
+    }
+
+    .stats-content {
+      flex: 1;
+      padding: 34px 30px;
+    }
+
+    .stats-card {
+      width: min(720px, 100%);
+      margin: 0 auto;
+      padding: 26px;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      background: #fff;
+      box-shadow: 0 8px 28px rgba(23, 35, 58, .06);
+    }
+
+    .stats-card h3 {
+      margin: 0 0 18px;
+      font-size: 1.4rem;
+    }
+
+    .stats-language-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .stats-language-button {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 14px 15px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: var(--surface);
+      color: var(--text);
+      text-align: left;
+      font-weight: 700;
+    }
+
+    .stats-language-button:hover {
+      border-color: rgba(40, 86, 216, .35);
+      background: #f7f9ff;
+    }
+
+    .stats-language-count {
+      color: var(--primary);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .stats-overall {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-top: 18px;
+      padding-top: 18px;
+      border-top: 1px solid var(--border);
+      font-weight: 800;
+    }
+
+    .stats-overall-count {
+      color: var(--primary);
+      font-size: 1.18rem;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .stats-message {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    .stats-message.error {
+      color: var(--danger);
+      font-weight: 650;
+    }
+
+    .stats-detail-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+
+    .stats-detail-top h3 {
+      margin: 0;
+    }
+
+    .stats-back-link {
+      border: none;
+      padding: 0;
+      background: transparent;
+      color: var(--primary);
+      font-weight: 750;
+    }
+
+    .stats-back-link:hover {
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .vocabulary-list {
+      margin: 18px 0 0;
+      padding-left: 22px;
+      columns: 2;
+      column-gap: 40px;
+    }
+
+    .vocabulary-list li {
+      margin: 0 0 8px;
+      break-inside: avoid;
+      line-height: 1.4;
+    }
+
+    @media (max-width: 760px) {
       .page {
         padding: 0;
       }
 
       .app-shell,
       .screen {
-        min-height:
-          calc(
-            100vh - 54px
-          );
-
+        min-height: calc(100vh - 54px);
         border-radius: 0;
       }
 
@@ -1334,22 +866,19 @@
       }
 
       .account-bar {
-        padding:
-          8px
-          12px;
+        padding: 8px 12px;
       }
 
       .account-email {
-        max-width: 150px;
+        max-width: 120px;
       }
 
       #homeScreen {
-        padding:
-          34px
-          22px;
+        padding: 34px 22px;
       }
 
-      .chat-header {
+      .chat-header,
+      .stats-header {
         align-items: flex-start;
       }
 
@@ -1358,31 +887,19 @@
       }
 
       .messages {
-        padding:
-          22px
-          16px;
+        padding: 22px 16px;
       }
 
       .feedback-panel {
-        margin:
-          0
-          14px
-          12px;
+        margin: 0 14px 12px;
       }
 
       .special-character-bar {
-        padding:
-          10px
-          14px
-          0;
+        padding: 10px 14px 0;
       }
 
       .composer {
-        padding:
-          12px
-          14px
-          14px;
-
+        padding: 12px 14px 14px;
         flex-wrap: wrap;
       }
 
@@ -1396,37 +913,42 @@
       }
 
       .example-btn {
-        flex:
-          1
-          1
-          auto;
+        flex: 1 1 auto;
       }
 
       .send-btn {
-        flex:
-          0
-          0
-          auto;
+        flex: 0 0 auto;
       }
 
       .chat-credit {
-        padding:
-          0
-          14px
-          8px;
+        padding: 0 14px 8px;
       }
 
       .auth-card {
-        padding:
-          24px
-          20px
-          20px;
+        padding: 24px 20px 20px;
+      }
+
+      .stats-header {
+        padding: 18px 16px;
+      }
+
+      .stats-content {
+        padding: 22px 14px;
+      }
+
+      .stats-card {
+        padding: 20px 16px;
+      }
+
+      .vocabulary-list {
+        columns: 1;
       }
     }
   </style>
 </head>
 
 <body>
+
   <main class="page">
 
     <section class="app-shell">
@@ -1471,6 +993,14 @@
           ></span>
 
           <button
+            id="statsButton"
+            class="account-btn"
+            type="button"
+          >
+            Stats
+          </button>
+
+          <button
             id="logoutButton"
             class="account-btn"
             type="button"
@@ -1494,29 +1024,23 @@
             Conversation practice
           </div>
 
-
           <h1>
             Language Learning
           </h1>
-
 
           <p class="intro">
             Choose your language and level, then select a scenario
             or create your own conversation.
           </p>
 
-
           <div
             id="homeError"
             class="home-error hidden"
           ></div>
 
-
           <div class="field">
 
-            <label
-              for="languageSelect"
-            >
+            <label for="languageSelect">
               Language
             </label>
 
@@ -1526,11 +1050,9 @@
                 id="languageSelect"
                 disabled
               >
-
                 <option>
                   Loading languages...
                 </option>
-
               </select>
 
             </div>
@@ -1540,9 +1062,7 @@
 
           <div class="field">
 
-            <label
-              for="levelSelect"
-            >
+            <label for="levelSelect">
               Language level
             </label>
 
@@ -1552,11 +1072,9 @@
                 id="levelSelect"
                 disabled
               >
-
                 <option>
                   Loading levels...
                 </option>
-
               </select>
 
             </div>
@@ -1566,9 +1084,7 @@
 
           <div class="field">
 
-            <label
-              for="scenarioSelect"
-            >
+            <label for="scenarioSelect">
               Scenario
             </label>
 
@@ -1578,11 +1094,9 @@
                 id="scenarioSelect"
                 disabled
               >
-
                 <option>
                   Loading scenarios...
                 </option>
-
               </select>
 
             </div>
@@ -1595,12 +1109,9 @@
             class="custom-scenario-panel hidden"
           >
 
-            <label
-              for="customScenarioInput"
-            >
+            <label for="customScenarioInput">
               Describe your scenario
             </label>
-
 
             <p class="custom-scenario-help">
               Describe what you want to talk about, who you want
@@ -1608,13 +1119,11 @@
               or any details you want included.
             </p>
 
-
             <textarea
               id="customScenarioInput"
               maxlength="2000"
               placeholder="For example: I want to have a casual conversation about pets. Ask me what pets I have now, what they are like, what pets I have had in the past, and what animals I would like to have in the future. Tell me about your pets too and ask natural follow-up questions."
             ></textarea>
-
 
             <div class="custom-scenario-footer">
 
@@ -1622,7 +1131,6 @@
                 id="customScenarioError"
                 class="custom-scenario-error"
               ></div>
-
 
               <div
                 id="customScenarioCounter"
@@ -1715,7 +1223,6 @@
 
           </div>
 
-
           <button
             id="endChatButton"
             class="secondary-btn"
@@ -1745,9 +1252,7 @@
               Feedback on your last message
             </div>
 
-            <div
-              id="feedbackContent"
-            ></div>
+            <div id="feedbackContent"></div>
 
           </section>
 
@@ -1759,7 +1264,6 @@
               class="special-character-bar hidden"
               aria-label="Special characters"
             ></div>
-
 
             <form
               id="chatForm"
@@ -1775,7 +1279,6 @@
                 aria-label="Chat message"
               />
 
-
               <button
                 id="exampleButton"
                 class="example-btn"
@@ -1783,7 +1286,6 @@
               >
                 Generate example response
               </button>
-
 
               <button
                 id="sendButton"
@@ -1831,6 +1333,130 @@
             </a>.
 
           </p>
+
+        </div>
+
+      </section>
+
+
+      <section
+        id="statsScreen"
+        class="screen stats-screen"
+      >
+
+        <header class="stats-header">
+
+          <div>
+
+            <h2>
+              My Stats
+            </h2>
+
+            <p>
+              Vocabulary saved from correction-free learner messages.
+            </p>
+
+          </div>
+
+          <button
+            id="closeStatsButton"
+            class="account-btn"
+            type="button"
+          >
+            Back
+          </button>
+
+        </header>
+
+
+        <div class="stats-content">
+
+          <section
+            id="statsOverview"
+            class="stats-card"
+          >
+
+            <div class="stats-eyebrow">
+              My Stats
+            </div>
+
+            <h3>
+              Vocabulary
+            </h3>
+
+            <p
+              id="statsOverviewMessage"
+              class="stats-message"
+            >
+              Loading vocabulary…
+            </p>
+
+            <div
+              id="statsLanguageList"
+              class="stats-language-list hidden"
+            ></div>
+
+            <div
+              id="statsOverall"
+              class="stats-overall hidden"
+            >
+
+              <span>
+                Overall foreign vocabulary
+              </span>
+
+              <span
+                id="statsOverallCount"
+                class="stats-overall-count"
+              >
+                0
+              </span>
+
+            </div>
+
+          </section>
+
+
+          <section
+            id="statsLanguageDetail"
+            class="stats-card hidden"
+          >
+
+            <div class="stats-detail-top">
+
+              <div>
+
+                <div class="stats-eyebrow">
+                  Vocabulary
+                </div>
+
+                <h3 id="statsLanguageTitle">
+                  Vocabulary
+                </h3>
+
+              </div>
+
+              <button
+                id="statsBackToOverviewButton"
+                class="stats-back-link"
+                type="button"
+              >
+                ← All languages
+              </button>
+
+            </div>
+
+            <p
+              id="statsLanguageMessage"
+              class="stats-message"
+            ></p>
+
+            <ul
+              id="statsVocabularyList"
+              class="vocabulary-list hidden"
+            ></ul>
+
+          </section>
 
         </div>
 
@@ -1900,7 +1526,6 @@
           Log In
         </button>
 
-
         <button
           id="signupTab"
           class="auth-tab"
@@ -1918,9 +1543,7 @@
 
         <div class="auth-field">
 
-          <label
-            for="authEmail"
-          >
+          <label for="authEmail">
             Email
           </label>
 
@@ -1936,9 +1559,7 @@
 
         <div class="auth-field">
 
-          <label
-            for="authPassword"
-          >
+          <label for="authPassword">
             Password
           </label>
 
@@ -1959,7 +1580,6 @@
         >
           Log In
         </button>
-
 
         <div
           id="authMessage"
@@ -2011,244 +1631,223 @@
       );
 
 
+    const $ =
+      id =>
+        document.getElementById(
+          id
+        );
+
+
     const homeScreen =
-      document.getElementById(
-        "homeScreen"
-      );
+      $("homeScreen");
 
 
     const chatScreen =
-      document.getElementById(
-        "chatScreen"
-      );
+      $("chatScreen");
+
+
+    const statsScreen =
+      $("statsScreen");
 
 
     const homeError =
-      document.getElementById(
-        "homeError"
-      );
+      $("homeError");
 
 
     const startChatButton =
-      document.getElementById(
-        "startChatButton"
-      );
+      $("startChatButton");
 
 
     const endChatButton =
-      document.getElementById(
-        "endChatButton"
-      );
+      $("endChatButton");
 
 
     const languageSelect =
-      document.getElementById(
-        "languageSelect"
-      );
+      $("languageSelect");
 
 
     const levelSelect =
-      document.getElementById(
-        "levelSelect"
-      );
+      $("levelSelect");
 
 
     const scenarioSelect =
-      document.getElementById(
-        "scenarioSelect"
-      );
+      $("scenarioSelect");
 
 
     const customScenarioPanel =
-      document.getElementById(
-        "customScenarioPanel"
-      );
+      $("customScenarioPanel");
 
 
     const customScenarioInput =
-      document.getElementById(
-        "customScenarioInput"
-      );
+      $("customScenarioInput");
 
 
     const customScenarioCounter =
-      document.getElementById(
-        "customScenarioCounter"
-      );
+      $("customScenarioCounter");
 
 
     const customScenarioError =
-      document.getElementById(
-        "customScenarioError"
-      );
+      $("customScenarioError");
 
 
     const chatTitle =
-      document.getElementById(
-        "chatTitle"
-      );
+      $("chatTitle");
 
 
     const scenarioLabel =
-      document.getElementById(
-        "scenarioLabel"
-      );
+      $("scenarioLabel");
 
 
     const chatForm =
-      document.getElementById(
-        "chatForm"
-      );
+      $("chatForm");
 
 
     const messageInput =
-      document.getElementById(
-        "messageInput"
-      );
+      $("messageInput");
 
 
     const exampleButton =
-      document.getElementById(
-        "exampleButton"
-      );
+      $("exampleButton");
 
 
     const sendButton =
-      document.getElementById(
-        "sendButton"
-      );
+      $("sendButton");
 
 
     const messages =
-      document.getElementById(
-        "messages"
-      );
+      $("messages");
 
 
     const feedbackPanel =
-      document.getElementById(
-        "feedbackPanel"
-      );
+      $("feedbackPanel");
 
 
     const feedbackContent =
-      document.getElementById(
-        "feedbackContent"
-      );
+      $("feedbackContent");
 
 
     const dictionaryTooltip =
-      document.getElementById(
-        "dictionaryTooltip"
-      );
+      $("dictionaryTooltip");
 
 
     const specialCharacterBar =
-      document.getElementById(
-        "specialCharacterBar"
-      );
+      $("specialCharacterBar");
 
 
     const signedOutControls =
-      document.getElementById(
-        "signedOutControls"
-      );
+      $("signedOutControls");
 
 
     const signedInControls =
-      document.getElementById(
-        "signedInControls"
-      );
+      $("signedInControls");
 
 
     const accountEmail =
-      document.getElementById(
-        "accountEmail"
-      );
+      $("accountEmail");
+
+
+    const statsButton =
+      $("statsButton");
 
 
     const loginButton =
-      document.getElementById(
-        "loginButton"
-      );
+      $("loginButton");
 
 
     const signupButton =
-      document.getElementById(
-        "signupButton"
-      );
+      $("signupButton");
 
 
     const logoutButton =
-      document.getElementById(
-        "logoutButton"
-      );
+      $("logoutButton");
 
 
     const authModal =
-      document.getElementById(
-        "authModal"
-      );
+      $("authModal");
 
 
     const authCloseButton =
-      document.getElementById(
-        "authCloseButton"
-      );
+      $("authCloseButton");
 
 
     const authModalTitle =
-      document.getElementById(
-        "authModalTitle"
-      );
+      $("authModalTitle");
 
 
     const authSubtitle =
-      document.getElementById(
-        "authSubtitle"
-      );
+      $("authSubtitle");
 
 
     const loginTab =
-      document.getElementById(
-        "loginTab"
-      );
+      $("loginTab");
 
 
     const signupTab =
-      document.getElementById(
-        "signupTab"
-      );
+      $("signupTab");
 
 
     const authForm =
-      document.getElementById(
-        "authForm"
-      );
+      $("authForm");
 
 
     const authEmail =
-      document.getElementById(
-        "authEmail"
-      );
+      $("authEmail");
 
 
     const authPassword =
-      document.getElementById(
-        "authPassword"
-      );
+      $("authPassword");
 
 
     const authSubmitButton =
-      document.getElementById(
-        "authSubmitButton"
-      );
+      $("authSubmitButton");
 
 
     const authMessage =
-      document.getElementById(
-        "authMessage"
-      );
+      $("authMessage");
+
+
+    const closeStatsButton =
+      $("closeStatsButton");
+
+
+    const statsOverview =
+      $("statsOverview");
+
+
+    const statsOverviewMessage =
+      $("statsOverviewMessage");
+
+
+    const statsLanguageList =
+      $("statsLanguageList");
+
+
+    const statsOverall =
+      $("statsOverall");
+
+
+    const statsOverallCount =
+      $("statsOverallCount");
+
+
+    const statsLanguageDetail =
+      $("statsLanguageDetail");
+
+
+    const statsLanguageTitle =
+      $("statsLanguageTitle");
+
+
+    const statsLanguageMessage =
+      $("statsLanguageMessage");
+
+
+    const statsVocabularyList =
+      $("statsVocabularyList");
+
+
+    const statsBackToOverviewButton =
+      $("statsBackToOverviewButton");
 
 
     let appConfig =
@@ -2295,6 +1894,10 @@
       "login";
 
 
+    let screenBeforeStats =
+      homeScreen;
+
+
     const dictionaryCache =
       new Map();
 
@@ -2321,24 +1924,27 @@
 
 
     function showScreen(
-      screenToShow
+      screen
     ) {
 
-      homeScreen
-        .classList
-        .remove(
-          "active"
-        );
+      [
+        homeScreen,
+        chatScreen,
+        statsScreen,
+      ].forEach(
+        item => {
+
+          item
+            .classList
+            .remove(
+              "active"
+            );
+
+        }
+      );
 
 
-      chatScreen
-        .classList
-        .remove(
-          "active"
-        );
-
-
-      screenToShow
+      screen
         .classList
         .add(
           "active"
@@ -2385,8 +1991,68 @@
     }
 
 
+    function optionalAuthHeaders() {
+
+      return currentSession
+        ?.access_token
+          ? {
+
+              Authorization:
+                `Bearer ${currentSession.access_token}`,
+
+            }
+          : {};
+
+    }
+
+
+    async function getRequiredAccessToken() {
+
+      const {
+        data,
+        error,
+      } =
+        await supabaseClient
+          .auth
+          .getSession();
+
+
+      if (
+        error
+      ) {
+
+        throw new Error(
+          "Could not read your login session."
+        );
+
+      }
+
+
+      updateAuthUI(
+        data.session
+      );
+
+
+      if (
+        !data.session
+          ?.access_token
+      ) {
+
+        throw new Error(
+          "Please log in to view your vocabulary statistics."
+        );
+
+      }
+
+
+      return data.session
+        .access_token;
+
+    }
+
+
     // ----------------------------------------------------
-    // Supabase authentication
+    // Authentication
     // ----------------------------------------------------
 
 
@@ -2400,7 +2066,8 @@
 
 
       const user =
-        currentSession?.user ||
+        currentSession
+          ?.user ||
         null;
 
 
@@ -2430,6 +2097,22 @@
       accountEmail.title =
         user?.email ||
         "";
+
+
+      if (
+        !user &&
+        statsScreen
+          .classList
+          .contains(
+            "active"
+          )
+      ) {
+
+        showScreen(
+          homeScreen
+        );
+
+      }
 
     }
 
@@ -2863,7 +2546,484 @@
 
 
     // ----------------------------------------------------
-    // Backend configuration
+    // Stats
+    // ----------------------------------------------------
+
+
+    function showStatsOverview() {
+
+      statsLanguageDetail
+        .classList
+        .add(
+          "hidden"
+        );
+
+
+      statsOverview
+        .classList
+        .remove(
+          "hidden"
+        );
+
+    }
+
+
+    function showStatsLanguageDetail() {
+
+      statsOverview
+        .classList
+        .add(
+          "hidden"
+        );
+
+
+      statsLanguageDetail
+        .classList
+        .remove(
+          "hidden"
+        );
+
+    }
+
+
+    function resetStatsOverview() {
+
+      statsOverviewMessage.textContent =
+        "Loading vocabulary…";
+
+
+      statsOverviewMessage.className =
+        "stats-message";
+
+
+      statsLanguageList.innerHTML =
+        "";
+
+
+      statsLanguageList
+        .classList
+        .add(
+          "hidden"
+        );
+
+
+      statsOverall
+        .classList
+        .add(
+          "hidden"
+        );
+
+
+      statsOverallCount.textContent =
+        "0";
+
+    }
+
+
+    async function loadVocabularyStats() {
+
+      resetStatsOverview();
+
+
+      showStatsOverview();
+
+
+      try {
+
+        const token =
+          await getRequiredAccessToken();
+
+
+        const response =
+          await fetch(
+            `${API_BASE_URL}/api/vocabulary`,
+            {
+
+              headers: {
+
+                Authorization:
+                  `Bearer ${token}`,
+
+              },
+
+              cache:
+                "no-store",
+
+            }
+          );
+
+
+        const data =
+          await readJsonResponse(
+            response
+          );
+
+
+        const languages =
+          Array.isArray(
+            data.languages
+          )
+            ? data.languages
+            : [];
+
+
+        statsLanguageList.innerHTML =
+          "";
+
+
+        if (
+          languages.length ===
+            0
+        ) {
+
+          statsOverviewMessage.textContent =
+            "You do not have any saved vocabulary yet. Correction-free messages in supported languages will appear here.";
+
+        } else {
+
+          statsOverviewMessage
+            .classList
+            .add(
+              "hidden"
+            );
+
+
+          for (
+            const language
+            of languages
+          ) {
+
+            const button =
+              document.createElement(
+                "button"
+              );
+
+
+            const name =
+              document.createElement(
+                "span"
+              );
+
+
+            const count =
+              document.createElement(
+                "span"
+              );
+
+
+            button.type =
+              "button";
+
+
+            button.className =
+              "stats-language-button";
+
+
+            name.textContent =
+              language.name ||
+              language.id;
+
+
+            count.className =
+              "stats-language-count";
+
+
+            count.textContent =
+              Number(
+                language.count ||
+                0
+              )
+                .toLocaleString();
+
+
+            button.append(
+              name,
+              count
+            );
+
+
+            button.addEventListener(
+              "click",
+              () => {
+
+                loadVocabularyLanguage(
+                  language.id,
+                  language.name ||
+                    language.id
+                );
+
+              }
+            );
+
+
+            statsLanguageList
+              .appendChild(
+                button
+              );
+
+          }
+
+
+          statsLanguageList
+            .classList
+            .remove(
+              "hidden"
+            );
+
+        }
+
+
+        statsOverallCount.textContent =
+          Number(
+            data.overallTotal ||
+            0
+          )
+            .toLocaleString();
+
+
+        statsOverall
+          .classList
+          .remove(
+            "hidden"
+          );
+
+      } catch (
+        error
+      ) {
+
+        statsOverviewMessage.textContent =
+          error.message ||
+          "Could not load vocabulary statistics.";
+
+
+        statsOverviewMessage.className =
+          "stats-message error";
+
+
+        statsLanguageList
+          .classList
+          .add(
+            "hidden"
+          );
+
+
+        statsOverall
+          .classList
+          .add(
+            "hidden"
+          );
+
+      }
+
+    }
+
+
+    async function loadVocabularyLanguage(
+      languageId,
+      languageName
+    ) {
+
+      showStatsLanguageDetail();
+
+
+      statsLanguageTitle.textContent =
+        `${languageName} vocabulary`;
+
+
+      statsLanguageMessage.textContent =
+        "Loading vocabulary…";
+
+
+      statsLanguageMessage.className =
+        "stats-message";
+
+
+      statsVocabularyList.innerHTML =
+        "";
+
+
+      statsVocabularyList
+        .classList
+        .add(
+          "hidden"
+        );
+
+
+      try {
+
+        const token =
+          await getRequiredAccessToken();
+
+
+        const response =
+          await fetch(
+            `${API_BASE_URL}/api/vocabulary?language=${encodeURIComponent(
+              languageId
+            )}`,
+            {
+
+              headers: {
+
+                Authorization:
+                  `Bearer ${token}`,
+
+              },
+
+              cache:
+                "no-store",
+
+            }
+          );
+
+
+        const data =
+          await readJsonResponse(
+            response
+          );
+
+
+        const items =
+          Array.isArray(
+            data.items
+          )
+            ? data.items
+            : [];
+
+
+        statsLanguageTitle.textContent =
+          `${
+            data.language?.name ||
+            languageName
+          } vocabulary`;
+
+
+        if (
+          items.length ===
+            0
+        ) {
+
+          statsLanguageMessage.textContent =
+            "No saved vocabulary for this language yet.";
+
+
+          return;
+
+        }
+
+
+        statsLanguageMessage.textContent =
+          `${
+            items.length.toLocaleString()
+          } saved vocabulary ${
+            items.length ===
+              1
+              ? "item"
+              : "items"
+          }.`;
+
+
+        for (
+          const lemma
+          of items
+        ) {
+
+          const item =
+            document.createElement(
+              "li"
+            );
+
+
+          item.dir =
+            languageById.get(
+              languageId
+            )?.direction ||
+            "auto";
+
+
+          item.textContent =
+            lemma;
+
+
+          statsVocabularyList
+            .appendChild(
+              item
+            );
+
+        }
+
+
+        statsVocabularyList
+          .classList
+          .remove(
+            "hidden"
+          );
+
+      } catch (
+        error
+      ) {
+
+        statsLanguageMessage.textContent =
+          error.message ||
+          "Could not load this vocabulary list.";
+
+
+        statsLanguageMessage.className =
+          "stats-message error";
+
+      }
+
+    }
+
+
+    async function openStats() {
+
+      if (
+        !currentSession
+          ?.user
+      ) {
+
+        openAuthModal(
+          "login"
+        );
+
+
+        return;
+
+      }
+
+
+      screenBeforeStats =
+        chatScreen
+          .classList
+          .contains(
+            "active"
+          )
+          ? chatScreen
+          : homeScreen;
+
+
+      showScreen(
+        statsScreen
+      );
+
+
+      await loadVocabularyStats();
+
+    }
+
+
+    function closeStats() {
+
+      showScreen(
+        screenBeforeStats ||
+        homeScreen
+      );
+
+    }
+
+
+    // ----------------------------------------------------
+    // Configuration
     // ----------------------------------------------------
 
 
@@ -2988,9 +3148,7 @@
         languageById =
           new Map(
             data.languages.map(
-              (
-                language
-              ) => [
+              language => [
                 language.id,
                 language,
               ]
@@ -3142,8 +3300,7 @@
       return (
         levelSelect
           .options[
-            levelSelect
-              .selectedIndex
+            levelSelect.selectedIndex
           ]
           ?.text ||
         levelSelect.value
@@ -3290,13 +3447,8 @@
 
         button.addEventListener(
           "mousedown",
-          (
-            event
-          ) => {
-
-            event.preventDefault();
-
-          }
+          event =>
+            event.preventDefault()
         );
 
 
@@ -3333,18 +3485,18 @@
       enabled
     ) {
 
-      for (
-        const button
-        of specialCharacterBar
-          .querySelectorAll(
-            "button"
-          )
-      ) {
+      specialCharacterBar
+        .querySelectorAll(
+          "button"
+        )
+        .forEach(
+          button => {
 
-        button.disabled =
-          !enabled;
+            button.disabled =
+              !enabled;
 
-      }
+          }
+        );
 
     }
 
@@ -3383,14 +3535,14 @@
 
     function updateCustomScenarioCounter() {
 
-      const length =
-        customScenarioInput
-          .value
-          .length;
-
-
       customScenarioCounter.textContent =
-        `${length} / ${maxCustomScenarioLength}`;
+        `${
+          customScenarioInput
+            .value
+            .length
+        } / ${
+          maxCustomScenarioLength
+        }`;
 
 
       if (
@@ -3476,9 +3628,11 @@
     ) {
 
       const cacheKey =
-        `${languageId}|${normalizeDictionaryKey(
-          lookupWord
-        )}|${partOfSpeech}`;
+        `${languageId}|${
+          normalizeDictionaryKey(
+            lookupWord
+          )
+        }|${partOfSpeech}`;
 
 
       if (
@@ -3487,9 +3641,10 @@
         )
       ) {
 
-        return dictionaryCache.get(
-          cacheKey
-        );
+        return dictionaryCache
+          .get(
+            cacheKey
+          );
 
       }
 
@@ -3691,18 +3846,14 @@
 
         return entry.senses
           .filter(
-            (
-              sense
-            ) =>
+            sense =>
               sense &&
               typeof sense.meaning ===
                 "string" &&
               sense.meaning.trim()
           )
           .map(
-            (
-              sense
-            ) => ({
+            sense => ({
 
               meaning:
                 sense.meaning.trim(),
@@ -3712,9 +3863,7 @@
                   sense.tags
                 )
                   ? sense.tags.filter(
-                      (
-                        tag
-                      ) =>
+                      tag =>
                         typeof tag ===
                           "string" &&
                         tag.trim()
@@ -3735,17 +3884,13 @@
           : []
       )
         .filter(
-          (
-            meaning
-          ) =>
+          meaning =>
             typeof meaning ===
               "string" &&
             meaning.trim()
         )
         .map(
-          (
-            meaning
-          ) => ({
+          meaning => ({
 
             meaning:
               meaning.trim(),
@@ -3873,7 +4018,7 @@
 
       if (
         senses.length ===
-        0
+          0
       ) {
 
         const unavailable =
@@ -3939,7 +4084,7 @@
 
           if (
             sense.tags.length >
-            0
+              0
           ) {
 
             const tags =
@@ -4014,7 +4159,7 @@
 
       if (
         metaParts.length >
-        0
+          0
       ) {
 
         const meta =
@@ -4444,9 +4589,7 @@
 
         word.addEventListener(
           "click",
-          (
-            event
-          ) => {
+          event => {
 
             event.stopPropagation();
 
@@ -4493,14 +4636,20 @@
         );
 
 
-      row.className =
-        `message-row ${sender}`;
-
-
       const bubble =
         document.createElement(
           "div"
         );
+
+
+      const body =
+        document.createElement(
+          "div"
+        );
+
+
+      row.className =
+        `message-row ${sender}`;
 
 
       bubble.className =
@@ -4539,14 +4688,8 @@
       }
 
 
-      const textContainer =
-        document.createElement(
-          "div"
-        );
-
-
       appendInteractiveLanguageText(
-        textContainer,
+        body,
         text,
         languageId,
         replyWords
@@ -4554,7 +4697,7 @@
 
 
       bubble.appendChild(
-        textContainer
+        body
       );
 
 
@@ -4678,19 +4821,20 @@
         );
 
 
-      label.textContent =
-        "Correction: ";
-
-
-      correction.appendChild(
-        label
-      );
-
-
       const correctedText =
         document.createElement(
           "span"
         );
+
+
+      const explanation =
+        document.createElement(
+          "p"
+        );
+
+
+      label.textContent =
+        "Correction: ";
 
 
       correctedText.dir =
@@ -4704,15 +4848,10 @@
         "";
 
 
-      correction.appendChild(
+      correction.append(
+        label,
         correctedText
       );
-
-
-      const explanation =
-        document.createElement(
-          "p"
-        );
 
 
       explanation.textContent =
@@ -4789,7 +4928,7 @@
 
 
     // ----------------------------------------------------
-    // Start conversation
+    // Conversation
     // ----------------------------------------------------
 
 
@@ -4877,8 +5016,7 @@
           ? "Custom scenario"
           : scenarioSelect
               .options[
-                scenarioSelect
-                  .selectedIndex
+                scenarioSelect.selectedIndex
               ]
               .text;
 
@@ -5166,11 +5304,6 @@
     }
 
 
-    // ----------------------------------------------------
-    // Generate example
-    // ----------------------------------------------------
-
-
     async function generateExampleResponse() {
 
       if (
@@ -5186,9 +5319,10 @@
 
         ...getActiveConversationPayload(),
 
-        history: [
-          ...history
-        ],
+        history:
+          [
+            ...history,
+          ],
 
       };
 
@@ -5259,26 +5393,26 @@
         );
 
 
-        history.push({
+        history.push(
+          {
 
-          role:
-            "user",
+            role:
+              "user",
 
-          content:
-            data.exampleMessage,
+            content:
+              data.exampleMessage,
 
-        });
+          },
+          {
 
+            role:
+              "assistant",
 
-        history.push({
+            content:
+              data.reply,
 
-          role:
-            "assistant",
-
-          content:
-            data.reply,
-
-        });
+          }
+        );
 
 
         addMessage(
@@ -5360,46 +5494,39 @@
     // ----------------------------------------------------
 
 
-    scenarioSelect
-      .addEventListener(
-        "change",
-        () => {
+    scenarioSelect.addEventListener(
+      "change",
+      () => {
 
-          updateCustomScenarioUI();
+        updateCustomScenarioUI();
 
 
-          if (
-            scenarioSelect.value ===
-            "custom"
-          ) {
+        if (
+          scenarioSelect.value ===
+          "custom"
+        ) {
 
-            setTimeout(
-              () => {
-
-                customScenarioInput.focus();
-
-              },
-              0
-            );
-
-          }
+          setTimeout(
+            () =>
+              customScenarioInput.focus(),
+            0
+          );
 
         }
-      );
+
+      }
+    );
 
 
-    customScenarioInput
-      .addEventListener(
-        "input",
-        updateCustomScenarioCounter
-      );
+    customScenarioInput.addEventListener(
+      "input",
+      updateCustomScenarioCounter
+    );
 
 
     document.addEventListener(
       "click",
-      (
-        event
-      ) => {
+      event => {
 
         if (
           !event.target.closest(
@@ -5419,25 +5546,19 @@
 
     window.addEventListener(
       "resize",
-      () => {
-
+      () =>
         hideDictionaryTooltip(
           0
-        );
-
-      }
+        )
     );
 
 
     messages.addEventListener(
       "scroll",
-      () => {
-
+      () =>
         hideDictionaryTooltip(
           0
-        );
-
-      }
+        )
     );
 
 
@@ -5461,25 +5582,37 @@
 
     loginButton.addEventListener(
       "click",
-      () => {
-
+      () =>
         openAuthModal(
           "login"
-        );
-
-      }
+        )
     );
 
 
     signupButton.addEventListener(
       "click",
-      () => {
-
+      () =>
         openAuthModal(
           "signup"
-        );
+        )
+    );
 
-      }
+
+    statsButton.addEventListener(
+      "click",
+      openStats
+    );
+
+
+    closeStatsButton.addEventListener(
+      "click",
+      closeStats
+    );
+
+
+    statsBackToOverviewButton.addEventListener(
+      "click",
+      showStatsOverview
     );
 
 
@@ -5497,25 +5630,19 @@
 
     loginTab.addEventListener(
       "click",
-      () => {
-
+      () =>
         setAuthMode(
           "login"
-        );
-
-      }
+        )
     );
 
 
     signupTab.addEventListener(
       "click",
-      () => {
-
+      () =>
         setAuthMode(
           "signup"
-        );
-
-      }
+        )
     );
 
 
@@ -5527,9 +5654,7 @@
 
     authModal.addEventListener(
       "click",
-      (
-        event
-      ) => {
+      event => {
 
         if (
           event.target ===
@@ -5546,9 +5671,7 @@
 
     document.addEventListener(
       "keydown",
-      (
-        event
-      ) => {
+      event => {
 
         if (
           event.key ===
@@ -5570,9 +5693,7 @@
 
     chatForm.addEventListener(
       "submit",
-      async (
-        event
-      ) => {
+      async event => {
 
         event.preventDefault();
 
@@ -5603,7 +5724,7 @@
 
         const historyBeforeMessage =
           [
-            ...history
+            ...history,
           ];
 
 
@@ -5662,6 +5783,8 @@
                   "Content-Type":
                     "application/json",
 
+                  ...optionalAuthHeaders(),
+
                 },
 
                 body:
@@ -5679,26 +5802,26 @@
             );
 
 
-          history.push({
+          history.push(
+            {
 
-            role:
-              "user",
+              role:
+                "user",
 
-            content:
-              message,
+              content:
+                message,
 
-          });
+            },
+            {
 
+              role:
+                "assistant",
 
-          history.push({
+              content:
+                data.reply,
 
-            role:
-              "assistant",
-
-            content:
-              data.reply,
-
-          });
+            }
+          );
 
 
           addMessage(
