@@ -5909,6 +5909,2044 @@
     initializeAuth();
 
   </script>
+<script>
+(() => {
+  const PB_RECENT_KEY = "plainbetter_recent_conversations_v1";
+  const PB_RECENT_MAX = 20;
+  const PB_RECENT_TTL_MS = 30 * 24 * 60 * 60 * 1000;
 
+  let pbActiveConversation = null;
+  let pbScreenBeforeRecent = homeScreen;
+  let pbLastStatsLanguageId = null;
+  let pbLastStatsLanguageName = "";
+  let pbEnhancingStats = false;
+
+  function pbMakeId() {
+    if (
+      typeof crypto !== "undefined" &&
+      typeof crypto.randomUUID === "function"
+    ) {
+      return crypto.randomUUID();
+    }
+
+    return `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+  }
+
+
+  // -------------------------------------------------------
+  // Recent conversation storage
+  // -------------------------------------------------------
+
+  function pbReadRecent() {
+    let items = [];
+
+    try {
+      const parsed =
+        JSON.parse(
+          localStorage.getItem(PB_RECENT_KEY) || "[]"
+        );
+
+      if (Array.isArray(parsed)) {
+        items = parsed;
+      }
+    } catch (error) {
+      console.warn(
+        "Could not read recent conversations",
+        error
+      );
+    }
+
+    const cutoff =
+      Date.now() - PB_RECENT_TTL_MS;
+
+    items =
+      items
+        .filter((item) => {
+          const updated =
+            Date.parse(
+              item?.updatedAt ||
+              item?.createdAt ||
+              ""
+            );
+
+          return (
+            item &&
+            Number.isFinite(updated) &&
+            updated >= cutoff
+          );
+        })
+        .sort(
+          (a, b) =>
+            Date.parse(
+              b.updatedAt ||
+              b.createdAt
+            ) -
+            Date.parse(
+              a.updatedAt ||
+              a.createdAt
+            )
+        )
+        .slice(
+          0,
+          PB_RECENT_MAX
+        );
+
+    try {
+      localStorage.setItem(
+        PB_RECENT_KEY,
+        JSON.stringify(items)
+      );
+    } catch (error) {
+      console.warn(
+        "Could not tidy recent conversation storage",
+        error
+      );
+    }
+
+    return items;
+  }
+
+
+  function pbWriteRecent(items) {
+    try {
+      localStorage.setItem(
+        PB_RECENT_KEY,
+        JSON.stringify(
+          items.slice(
+            0,
+            PB_RECENT_MAX
+          )
+        )
+      );
+    } catch (error) {
+      console.warn(
+        "Could not save recent conversation",
+        error
+      );
+    }
+  }
+
+
+  function pbPersistActive() {
+    if (!pbActiveConversation) {
+      return;
+    }
+
+    pbActiveConversation.updatedAt =
+      new Date().toISOString();
+
+    const items =
+      pbReadRecent()
+        .filter(
+          (item) =>
+            item.id !==
+            pbActiveConversation.id
+        );
+
+    items.unshift(
+      pbActiveConversation
+    );
+
+    pbWriteRecent(items);
+  }
+
+
+  function pbStartConversationRecord(
+    body,
+    data
+  ) {
+    const now =
+      new Date().toISOString();
+
+    const languageName =
+      languageById.get(
+        body.language
+      )?.name ||
+      body.language ||
+      "Language";
+
+    const levelLabel =
+      levelSelect
+        ?.options?.[
+          levelSelect.selectedIndex
+        ]
+        ?.text ||
+      body.level ||
+      "";
+
+    const scenarioName =
+      body.scenario === "custom"
+        ? "Custom scenario"
+        : scenarioSelect
+            ?.options?.[
+              scenarioSelect.selectedIndex
+            ]
+            ?.text ||
+          body.scenario ||
+          "Conversation";
+
+    pbActiveConversation = {
+      id:
+        pbMakeId(),
+
+      createdAt:
+        now,
+
+      updatedAt:
+        now,
+
+      languageId:
+        body.language,
+
+      languageName,
+
+      levelId:
+        body.level,
+
+      levelLabel,
+
+      scenarioKey:
+        body.scenario,
+
+      scenarioName,
+
+      customScenario:
+        body.customScenario || "",
+
+      conversationEnded:
+        Boolean(
+          data.conversationEnded
+        ),
+
+      messages: [
+        {
+          sender:
+            "ai",
+
+          text:
+            data.reply || "",
+
+          wordMetadata:
+            Array.isArray(
+              data.replyWords
+            )
+              ? data.replyWords
+              : [],
+
+          isExample:
+            false,
+
+          translation:
+            "",
+
+          feedback:
+            null,
+        },
+      ],
+    };
+
+    if (
+      data.conversationEnded
+    ) {
+      pbActiveConversation.endedAt =
+        now;
+    }
+
+    pbPersistActive();
+  }
+
+
+  function pbAppendMessage(
+    message
+  ) {
+    if (!pbActiveConversation) {
+      return;
+    }
+
+    pbActiveConversation
+      .messages
+      .push({
+        sender:
+          message.sender,
+
+        text:
+          message.text || "",
+
+        wordMetadata:
+          Array.isArray(
+            message.wordMetadata
+          )
+            ? message.wordMetadata
+            : [],
+
+        isExample:
+          Boolean(
+            message.isExample
+          ),
+
+        translation:
+          message.translation || "",
+
+        feedback:
+          message.feedback || null,
+      });
+
+    pbPersistActive();
+  }
+
+
+  function pbMarkEnded() {
+    if (!pbActiveConversation) {
+      return;
+    }
+
+    pbActiveConversation
+      .conversationEnded =
+        true;
+
+    pbActiveConversation.endedAt =
+      new Date().toISOString();
+
+    pbPersistActive();
+  }
+
+
+  // -------------------------------------------------------
+  // Fetch interception
+  //
+  // This has two purposes:
+  // 1. Make sure /api/chat has the access token when logged in.
+  // 2. Capture successful conversations in browser storage.
+  // -------------------------------------------------------
+
+  function pbParseRequestBody(
+    init
+  ) {
+    if (
+      !init ||
+      typeof init.body !== "string"
+    ) {
+      return null;
+    }
+
+    try {
+      return JSON.parse(
+        init.body
+      );
+    } catch {
+      return null;
+    }
+  }
+
+
+  async function pbHandleSuccessfulApiCall(
+    url,
+    body,
+    response
+  ) {
+    const parsedUrl =
+      new URL(
+        url,
+        window.location.href
+      );
+
+    /*
+      Remember which Stats language is open.
+      This lets us enhance the existing vocabulary list.
+    */
+
+    if (
+      parsedUrl.pathname.endsWith(
+        "/api/vocabulary"
+      ) &&
+      parsedUrl.searchParams.has(
+        "language"
+      )
+    ) {
+      pbLastStatsLanguageId =
+        parsedUrl.searchParams.get(
+          "language"
+        );
+
+      pbLastStatsLanguageName =
+        languageById.get(
+          pbLastStatsLanguageId
+        )?.name ||
+        pbLastStatsLanguageId ||
+        "";
+
+      return;
+    }
+
+    const isStart =
+      parsedUrl.pathname.endsWith(
+        "/api/start"
+      );
+
+    const isChat =
+      parsedUrl.pathname.endsWith(
+        "/api/chat"
+      );
+
+    const isExample =
+      parsedUrl.pathname.endsWith(
+        "/api/example"
+      );
+
+    if (
+      !isStart &&
+      !isChat &&
+      !isExample
+    ) {
+      return;
+    }
+
+    let data;
+
+    try {
+      data =
+        await response
+          .clone()
+          .json();
+    } catch {
+      return;
+    }
+
+    if (isStart) {
+      if (body) {
+        pbStartConversationRecord(
+          body,
+          data
+        );
+      }
+
+      return;
+    }
+
+    if (isChat) {
+      if (!body) {
+        return;
+      }
+
+      pbAppendMessage({
+        sender:
+          "user",
+
+        text:
+          body.message || "",
+
+        wordMetadata:
+          [],
+
+        feedback:
+          data.feedback || null,
+      });
+
+      pbAppendMessage({
+        sender:
+          "ai",
+
+        text:
+          data.reply || "",
+
+        wordMetadata:
+          data.replyWords || [],
+      });
+
+      if (
+        data.conversationEnded
+      ) {
+        pbMarkEnded();
+      }
+
+      return;
+    }
+
+    if (isExample) {
+      pbAppendMessage({
+        sender:
+          "user",
+
+        text:
+          data.exampleMessage || "",
+
+        wordMetadata:
+          data.exampleWords || [],
+
+        isExample:
+          true,
+
+        translation:
+          data.exampleTranslation || "",
+      });
+
+      pbAppendMessage({
+        sender:
+          "ai",
+
+        text:
+          data.reply || "",
+
+        wordMetadata:
+          data.replyWords || [],
+      });
+
+      if (
+        data.conversationEnded
+      ) {
+        pbMarkEnded();
+      }
+    }
+  }
+
+
+  const pbNativeFetch =
+    window.fetch.bind(
+      window
+    );
+
+
+  window.fetch =
+    async function(
+      input,
+      init = {}
+    ) {
+      const url =
+        typeof input === "string"
+          ? input
+          : input instanceof Request
+            ? input.url
+            : String(input);
+
+      const parsedUrl =
+        new URL(
+          url,
+          window.location.href
+        );
+
+      const body =
+        pbParseRequestBody(
+          init
+        );
+
+      let nextInit =
+        init;
+
+      /*
+        Your current Stage 6 frontend already sends this,
+        but retaining this here makes the feature robust.
+      */
+
+      if (
+        parsedUrl.pathname.endsWith(
+          "/api/chat"
+        ) &&
+        currentSession?.access_token
+      ) {
+        const headers =
+          new Headers(
+            init.headers || {}
+          );
+
+        if (
+          !headers.has(
+            "Authorization"
+          )
+        ) {
+          headers.set(
+            "Authorization",
+            `Bearer ${currentSession.access_token}`
+          );
+        }
+
+        nextInit = {
+          ...init,
+          headers,
+        };
+      }
+
+      /*
+        Capture the language before the existing Stats
+        renderer creates its list.
+      */
+
+      if (
+        parsedUrl.pathname.endsWith(
+          "/api/vocabulary"
+        ) &&
+        parsedUrl.searchParams.has(
+          "language"
+        )
+      ) {
+        pbLastStatsLanguageId =
+          parsedUrl.searchParams.get(
+            "language"
+          );
+
+        pbLastStatsLanguageName =
+          languageById.get(
+            pbLastStatsLanguageId
+          )?.name ||
+          pbLastStatsLanguageId ||
+          "";
+      }
+
+      const response =
+        await pbNativeFetch(
+          input,
+          nextInit
+        );
+
+      if (response.ok) {
+        await pbHandleSuccessfulApiCall(
+          url,
+          body,
+          response
+        );
+      }
+
+      return response;
+    };
+
+
+  // -------------------------------------------------------
+  // Vocabulary hover + delete
+  // -------------------------------------------------------
+
+  function pbMakeHoverWord(
+    lemma,
+    languageId
+  ) {
+    const span =
+      document.createElement(
+        "span"
+      );
+
+    span.className =
+      "word-token";
+
+    span.textContent =
+      lemma;
+
+    span.tabIndex =
+      0;
+
+    span.setAttribute(
+      "aria-label",
+      `${lemma}: show English meaning`
+    );
+
+    let hoverTimer =
+      null;
+
+    const open =
+      () =>
+        openDictionaryTooltip(
+          span,
+          languageId,
+          lemma,
+          lemma,
+          ""
+        );
+
+    span.addEventListener(
+      "mouseenter",
+      () => {
+        clearTimeout(
+          hoverTimer
+        );
+
+        hoverTimer =
+          setTimeout(
+            open,
+            120
+          );
+      }
+    );
+
+    span.addEventListener(
+      "mouseleave",
+      () => {
+        clearTimeout(
+          hoverTimer
+        );
+
+        hideDictionaryTooltip();
+      }
+    );
+
+    span.addEventListener(
+      "focus",
+      open
+    );
+
+    span.addEventListener(
+      "blur",
+      () => {
+        hideDictionaryTooltip();
+      }
+    );
+
+    span.addEventListener(
+      "click",
+      (event) => {
+        event.stopPropagation();
+
+        open();
+      }
+    );
+
+    return span;
+  }
+
+
+  async function pbDeleteVocabularyWord(
+    lemma,
+    languageId,
+    button
+  ) {
+    if (
+      !currentSession?.user
+    ) {
+      alert(
+        "Please log in to change your vocabulary."
+      );
+
+      return;
+    }
+
+    const languageName =
+      languageById.get(
+        languageId
+      )?.name ||
+      languageId ||
+      "this language";
+
+    const confirmed =
+      window.confirm(
+        `Remove "${lemma}" from your saved ${languageName} vocabulary?`
+      );
+
+    if (!confirmed) {
+      return;
+    }
+
+    button.disabled =
+      true;
+
+    button.textContent =
+      "Deleting…";
+
+    try {
+      /*
+        This direct delete is safe because:
+        - Supabase knows the logged-in Auth user;
+        - RLS only permits deletion of rows owned by auth.uid();
+        - no INSERT or UPDATE permission is being granted.
+      */
+
+      const {
+        error,
+      } =
+        await supabaseClient
+          .from(
+            "vocabulary"
+          )
+          .delete()
+          .eq(
+            "language",
+            languageId
+          )
+          .eq(
+            "lemma",
+            lemma
+          );
+
+      if (error) {
+        throw error;
+      }
+
+      /*
+        Reuse your existing Stats loader
+        to refresh the language list.
+      */
+
+      if (
+        typeof loadVocabularyLanguage ===
+          "function"
+      ) {
+        await loadVocabularyLanguage(
+          languageId,
+          languageName
+        );
+      }
+    } catch (error) {
+      alert(
+        `Could not delete "${lemma}": ${
+          error?.message ||
+          "Unknown error"
+        }`
+      );
+
+      button.disabled =
+        false;
+
+      button.textContent =
+        "Delete";
+    }
+  }
+
+
+  function pbEnhanceStatsVocabularyList() {
+    if (
+      pbEnhancingStats ||
+      !pbLastStatsLanguageId
+    ) {
+      return;
+    }
+
+    const list =
+      document.getElementById(
+        "statsVocabularyList"
+      );
+
+    if (!list) {
+      return;
+    }
+
+    const rows =
+      [
+        ...list.querySelectorAll(
+          "li:not([data-pb-enhanced])"
+        ),
+      ];
+
+    if (
+      rows.length === 0
+    ) {
+      return;
+    }
+
+    pbEnhancingStats =
+      true;
+
+    try {
+      for (
+        const row
+        of rows
+      ) {
+        const lemma =
+          row.textContent.trim();
+
+        if (!lemma) {
+          continue;
+        }
+
+        row.dataset.pbEnhanced =
+          "true";
+
+        row.classList.add(
+          "pb-vocab-row"
+        );
+
+        row.innerHTML =
+          "";
+
+        const wordWrap =
+          document.createElement(
+            "span"
+          );
+
+        wordWrap.className =
+          "pb-vocab-word";
+
+        wordWrap.dir =
+          languageById.get(
+            pbLastStatsLanguageId
+          )?.direction ||
+          "auto";
+
+        wordWrap.appendChild(
+          pbMakeHoverWord(
+            lemma,
+            pbLastStatsLanguageId
+          )
+        );
+
+        const deleteButton =
+          document.createElement(
+            "button"
+          );
+
+        deleteButton.type =
+          "button";
+
+        deleteButton.className =
+          "pb-vocab-delete";
+
+        deleteButton.textContent =
+          "Delete";
+
+        deleteButton.setAttribute(
+          "aria-label",
+          `Delete ${lemma} from vocabulary`
+        );
+
+        deleteButton.addEventListener(
+          "click",
+          () => {
+            pbDeleteVocabularyWord(
+              lemma,
+              pbLastStatsLanguageId,
+              deleteButton
+            );
+          }
+        );
+
+        row.append(
+          wordWrap,
+          deleteButton
+        );
+      }
+    } finally {
+      pbEnhancingStats =
+        false;
+    }
+  }
+
+
+  /*
+    Your existing Stats code creates the vocabulary <li>s.
+    Observe that list and enhance them immediately afterwards.
+  */
+
+  const pbStatsList =
+    document.getElementById(
+      "statsVocabularyList"
+    );
+
+  if (pbStatsList) {
+    const observer =
+      new MutationObserver(
+        () => {
+          queueMicrotask(
+            pbEnhanceStatsVocabularyList
+          );
+        }
+      );
+
+    observer.observe(
+      pbStatsList,
+      {
+        childList:
+          true,
+
+        subtree:
+          true,
+      }
+    );
+  }
+
+
+  /*
+    If a word was deleted, reload totals when returning
+    from a language list.
+  */
+
+  const pbStatsBack =
+    document.getElementById(
+      "statsBackToOverviewButton"
+    );
+
+  if (pbStatsBack) {
+    pbStatsBack.addEventListener(
+      "click",
+      () => {
+        setTimeout(
+          () => {
+            if (
+              typeof loadVocabularyStats ===
+                "function"
+            ) {
+              loadVocabularyStats();
+            }
+          },
+          0
+        );
+      }
+    );
+  }
+
+
+  // -------------------------------------------------------
+  // Recent conversations UI
+  // -------------------------------------------------------
+
+  function pbFormatTime(
+    value
+  ) {
+    const date =
+      new Date(
+        value
+      );
+
+    if (
+      Number.isNaN(
+        date.getTime()
+      )
+    ) {
+      return "";
+    }
+
+    return date.toLocaleString(
+      undefined,
+      {
+        dateStyle:
+          "medium",
+
+        timeStyle:
+          "short",
+      }
+    );
+  }
+
+
+  function pbPreview(
+    conversation
+  ) {
+    const messages =
+      Array.isArray(
+        conversation?.messages
+      )
+        ? conversation.messages
+        : [];
+
+    return (
+      messages.find(
+        (message) =>
+          message?.sender ===
+          "user"
+      )?.text ||
+      messages[0]?.text ||
+      "Conversation"
+    );
+  }
+
+
+  function pbStoredFeedback(
+    feedback
+  ) {
+    const box =
+      document.createElement(
+        "div"
+      );
+
+    box.className =
+      "pb-recent-feedback";
+
+    if (
+      !feedback ||
+      feedback.hasIssues ===
+        false
+    ) {
+      const p =
+        document.createElement(
+          "p"
+        );
+
+      p.className =
+        "pb-recent-feedback-ok";
+
+      p.textContent =
+        feedback?.explanation ||
+        "No correction needed.";
+
+      box.appendChild(
+        p
+      );
+
+      return box;
+    }
+
+    const correction =
+      document.createElement(
+        "p"
+      );
+
+    const strong =
+      document.createElement(
+        "strong"
+      );
+
+    strong.textContent =
+      "Correction: ";
+
+    correction.append(
+      strong,
+      document.createTextNode(
+        feedback.correctedVersion ||
+        ""
+      )
+    );
+
+    const explanation =
+      document.createElement(
+        "p"
+      );
+
+    explanation.textContent =
+      feedback.explanation ||
+      "";
+
+    box.append(
+      correction,
+      explanation
+    );
+
+    return box;
+  }
+
+
+  function pbRenderRecentDetail(
+    conversation
+  ) {
+    pbRecentOverview
+      .classList
+      .add(
+        "hidden"
+      );
+
+    pbRecentDetail
+      .classList
+      .remove(
+        "hidden"
+      );
+
+    pbRecentDetailTitle.textContent =
+      `${
+        conversation.languageName ||
+        conversation.languageId ||
+        "Language"
+      } conversation`;
+
+    pbRecentDetailMeta.textContent =
+      [
+        conversation.scenarioName,
+        conversation.levelLabel,
+        pbFormatTime(
+          conversation.createdAt
+        ),
+      ]
+        .filter(Boolean)
+        .join(
+          " · "
+        );
+
+    pbRecentMessages.innerHTML =
+      "";
+
+    const storedMessages =
+      Array.isArray(
+        conversation.messages
+      )
+        ? conversation.messages
+        : [];
+
+    for (
+      const stored
+      of storedMessages
+    ) {
+      const sender =
+        stored.sender === "user"
+          ? "user"
+          : "ai";
+
+      const row =
+        document.createElement(
+          "div"
+        );
+
+      const bubble =
+        document.createElement(
+          "div"
+        );
+
+      const textContainer =
+        document.createElement(
+          "div"
+        );
+
+      row.className =
+        `message-row ${sender}`;
+
+      bubble.className =
+        "message";
+
+      bubble.dir =
+        languageById.get(
+          conversation.languageId
+        )?.direction ||
+        "auto";
+
+      if (
+        stored.isExample
+      ) {
+        const label =
+          document.createElement(
+            "div"
+          );
+
+        label.className =
+          "example-label";
+
+        label.textContent =
+          "Example response";
+
+        bubble.appendChild(
+          label
+        );
+      }
+
+      /*
+        Reuse PlainBetter's existing language-text renderer.
+        This gives Recent Conversations the exact same
+        hover dictionary behaviour as the live chat.
+      */
+
+      appendInteractiveLanguageText(
+        textContainer,
+        stored.text || "",
+        conversation.languageId,
+        stored.wordMetadata || []
+      );
+
+      bubble.appendChild(
+        textContainer
+      );
+
+      if (
+        stored.translation
+      ) {
+        const translation =
+          document.createElement(
+            "div"
+          );
+
+        translation.className =
+          "example-translation";
+
+        translation.textContent =
+          `English: ${stored.translation}`;
+
+        bubble.appendChild(
+          translation
+        );
+      }
+
+      row.appendChild(
+        bubble
+      );
+
+      pbRecentMessages
+        .appendChild(
+          row
+        );
+
+      if (
+        sender === "user" &&
+        stored.feedback
+      ) {
+        pbRecentMessages
+          .appendChild(
+            pbStoredFeedback(
+              stored.feedback
+            )
+          );
+      }
+    }
+
+    if (
+      storedMessages.length ===
+        0
+    ) {
+      pbRecentMessages.textContent =
+        "No messages were stored for this conversation.";
+    }
+  }
+
+
+  function pbRenderRecentOverview() {
+    pbRecentDetail
+      .classList
+      .add(
+        "hidden"
+      );
+
+    pbRecentOverview
+      .classList
+      .remove(
+        "hidden"
+      );
+
+    const conversations =
+      pbReadRecent();
+
+    pbRecentList.innerHTML =
+      "";
+
+    if (
+      conversations.length ===
+        0
+    ) {
+      pbRecentMessage.textContent =
+        "You do not have any recent conversations stored in this browser yet.";
+
+      pbRecentList
+        .classList
+        .add(
+          "hidden"
+        );
+
+      return;
+    }
+
+    pbRecentMessage.textContent =
+      "Open a conversation to review the chat, feedback, generated-response translations and dictionary meanings.";
+
+    for (
+      const conversation
+      of conversations
+    ) {
+      const card =
+        document.createElement(
+          "button"
+        );
+
+      card.type =
+        "button";
+
+      card.className =
+        "pb-recent-card";
+
+      const top =
+        document.createElement(
+          "div"
+        );
+
+      top.className =
+        "pb-recent-card-top";
+
+      const title =
+        document.createElement(
+          "span"
+        );
+
+      title.textContent =
+        `${
+          conversation.languageName ||
+          conversation.languageId ||
+          "Language"
+        } · ${
+          conversation.scenarioName ||
+          "Conversation"
+        }`;
+
+      const time =
+        document.createElement(
+          "span"
+        );
+
+      time.className =
+        "pb-recent-time";
+
+      time.textContent =
+        pbFormatTime(
+          conversation.updatedAt ||
+          conversation.createdAt
+        );
+
+      top.append(
+        title,
+        time
+      );
+
+      const meta =
+        document.createElement(
+          "div"
+        );
+
+      meta.className =
+        "pb-recent-meta";
+
+      meta.textContent =
+        [
+          conversation.levelLabel,
+          conversation.conversationEnded
+            ? "Ended"
+            : "Recent",
+        ]
+          .filter(Boolean)
+          .join(
+            " · "
+          );
+
+      const preview =
+        document.createElement(
+          "div"
+        );
+
+      preview.className =
+        "pb-recent-preview";
+
+      preview.textContent =
+        pbPreview(
+          conversation
+        );
+
+      card.append(
+        top,
+        meta,
+        preview
+      );
+
+      card.addEventListener(
+        "click",
+        () => {
+          pbRenderRecentDetail(
+            conversation
+          );
+        }
+      );
+
+      pbRecentList
+        .appendChild(
+          card
+        );
+    }
+
+    pbRecentList
+      .classList
+      .remove(
+        "hidden"
+      );
+  }
+
+
+  function pbOpenRecent() {
+    pbScreenBeforeRecent =
+      [
+        homeScreen,
+        chatScreen,
+        document.getElementById(
+          "statsScreen"
+        ),
+      ].find(
+        (screen) =>
+          screen?.classList.contains(
+            "active"
+          )
+      ) ||
+      homeScreen;
+
+    hideDictionaryTooltip(
+      0
+    );
+
+    homeScreen
+      .classList
+      .remove(
+        "active"
+      );
+
+    chatScreen
+      .classList
+      .remove(
+        "active"
+      );
+
+    document
+      .getElementById(
+        "statsScreen"
+      )
+      ?.classList
+      .remove(
+        "active"
+      );
+
+    pbRecentScreen
+      .classList
+      .add(
+        "active"
+      );
+
+    pbRenderRecentOverview();
+  }
+
+
+  function pbCloseRecent() {
+    hideDictionaryTooltip(
+      0
+    );
+
+    pbRecentScreen
+      .classList
+      .remove(
+        "active"
+      );
+
+    (
+      pbScreenBeforeRecent ||
+      homeScreen
+    )
+      .classList
+      .add(
+        "active"
+      );
+  }
+
+
+  // -------------------------------------------------------
+  // New styles
+  // -------------------------------------------------------
+
+  const style =
+    document.createElement(
+      "style"
+    );
+
+  style.textContent = `
+    .account-bar {
+      justify-content: space-between;
+    }
+
+    .pb-account-left {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+    }
+
+    .pb-vocab-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      break-inside: avoid;
+      margin: 0 0 8px;
+      padding: 8px 10px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: var(--surface-soft);
+    }
+
+    .pb-vocab-word {
+      min-width: 0;
+      font-weight: 650;
+    }
+
+    .pb-vocab-delete {
+      flex: 0 0 auto;
+      border: 1px solid #ecd1d1;
+      border-radius: 8px;
+      padding: 5px 8px;
+      background: #fffafa;
+      color: var(--danger);
+      font-size: .78rem;
+      font-weight: 700;
+    }
+
+    .pb-vocab-delete:hover:not(:disabled) {
+      background: #fff2f2;
+    }
+
+    #pbRecentScreen {
+      flex-direction: column;
+      background: var(--surface-soft);
+    }
+
+    .pb-recent-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--border);
+      background: rgba(255, 255, 255, .96);
+    }
+
+    .pb-recent-header h2 {
+      margin: 0 0 5px;
+      font-size: 1.18rem;
+    }
+
+    .pb-recent-header p {
+      margin: 0;
+      color: var(--muted);
+      font-size: .91rem;
+    }
+
+    .pb-recent-content {
+      flex: 1;
+      padding: 34px 30px;
+    }
+
+    .pb-recent-panel {
+      width: min(760px, 100%);
+      margin: 0 auto;
+      padding: 26px;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      background: #fff;
+      box-shadow: 0 8px 28px rgba(23, 35, 58, .06);
+    }
+
+    .pb-recent-eyebrow {
+      display: inline-flex;
+      margin-bottom: 14px;
+      color: var(--primary);
+      font-size: .86rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .pb-recent-panel h3 {
+      margin: 0 0 18px;
+      font-size: 1.4rem;
+    }
+
+    .pb-recent-message {
+      margin: 0 0 16px;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    .pb-recent-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .pb-recent-card {
+      width: 100%;
+      padding: 15px 16px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: #fff;
+      color: var(--text);
+      text-align: left;
+    }
+
+    .pb-recent-card:hover {
+      border-color: rgba(40, 86, 216, .35);
+      background: #f8faff;
+    }
+
+    .pb-recent-card-top {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 14px;
+      font-weight: 800;
+    }
+
+    .pb-recent-time {
+      flex: 0 0 auto;
+      color: var(--muted);
+      font-size: .78rem;
+      font-weight: 600;
+    }
+
+    .pb-recent-meta {
+      margin-top: 5px;
+      color: var(--muted);
+      font-size: .84rem;
+    }
+
+    .pb-recent-preview {
+      margin-top: 8px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      font-size: .9rem;
+    }
+
+    .pb-recent-detail-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+
+    .pb-recent-link {
+      border: none;
+      padding: 0;
+      background: transparent;
+      color: var(--primary);
+      font-weight: 750;
+    }
+
+    .pb-recent-link:hover {
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .pb-recent-messages {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      padding: 18px;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      background: var(--surface-soft);
+    }
+
+    .pb-recent-feedback {
+      align-self: flex-end;
+      width: min(78%, 650px);
+      margin-top: -8px;
+      padding: 10px 12px;
+      border: 1px solid var(--feedback-border);
+      border-radius: 11px;
+      background: var(--feedback-bg);
+      font-size: .84rem;
+      line-height: 1.45;
+    }
+
+    .pb-recent-feedback p {
+      margin: 4px 0;
+    }
+
+    .pb-recent-feedback-ok {
+      color: var(--success);
+      font-weight: 700;
+    }
+
+    .pb-recent-note {
+      margin: 18px 0 0;
+      color: var(--muted);
+      font-size: .78rem;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 760px) {
+      .pb-recent-header {
+        align-items: flex-start;
+        padding: 18px 16px;
+      }
+
+      .pb-recent-content {
+        padding: 22px 14px;
+      }
+
+      .pb-recent-panel {
+        padding: 20px 16px;
+      }
+
+      .pb-recent-feedback {
+        width: 90%;
+      }
+
+      .pb-recent-card-top {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 4px;
+      }
+    }
+  `;
+
+  document.head
+    .appendChild(
+      style
+    );
+
+
+  // -------------------------------------------------------
+  // Add Recent Conversations button on the left
+  // -------------------------------------------------------
+
+  const accountBar =
+    document.querySelector(
+      ".account-bar"
+    );
+
+  const accountLeft =
+    document.createElement(
+      "div"
+    );
+
+  accountLeft.className =
+    "pb-account-left";
+
+  const recentButton =
+    document.createElement(
+      "button"
+    );
+
+  recentButton.type =
+    "button";
+
+  recentButton.className =
+    "account-btn";
+
+  recentButton.textContent =
+    "Recent Conversations";
+
+  recentButton.addEventListener(
+    "click",
+    pbOpenRecent
+  );
+
+  accountLeft.appendChild(
+    recentButton
+  );
+
+  accountBar.insertBefore(
+    accountLeft,
+    accountBar.firstChild
+  );
+
+
+  // -------------------------------------------------------
+  // Build Recent Conversations screen
+  // -------------------------------------------------------
+
+  const pbRecentScreen =
+    document.createElement(
+      "section"
+    );
+
+  pbRecentScreen.id =
+    "pbRecentScreen";
+
+  pbRecentScreen.className =
+    "screen";
+
+  pbRecentScreen.innerHTML = `
+    <header class="pb-recent-header">
+
+      <div>
+
+        <h2>
+          Recent Conversations
+        </h2>
+
+        <p>
+          Conversations stored only in this browser.
+        </p>
+
+      </div>
+
+      <button
+        id="pbCloseRecent"
+        class="account-btn"
+        type="button"
+      >
+        Back
+      </button>
+
+    </header>
+
+
+    <div class="pb-recent-content">
+
+      <section
+        id="pbRecentOverview"
+        class="pb-recent-panel"
+      >
+
+        <div class="pb-recent-eyebrow">
+          Recent Conversations
+        </div>
+
+        <h3>
+          Your recent chats
+        </h3>
+
+        <p
+          id="pbRecentMessage"
+          class="pb-recent-message"
+        ></p>
+
+        <div
+          id="pbRecentList"
+          class="pb-recent-list hidden"
+        ></div>
+
+        <p class="pb-recent-note">
+          Recent conversations are stored locally in this browser,
+          capped at 20 conversations and automatically removed after
+          30 days. They are not added to your Supabase learner record.
+        </p>
+
+      </section>
+
+
+      <section
+        id="pbRecentDetail"
+        class="pb-recent-panel hidden"
+      >
+
+        <div class="pb-recent-detail-top">
+
+          <div>
+
+            <div class="pb-recent-eyebrow">
+              Recent Conversation
+            </div>
+
+            <h3 id="pbRecentDetailTitle">
+              Conversation
+            </h3>
+
+            <p
+              id="pbRecentDetailMeta"
+              class="pb-recent-message"
+            ></p>
+
+          </div>
+
+          <button
+            id="pbRecentBack"
+            class="pb-recent-link"
+            type="button"
+          >
+            ← All conversations
+          </button>
+
+        </div>
+
+        <div
+          id="pbRecentMessages"
+          class="pb-recent-messages"
+        ></div>
+
+      </section>
+
+    </div>
+  `;
+
+  document
+    .querySelector(
+      ".app-shell"
+    )
+    .appendChild(
+      pbRecentScreen
+    );
+
+
+  const pbRecentOverview =
+    document.getElementById(
+      "pbRecentOverview"
+    );
+
+  const pbRecentDetail =
+    document.getElementById(
+      "pbRecentDetail"
+    );
+
+  const pbRecentMessage =
+    document.getElementById(
+      "pbRecentMessage"
+    );
+
+  const pbRecentList =
+    document.getElementById(
+      "pbRecentList"
+    );
+
+  const pbRecentDetailTitle =
+    document.getElementById(
+      "pbRecentDetailTitle"
+    );
+
+  const pbRecentDetailMeta =
+    document.getElementById(
+      "pbRecentDetailMeta"
+    );
+
+  const pbRecentMessages =
+    document.getElementById(
+      "pbRecentMessages"
+    );
+
+
+  document
+    .getElementById(
+      "pbCloseRecent"
+    )
+    .addEventListener(
+      "click",
+      pbCloseRecent
+    );
+
+
+  document
+    .getElementById(
+      "pbRecentBack"
+    )
+    .addEventListener(
+      "click",
+      pbRenderRecentOverview
+    );
+
+
+  /*
+    Existing End Conversation button has already registered
+    its normal behaviour. We add storage finalisation too.
+  */
+
+  endChatButton.addEventListener(
+    "click",
+    pbMarkEnded
+  );
+
+
+  /*
+    If someone logs out while Stats is open,
+    don't leave authenticated Stats visible.
+  */
+
+  supabaseClient
+    .auth
+    .onAuthStateChange(
+      (event) => {
+        if (
+          event === "SIGNED_OUT" &&
+          document
+            .getElementById(
+              "statsScreen"
+            )
+            ?.classList
+            .contains(
+              "active"
+            )
+        ) {
+          document
+            .getElementById(
+              "statsScreen"
+            )
+            .classList
+            .remove(
+              "active"
+            );
+
+          homeScreen
+            .classList
+            .add(
+              "active"
+            );
+        }
+      }
+    );
+
+
+  /*
+    Purge any expired browser-only conversations now.
+  */
+
+  pbReadRecent();
+
+})();
+</script>
 </body>
 </html>
