@@ -260,8 +260,8 @@
 
       z-index: 125;
 
-      width: 96px;
-      height: 150px;
+      width: 98px;
+      height: 154px;
 
       pointer-events: none;
 
@@ -331,27 +331,51 @@
     }
 
     .pose-hang,
+    .pose-fall,
+    .pose-land,
     .pose-sit {
       transition:
-        opacity .11s linear;
+        opacity .09s linear;
     }
 
-    .character-hanging .pose-hang,
-    .character-falling .pose-hang {
+    .character-hanging .pose-hang {
       opacity: 1;
     }
 
-    .character-hanging .pose-sit,
+    .character-hanging .pose-fall,
+    .character-hanging .pose-land,
+    .character-hanging .pose-sit {
+      opacity: 0;
+    }
+
+    .character-falling .pose-fall {
+      opacity: 1;
+    }
+
+    .character-falling .pose-hang,
+    .character-falling .pose-land,
     .character-falling .pose-sit {
       opacity: 0;
     }
 
-    .character-sitting .pose-hang {
+    .character-landing .pose-land {
+      opacity: 1;
+    }
+
+    .character-landing .pose-hang,
+    .character-landing .pose-fall,
+    .character-landing .pose-sit {
       opacity: 0;
     }
 
     .character-sitting .pose-sit {
       opacity: 1;
+    }
+
+    .character-sitting .pose-hang,
+    .character-sitting .pose-fall,
+    .character-sitting .pose-land {
+      opacity: 0;
     }
 
     .character-hanging {
@@ -366,6 +390,7 @@
     }
 
     .character-falling,
+    .character-landing,
     .character-sitting {
       animation: none;
     }
@@ -2335,8 +2360,8 @@
       }
 
       .plainbetter-character {
-        width: 82px;
-        height: 128px;
+        width: 84px;
+        height: 132px;
       }
 
       .home-screen {
@@ -2692,17 +2717,16 @@
   >
 
     <svg
-      viewBox="0 0 96 150"
+      viewBox="0 0 98 154"
       xmlns="http://www.w3.org/2000/svg"
     >
 
       <!-- =========================
-           HANGING / FALLING POSE
+           HANGING POSE
            ========================= -->
 
       <g class="pose-hang">
 
-        <!-- gripping hand -->
         <circle
           class="character-hand"
           cx="25"
@@ -2710,7 +2734,6 @@
           r="4.5"
         />
 
-        <!-- arm holding the bar -->
         <path
           class="character-line"
           d="
@@ -2720,8 +2743,6 @@
           "
         />
 
-        <!-- shoulders:
-             hanging shoulder intentionally higher -->
         <path
           class="character-line"
           d="
@@ -2730,7 +2751,6 @@
           "
         />
 
-        <!-- head -->
         <circle
           class="character-head"
           cx="48"
@@ -2738,7 +2758,6 @@
           r="12"
         />
 
-        <!-- torso -->
         <path
           class="character-line"
           d="
@@ -2747,7 +2766,6 @@
           "
         />
 
-        <!-- phone arm -->
         <path
           class="character-line"
           d="
@@ -2757,7 +2775,6 @@
           "
         />
 
-        <!-- phone hand -->
         <circle
           class="character-hand"
           cx="68"
@@ -2765,7 +2782,6 @@
           r="3.8"
         />
 
-        <!-- phone -->
         <g transform="rotate(11 67 55)">
           <rect
             class="character-phone"
@@ -2787,7 +2803,6 @@
           />
         </g>
 
-        <!-- left leg -->
         <path
           class="character-line"
           d="
@@ -2796,7 +2811,6 @@
           "
         />
 
-        <!-- right leg -->
         <path
           class="character-line"
           d="
@@ -2809,12 +2823,230 @@
 
 
       <!-- =========================
+           FALLING POSE
+           Free arm raised
+           ========================= -->
+
+      <g class="pose-fall">
+
+        <circle
+          class="character-head"
+          cx="48"
+          cy="62"
+          r="12"
+        />
+
+        <path
+          class="character-line"
+          d="
+            M39 79
+            C45 82 50 84 56 86
+          "
+        />
+
+        <path
+          class="character-line"
+          d="
+            M44 81
+            C46 89 49 100 52 111
+          "
+        />
+
+        <path
+          class="character-line"
+          d="
+            M40 80
+            C34 72 28 63 24 53
+            C22 49 21 45 20 42
+          "
+        />
+
+        <circle
+          class="character-hand"
+          cx="20"
+          cy="42"
+          r="3.8"
+        />
+
+        <path
+          class="character-line"
+          d="
+            M56 86
+            C63 82 69 75 73 66
+            C75 62 76 58 76 54
+          "
+        />
+
+        <circle
+          class="character-hand"
+          cx="76"
+          cy="54"
+          r="3.8"
+        />
+
+        <g transform="rotate(22 75 47)">
+          <rect
+            class="character-phone"
+            x="70"
+            y="37"
+            width="10"
+            height="19"
+            rx="2.2"
+          />
+
+          <path
+            class="character-phone-detail"
+            d="M73 40 L77 40"
+          />
+
+          <path
+            class="character-phone-detail"
+            d="M74 53 L76 53"
+          />
+        </g>
+
+        <path
+          class="character-line"
+          d="
+            M52 111
+            C44 118 38 127 34 138
+          "
+        />
+
+        <path
+          class="character-line"
+          d="
+            M52 111
+            C59 118 67 126 75 134
+          "
+        />
+
+      </g>
+
+
+      <!-- =========================
+           LANDING POSE
+           Both arms down, knees bent
+           ========================= -->
+
+      <g class="pose-land">
+
+        <circle
+          class="character-head"
+          cx="48"
+          cy="60"
+          r="12"
+        />
+
+        <path
+          class="character-line"
+          d="
+            M39 74
+            C45 75 51 76 57 76
+          "
+        />
+
+        <path
+          class="character-line"
+          d="
+            M47 77
+            C48 85 48 91 48 97
+          "
+        />
+
+        <path
+          class="character-line"
+          d="
+            M40 75
+            C38 84 38 93 39 101
+          "
+        />
+
+        <circle
+          class="character-hand"
+          cx="39"
+          cy="104"
+          r="3.8"
+        />
+
+        <path
+          class="character-line"
+          d="
+            M56 76
+            C58 85 58 93 57 101
+          "
+        />
+
+        <circle
+          class="character-hand"
+          cx="57"
+          cy="104"
+          r="3.8"
+        />
+
+        <g transform="rotate(-2 63 109)">
+          <rect
+            class="character-phone"
+            x="58"
+            y="99"
+            width="10"
+            height="18"
+            rx="2.2"
+          />
+
+          <path
+            class="character-phone-detail"
+            d="M61 102 L65 102"
+          />
+
+          <path
+            class="character-phone-detail"
+            d="M62 114 L64 114"
+          />
+        </g>
+
+        <path
+          class="character-line"
+          d="
+            M48 97
+            C42 101 38 106 35 112
+          "
+        />
+
+        <path
+          class="character-line"
+          d="
+            M48 97
+            C54 101 58 106 61 112
+          "
+        />
+
+        <path
+          class="character-line"
+          d="
+            M35 112
+            C33 121 32 130 34 140
+          "
+        />
+
+        <path
+          class="character-line"
+          d="
+            M61 112
+            C63 121 64 130 62 140
+          "
+        />
+
+      </g>
+
+
+      <!-- =========================
            SITTING POSE
+           Hand on knee, phone at ear
            ========================= -->
 
       <g class="pose-sit">
 
-        <!-- head -->
         <circle
           class="character-head"
           cx="45"
@@ -2822,7 +3054,6 @@
           r="12"
         />
 
-        <!-- slightly relaxed shoulders -->
         <path
           class="character-line"
           d="
@@ -2831,7 +3062,6 @@
           "
         />
 
-        <!-- torso -->
         <path
           class="character-line"
           d="
@@ -2840,25 +3070,22 @@
           "
         />
 
-        <!-- arm that was hanging:
-             now resting beside him -->
         <path
           class="character-line"
           d="
-            M35 68
-            C30 75 27 83 28 90
-            C29 93 31 95 34 96
+            M36 69
+            C35 78 36 86 39 92
+            C41 96 42 100 42 104
           "
         />
 
         <circle
           class="character-hand"
-          cx="34"
-          cy="96"
+          cx="42"
+          cy="104"
           r="3.8"
         />
 
-        <!-- phone arm -->
         <path
           class="character-line"
           d="
@@ -2875,7 +3102,6 @@
           r="3.8"
         />
 
-        <!-- phone -->
         <g transform="rotate(10 65 43)">
           <rect
             class="character-phone"
@@ -2897,7 +3123,6 @@
           />
         </g>
 
-        <!-- thighs sitting across the edge -->
         <path
           class="character-line"
           d="
@@ -2914,7 +3139,6 @@
           "
         />
 
-        <!-- dangling left shin -->
         <path
           class="character-line"
           d="
@@ -2923,7 +3147,6 @@
           "
         />
 
-        <!-- dangling right shin -->
         <path
           class="character-line"
           d="
@@ -4785,8 +5008,8 @@
       null;
 
 
-    let characterPoseTimer =
-      null;
+    let characterPoseTimers =
+      [];
 
 
     function characterAnchorRatio() {
@@ -4841,11 +5064,6 @@
           .getBoundingClientRect();
 
 
-      /*
-        The hanging hand is at x=25, y=4
-        in the SVG.
-      */
-
       return {
         left:
           characterAnchorX() -
@@ -4869,16 +5087,6 @@
           .getBoundingClientRect();
 
 
-      /*
-        The sitting character's hip is
-        around x=48, y=95.
-
-        Putting that point on the top
-        edge of the footer means the
-        legs naturally hang down through
-        the bottom bar.
-      */
-
       return {
         left:
           characterAnchorX() -
@@ -4886,7 +5094,7 @@
 
         top:
           footer.top -
-          93,
+          94,
       };
 
     }
@@ -4915,6 +5123,7 @@
         .remove(
           "character-hanging",
           "character-falling",
+          "character-landing",
           "character-sitting"
         );
 
@@ -4928,6 +5137,22 @@
 
       characterState =
         pose;
+
+    }
+
+
+    function clearCharacterPoseTimers() {
+
+      characterPoseTimers.forEach(
+        timer =>
+          clearTimeout(
+            timer
+          )
+      );
+
+
+      characterPoseTimers =
+        [];
 
     }
 
@@ -4948,19 +5173,7 @@
       }
 
 
-      if (
-        characterPoseTimer
-      ) {
-
-        clearTimeout(
-          characterPoseTimer
-        );
-
-
-        characterPoseTimer =
-          null;
-
-      }
+      clearCharacterPoseTimers();
 
 
       characterAnimating =
@@ -5070,13 +5283,6 @@
       );
 
 
-      /*
-        Change the page underneath him
-        immediately. He remains in a
-        fixed layer above the site while
-        he falls.
-      */
-
       show(
         destinationScreen
       );
@@ -5132,20 +5338,14 @@
         start.top;
 
 
-      /*
-        Scale duration slightly with the
-        actual screen height so laptops
-        and larger displays feel similar.
-      */
-
       const duration =
         Math.max(
-          760,
+          800,
           Math.min(
-            1050,
-            670 +
+            1150,
+            710 +
             Math.abs(dy) *
-            .32
+            .34
           )
         );
 
@@ -5155,119 +5355,82 @@
           [
             {
               offset: 0,
-
               transform:
                 "translate(0px, 0px) rotate(-4deg)",
             },
-
-            /*
-              Tiny upward / sideways push
-              as the hand releases.
-            */
             {
-              offset: .11,
-
+              offset: .10,
               transform:
-                `translate(${dx * .04}px, -11px) rotate(8deg)`,
+                `translate(${dx * .05}px, -12px) rotate(10deg)`,
             },
-
-            /*
-              Early fall — relatively slow.
-            */
             {
-              offset: .35,
-
+              offset: .30,
               transform:
-                `translate(${dx * .28}px, ${dy * .17}px) rotate(13deg)`,
+                `translate(${dx * .27}px, ${dy * .16}px) rotate(18deg)`,
             },
-
-            /*
-              Accelerating under gravity.
-            */
             {
-              offset: .67,
-
+              offset: .60,
               transform:
-                `translate(${dx * .70}px, ${dy * .55}px) rotate(-10deg)`,
+                `translate(${dx * .70}px, ${dy * .56}px) rotate(-10deg)`,
             },
-
-            /*
-              Impact.
-            */
             {
-              offset: .86,
-
+              offset: .82,
               transform:
-                `translate(${dx}px, ${dy}px) rotate(5deg) scaleY(.90)`,
+                `translate(${dx}px, ${dy - 2}px) rotate(2deg)`,
             },
-
-            /*
-              Small bounce.
-            */
             {
-              offset: .93,
-
+              offset: .89,
               transform:
-                `translate(${dx}px, ${dy - 10}px) rotate(-2deg) scaleY(1.02)`,
+                `translate(${dx}px, ${dy + 1}px) rotate(0deg) scale(1.02, .91)`,
             },
-
-            /*
-              Settled.
-            */
+            {
+              offset: .95,
+              transform:
+                `translate(${dx}px, ${dy - 7}px) rotate(-1deg) scale(1, .98)`,
+            },
             {
               offset: 1,
-
               transform:
-                `translate(${dx}px, ${dy}px) rotate(0deg) scaleY(1)`,
+                `translate(${dx}px, ${dy}px) rotate(0deg) scale(1, 1)`,
             },
           ],
           {
             duration,
-
             easing:
               "cubic-bezier(.32,.02,.27,1)",
-
             fill:
               "forwards",
           }
         );
 
 
-      /*
-        As he reaches the footer, change
-        from the falling body pose to the
-        sitting pose. This makes the final
-        part look like he lands and folds
-        himself onto the bar.
-      */
-
-      characterPoseTimer =
+      characterPoseTimers.push(
         setTimeout(
           () => {
-
-            character
-              .classList
-              .remove(
-                "character-falling"
-              );
-
-
-            character
-              .classList
-              .add(
-                "character-sitting"
-              );
-
+            setCharacterPose(
+              "landing"
+            );
           },
-          duration *
-          .86
-        );
+          duration * .82
+        )
+      );
+
+
+      characterPoseTimers.push(
+        setTimeout(
+          () => {
+            setCharacterPose(
+              "sitting"
+            );
+          },
+          duration * .93
+        )
+      );
 
 
       try {
 
-        await characterMotion
-          .finished;
+        await characterMotion.finished;
 
       } catch {
 
@@ -5275,32 +5438,10 @@
 
       } finally {
 
-        if (
-          characterPoseTimer
-        ) {
-
-          clearTimeout(
-            characterPoseTimer
-          );
-
-
-          characterPoseTimer =
-            null;
-
-        }
+        clearCharacterPoseTimers();
 
       }
 
-
-      /*
-        WAAPI used transforms relative to
-        the original fixed position.
-
-        Once finished, move the actual
-        fixed element to its permanent
-        sitting coordinates and remove
-        the temporary transform.
-      */
 
       try {
         characterMotion.cancel();
@@ -5775,15 +5916,6 @@
 
       }
 
-
-      /*
-        Normal navigation keeps the
-        character in the appropriate
-        persistent state.
-
-        During the special Home-tile fall
-        animation, this is skipped.
-      */
 
       syncCharacterToScreen(
         screen
@@ -11014,15 +11146,6 @@
     );
 
 
-    /*
-      Recalculate the actual bar positions
-      if the browser is resized.
-
-      If resizing happens during the jump,
-      finish the animation safely in the
-      correct state for the current page.
-    */
-
     window.addEventListener(
       "resize",
       () => {
@@ -11373,12 +11496,6 @@
 
     initPrivacyPreferences();
 
-
-    /*
-      Do this after the bars have rendered
-      so the hand is positioned against
-      the real bottom edge of the header.
-    */
 
     requestAnimationFrame(
       () => {
