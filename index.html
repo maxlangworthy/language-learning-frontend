@@ -253,7 +253,7 @@
 
 
     /* =====================================================
-       PLAINBETTER CHARACTER
+       CHARACTER
        ===================================================== */
 
     .plainbetter-character {
@@ -1251,6 +1251,13 @@
       font-weight: 600;
     }
 
+    .char-btn:hover:not(:disabled) {
+      background: var(--white);
+
+      border-color:
+        rgba(24, 58, 82, .35);
+    }
+
     .composer {
       display: flex;
 
@@ -1520,6 +1527,12 @@
       margin-top: 24px;
     }
 
+    .test-chars {
+      margin-top: 12px;
+
+      padding-bottom: 12px;
+    }
+
     .hardcore-row {
       display: flex;
 
@@ -1528,6 +1541,10 @@
 
     .hardcore-row input {
       flex: 1;
+    }
+
+    .hardcore-row .send {
+      min-width: 98px;
     }
 
     .answer-feedback {
@@ -2513,6 +2530,10 @@
         flex-direction: column;
       }
 
+      .hardcore-row .send {
+        min-height: 44px;
+      }
+
       .recent-top {
         flex-direction: column;
 
@@ -2615,11 +2636,6 @@
 
 
 <body>
-
-
-  <!-- ===================================================
-       TOP BAR
-       =================================================== -->
 
   <header class="topbar">
 
@@ -2728,9 +2744,7 @@
   </header>
 
 
-  <!-- ===================================================
-       CHARACTER
-       =================================================== -->
+  <!-- CHARACTER -->
 
   <div
     id="plainbetterCharacter"
@@ -2742,8 +2756,6 @@
       viewBox="0 0 98 154"
       xmlns="http://www.w3.org/2000/svg"
     >
-
-      <!-- HANGING POSE -->
 
       <g class="pose-hang">
 
@@ -2844,8 +2856,6 @@
       </g>
 
 
-      <!-- SITTING POSE -->
-
       <g class="pose-sit">
 
         <circle
@@ -2871,8 +2881,6 @@
           "
         />
 
-        <!-- resting hand towards knee -->
-
         <path
           class="character-line"
           d="
@@ -2888,8 +2896,6 @@
           cy="105"
           r="3.8"
         />
-
-        <!-- phone arm -->
 
         <path
           class="character-line"
@@ -2930,8 +2936,6 @@
 
         </g>
 
-        <!-- thighs -->
-
         <path
           class="character-line"
           d="
@@ -2947,8 +2951,6 @@
             C55 99 61 104 66 111
           "
         />
-
-        <!-- dangling legs -->
 
         <path
           class="character-line"
@@ -2972,10 +2974,6 @@
 
   </div>
 
-
-  <!-- ===================================================
-       APP
-       =================================================== -->
 
   <main class="app">
 
@@ -3587,6 +3585,12 @@
             </label>
 
 
+            <div
+              id="testCharBar"
+              class="chars test-chars hidden"
+            ></div>
+
+
             <div class="hardcore-row">
 
               <input
@@ -3598,6 +3602,7 @@
 
 
               <button
+                id="hardcoreSubmitBtn"
                 class="send"
                 type="submit"
               >
@@ -4332,9 +4337,7 @@
   </main>
 
 
-  <!-- ===================================================
-       FOOTER
-       =================================================== -->
+  <!-- FOOTER -->
 
   <footer class="site-footer">
 
@@ -4934,56 +4937,40 @@
       }
 
 
-      const shouldHang =
-        screen ===
-        screens.home;
-
-
       if (
-        shouldHang
+        screen ===
+        screens.home
       ) {
+
+        applyCharacterPosition(
+          hangingCharacterPosition()
+        );
+
 
         if (
           characterState !==
           "hanging"
         ) {
 
-          applyCharacterPosition(
-            hangingCharacterPosition()
-          );
-
-
           setCharacterPose(
             "hanging"
-          );
-
-        } else {
-
-          applyCharacterPosition(
-            hangingCharacterPosition()
           );
         }
 
       } else {
+
+        applyCharacterPosition(
+          sittingCharacterPosition()
+        );
+
 
         if (
           characterState !==
           "sitting"
         ) {
 
-          applyCharacterPosition(
-            sittingCharacterPosition()
-          );
-
-
           setCharacterPose(
             "sitting"
-          );
-
-        } else {
-
-          applyCharacterPosition(
-            sittingCharacterPosition()
           );
         }
       }
@@ -5009,11 +4996,6 @@
 
           : "sitting";
 
-
-      /*
-        No pose/position change is required if
-        both screens use the sitting state.
-      */
 
       if (
         targetState ===
@@ -5081,12 +5063,6 @@
         "1";
 
 
-      /*
-        PHASE 1
-
-        The current pose disappears completely.
-      */
-
       characterFadeAnimation =
         character.animate(
           [
@@ -5113,10 +5089,12 @@
 
       try {
 
-        await characterFadeAnimation
-          .finished;
+        await characterFadeAnimation.finished;
 
       } catch {
+
+        characterTransitioning =
+          false;
 
         return;
       }
@@ -5134,20 +5112,6 @@
       character.style.opacity =
         "0";
 
-
-      /*
-        This is the exact invisible midpoint.
-
-        The old figure has now fully faded away.
-        At this same instant:
-
-        - the page changes
-        - the character changes position
-        - the character changes pose
-
-        The new pose then begins fading in
-        immediately.
-      */
 
       show(
         targetScreen
@@ -5181,13 +5145,6 @@
       }
 
 
-      /*
-        PHASE 2
-
-        New pose fades in immediately after
-        fade-out reaches zero.
-      */
-
       characterFadeAnimation =
         character.animate(
           [
@@ -5214,10 +5171,12 @@
 
       try {
 
-        await characterFadeAnimation
-          .finished;
+        await characterFadeAnimation.finished;
 
       } catch {
+
+        characterTransitioning =
+          false;
 
         return;
       }
@@ -5258,12 +5217,6 @@
         targetScreen ===
         screens.home;
 
-
-      /*
-        Only crossing between Home and the
-        rest of the app needs the character
-        fade transition.
-      */
 
       if (
         currentIsHome !==
@@ -5381,8 +5334,7 @@
     function recentStorageAllowed() {
 
       return (
-        privacyPreference
-          ?.recentConversations ===
+        privacyPreference?.recentConversations ===
         true
       );
     }
@@ -5840,8 +5792,7 @@
 
     function authHeaders() {
 
-      return session
-        ?.access_token
+      return session?.access_token
 
         ? {
             Authorization:
@@ -5879,8 +5830,7 @@
 
 
       if (
-        !data.session
-          ?.access_token
+        !data.session?.access_token
       ) {
 
         throw new Error(
@@ -5904,8 +5854,7 @@
 
 
       const user =
-        session
-          ?.user;
+        session?.user;
 
 
       $("signedOut")
@@ -6484,8 +6433,7 @@
 
         $("customScenario")
           .maxLength =
-            data.limits
-              ?.customScenarioMaxLength ||
+            data.limits?.customScenarioMaxLength ||
             2000;
 
 
@@ -6725,6 +6673,165 @@
         .classList
         .remove(
           "hidden"
+        );
+    }
+
+
+    function insertTestChar(
+      characterToInsert
+    ) {
+
+      const input =
+        $("hardcoreInput");
+
+
+      if (
+        input.disabled ||
+        input.readOnly
+      ) {
+        return;
+      }
+
+
+      const start =
+        input.selectionStart ??
+        input.value.length;
+
+
+      const end =
+        input.selectionEnd ??
+        start;
+
+
+      input.setRangeText(
+        characterToInsert,
+        start,
+        end,
+        "end"
+      );
+
+
+      input.focus();
+    }
+
+
+    function renderTestChars(
+      languageId
+    ) {
+
+      const bar =
+        $("testCharBar");
+
+
+      const characters =
+        languageMap
+          .get(
+            languageId
+          )
+          ?.specialCharacters ||
+        [];
+
+
+      bar.innerHTML =
+        "";
+
+
+      if (
+        !characters.length
+      ) {
+
+        bar
+          .classList
+          .add(
+            "hidden"
+          );
+
+
+        return;
+      }
+
+
+      const label =
+        document.createElement(
+          "div"
+        );
+
+
+      label.className =
+        "chars-label";
+
+
+      label.textContent =
+        "Characters you may not have on an English keyboard";
+
+
+      bar.appendChild(
+        label
+      );
+
+
+      characters.forEach(
+        characterToInsert => {
+
+          const button =
+            document.createElement(
+              "button"
+            );
+
+
+          button.type =
+            "button";
+
+
+          button.className =
+            "char-btn";
+
+
+          button.textContent =
+            characterToInsert;
+
+
+          button.onmousedown =
+            event =>
+              event.preventDefault();
+
+
+          button.onclick =
+            () =>
+              insertTestChar(
+                characterToInsert
+              );
+
+
+          bar.appendChild(
+            button
+          );
+        }
+      );
+
+
+      bar
+        .classList
+        .remove(
+          "hidden"
+        );
+    }
+
+
+    function setTestCharButtons(
+      enabled
+    ) {
+
+      $("testCharBar")
+        .querySelectorAll(
+          "button"
+        )
+        .forEach(
+          button => {
+
+            button.disabled =
+              !enabled;
+          }
         );
     }
 
@@ -7263,8 +7370,7 @@
       if (
         data.lookupError ||
         !data.found ||
-        !data.entries
-          ?.length
+        !data.entries?.length
       ) {
 
         const unavailable =
@@ -7301,8 +7407,7 @@
 
       const senses =
         (
-          entry.senses
-            ?.length
+          entry.senses?.length
 
             ? entry.senses
 
@@ -7351,8 +7456,7 @@
 
 
           if (
-            sense.tags
-              ?.length
+            sense.tags?.length
           ) {
 
             const tags =
@@ -7665,8 +7769,7 @@
 
 
         paragraph.textContent =
-          feedback
-            ?.explanation ||
+          feedback?.explanation ||
           "No correction needed.";
 
 
@@ -8015,9 +8118,7 @@
 
 
       if (
-        currentRecent
-          ?.messages
-          ?.[index]
+        currentRecent?.messages?.[index]
       ) {
 
         currentRecent
@@ -8119,8 +8220,7 @@
 
 
         paragraph.textContent =
-          feedback
-            ?.explanation ||
+          feedback?.explanation ||
           "No correction needed.";
 
 
@@ -8269,9 +8369,7 @@
               )
               ?.text ||
 
-            conversation.messages
-              ?.[0]
-              ?.text ||
+            conversation.messages?.[0]?.text ||
 
             "Conversation";
 
@@ -8694,8 +8792,7 @@
 
 
         if (
-          !data.languages
-            ?.length
+          !data.languages?.length
         ) {
 
           message.textContent =
@@ -8901,8 +8998,7 @@
 
 
         const vocabText =
-          data.items
-            ?.length
+          data.items?.length
 
             ? `${data.items.length} saved vocabulary item${data.items.length === 1 ? "" : "s"}`
 
@@ -9124,8 +9220,7 @@
     async function openStats() {
 
       if (
-        !session
-          ?.user
+        !session?.user
       ) {
 
         openAuth(
@@ -9732,8 +9827,7 @@
         ].includes(
           sourceMode
         ) &&
-        !session
-          ?.user
+        !session?.user
       ) {
 
         $("vocabSetupError")
@@ -9799,6 +9893,9 @@
         activeTest = {
           ...data,
 
+          languageId:
+            language,
+
           index:
             0,
 
@@ -9808,6 +9905,11 @@
           answered:
             false,
         };
+
+
+        renderTestChars(
+          language
+        );
 
 
         $("testTitle")
@@ -9962,6 +10064,26 @@
           false;
 
 
+      $("hardcoreInput")
+        .readOnly =
+          false;
+
+
+      $("hardcoreSubmitBtn")
+        .disabled =
+          false;
+
+
+      $("hardcoreSubmitBtn")
+        .textContent =
+          "Check";
+
+
+      setTestCharButtons(
+        true
+      );
+
+
       if (
         activeTest.quizMode ===
         "hardcore"
@@ -9981,6 +10103,21 @@
           );
 
 
+        const hasCharacters =
+          $("testCharBar")
+            .querySelector(
+              ".char-btn"
+            );
+
+
+        $("testCharBar")
+          .classList
+          .toggle(
+            "hidden",
+            !hasCharacters
+          );
+
+
         setTimeout(
           () =>
             $("hardcoreInput")
@@ -9991,6 +10128,13 @@
       } else {
 
         $("hardcoreForm")
+          .classList
+          .add(
+            "hidden"
+          );
+
+
+        $("testCharBar")
           .classList
           .add(
             "hidden"
@@ -10055,8 +10199,7 @@
 
       if (
         answerPending ||
-        activeTest
-          ?.answered ||
+        activeTest?.answered ||
         !String(
           answer ||
           ""
@@ -10085,9 +10228,30 @@
         );
 
 
-      $("hardcoreInput")
-        .disabled =
-          true;
+      if (
+        activeTest.quizMode ===
+        "hardcore"
+      ) {
+
+        $("hardcoreInput")
+          .disabled =
+            true;
+
+
+        $("hardcoreSubmitBtn")
+          .disabled =
+            true;
+
+
+        $("hardcoreSubmitBtn")
+          .textContent =
+            "Checking…";
+
+
+        setTestCharButtons(
+          false
+        );
+      }
 
 
       try {
@@ -10237,22 +10401,85 @@
             `Score: ${activeTest.score}`;
 
 
-        $("nextWordBtn")
-          .textContent =
-            activeTest.index ===
-            activeTest.questions.length -
-            1
-
-              ? "See results"
-
-              : "Next word";
+        const lastQuestion =
+          activeTest.index ===
+          activeTest.questions.length -
+          1;
 
 
-        $("nextWordBtn")
-          .classList
-          .remove(
-            "hidden"
+        if (
+          activeTest.quizMode ===
+          "hardcore"
+        ) {
+
+          /*
+            Keep the answer field visible but stop it
+            being edited. The same submit button now
+            becomes the Next/Results control.
+
+            It receives focus, so pressing Enter again
+            immediately advances.
+          */
+
+          $("hardcoreInput")
+            .disabled =
+              false;
+
+
+          $("hardcoreInput")
+            .readOnly =
+              true;
+
+
+          $("hardcoreSubmitBtn")
+            .disabled =
+              false;
+
+
+          $("hardcoreSubmitBtn")
+            .textContent =
+              lastQuestion
+
+                ? "See results"
+
+                : "Next word";
+
+
+          setTestCharButtons(
+            false
           );
+
+
+          requestAnimationFrame(
+            () =>
+              $("hardcoreSubmitBtn")
+                .focus()
+          );
+
+        } else {
+
+          $("nextWordBtn")
+            .textContent =
+              lastQuestion
+
+                ? "See results"
+
+                : "Next word";
+
+
+          $("nextWordBtn")
+            .classList
+            .remove(
+              "hidden"
+            );
+
+
+          requestAnimationFrame(
+            () =>
+              $("nextWordBtn")
+                .focus()
+          );
+        }
 
       } catch (
         error
@@ -10281,9 +10508,39 @@
           );
 
 
-        $("hardcoreInput")
-          .disabled =
-            false;
+        if (
+          activeTest.quizMode ===
+          "hardcore"
+        ) {
+
+          $("hardcoreInput")
+            .disabled =
+              false;
+
+
+          $("hardcoreInput")
+            .readOnly =
+              false;
+
+
+          $("hardcoreSubmitBtn")
+            .disabled =
+              false;
+
+
+          $("hardcoreSubmitBtn")
+            .textContent =
+              "Check";
+
+
+          setTestCharButtons(
+            true
+          );
+
+
+          $("hardcoreInput")
+            .focus();
+        }
 
       } finally {
 
@@ -10296,8 +10553,7 @@
     function nextQuestion() {
 
       if (
-        !activeTest
-          ?.answered
+        !activeTest?.answered
       ) {
 
         return;
@@ -10365,6 +10621,13 @@
           .textContent =
             "Multiple-choice answers affect this score only and never change your saved vocabulary.";
       }
+
+
+      requestAnimationFrame(
+        () =>
+          $("backToVocabBtn")
+            .focus()
+      );
     }
 
 
@@ -10376,6 +10639,11 @@
 
       answerPending =
         false;
+
+
+      $("testCharBar")
+        .innerHTML =
+          "";
 
 
       show(
@@ -10545,11 +10813,37 @@
         startVocabTest;
 
 
+    /*
+      HARDCORE ENTER BEHAVIOUR
+
+      First Enter:
+        checks the typed answer.
+
+      Once answered:
+        the same form submission advances
+        to the next word.
+
+      Because the submit button is focused after
+      feedback appears, another press of Enter
+      immediately triggers this.
+    */
+
     $("hardcoreForm")
       .onsubmit =
         event => {
 
           event.preventDefault();
+
+
+          if (
+            activeTest?.answered
+          ) {
+
+            nextQuestion();
+
+
+            return;
+          }
 
 
           submitAnswer(
@@ -10772,12 +11066,6 @@
           0
         );
 
-
-        /*
-          If the browser is resized in the
-          middle of a fade, finish safely at
-          the currently displayed page's pose.
-        */
 
         if (
           characterTransitioning
