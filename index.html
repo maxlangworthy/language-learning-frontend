@@ -116,8 +116,6 @@
     }
 
     .topbar-inner {
-      position: relative;
-
       width: min(1500px, 100%);
       height: 100%;
 
@@ -134,9 +132,10 @@
       display: flex;
       align-items: center;
 
-      gap: 12px;
+      gap: 10px;
 
-      min-width: 120px;
+      min-width: 0;
+      flex: 0 1 auto;
     }
 
     .top-right {
@@ -159,17 +158,12 @@
     }
 
     .top-brand {
-      position: absolute;
-
-      left: 50%;
-      top: 50%;
-
-      transform:
-        translate(-50%, -50%);
-
       border: 0;
 
-      padding: 4px 12px;
+      padding:
+        3px 7px 5px 0;
+
+      margin-right: 5px;
 
       background: transparent;
       color: var(--white);
@@ -179,10 +173,12 @@
         Georgia,
         serif;
 
-      font-size: 1.8rem;
+      font-size: 1.85rem;
       font-weight: 500;
 
-      letter-spacing: -.02em;
+      line-height: 1;
+
+      letter-spacing: -.025em;
 
       white-space: nowrap;
 
@@ -268,10 +264,12 @@
       width: 98px;
       height: 154px;
 
+      opacity: 1;
+
       pointer-events: none;
 
       will-change:
-        transform,
+        opacity,
         left,
         top;
 
@@ -336,51 +334,16 @@
     }
 
     .pose-hang,
-    .pose-fall,
-    .pose-land,
     .pose-sit {
-      transition:
-        opacity .09s linear;
+      display: none;
     }
 
     .character-hanging .pose-hang {
-      opacity: 1;
-    }
-
-    .character-hanging .pose-fall,
-    .character-hanging .pose-land,
-    .character-hanging .pose-sit {
-      opacity: 0;
-    }
-
-    .character-falling .pose-fall {
-      opacity: 1;
-    }
-
-    .character-falling .pose-hang,
-    .character-falling .pose-land,
-    .character-falling .pose-sit {
-      opacity: 0;
-    }
-
-    .character-landing .pose-land {
-      opacity: 1;
-    }
-
-    .character-landing .pose-hang,
-    .character-landing .pose-fall,
-    .character-landing .pose-sit {
-      opacity: 0;
+      display: block;
     }
 
     .character-sitting .pose-sit {
-      opacity: 1;
-    }
-
-    .character-sitting .pose-hang,
-    .character-sitting .pose-fall,
-    .character-sitting .pose-land {
-      opacity: 0;
+      display: block;
     }
 
     .character-hanging {
@@ -394,8 +357,6 @@
         infinite;
     }
 
-    .character-falling,
-    .character-landing,
     .character-sitting {
       animation: none;
     }
@@ -2334,12 +2295,14 @@
        ===================================================== */
 
     @media (max-width: 980px) {
-      .top-brand {
+      .topbar .email {
         display: none !important;
       }
 
-      .topbar .email {
-        display: none !important;
+      .top-brand {
+        font-size: 1.5rem;
+
+        margin-right: 1px;
       }
     }
 
@@ -2361,7 +2324,7 @@
       }
 
       .top-left {
-        min-width: auto;
+        gap: 5px;
       }
 
       .top-right,
@@ -2369,11 +2332,25 @@
         gap: 5px;
       }
 
+      .top-brand {
+        font-size: 1.28rem;
+
+        padding-right: 2px;
+      }
+
       .nav-btn {
         padding:
           8px 9px;
 
         font-size: .80rem;
+      }
+
+      #topBackBtn,
+      #topHomeBtn {
+        padding:
+          8px 8px;
+
+        font-size: .76rem;
       }
 
       #recentBtn {
@@ -2578,6 +2555,20 @@
       }
     }
 
+    @media (max-width: 620px) {
+      .top-brand {
+        font-size: 1.12rem;
+      }
+
+      #topBackBtn,
+      #topHomeBtn {
+        padding:
+          7px 6px;
+
+        font-size: .68rem;
+      }
+    }
+
     @media (max-width: 520px) {
       .nav-btn {
         padding:
@@ -2637,6 +2628,16 @@
       <div class="top-left">
 
         <button
+          id="topBrand"
+          class="top-brand hidden"
+          type="button"
+          aria-label="Return to PlainBetter home"
+        >
+          PlainBetter
+        </button>
+
+
+        <button
           id="topBackBtn"
           class="nav-btn hidden"
           type="button"
@@ -2644,17 +2645,16 @@
           ← Back
         </button>
 
+
+        <button
+          id="topHomeBtn"
+          class="nav-btn hidden"
+          type="button"
+        >
+          Home
+        </button>
+
       </div>
-
-
-      <button
-        id="topBrand"
-        class="top-brand hidden"
-        type="button"
-        aria-label="Return to PlainBetter home"
-      >
-        PlainBetter
-      </button>
 
 
       <div class="top-right">
@@ -2729,7 +2729,7 @@
 
 
   <!-- ===================================================
-       ANIMATED CHARACTER
+       CHARACTER
        =================================================== -->
 
   <div
@@ -2743,7 +2743,7 @@
       xmlns="http://www.w3.org/2000/svg"
     >
 
-      <!-- HANGING -->
+      <!-- HANGING POSE -->
 
       <g class="pose-hang">
 
@@ -2844,223 +2844,7 @@
       </g>
 
 
-      <!-- FALLING -->
-
-      <g class="pose-fall">
-
-        <circle
-          class="character-head"
-          cx="48"
-          cy="62"
-          r="12"
-        />
-
-        <path
-          class="character-line"
-          d="
-            M39 79
-            C45 82 50 84 56 86
-          "
-        />
-
-        <path
-          class="character-line"
-          d="
-            M44 81
-            C46 89 49 100 52 111
-          "
-        />
-
-        <path
-          class="character-line"
-          d="
-            M40 80
-            C34 72 28 63 24 53
-            C22 49 21 45 20 42
-          "
-        />
-
-        <circle
-          class="character-hand"
-          cx="20"
-          cy="42"
-          r="3.8"
-        />
-
-        <path
-          class="character-line"
-          d="
-            M56 86
-            C63 82 69 75 73 66
-            C75 62 76 58 76 54
-          "
-        />
-
-        <circle
-          class="character-hand"
-          cx="76"
-          cy="54"
-          r="3.8"
-        />
-
-        <g transform="rotate(22 75 47)">
-
-          <rect
-            class="character-phone"
-            x="70"
-            y="37"
-            width="10"
-            height="19"
-            rx="2.2"
-          />
-
-          <path
-            class="character-phone-detail"
-            d="M73 40 L77 40"
-          />
-
-          <path
-            class="character-phone-detail"
-            d="M74 53 L76 53"
-          />
-
-        </g>
-
-        <path
-          class="character-line"
-          d="
-            M52 111
-            C44 118 38 127 34 138
-          "
-        />
-
-        <path
-          class="character-line"
-          d="
-            M52 111
-            C59 118 67 126 75 134
-          "
-        />
-
-      </g>
-
-
-      <!-- LANDING -->
-
-      <g class="pose-land">
-
-        <circle
-          class="character-head"
-          cx="48"
-          cy="60"
-          r="12"
-        />
-
-        <path
-          class="character-line"
-          d="
-            M39 74
-            C45 75 51 76 57 76
-          "
-        />
-
-        <path
-          class="character-line"
-          d="
-            M47 77
-            C48 85 48 91 48 97
-          "
-        />
-
-        <path
-          class="character-line"
-          d="
-            M40 75
-            C38 84 38 93 39 101
-          "
-        />
-
-        <circle
-          class="character-hand"
-          cx="39"
-          cy="104"
-          r="3.8"
-        />
-
-        <path
-          class="character-line"
-          d="
-            M56 76
-            C58 85 58 93 57 101
-          "
-        />
-
-        <circle
-          class="character-hand"
-          cx="57"
-          cy="104"
-          r="3.8"
-        />
-
-        <g transform="rotate(-2 63 109)">
-
-          <rect
-            class="character-phone"
-            x="58"
-            y="99"
-            width="10"
-            height="18"
-            rx="2.2"
-          />
-
-          <path
-            class="character-phone-detail"
-            d="M61 102 L65 102"
-          />
-
-          <path
-            class="character-phone-detail"
-            d="M62 114 L64 114"
-          />
-
-        </g>
-
-        <path
-          class="character-line"
-          d="
-            M48 97
-            C42 101 38 106 35 112
-          "
-        />
-
-        <path
-          class="character-line"
-          d="
-            M48 97
-            C54 101 58 106 61 112
-          "
-        />
-
-        <path
-          class="character-line"
-          d="
-            M35 112
-            C33 121 32 130 34 140
-          "
-        />
-
-        <path
-          class="character-line"
-          d="
-            M61 112
-            C63 121 64 130 62 140
-          "
-        />
-
-      </g>
-
-
-      <!-- SITTING -->
+      <!-- SITTING POSE -->
 
       <g class="pose-sit">
 
@@ -3087,21 +2871,25 @@
           "
         />
 
+        <!-- resting hand towards knee -->
+
         <path
           class="character-line"
           d="
             M36 69
-            C35 78 36 86 39 92
-            C41 96 42 100 42 104
+            C36 78 37 86 39 93
+            C40 98 41 102 42 105
           "
         />
 
         <circle
           class="character-hand"
           cx="42"
-          cy="104"
+          cy="105"
           r="3.8"
         />
+
+        <!-- phone arm -->
 
         <path
           class="character-line"
@@ -3142,6 +2930,8 @@
 
         </g>
 
+        <!-- thighs -->
+
         <path
           class="character-line"
           d="
@@ -3157,6 +2947,8 @@
             C55 99 61 104 66 111
           "
         />
+
+        <!-- dangling legs -->
 
         <path
           class="character-line"
@@ -4934,14 +4726,19 @@
     let characterState =
       "hanging";
 
-    let characterAnimating =
+    let characterTransitioning =
       false;
 
-    let characterMotion =
+    let characterFadeAnimation =
       null;
 
-    let characterPoseTimers =
-      [];
+
+    const CHARACTER_FADE_OUT_MS =
+      190;
+
+
+    const CHARACTER_FADE_IN_MS =
+      230;
 
 
     function characterAnchorRatio() {
@@ -5046,8 +4843,6 @@
         .classList
         .remove(
           "character-hanging",
-          "character-falling",
-          "character-landing",
           "character-sitting"
         );
 
@@ -5064,51 +4859,33 @@
     }
 
 
-    function clearCharacterPoseTimers() {
-
-      characterPoseTimers.forEach(
-        timer =>
-          clearTimeout(
-            timer
-          )
-      );
-
-
-      characterPoseTimers =
-        [];
-    }
-
-
-    function cancelCharacterMotion() {
+    function stopCharacterFade() {
 
       if (
-        characterMotion
+        characterFadeAnimation
       ) {
 
         try {
-          characterMotion.cancel();
+          characterFadeAnimation.cancel();
         } catch {}
 
-        characterMotion =
+        characterFadeAnimation =
           null;
       }
 
 
-      clearCharacterPoseTimers();
+      character.style.opacity =
+        "1";
 
 
-      characterAnimating =
+      characterTransitioning =
         false;
-
-
-      character.style.transform =
-        "";
     }
 
 
     function placeCharacterHanging() {
 
-      cancelCharacterMotion();
+      stopCharacterFade();
 
 
       applyCharacterPosition(
@@ -5119,12 +4896,16 @@
       setCharacterPose(
         "hanging"
       );
+
+
+      character.style.opacity =
+        "1";
     }
 
 
     function placeCharacterSitting() {
 
-      cancelCharacterMotion();
+      stopCharacterFade();
 
 
       applyCharacterPosition(
@@ -5135,6 +4916,10 @@
       setCharacterPose(
         "sitting"
       );
+
+
+      character.style.opacity =
+        "1";
     }
 
 
@@ -5143,65 +4928,105 @@
     ) {
 
       if (
-        characterAnimating
+        characterTransitioning
       ) {
         return;
       }
 
 
-      if (
+      const shouldHang =
         screen ===
-        screens.home
+        screens.home;
+
+
+      if (
+        shouldHang
       ) {
 
-        placeCharacterHanging();
+        if (
+          characterState !==
+          "hanging"
+        ) {
+
+          applyCharacterPosition(
+            hangingCharacterPosition()
+          );
+
+
+          setCharacterPose(
+            "hanging"
+          );
+
+        } else {
+
+          applyCharacterPosition(
+            hangingCharacterPosition()
+          );
+        }
 
       } else {
 
-        placeCharacterSitting();
+        if (
+          characterState !==
+          "sitting"
+        ) {
 
+          applyCharacterPosition(
+            sittingCharacterPosition()
+          );
+
+
+          setCharacterPose(
+            "sitting"
+          );
+
+        } else {
+
+          applyCharacterPosition(
+            sittingCharacterPosition()
+          );
+        }
       }
     }
 
 
-    async function animateCharacterToFooter(
-      destinationScreen
+    async function fadeCharacterToScreen(
+      targetScreen
     ) {
 
       if (
-        characterAnimating
+        characterTransitioning
       ) {
         return;
       }
 
 
-      cancelCharacterMotion();
+      const targetState =
+        targetScreen ===
+          screens.home
+
+          ? "hanging"
+
+          : "sitting";
 
 
-      const start =
-        hangingCharacterPosition();
+      /*
+        No pose/position change is required if
+        both screens use the sitting state.
+      */
 
-      const end =
-        sittingCharacterPosition();
+      if (
+        targetState ===
+        characterState
+      ) {
 
-
-      applyCharacterPosition(
-        start
-      );
-
-
-      characterAnimating =
-        true;
-
-
-      setCharacterPose(
-        "falling"
-      );
+        show(
+          targetScreen
+        );
 
 
-      show(
-        destinationScreen
-      );
+        return;
+      }
 
 
       const hiddenCharacter =
@@ -5226,109 +5051,59 @@
         reducedMotion
       ) {
 
-        characterAnimating =
-          false;
-
-
-        applyCharacterPosition(
-          end
+        show(
+          targetScreen
         );
 
 
-        setCharacterPose(
-          "sitting"
-        );
+        if (
+          targetState ===
+          "hanging"
+        ) {
+
+          placeCharacterHanging();
+
+        } else {
+
+          placeCharacterSitting();
+        }
 
 
         return;
       }
 
 
-      const dx =
-        end.left -
-        start.left;
-
-      const dy =
-        end.top -
-        start.top;
+      characterTransitioning =
+        true;
 
 
-      const duration =
-        Math.max(
-          800,
-          Math.min(
-            1150,
-            710 +
-            Math.abs(dy) *
-            .34
-          )
-        );
+      character.style.opacity =
+        "1";
 
 
-      characterMotion =
+      /*
+        PHASE 1
+
+        The current pose disappears completely.
+      */
+
+      characterFadeAnimation =
         character.animate(
           [
             {
-              offset: 0,
-
-              transform:
-                "translate(0px, 0px) rotate(-4deg)",
+              opacity: 1,
             },
 
             {
-              offset: .10,
-
-              transform:
-                `translate(${dx * .05}px, -12px) rotate(10deg)`,
-            },
-
-            {
-              offset: .30,
-
-              transform:
-                `translate(${dx * .27}px, ${dy * .16}px) rotate(18deg)`,
-            },
-
-            {
-              offset: .60,
-
-              transform:
-                `translate(${dx * .70}px, ${dy * .56}px) rotate(-10deg)`,
-            },
-
-            {
-              offset: .82,
-
-              transform:
-                `translate(${dx}px, ${dy - 2}px) rotate(2deg)`,
-            },
-
-            {
-              offset: .89,
-
-              transform:
-                `translate(${dx}px, ${dy + 1}px) rotate(0deg) scale(1.02, .91)`,
-            },
-
-            {
-              offset: .95,
-
-              transform:
-                `translate(${dx}px, ${dy - 7}px) rotate(-1deg) scale(1, .98)`,
-            },
-
-            {
-              offset: 1,
-
-              transform:
-                `translate(${dx}px, ${dy}px) rotate(0deg) scale(1, 1)`,
+              opacity: 0,
             },
           ],
           {
-            duration,
+            duration:
+              CHARACTER_FADE_OUT_MS,
 
             easing:
-              "cubic-bezier(.32,.02,.27,1)",
+              "ease-in",
 
             fill:
               "forwards",
@@ -5336,71 +5111,176 @@
         );
 
 
-      characterPoseTimers.push(
-        setTimeout(
-          () => {
-            setCharacterPose(
-              "landing"
-            );
-          },
-          duration *
-          .82
-        )
-      );
-
-
-      characterPoseTimers.push(
-        setTimeout(
-          () => {
-            setCharacterPose(
-              "sitting"
-            );
-          },
-          duration *
-          .93
-        )
-      );
-
-
       try {
 
-        await characterMotion.finished;
+        await characterFadeAnimation
+          .finished;
 
       } catch {
 
         return;
-
-      } finally {
-
-        clearCharacterPoseTimers();
-
       }
 
 
       try {
-        characterMotion.cancel();
+        characterFadeAnimation.cancel();
       } catch {}
 
 
-      characterMotion =
+      characterFadeAnimation =
         null;
 
 
-      character.style.transform =
-        "";
+      character.style.opacity =
+        "0";
 
 
-      applyCharacterPosition(
-        end
+      /*
+        This is the exact invisible midpoint.
+
+        The old figure has now fully faded away.
+        At this same instant:
+
+        - the page changes
+        - the character changes position
+        - the character changes pose
+
+        The new pose then begins fading in
+        immediately.
+      */
+
+      show(
+        targetScreen
       );
 
 
-      characterAnimating =
+      if (
+        targetState ===
+        "hanging"
+      ) {
+
+        applyCharacterPosition(
+          hangingCharacterPosition()
+        );
+
+
+        setCharacterPose(
+          "hanging"
+        );
+
+      } else {
+
+        applyCharacterPosition(
+          sittingCharacterPosition()
+        );
+
+
+        setCharacterPose(
+          "sitting"
+        );
+      }
+
+
+      /*
+        PHASE 2
+
+        New pose fades in immediately after
+        fade-out reaches zero.
+      */
+
+      characterFadeAnimation =
+        character.animate(
+          [
+            {
+              opacity: 0,
+            },
+
+            {
+              opacity: 1,
+            },
+          ],
+          {
+            duration:
+              CHARACTER_FADE_IN_MS,
+
+            easing:
+              "ease-out",
+
+            fill:
+              "forwards",
+          }
+        );
+
+
+      try {
+
+        await characterFadeAnimation
+          .finished;
+
+      } catch {
+
+        return;
+      }
+
+
+      try {
+        characterFadeAnimation.cancel();
+      } catch {}
+
+
+      characterFadeAnimation =
+        null;
+
+
+      character.style.opacity =
+        "1";
+
+
+      characterTransitioning =
         false;
+    }
 
 
-      setCharacterPose(
-        "sitting"
+    async function navigateToScreen(
+      targetScreen
+    ) {
+
+      const current =
+        activeScreen();
+
+
+      const currentIsHome =
+        current ===
+        screens.home;
+
+
+      const targetIsHome =
+        targetScreen ===
+        screens.home;
+
+
+      /*
+        Only crossing between Home and the
+        rest of the app needs the character
+        fade transition.
+      */
+
+      if (
+        currentIsHome !==
+        targetIsHome
+      ) {
+
+        await fadeCharacterToScreen(
+          targetScreen
+        );
+
+
+        return;
+      }
+
+
+      show(
+        targetScreen
       );
     }
 
@@ -5501,7 +5381,8 @@
     function recentStorageAllowed() {
 
       return (
-        privacyPreference?.recentConversations ===
+        privacyPreference
+          ?.recentConversations ===
         true
       );
     }
@@ -5516,6 +5397,7 @@
         $("privacyCurrent")
           .textContent =
             "No choice has been saved yet.";
+
 
         return;
       }
@@ -5715,6 +5597,14 @@
         screens.home;
 
 
+      $("topBrand")
+        .classList
+        .toggle(
+          "hidden",
+          home
+        );
+
+
       $("topBackBtn")
         .classList
         .toggle(
@@ -5723,7 +5613,7 @@
         );
 
 
-      $("topBrand")
+      $("topHomeBtn")
         .classList
         .toggle(
           "hidden",
@@ -5747,7 +5637,7 @@
 
         $("topBackBtn")
           .textContent =
-            "← Home";
+            "← Back";
 
       } else if (
         screen ===
@@ -5853,10 +5743,7 @@
     }
 
 
-    function goHome() {
-
-      cancelCharacterMotion();
-
+    async function goHome() {
 
       screenBeforeStats =
         screens.home;
@@ -5868,13 +5755,13 @@
         screens.home;
 
 
-      show(
+      await navigateToScreen(
         screens.home
       );
     }
 
 
-    function openInfoScreen(
+    async function openInfoScreen(
       screen
     ) {
 
@@ -5897,15 +5784,15 @@
       }
 
 
-      show(
+      await navigateToScreen(
         screen
       );
     }
 
 
-    function closeInfoScreen() {
+    async function closeInfoScreen() {
 
-      show(
+      await navigateToScreen(
         screenBeforeInfo ||
         screens.home
       );
@@ -5953,7 +5840,8 @@
 
     function authHeaders() {
 
-      return session?.access_token
+      return session
+        ?.access_token
 
         ? {
             Authorization:
@@ -5991,7 +5879,8 @@
 
 
       if (
-        !data.session?.access_token
+        !data.session
+          ?.access_token
       ) {
 
         throw new Error(
@@ -6015,7 +5904,8 @@
 
 
       const user =
-        session?.user;
+        session
+          ?.user;
 
 
       $("signedOut")
@@ -6065,7 +5955,7 @@
           )
       ) {
 
-        show(
+        navigateToScreen(
           screens.home
         );
       }
@@ -6594,7 +6484,8 @@
 
         $("customScenario")
           .maxLength =
-            data.limits?.customScenarioMaxLength ||
+            data.limits
+              ?.customScenarioMaxLength ||
             2000;
 
 
@@ -7372,7 +7263,8 @@
       if (
         data.lookupError ||
         !data.found ||
-        !data.entries?.length
+        !data.entries
+          ?.length
       ) {
 
         const unavailable =
@@ -7409,7 +7301,8 @@
 
       const senses =
         (
-          entry.senses?.length
+          entry.senses
+            ?.length
 
             ? entry.senses
 
@@ -7458,7 +7351,8 @@
 
 
           if (
-            sense.tags?.length
+            sense.tags
+              ?.length
           ) {
 
             const tags =
@@ -7771,7 +7665,8 @@
 
 
         paragraph.textContent =
-          feedback?.explanation ||
+          feedback
+            ?.explanation ||
           "No correction needed.";
 
 
@@ -8120,7 +8015,9 @@
 
 
       if (
-        currentRecent?.messages?.[index]
+        currentRecent
+          ?.messages
+          ?.[index]
       ) {
 
         currentRecent
@@ -8222,7 +8119,8 @@
 
 
         paragraph.textContent =
-          feedback?.explanation ||
+          feedback
+            ?.explanation ||
           "No correction needed.";
 
 
@@ -8371,7 +8269,9 @@
               )
               ?.text ||
 
-            conversation.messages?.[0]?.text ||
+            conversation.messages
+              ?.[0]
+              ?.text ||
 
             "Conversation";
 
@@ -8470,6 +8370,7 @@
           [
             conversation.scenarioName,
             conversation.levelLabel,
+
             formatDate(
               conversation.createdAt
             ),
@@ -8620,13 +8521,13 @@
     }
 
 
-    function openRecent() {
+    async function openRecent() {
 
       screenBeforeRecent =
         activeScreen();
 
 
-      show(
+      await navigateToScreen(
         screens.recent
       );
 
@@ -8635,9 +8536,9 @@
     }
 
 
-    function closeRecent() {
+    async function closeRecent() {
 
-      show(
+      await navigateToScreen(
         screenBeforeRecent ||
         screens.home
       );
@@ -8793,7 +8694,8 @@
 
 
         if (
-          !data.languages?.length
+          !data.languages
+            ?.length
         ) {
 
           message.textContent =
@@ -8999,7 +8901,8 @@
 
 
         const vocabText =
-          data.items?.length
+          data.items
+            ?.length
 
             ? `${data.items.length} saved vocabulary item${data.items.length === 1 ? "" : "s"}`
 
@@ -9221,7 +9124,8 @@
     async function openStats() {
 
       if (
-        !session?.user
+        !session
+          ?.user
       ) {
 
         openAuth(
@@ -9237,7 +9141,7 @@
         activeScreen();
 
 
-      show(
+      await navigateToScreen(
         screens.stats
       );
 
@@ -9246,9 +9150,9 @@
     }
 
 
-    function closeStats() {
+    async function closeStats() {
 
-      show(
+      await navigateToScreen(
         screenBeforeStats ||
         screens.home
       );
@@ -9828,7 +9732,8 @@
         ].includes(
           sourceMode
         ) &&
-        !session?.user
+        !session
+          ?.user
       ) {
 
         $("vocabSetupError")
@@ -10150,7 +10055,8 @@
 
       if (
         answerPending ||
-        activeTest?.answered ||
+        activeTest
+          ?.answered ||
         !String(
           answer ||
           ""
@@ -10390,7 +10296,8 @@
     function nextQuestion() {
 
       if (
-        !activeTest?.answered
+        !activeTest
+          ?.answered
       ) {
 
         return;
@@ -10484,7 +10391,7 @@
     $("chatTile")
       .onclick =
         () =>
-          animateCharacterToFooter(
+          navigateToScreen(
             screens.chatSetup
           );
 
@@ -10492,7 +10399,7 @@
     $("vocabTile")
       .onclick =
         () =>
-          animateCharacterToFooter(
+          navigateToScreen(
             screens.vocabSetup
           );
 
@@ -10502,9 +10409,14 @@
         goHome;
 
 
+    $("topHomeBtn")
+      .onclick =
+        goHome;
+
+
     $("topBackBtn")
       .onclick =
-        () => {
+        async () => {
 
           const current =
             activeScreen();
@@ -10520,7 +10432,7 @@
             )
           ) {
 
-            closeInfoScreen();
+            await closeInfoScreen();
 
 
             return;
@@ -10534,7 +10446,7 @@
               screens.vocabSetup
           ) {
 
-            goHome();
+            await goHome();
 
 
             return;
@@ -10570,7 +10482,7 @@
             screens.stats
           ) {
 
-            closeStats();
+            await closeStats();
 
 
             return;
@@ -10582,14 +10494,14 @@
             screens.recent
           ) {
 
-            closeRecent();
+            await closeRecent();
 
 
             return;
           }
 
 
-          goHome();
+          await goHome();
         };
 
 
@@ -10861,27 +10773,36 @@
         );
 
 
+        /*
+          If the browser is resized in the
+          middle of a fade, finish safely at
+          the currently displayed page's pose.
+        */
+
         if (
-          characterAnimating
+          characterTransitioning
         ) {
 
-          cancelCharacterMotion();
-
-
           if (
-            activeScreen() ===
-            screens.home
+            characterFadeAnimation
           ) {
 
-            placeCharacterHanging();
+            try {
+              characterFadeAnimation.cancel();
+            } catch {}
 
-          } else {
 
-            placeCharacterSitting();
+            characterFadeAnimation =
+              null;
           }
 
 
-          return;
+          characterTransitioning =
+            false;
+
+
+          character.style.opacity =
+            "1";
         }
 
 
