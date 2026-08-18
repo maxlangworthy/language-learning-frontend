@@ -58,10 +58,8 @@
     html,
     body {
       margin: 0;
-
       width: 100%;
       height: 100%;
-
       overflow: hidden;
     }
 
@@ -136,7 +134,8 @@
     .error-number-stack {
       display: flex;
       flex-direction: column;
-      align-items: center;
+
+      align-items: flex-start;
     }
 
 
@@ -146,8 +145,7 @@
 
     .error-label {
       margin:
-        0 0
-        clamp(16px, 2.2vh, 25px);
+        0 0 7px;
 
       color: var(--navy);
 
@@ -163,6 +161,11 @@
       font-weight: 400;
 
       letter-spacing: -.035em;
+
+      text-align: left;
+
+      transform:
+        translateY(8px);
     }
 
     .error-number {
@@ -311,9 +314,12 @@
       }
 
       .error-label {
-        margin-bottom: 14px;
+        margin-bottom: 5px;
 
         font-size: 2.6rem;
+
+        transform:
+          translateY(6px);
       }
 
       .error-number {
@@ -393,10 +399,7 @@
             />
 
 
-            <!--
-              Left arm:
-              hand resting on hip
-            -->
+            <!-- Hand on hip -->
 
             <path
               class="character-line"
@@ -415,11 +418,7 @@
             />
 
 
-            <!--
-              Right arm:
-              reaching over to scratch
-              the top of his head
-            -->
+            <!-- Arm reaching over head -->
 
             <path
               class="character-line"
