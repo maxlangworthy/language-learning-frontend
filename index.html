@@ -3,47 +3,32 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
   <title>PlainBetter — Language Learning</title>
-
-  <meta
-  name="description"
-  content="Practice languages through realistic AI conversations, instant word meanings, personalised vocabulary tracking and vocabulary tests."
-/>
   <link rel="icon" type="image/png" href="/favicon.png">
-  
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
   <link
     href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;500;600;700&display=swap"
     rel="stylesheet"
   >
-
   <style>
     :root {
       --navy: #183A52;
       --navy-dark: #102B3E;
       --navy-hover: #224B66;
-
       --ochre: #D2A13A;
       --ochre-mid: #D8AE52;
       --ochre-light: #E2C276;
-
       --white: #FFFFFF;
       --cream: #F8F1DE;
-
       --danger: #9E3E38;
       --success: #276543;
-
       --topbar-height: 88px;
       --footer-height: 58px;
     }
-
     * {
       box-sizing: border-box;
     }
-
     html,
     body {
       margin: 0;
@@ -51,20 +36,15 @@
       height: 100%;
       overflow: hidden;
     }
-
     body {
       display: flex;
       flex-direction: column;
-
       font-family:
         "Crimson Pro",
         Georgia,
         serif;
-
       font-size: 18px;
-
       color: var(--navy);
-
       background:
         linear-gradient(
           180deg,
@@ -73,7 +53,6 @@
           var(--ochre-light) 100%
         );
     }
-
     button,
     select,
     input,
@@ -81,11 +60,9 @@
       font: inherit;
       color: inherit;
     }
-
     button {
       cursor: pointer;
     }
-
     button:disabled,
     select:disabled,
     input:disabled,
@@ -93,481 +70,330 @@
       cursor: not-allowed;
       opacity: .58;
     }
-
     .hidden {
       display: none !important;
     }
-
-
     /* =====================================================
        TOP BAR
        ===================================================== */
-
     .topbar {
       position: relative;
       z-index: 100;
-
       flex: 0 0 var(--topbar-height);
-
       width: 100%;
       height: var(--topbar-height);
-
       overflow: visible;
-
       background: var(--navy);
       color: var(--white);
-
       box-shadow:
         0 5px 18px rgba(16, 43, 62, .17);
     }
-
     .topbar-inner {
       width: min(1500px, 100%);
       height: 100%;
-
       margin: 0 auto;
       padding: 0 34px;
-
       display: flex;
       align-items: center;
-
       gap: 24px;
     }
-
     .top-left {
       display: flex;
       align-items: center;
-
       gap: 10px;
-
       min-width: 0;
       flex: 0 1 auto;
     }
-
     .top-right {
       margin-left: auto;
-
       display: flex;
       align-items: center;
       justify-content: flex-end;
-
       gap: 12px;
-
       min-width: 0;
     }
-
     .auth-actions {
       display: flex;
       align-items: center;
-
       gap: 12px;
     }
-
     .top-brand {
       border: 0;
-
       padding:
         3px 7px 5px 0;
-
       margin-right: 5px;
-
       background: transparent;
       color: var(--white);
-
       font-family:
         "Crimson Pro",
         Georgia,
         serif;
-
       font-size: 1.85rem;
       font-weight: 500;
-
       line-height: 1;
-
       letter-spacing: -.025em;
-
       white-space: nowrap;
-
       cursor: pointer;
-
       transition:
         opacity .15s ease;
     }
-
     .top-brand:hover {
       opacity: .78;
     }
-
     .topbar .email {
       display: inline-block;
-
       max-width: 220px;
-
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
-
       padding: 3px 0 4px;
-
       color:
         rgba(255, 255, 255, .88);
-
       font-size: 1rem;
       font-weight: 500;
       line-height: 1.25;
     }
-
     .nav-btn {
       border:
         1px solid rgba(255, 255, 255, .32);
-
       border-radius: 11px;
-
       padding:
         11px 17px;
-
       background: transparent;
       color: var(--white);
-
       font-weight: 600;
       font-size: 1.04rem;
-
       transition:
         background .16s ease,
         transform .16s ease,
         border-color .16s ease;
     }
-
     .nav-btn:hover:not(:disabled) {
       background:
         rgba(255, 255, 255, .10);
-
       border-color:
         rgba(255, 255, 255, .52);
-
       transform:
         translateY(-1px);
     }
-
     .nav-btn.emphasis {
       background:
         rgba(255, 255, 255, .12);
-
       border-color:
         rgba(255, 255, 255, .48);
     }
-
-
     /* =====================================================
        CHARACTER
        ===================================================== */
-
     .plainbetter-character {
       position: fixed;
-
       z-index: 125;
-
       width: 98px;
       height: 154px;
-
       opacity: 1;
-
       pointer-events: none;
-
       will-change:
         opacity,
         left,
         top;
-
       filter:
         drop-shadow(
           0 4px 2px rgba(16, 43, 62, .09)
         );
     }
-
     .plainbetter-character svg {
       display: block;
-
       width: 100%;
       height: 100%;
-
       overflow: visible;
     }
-
     .character-line {
       fill: none;
-
       stroke: var(--navy-dark);
-
       stroke-width: 5;
-
       stroke-linecap: round;
       stroke-linejoin: round;
     }
-
     .character-head {
       fill: var(--cream);
-
       stroke: var(--navy-dark);
-
       stroke-width: 5;
     }
-
     .character-hand {
       fill: var(--cream);
-
       stroke: var(--navy-dark);
-
       stroke-width: 3.5;
     }
-
     .character-phone {
       fill: var(--white);
-
       stroke: var(--navy-dark);
-
       stroke-width: 3.2;
     }
-
     .character-phone-detail {
       fill: none;
-
       stroke: var(--navy-dark);
-
       stroke-width: 1.4;
-
       stroke-linecap: round;
     }
-
     .pose-hang,
     .pose-sit {
       display: none;
     }
-
     .character-hanging .pose-hang {
       display: block;
     }
-
     .character-sitting .pose-sit {
       display: block;
     }
-
     .character-hanging {
       transform-origin:
         25px 3px;
-
       animation:
         plainbetterSwing
         4.2s
         ease-in-out
         infinite;
     }
-
     .character-sitting {
       animation: none;
     }
-
     @keyframes plainbetterSwing {
       0% {
         transform:
           rotate(-5deg);
       }
-
       50% {
         transform:
           rotate(6deg);
       }
-
       100% {
         transform:
           rotate(-5deg);
       }
     }
-
-
     /* =====================================================
        APP
        ===================================================== */
-
     .app {
       position: relative;
-
       flex: 1 1 auto;
-
       width: 100%;
       min-height: 0;
-
       overflow: hidden;
     }
-
     .screen {
       display: none;
-
       position: absolute;
-
       inset: 0;
-
       width: 100%;
       height: 100%;
-
       min-height: 0;
-
       color: var(--navy);
     }
-
     .screen.active {
       display: flex;
     }
-
     .column-screen {
       flex-direction: column;
-
       min-height: 0;
     }
-
     .center-screen {
       align-items: center;
       justify-content: center;
-
       padding:
         32px 28px;
-
       overflow-y: auto;
     }
-
-
     /* =====================================================
        HOME
        ===================================================== */
-
     .home-screen {
       flex-direction: column;
       align-items: stretch;
-
       overflow: hidden;
-
       padding:
         clamp(14px, 3vh, 28px)
         0
         clamp(14px, 3vh, 30px);
     }
-
     .home-title {
       flex: 0 0 auto;
-
       text-align: center;
-
       padding:
         clamp(4px, 1.2vh, 10px)
         24px
         4px;
     }
-
     .brand-title {
       margin: 0;
-
       color: var(--navy);
-
       font-size:
         clamp(
           3.4rem,
           min(7vw, 10vh),
           6.5rem
         );
-
       line-height: .94;
-
       letter-spacing: -.045em;
-
       font-weight: 400;
     }
-
     .brand-subtitle {
       margin-top: 12px;
-
       color:
         rgba(24, 58, 82, .82);
-
       font-size:
         clamp(1.65rem, 3vw, 2.25rem);
-
       font-weight: 400;
     }
-
     .mode-grid {
       flex: 1 1 auto;
-
       width:
         min(1340px, calc(100% - 72px));
-
       min-height: 0;
-
       margin:
         clamp(14px, 3vh, 28px)
         auto
         0;
-
       display: grid;
-
       grid-template-columns:
         1fr 1fr;
-
       grid-template-rows:
         minmax(0, 292px);
-
       gap: 24px;
-
       align-content: center;
     }
-
     .mode-tile {
       position: relative;
-
       overflow: hidden;
-
       width: 100%;
       height: 100%;
-
       min-height: 0;
-
       display: flex;
       align-items: center;
       justify-content: center;
-
       padding:
         clamp(20px, 3.5vh, 34px)
         55px;
-
       border:
         1px solid rgba(24, 58, 82, .17);
-
       border-radius: 23px;
-
       background:
         rgba(255, 255, 255, .73);
-
       color: var(--navy);
-
       text-align: center;
-
       box-shadow:
         0 11px 30px rgba(16, 43, 62, .08);
-
       transition:
         transform .2s ease,
         box-shadow .2s ease,
         background .2s ease,
         border-color .2s ease;
     }
-
     .mode-tile::after {
       content: "";
-
       position: absolute;
       inset: 0;
-
       pointer-events: none;
-
       background:
         linear-gradient(
           145deg,
@@ -575,2129 +401,1458 @@
           transparent 50%
         );
     }
-
     .mode-tile:hover {
       transform:
         translateY(-5px);
-
       background:
         rgba(255, 255, 255, .88);
-
       border-color:
         rgba(24, 58, 82, .27);
-
       box-shadow:
         0 20px 42px rgba(16, 43, 62, .14);
     }
-
     .mode-content {
       position: relative;
       z-index: 2;
-
       display: flex;
       flex-direction: column;
       align-items: center;
-
       max-width: 430px;
     }
-
     .mode-icon {
       width: 70px;
       height: 70px;
-
       margin-bottom: 18px;
-
       border-radius: 18px;
-
       display: grid;
       place-items: center;
-
       background: var(--navy);
       color: var(--white);
-
       font-size: 1.8rem;
       font-weight: 700;
-
       box-shadow:
         0 10px 22px rgba(16, 43, 62, .18);
-
       transition:
         transform .2s ease;
     }
-
     .mode-tile:hover .mode-icon {
       transform:
         scale(1.045);
     }
-
     .mode-title {
       display: block;
-
       margin-bottom: 8px;
-
       font-size: 2rem;
       line-height: 1;
-
       font-weight: 600;
     }
-
     .mode-description {
       color:
         rgba(24, 58, 82, .72);
-
       font-size: 1.1rem;
       line-height: 1.42;
-
       font-weight: 400;
     }
-
     .mode-enter {
       margin-top: 17px;
-
       font-size: 1.2rem;
       font-weight: 600;
-
       transition:
         transform .2s ease;
     }
-
     .mode-tile:hover .mode-enter {
       transform:
         translateX(4px);
     }
-
-
     /* =====================================================
        SETUP
        ===================================================== */
-
     .setup-content {
       width:
         min(650px, 100%);
-
       margin: auto;
     }
-
     .eyebrow {
       display: inline-flex;
-
       margin-bottom: 12px;
-
       color:
         rgba(24, 58, 82, .72);
-
       font-size: .88rem;
       font-weight: 600;
-
       letter-spacing: .10em;
-
       text-transform: uppercase;
     }
-
     h1 {
       margin: 0;
-
       color: var(--navy);
-
       font-size:
         clamp(2.45rem, 5vw, 4rem);
-
       line-height: .98;
-
       letter-spacing: -.035em;
-
       font-weight: 400;
     }
-
     h2,
     h3 {
       margin-top: 0;
-
       color: var(--navy);
-
       font-weight: 500;
     }
-
     .intro {
       margin:
         17px 0 30px;
-
       color:
         rgba(24, 58, 82, .76);
-
       font-size: 1.08rem;
       line-height: 1.52;
     }
-
     .field {
       margin-bottom: 18px;
     }
-
     .field label {
       display: block;
-
       margin-bottom: 8px;
-
       font-size: .98rem;
       font-weight: 600;
     }
-
     .field-help {
       margin:
         7px 0 0;
-
       color:
         rgba(24, 58, 82, .69);
-
       font-size: .88rem;
       line-height: 1.45;
     }
-
     .select-wrap {
       position: relative;
     }
-
     .select-wrap::after {
       content: "⌄";
-
       position: absolute;
-
       right: 16px;
       top: 50%;
-
       transform:
         translateY(-56%);
-
       pointer-events: none;
-
       color:
         rgba(24, 58, 82, .65);
     }
-
     select,
     input,
     textarea {
       width: 100%;
-
       border:
         1px solid rgba(24, 58, 82, .20);
-
       border-radius: 13px;
-
       outline: none;
-
       background:
         rgba(255, 255, 255, .94);
-
       color: var(--navy);
-
       box-shadow:
         0 5px 14px rgba(16, 43, 62, .045);
     }
-
     select {
       appearance: none;
-
       padding:
         14px 44px 14px 15px;
     }
-
     input {
       padding:
         13px 15px;
     }
-
     textarea {
       min-height: 135px;
-
       padding:
         13px 15px;
-
       resize: vertical;
-
       line-height: 1.5;
     }
-
     select:focus,
     input:focus,
     textarea:focus {
       border-color:
         rgba(24, 58, 82, .54);
-
       box-shadow:
         0 0 0 4px rgba(24, 58, 82, .08);
     }
-
     .custom {
       margin:
         -2px 0 18px;
-
       padding: 15px;
-
       border:
         1px solid rgba(24, 58, 82, .16);
-
       border-radius: 15px;
-
       background:
         rgba(255, 255, 255, .28);
     }
-
     .custom-footer {
       display: flex;
       justify-content: space-between;
-
       gap: 10px;
-
       margin-top: 7px;
-
       color:
         rgba(24, 58, 82, .68);
-
       font-size: .83rem;
     }
-
     .notice {
       margin-bottom: 18px;
-
       padding:
         12px 14px;
-
       border:
         1px solid rgba(158, 62, 56, .28);
-
       border-radius: 12px;
-
       background:
         rgba(255, 247, 244, .92);
-
       color: var(--danger);
-
       font-size: .93rem;
       line-height: 1.45;
     }
-
     .error {
       color: var(--danger);
-
       font-weight: 600;
     }
-
     .big-btn {
       width: 100%;
-
       border: 0;
-
       border-radius: 14px;
-
       padding:
         14px 18px;
-
       background: var(--navy);
       color: var(--white);
-
       font-weight: 600;
-
       box-shadow:
         0 8px 19px rgba(16, 43, 62, .16);
-
       transition:
         background .17s ease,
         transform .17s ease;
     }
-
     .big-btn:hover:not(:disabled) {
       background: var(--navy-hover);
-
       transform:
         translateY(-1px);
     }
-
     .credit {
       margin-top: 16px;
-
       color:
         rgba(24, 58, 82, .61);
-
       font-size: .77rem;
-
       text-align: center;
-
       line-height: 1.45;
     }
-
     .credit a {
       color: inherit;
     }
-
-
     /* =====================================================
        CHAT
        ===================================================== */
-
     .workspace-header {
       flex: 0 0 auto;
-
       width:
         min(1220px, calc(100% - 52px));
-
       margin: 0 auto;
-
       padding:
         22px 0 14px;
-
       display: flex;
       align-items: center;
       justify-content: space-between;
-
       gap: 18px;
     }
-
     .workspace-header h2 {
       margin:
         0 0 4px;
-
       font-size: 1.65rem;
       font-weight: 500;
     }
-
     .workspace-header p {
       margin: 0;
-
       color:
         rgba(24, 58, 82, .69);
-
       font-size: .98rem;
     }
-
     .btn {
       border:
         1px solid rgba(24, 58, 82, .20);
-
       border-radius: 10px;
-
       padding:
         9px 13px;
-
       background:
         rgba(255, 255, 255, .87);
-
       color: var(--navy);
-
       font-weight: 600;
-
       transition:
         transform .16s ease,
         background .16s ease;
     }
-
     .btn:hover:not(:disabled) {
       transform:
         translateY(-1px);
-
       background: var(--white);
     }
-
     .btn.danger {
       border-color:
         rgba(158, 62, 56, .30);
-
       background:
         rgba(255, 247, 244, .88);
-
       color: var(--danger);
     }
-
     .chat-workspace {
       flex: 1 1 auto;
-
       min-height: 0;
-
       width:
         min(1220px, calc(100% - 52px));
-
       margin:
         0 auto;
-
       padding-bottom: 18px;
-
       display: grid;
-
       grid-template-columns:
         320px minmax(0, 1fr);
-
       gap: 34px;
-
       align-items: stretch;
     }
-
     .feedback {
       align-self: start;
-
       padding: 19px;
-
       border:
         1px solid rgba(24, 58, 82, .18);
-
       border-radius: 14px;
-
       background:
         rgba(255, 255, 255, .88);
-
       box-shadow:
         0 7px 20px rgba(16, 43, 62, .065);
-
       min-height: 112px;
     }
-
     .feedback-title {
       margin-bottom: 8px;
-
       color:
         rgba(24, 58, 82, .66);
-
       font-size: .82rem;
       font-weight: 600;
-
       letter-spacing: .06em;
-
       text-transform: uppercase;
     }
-
     .feedback p {
       margin:
         5px 0;
-
       line-height: 1.46;
     }
-
     .feedback-placeholder {
       color:
         rgba(24, 58, 82, .58);
-
       line-height: 1.45;
     }
-
     .ok {
       color: var(--success);
-
       font-weight: 600;
     }
-
     .chat-main {
       min-width: 0;
       min-height: 0;
-
       display: flex;
       flex-direction: column;
-
       overflow: hidden;
-
       border:
         1px solid rgba(24, 58, 82, .12);
-
       border-radius: 19px;
-
       background: var(--white);
-
       box-shadow:
         0 12px 31px rgba(16, 43, 62, .09);
     }
-
     .messages {
       flex: 1 1 auto;
-
       min-height: 0;
-
       overflow-y: auto;
-
       padding:
         25px;
-
       display: flex;
       flex-direction: column;
-
       gap: 15px;
-
       background:
         rgba(255, 255, 255, .98);
     }
-
     .row {
       display: flex;
-
       width: 100%;
     }
-
     .row.ai {
       justify-content: flex-start;
     }
-
     .row.user {
       justify-content: flex-end;
     }
-
     .bubble {
       max-width:
         min(76%, 620px);
-
       padding:
         12px 16px;
-
       border-radius: 16px;
-
       line-height: 1.5;
-
       word-break: break-word;
-
       unicode-bidi: plaintext;
-
       box-shadow:
         0 5px 15px rgba(16, 43, 62, .065);
     }
-
     .row.ai .bubble {
       background: var(--ochre);
-
       color: var(--navy);
-
       border:
         1px solid rgba(24, 58, 82, .10);
-
       border-bottom-left-radius: 5px;
     }
-
     .row.user .bubble {
       background: var(--navy);
-
       color: var(--white);
-
       border:
         1px solid var(--navy);
-
       border-bottom-right-radius: 5px;
     }
-
     .example-label {
       margin-bottom: 4px;
-
       font-size: .73rem;
       font-weight: 600;
-
       letter-spacing: .05em;
-
       text-transform: uppercase;
-
       opacity: .73;
     }
-
     .translation {
       margin-top: 8px;
-
       padding-top: 8px;
-
       border-top:
         1px solid rgba(255, 255, 255, .23);
-
       font-size: .85rem;
-
       opacity: .88;
-
       direction: ltr;
-
       text-align: left;
     }
-
     .composer-area {
       flex: 0 0 auto;
-
       padding:
         13px 18px 17px;
-
       border-top:
         1px solid rgba(24, 58, 82, .12);
-
       background: var(--white);
     }
-
     .chars {
       display: flex;
       flex-wrap: wrap;
-
       gap: 6px;
-
       padding:
         0 0 10px;
     }
-
     .chars-label {
       width: 100%;
-
       color:
         rgba(24, 58, 82, .67);
-
       font-size: .79rem;
       font-weight: 600;
     }
-
     .char-btn {
       min-width: 34px;
       height: 32px;
-
       border:
         1px solid rgba(24, 58, 82, .17);
-
       border-radius: 8px;
-
       background:
         rgba(255, 255, 255, .88);
-
       color: var(--navy);
-
       font-weight: 600;
     }
-
     .char-btn:hover:not(:disabled) {
       background: var(--white);
-
       border-color:
         rgba(24, 58, 82, .35);
     }
-
     .composer {
       display: flex;
-
       gap: 9px;
     }
-
     .composer input {
       flex: 1;
     }
-
     .send,
     .example {
       border-radius: 12px;
-
       padding:
         0 16px;
-
       font-weight: 600;
     }
-
     .send {
       border: 0;
-
       background: var(--navy);
       color: var(--white);
     }
-
     .send:hover:not(:disabled) {
       background: var(--navy-hover);
     }
-
     .example {
       border:
         1px solid rgba(24, 58, 82, .20);
-
       background:
         rgba(255, 255, 255, .85);
-
       color: var(--navy);
     }
-
-
     /* =====================================================
        DICTIONARY
        ===================================================== */
-
     .word {
       border-bottom:
         1px dotted currentColor;
-
       cursor: help;
-
       outline: none;
     }
-
     .tooltip {
       display: none;
-
       position: fixed;
-
       z-index: 9999;
-
       width: max-content;
-
       max-width:
         min(370px, calc(100vw - 24px));
-
       padding:
         12px 14px;
-
       border-radius: 12px;
-
       background: var(--navy-dark);
       color: var(--white);
-
       box-shadow:
         0 13px 34px rgba(16, 43, 62, .26);
-
       font-size: .91rem;
       line-height: 1.4;
-
       pointer-events: none;
     }
-
     .tooltip.visible {
       display: block;
     }
-
     .tip-title {
       margin-bottom: 6px;
-
       font-weight: 600;
     }
-
     .tip-list {
       margin: 0;
-
       padding-left: 20px;
     }
-
     .tip-list li {
       margin: 4px 0;
     }
-
     .tip-tags {
       opacity: .67;
-
       font-size: .8rem;
-
       font-style: italic;
     }
-
     .tip-meta {
       margin-top: 7px;
-
       opacity: .73;
-
       font-size: .8rem;
     }
-
-
     /* =====================================================
        VOCAB TEST
        ===================================================== */
-
     .quiz-wrap {
       flex: 1 1 auto;
-
       min-height: 0;
-
       display: flex;
       align-items: center;
       justify-content: center;
-
       overflow-y: auto;
-
       padding:
         18px 28px 28px;
     }
-
     .quiz-card {
       width:
         min(650px, 100%);
-
       padding: 25px;
-
       border:
         1px solid rgba(24, 58, 82, .14);
-
       border-radius: 18px;
-
       background:
         rgba(255, 255, 255, .90);
-
       box-shadow:
         0 9px 28px rgba(16, 43, 62, .08);
     }
-
     .quiz-status {
       display: flex;
       justify-content: space-between;
-
       gap: 14px;
-
       color:
         rgba(24, 58, 82, .66);
-
       font-size: .9rem;
       font-weight: 600;
     }
-
     .prompt-label {
       margin-top: 26px;
-
       color:
         rgba(24, 58, 82, .59);
-
       font-size: .8rem;
       font-weight: 600;
-
       text-transform: uppercase;
-
       letter-spacing: .06em;
     }
-
     .prompt {
       margin:
         9px 0 8px;
-
       font-size: 1.74rem;
       font-weight: 500;
-
       line-height: 1.25;
     }
-
     .pos {
       display: inline-flex;
-
       padding:
         4px 8px;
-
       border-radius: 999px;
-
       background: var(--cream);
-
       color:
         rgba(24, 58, 82, .64);
-
       font-size: .81rem;
     }
-
     .options {
       display: grid;
-
       grid-template-columns:
         1fr 1fr;
-
       gap: 10px;
-
       margin-top: 24px;
     }
-
     .option {
       padding: 13px;
-
       border:
         1px solid rgba(24, 58, 82, .16);
-
       border-radius: 11px;
-
       background:
         rgba(255, 255, 255, .94);
-
       color: var(--navy);
-
       font-weight: 600;
-
       transition:
         background .15s ease,
         transform .15s ease;
     }
-
     .option:hover:not(:disabled) {
       transform:
         translateY(-1px);
-
       background: var(--white);
     }
-
     .option.good {
       border-color: #9FD0B2;
-
       background: #F2FBF5;
-
       color: var(--success);
     }
-
     .option.bad {
       border-color: #E8ABAB;
-
       background: #FFF5F5;
-
       color: var(--danger);
     }
-
     .hardcore {
       margin-top: 24px;
     }
-
     .test-chars {
       margin-top: 12px;
-
       padding-bottom: 12px;
     }
-
     .hardcore-row {
       display: flex;
-
       gap: 9px;
     }
-
     .hardcore-row input {
       flex: 1;
     }
-
     .hardcore-row .send {
       min-width: 98px;
     }
-
     .answer-feedback {
       margin:
         18px 0 12px;
-
       padding:
         11px 13px;
-
       border-radius: 11px;
-
       font-weight: 600;
-
       line-height: 1.4;
     }
-
     .answer-feedback.good {
       border:
         1px solid #B9DDC6;
-
       background: #F2FBF5;
-
       color: var(--success);
     }
-
     .answer-feedback.bad {
       border:
         1px solid #EBC1C1;
-
       background: #FFF5F5;
-
       color: var(--danger);
     }
-
     .final-score {
       font-size: 1.3rem;
       font-weight: 500;
     }
-
-
     /* =====================================================
        STATS / RECENT
        ===================================================== */
-
     .utility {
       width: 100%;
       height: 100%;
-
       min-height: 0;
-
       overflow-y: auto;
-
       padding:
         32px 26px;
     }
-
     .utility-card {
       width:
         min(760px, 100%);
-
       margin: 0 auto;
-
       padding: 25px;
-
       border:
         1px solid rgba(24, 58, 82, .14);
-
       border-radius: 18px;
-
       background:
         rgba(255, 255, 255, .88);
-
       box-shadow:
         0 8px 28px rgba(16, 43, 62, .07);
     }
-
     .utility-message {
       color:
         rgba(24, 58, 82, .70);
-
       line-height: 1.5;
     }
-
     .lang-list,
     .recent-list {
       display: grid;
-
       gap: 9px;
     }
-
     .lang-btn,
     .recent-btn {
       width: 100%;
-
       display: flex;
       align-items: center;
       justify-content: space-between;
-
       gap: 14px;
-
       padding:
         13px 14px;
-
       border:
         1px solid rgba(24, 58, 82, .14);
-
       border-radius: 11px;
-
       background:
         rgba(255, 255, 255, .92);
-
       text-align: left;
-
       color: var(--navy);
-
       font-weight: 600;
     }
-
     .lang-btn:hover,
     .recent-btn:hover {
       background: var(--white);
-
       border-color:
         rgba(24, 58, 82, .28);
     }
-
     .lang-copy {
       display: flex;
       flex-direction: column;
-
       gap: 3px;
-
       min-width: 0;
     }
-
     .lang-copy small {
       color:
         rgba(24, 58, 82, .64);
-
       font-size: .83rem;
       font-weight: 500;
     }
-
     .lang-vocab-count {
       white-space: nowrap;
-
       color: var(--navy);
     }
-
     .overall {
       display: flex;
       justify-content: space-between;
-
       gap: 16px;
-
       margin-top: 17px;
-
       padding-top: 17px;
-
       border-top:
         1px solid rgba(24, 58, 82, .13);
-
       font-weight: 600;
     }
-
     .legacy-note {
       color:
         rgba(24, 58, 82, .65);
     }
-
     .detail-top {
       display: flex;
       align-items: flex-start;
       justify-content: space-between;
-
       gap: 14px;
     }
-
     .linkbtn {
       border: 0;
-
       padding: 0;
-
       background: transparent;
-
       color: var(--navy);
-
       font-weight: 600;
     }
-
     .vocab-list {
       list-style: none;
-
       padding: 0;
-
       margin:
         17px 0 0;
-
       display: grid;
-
       grid-template-columns:
         1fr 1fr;
-
       gap:
         8px 12px;
     }
-
     .vocab-item {
       display: flex;
       align-items: center;
       justify-content: space-between;
-
       gap: 10px;
-
       padding:
         9px 10px;
-
       border:
         1px solid rgba(24, 58, 82, .13);
-
       border-radius: 10px;
-
       background:
         rgba(248, 241, 222, .72);
     }
-
     .delete-word {
       border:
         1px solid rgba(158, 62, 56, .28);
-
       border-radius: 8px;
-
       padding:
         5px 8px;
-
       background: #FFF7F4;
-
       color: var(--danger);
-
       font-size: .79rem;
       font-weight: 600;
     }
-
     .recent-btn {
       display: block;
     }
-
     .recent-top {
       display: flex;
       justify-content: space-between;
-
       gap: 12px;
     }
-
     .recent-time {
       color:
         rgba(24, 58, 82, .60);
-
       font-size: .81rem;
     }
-
     .recent-meta {
       margin-top: 4px;
-
       color:
         rgba(24, 58, 82, .64);
-
       font-size: .85rem;
     }
-
     .recent-preview {
       margin-top: 7px;
-
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
-
       font-size: .95rem;
     }
-
     .recent-messages {
       display: flex;
       flex-direction: column;
-
       gap: 13px;
-
       padding: 15px;
-
       border:
         1px solid rgba(24, 58, 82, .14);
-
       border-radius: 14px;
-
       background:
         rgba(255, 255, 255, .94);
     }
-
     .stored-feedback {
       align-self: flex-end;
-
       width:
         min(82%, 650px);
-
       padding:
         10px 12px;
-
       border:
         1px solid rgba(24, 58, 82, .18);
-
       border-radius: 10px;
-
       background:
         rgba(255, 255, 255, .88);
-
       font-size: .87rem;
     }
-
     .stored-feedback p {
       margin: 3px 0;
     }
-
     .retention {
       margin-top: 16px;
-
       color:
         rgba(24, 58, 82, .60);
-
       font-size: .81rem;
-
       line-height: 1.45;
     }
-
     .secondary-btn {
       border:
         1px solid rgba(24, 58, 82, .22);
-
       border-radius: 11px;
-
       padding:
         10px 14px;
-
       background:
         rgba(255, 255, 255, .94);
-
       color: var(--navy);
-
       font-weight: 600;
     }
-
-
     /* =====================================================
        LEGAL
        ===================================================== */
-
     .legal-wrap {
       width: 100%;
       height: 100%;
-
       min-height: 0;
-
       overflow-y: auto;
-
       padding:
         32px 24px;
     }
-
     .legal-content {
       width:
         min(900px, 100%);
-
       margin: 0 auto;
-
       padding:
         34px 38px;
-
       border:
         1px solid rgba(24, 58, 82, .14);
-
       border-radius: 18px;
-
       background:
         rgba(255, 255, 255, .91);
-
       box-shadow:
         0 9px 28px rgba(16, 43, 62, .07);
-
       line-height: 1.62;
     }
-
     .legal-content h1 {
       margin-bottom: 8px;
     }
-
     .legal-content h2 {
       margin:
         30px 0 8px;
-
       font-size: 1.45rem;
       font-weight: 600;
     }
-
     .legal-content h3 {
       margin:
         22px 0 6px;
-
       font-size: 1.15rem;
       font-weight: 600;
     }
-
     .legal-content p {
       margin:
         9px 0;
     }
-
     .legal-content ul {
       margin:
         8px 0 10px;
-
       padding-left: 23px;
     }
-
     .legal-content li {
       margin: 6px 0;
     }
-
     .legal-content a {
       color: var(--navy);
-
       font-weight: 600;
     }
-
     .legal-updated {
       margin-bottom: 28px;
-
       color:
         rgba(24, 58, 82, .62);
-
       font-size: .9rem;
     }
-
     .legal-callout {
       margin:
         22px 0;
-
       padding:
         14px 16px;
-
       border-left:
         4px solid var(--navy);
-
       border-radius: 8px;
-
       background:
         rgba(210, 161, 58, .18);
     }
-
-
     /* =====================================================
        FOOTER
        ===================================================== */
-
     .site-footer {
       position: relative;
       z-index: 100;
-
       flex:
         0 0 var(--footer-height);
-
       width: 100%;
       height: var(--footer-height);
-
       border-top:
         1px solid rgba(24, 58, 82, .16);
-
       background:
         rgba(226, 194, 118, .95);
-
       backdrop-filter:
         blur(8px);
-
       color:
         rgba(24, 58, 82, .82);
     }
-
     .site-footer-inner {
       width:
         min(1340px, calc(100% - 48px));
-
       height: 100%;
-
       margin: 0 auto;
-
       display: flex;
       align-items: center;
       justify-content: space-between;
-
       gap: 18px;
     }
-
     .footer-links {
       display: flex;
       align-items: center;
       justify-content: flex-end;
-
       gap: 10px;
-
       flex-wrap: nowrap;
     }
-
     .footer-link {
       border: 0;
-
       padding: 0;
-
       background: transparent;
-
       color: var(--navy);
-
       font-weight: 600;
-
       white-space: nowrap;
     }
-
     .footer-link:hover {
       text-decoration: underline;
     }
-
     .footer-dot {
       color:
         rgba(24, 58, 82, .48);
-
       font-size: .9rem;
-
       line-height: 1;
-
       user-select: none;
     }
-
-
     /* =====================================================
        PRIVACY
        ===================================================== */
-
     .privacy-banner {
       position: fixed;
-
       left: 50%;
       bottom:
         calc(var(--footer-height) + 14px);
-
       z-index: 12000;
-
       width:
         min(760px, calc(100% - 28px));
-
       transform:
         translateX(-50%);
-
       padding:
         19px 20px;
-
       border:
         1px solid rgba(255, 255, 255, .28);
-
       border-radius: 16px;
-
       background: var(--navy-dark);
       color: var(--white);
-
       box-shadow:
         0 20px 60px rgba(16, 43, 62, .32);
     }
-
     .privacy-banner h3 {
       margin:
         0 0 7px;
-
       color: var(--white);
-
       font-size: 1.25rem;
       font-weight: 600;
     }
-
     .privacy-banner p {
       margin: 0;
-
       color:
         rgba(255, 255, 255, .88);
-
       line-height: 1.45;
     }
-
     .privacy-current {
       margin-top:
         7px !important;
-
       color:
         rgba(255, 255, 255, .70) !important;
-
       font-size: .88rem;
     }
-
     .privacy-actions {
       margin-top: 14px;
-
       display: flex;
       flex-wrap: wrap;
-
       gap: 10px;
     }
-
     .privacy-choice-btn {
       flex:
         1 1 210px;
-
       border:
         1px solid rgba(255, 255, 255, .50);
-
       border-radius: 10px;
-
       padding:
         10px 13px;
-
       background:
         rgba(255, 255, 255, .10);
-
       color: var(--white);
-
       font-weight: 600;
     }
-
     .privacy-choice-btn:hover {
       background:
         rgba(255, 255, 255, .18);
     }
-
     .privacy-policy-btn {
       border: 0;
-
       padding:
         8px 2px;
-
       background: transparent;
-
       color: var(--white);
-
       text-decoration: underline;
-
       font-weight: 600;
     }
-
-
     /* =====================================================
        AUTH
        ===================================================== */
-
     .auth-modal {
       position: fixed;
-
       inset: 0;
-
       z-index: 15000;
-
       display: flex;
       align-items: center;
       justify-content: center;
-
       padding: 20px;
-
       background:
         rgba(16, 43, 62, .65);
     }
-
     .auth-card {
       position: relative;
-
       width:
         min(440px, 100%);
-
       padding: 25px;
-
       border-radius: 19px;
-
       background: var(--white);
       color: var(--navy);
-
       box-shadow:
         0 24px 70px rgba(16, 43, 62, .29);
     }
-
     .auth-close {
       position: absolute;
-
       top: 11px;
       right: 13px;
-
       width: 34px;
       height: 34px;
-
       border: 0;
-
       border-radius: 50%;
-
       background: transparent;
-
       color:
         rgba(24, 58, 82, .65);
-
       font-size: 1.4rem;
     }
-
     .auth-tabs {
       display: grid;
-
       grid-template-columns:
         1fr 1fr;
-
       gap: 5px;
-
       margin:
         18px 0;
-
       padding: 4px;
-
       border-radius: 11px;
-
       background: var(--cream);
     }
-
     .tab {
       border: 0;
-
       border-radius: 8px;
-
       padding: 9px;
-
       background: transparent;
-
       color:
         rgba(24, 58, 82, .64);
-
       font-weight: 600;
     }
-
     .tab.active {
       background: var(--white);
-
       color: var(--navy);
-
       box-shadow:
         0 1px 3px rgba(16, 43, 62, .10);
     }
-
     .password-wrap {
       position: relative;
     }
-
     .password-wrap input {
       padding-right: 78px;
     }
-
     .password-toggle {
       position: absolute;
-
       top: 50%;
       right: 10px;
-
       transform:
         translateY(-50%);
-
       border: 0;
-
       padding:
         5px 7px;
-
       border-radius: 7px;
-
       background: transparent;
-
       color:
         rgba(24, 58, 82, .72);
-
       font-size: .86rem;
       font-weight: 600;
-
       line-height: 1;
     }
-
     .password-toggle:hover {
       background:
         rgba(24, 58, 82, .07);
-
       color: var(--navy);
     }
-
     .password-toggle:focus-visible {
       outline:
         2px solid rgba(24, 58, 82, .40);
-
       outline-offset: 1px;
     }
-
+    .auth-link-row {
+      margin-top: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+    }
+    .auth-link {
+      border: 0;
+      padding: 2px 0;
+      background: transparent;
+      color: var(--navy);
+      font-size: .9rem;
+      font-weight: 600;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+    .auth-link:hover {
+      opacity: .76;
+    }
     .auth-msg {
       min-height: 20px;
-
       margin-top: 12px;
-
       font-size: .89rem;
     }
-
-
     /* =====================================================
        MOBILE
        ===================================================== */
-
     @media (max-width: 980px) {
       .topbar .email {
         display: none !important;
       }
-
       .top-brand {
         font-size: 1.5rem;
-
         margin-right: 1px;
       }
     }
-
     @media (max-width: 820px) {
       :root {
         --topbar-height: 76px;
         --footer-height: 52px;
       }
-
       body {
         font-size: 17px;
       }
-
       .topbar-inner {
         padding:
           0 12px;
-
         gap: 7px;
       }
-
       .top-left {
         gap: 5px;
       }
-
       .top-right,
       .auth-actions {
         gap: 5px;
       }
-
       .top-brand {
         font-size: 1.28rem;
-
         padding-right: 2px;
       }
-
       .nav-btn {
         padding:
           8px 9px;
-
         font-size: .80rem;
       }
-
       #topBackBtn,
       #topHomeBtn {
         padding:
           8px 8px;
-
         font-size: .76rem;
       }
-
       #recentBtn {
         font-size: .74rem;
       }
-
       .plainbetter-character {
         width: 84px;
         height: 132px;
       }
-
       .home-screen {
         overflow-y: auto;
-
         padding:
           24px 0;
       }
-
       .brand-title {
         font-size: 3.6rem;
       }
-
       .brand-subtitle {
         font-size: 1.5rem;
       }
-
       .mode-grid {
         flex: 0 0 auto;
-
         width:
           calc(100% - 28px);
-
         margin-top: 25px;
-
         grid-template-columns: 1fr;
         grid-template-rows: none;
-
         gap: 15px;
-
         padding-bottom: 20px;
       }
-
       .mode-tile {
         height: 220px;
-
         padding:
           26px 22px;
       }
-
       .mode-icon {
         width: 58px;
         height: 58px;
-
         margin-bottom: 13px;
-
         font-size: 1.5rem;
       }
-
       .mode-title {
         font-size: 1.7rem;
       }
-
       .mode-description {
         font-size: .98rem;
       }
-
       .mode-enter {
         margin-top: 11px;
-
         font-size: 1.05rem;
       }
-
       .center-screen {
         align-items: flex-start;
-
         padding:
           28px 17px;
       }
-
       .workspace-header {
         width:
           calc(100% - 28px);
-
         padding:
           17px 0 11px;
       }
-
       .chat-workspace {
         width:
           calc(100% - 28px);
-
         grid-template-columns:
           1fr;
-
         grid-template-rows:
           auto minmax(0, 1fr);
-
         gap: 12px;
-
         padding-bottom: 12px;
       }
-
       .feedback {
         padding: 13px;
-
         min-height: auto;
       }
-
       .messages {
         padding:
           18px 14px;
       }
-
       .bubble {
         max-width: 88%;
       }
-
       .composer {
         flex-wrap: wrap;
       }
-
       .composer input {
         flex-basis: 100%;
       }
-
       .example {
         flex: 1;
-
         min-height: 42px;
       }
-
       .send {
         min-height: 42px;
       }
-
       .quiz-wrap {
         align-items: flex-start;
-
         padding:
           16px 13px 24px;
       }
-
       .utility {
         padding:
           23px 13px;
       }
-
       .utility-card,
       .quiz-card {
         padding:
           19px 15px;
       }
-
       .options,
       .vocab-list {
         grid-template-columns: 1fr;
       }
-
       .hardcore-row {
         flex-direction: column;
       }
-
       .hardcore-row .send {
         min-height: 44px;
       }
-
       .recent-top {
         flex-direction: column;
-
         gap: 3px;
       }
-
       .legal-wrap {
         padding:
           22px 13px;
       }
-
       .legal-content {
         padding:
           24px 18px;
       }
-
       .site-footer-inner {
         width:
           calc(100% - 16px);
       }
-
       .site-footer-inner > div:first-child {
         display: none;
       }
-
       .footer-links {
         width: 100%;
-
         justify-content: center;
-
         gap: 7px;
       }
-
       .footer-link {
         font-size: .75rem;
       }
-
       .footer-dot {
         font-size: .7rem;
       }
     }
-
     @media (max-width: 620px) {
       .top-brand {
         font-size: 1.12rem;
       }
-
       #topBackBtn,
       #topHomeBtn {
         padding:
           7px 6px;
-
         font-size: .68rem;
       }
     }
-
     @media (max-width: 520px) {
       .nav-btn {
         padding:
           7px 6px;
-
         font-size: .70rem;
       }
-
       #recentBtn {
         font-size: .65rem;
       }
-
       .plainbetter-character {
         display: none;
       }
-
       .footer-links {
         gap: 5px;
       }
-
       .footer-link {
         font-size: .67rem;
       }
-
       .footer-dot {
         font-size: .62rem;
       }
-
       .brand-title {
         font-size: 3rem;
       }
     }
-
     @media (prefers-reduced-motion: reduce) {
       .character-hanging {
         animation: none;
-
         transform:
           rotate(1deg);
       }
     }
   </style>
 </head>
-
-
 <body>
-
   <header class="topbar">
-
     <div class="topbar-inner">
-
       <div class="top-left">
-
         <button
           id="topBrand"
           class="top-brand hidden"
@@ -2706,8 +1861,6 @@
         >
           PlainBetter
         </button>
-
-
         <button
           id="topBackBtn"
           class="nav-btn hidden"
@@ -2715,8 +1868,6 @@
         >
           ← Back
         </button>
-
-
         <button
           id="topHomeBtn"
           class="nav-btn hidden"
@@ -2724,18 +1875,12 @@
         >
           Home
         </button>
-
       </div>
-
-
       <div class="top-right">
-
         <span
           id="emailLabel"
           class="email hidden"
         ></span>
-
-
         <button
           id="recentBtn"
           class="nav-btn"
@@ -2743,13 +1888,10 @@
         >
           Recent Conversations
         </button>
-
-
         <div
           id="signedOut"
           class="auth-actions"
         >
-
           <button
             id="loginBtn"
             class="nav-btn"
@@ -2757,7 +1899,6 @@
           >
             Log In
           </button>
-
           <button
             id="signupBtn"
             class="nav-btn emphasis"
@@ -2765,15 +1906,11 @@
           >
             Sign Up
           </button>
-
         </div>
-
-
         <div
           id="signedIn"
           class="auth-actions hidden"
         >
-
           <button
             id="statsBtn"
             class="nav-btn"
@@ -2781,7 +1918,6 @@
           >
             Stats
           </button>
-
           <button
             id="logoutBtn"
             class="nav-btn"
@@ -2789,38 +1925,27 @@
           >
             Log Out
           </button>
-
         </div>
-
       </div>
-
     </div>
-
   </header>
-
-
   <!-- CHARACTER -->
-
   <div
     id="plainbetterCharacter"
     class="plainbetter-character character-hanging"
     aria-hidden="true"
   >
-
     <svg
       viewBox="0 0 98 154"
       xmlns="http://www.w3.org/2000/svg"
     >
-
       <g class="pose-hang">
-
         <circle
           class="character-hand"
           cx="25"
           cy="4"
           r="4.5"
         />
-
         <path
           class="character-line"
           d="
@@ -2829,7 +1954,6 @@
             C34 67 35 73 36 77
           "
         />
-
         <path
           class="character-line"
           d="
@@ -2837,14 +1961,12 @@
             C42 79 47 82 53 84
           "
         />
-
         <circle
           class="character-head"
           cx="48"
           cy="64"
           r="12"
         />
-
         <path
           class="character-line"
           d="
@@ -2852,7 +1974,6 @@
             C45 91 47 101 49 112
           "
         />
-
         <path
           class="character-line"
           d="
@@ -2861,16 +1982,13 @@
             C66 65 67 63 68 61
           "
         />
-
         <circle
           class="character-hand"
           cx="68"
           cy="61"
           r="3.8"
         />
-
         <g transform="rotate(11 67 55)">
-
           <rect
             class="character-phone"
             x="62"
@@ -2879,19 +1997,15 @@
             height="19"
             rx="2.2"
           />
-
           <path
             class="character-phone-detail"
             d="M65 48 L69 48"
           />
-
           <path
             class="character-phone-detail"
             d="M66 61 L68 61"
           />
-
         </g>
-
         <path
           class="character-line"
           d="
@@ -2899,7 +2013,6 @@
             C42 121 37 131 33 142
           "
         />
-
         <path
           class="character-line"
           d="
@@ -2907,19 +2020,14 @@
             C57 120 64 129 70 139
           "
         />
-
       </g>
-
-
       <g class="pose-sit">
-
         <circle
           class="character-head"
           cx="45"
           cy="52"
           r="12"
         />
-
         <path
           class="character-line"
           d="
@@ -2927,7 +2035,6 @@
             C41 69 47 71 53 72
           "
         />
-
         <path
           class="character-line"
           d="
@@ -2935,7 +2042,6 @@
             C45 78 47 87 48 95
           "
         />
-
         <path
           class="character-line"
           d="
@@ -2944,14 +2050,12 @@
             C40 98 41 102 42 105
           "
         />
-
         <circle
           class="character-hand"
           cx="42"
           cy="105"
           r="3.8"
         />
-
         <path
           class="character-line"
           d="
@@ -2960,16 +2064,13 @@
             C65 53 66 50 66 48
           "
         />
-
         <circle
           class="character-hand"
           cx="66"
           cy="49"
           r="3.8"
         />
-
         <g transform="rotate(10 65 43)">
-
           <rect
             class="character-phone"
             x="60"
@@ -2978,19 +2079,15 @@
             height="19"
             rx="2.2"
           />
-
           <path
             class="character-phone-detail"
             d="M63 37 L67 37"
           />
-
           <path
             class="character-phone-detail"
             d="M64 50 L66 50"
           />
-
         </g>
-
         <path
           class="character-line"
           d="
@@ -2998,7 +2095,6 @@
             C41 98 35 104 31 111
           "
         />
-
         <path
           class="character-line"
           d="
@@ -3006,7 +2102,6 @@
             C55 99 61 104 66 111
           "
         />
-
         <path
           class="character-line"
           d="
@@ -3014,7 +2109,6 @@
             C30 123 30 135 29 147
           "
         />
-
         <path
           class="character-line"
           d="
@@ -3022,133 +2116,87 @@
             C67 123 68 135 69 147
           "
         />
-
       </g>
-
     </svg>
-
   </div>
-
-
   <main class="app">
-
-
     <!-- HOME -->
-
     <section
       id="home"
       class="screen home-screen active"
     >
-
       <div class="home-title">
-
         <h1 class="brand-title">
           PlainBetter
         </h1>
-
         <div class="brand-subtitle">
           Language Learning
         </div>
-
       </div>
-
-
       <div class="mode-grid">
-
         <button
           id="chatTile"
           class="mode-tile"
           type="button"
         >
-
           <span class="mode-content">
-
             <span class="mode-icon">
               💬
             </span>
-
             <span class="mode-title">
               Chat
             </span>
-
             <span class="mode-description">
               Practise realistic conversations with feedback and instant word meanings.
             </span>
-
             <span class="mode-enter">
               Start chatting →
             </span>
-
           </span>
-
         </button>
-
-
         <button
           id="vocabTile"
           class="mode-tile"
           type="button"
         >
-
           <span class="mode-content">
-
             <span class="mode-icon">
               Aa
             </span>
-
             <span class="mode-title">
               Vocabulary Test
             </span>
-
             <span class="mode-description">
               Test words from your conversations, explore new vocabulary, or practise random words.
             </span>
-
             <span class="mode-enter">
               Start testing →
             </span>
-
           </span>
-
         </button>
-
       </div>
-
     </section>
-
-
     <!-- CHAT SETUP -->
-
     <section
       id="chatSetup"
       class="screen center-screen"
     >
-
       <div class="setup-content">
-
         <h1>
           Chat
         </h1>
-
         <p class="intro">
           Choose your language and level, then select a scenario or create your own.
         </p>
-
-
         <div
           id="chatSetupError"
           class="notice hidden"
         ></div>
-
-
         <div class="field">
-
           <label for="languageSelect">
             Language
           </label>
-
           <div class="select-wrap">
-
             <select
               id="languageSelect"
               disabled
@@ -3157,20 +2205,13 @@
                 Loading…
               </option>
             </select>
-
           </div>
-
         </div>
-
-
         <div class="field">
-
           <label for="levelSelect">
             Language level
           </label>
-
           <div class="select-wrap">
-
             <select
               id="levelSelect"
               disabled
@@ -3179,20 +2220,13 @@
                 Loading…
               </option>
             </select>
-
           </div>
-
         </div>
-
-
         <div class="field">
-
           <label for="scenarioSelect">
             Scenario
           </label>
-
           <div class="select-wrap">
-
             <select
               id="scenarioSelect"
               disabled
@@ -3201,48 +2235,32 @@
                 Loading…
               </option>
             </select>
-
           </div>
-
         </div>
-
-
         <div
           id="customPanel"
           class="custom hidden"
         >
-
           <div class="field">
-
             <label for="customScenario">
               Describe your scenario
             </label>
-
             <textarea
               id="customScenario"
               maxlength="2000"
               placeholder="For example: I want to have a casual conversation about pets. Ask me what pets I have and what animals I would like to have in the future."
             ></textarea>
-
           </div>
-
-
           <div class="custom-footer">
-
             <span
               id="customError"
               class="error"
             ></span>
-
             <span id="customCount">
               0 / 2000
             </span>
-
           </div>
-
         </div>
-
-
         <button
           id="startChatBtn"
           class="big-btn"
@@ -3251,12 +2269,8 @@
         >
           Loading…
         </button>
-
-
         <p class="credit">
-
           Dictionary data from
-
           <a
             href="https://en.wiktionary.org/"
             target="_blank"
@@ -3264,9 +2278,7 @@
           >
             English Wiktionary
           </a>
-
           via
-
           <a
             href="https://kaikki.org/"
             target="_blank"
@@ -3274,48 +2286,31 @@
           >
             Kaikki.org
           </a>,
-
           provided under CC BY-SA 4.0.
-
         </p>
-
       </div>
-
     </section>
-
-
     <!-- VOCAB SETUP -->
-
     <section
       id="vocabSetup"
       class="screen center-screen"
     >
-
       <div class="setup-content">
-
         <h1>
           Vocabulary Test
         </h1>
-
         <p class="intro">
           Choose which words to test and how difficult you want the test to be.
         </p>
-
-
         <div
           id="vocabSetupError"
           class="notice hidden"
         ></div>
-
-
         <div class="field">
-
           <label for="vocabLanguage">
             Language
           </label>
-
           <div class="select-wrap">
-
             <select
               id="vocabLanguage"
               disabled
@@ -3324,20 +2319,13 @@
                 Loading…
               </option>
             </select>
-
           </div>
-
         </div>
-
-
         <div class="field">
-
           <label for="vocabCount">
             Number of words
           </label>
-
           <div class="select-wrap">
-
             <select id="vocabCount">
               <option>5</option>
               <option selected>10</option>
@@ -3346,78 +2334,49 @@
               <option>25</option>
               <option>30</option>
             </select>
-
           </div>
-
         </div>
-
-
         <div class="field">
-
           <label for="vocabSource">
             Words
           </label>
-
           <div class="select-wrap">
-
             <select id="vocabSource">
-
               <option value="random">
                 Random
               </option>
-
               <option value="my_vocab">
                 My vocabulary
               </option>
-
               <option value="new_vocab">
                 New vocabulary
               </option>
-
             </select>
-
           </div>
-
-
           <p
             id="sourceHelp"
             class="field-help"
           ></p>
-
         </div>
-
-
         <div class="field">
-
           <label for="quizMode">
             Test mode
           </label>
-
           <div class="select-wrap">
-
             <select id="quizMode">
-
               <option value="multiple_choice">
                 Multiple choice
               </option>
-
               <option value="hardcore">
                 Hardcore mode
               </option>
-
             </select>
-
           </div>
-
-
           <p
             id="modeHelp"
             class="field-help"
           ></p>
-
         </div>
-
-
         <button
           id="startVocabBtn"
           class="big-btn"
@@ -3426,39 +2385,25 @@
         >
           Loading…
         </button>
-
-
         <p class="field-help">
           My vocabulary and New vocabulary require a logged-in account. Random tests work without logging in.
         </p>
-
       </div>
-
     </section>
-
-
     <!-- CHAT -->
-
     <section
       id="chat"
       class="screen column-screen"
     >
-
       <div class="workspace-header">
-
         <div>
-
           <h2 id="chatTitle">
             Conversation
           </h2>
-
           <p id="chatMeta">
             Scenario
           </p>
-
         </div>
-
-
         <button
           id="endChatBtn"
           class="btn danger"
@@ -3466,55 +2411,37 @@
         >
           End conversation
         </button>
-
       </div>
-
-
       <div class="chat-workspace">
-
         <section
           id="feedback"
           class="feedback"
           aria-live="polite"
         >
-
           <div class="feedback-title">
             Feedback on your last message
           </div>
-
           <div id="feedbackBody">
-
             <div class="feedback-placeholder">
               Feedback will appear here after you send a message.
             </div>
-
           </div>
-
         </section>
-
-
         <div class="chat-main">
-
           <div
             id="messages"
             class="messages"
             aria-live="polite"
           ></div>
-
-
           <div class="composer-area">
-
             <div
               id="charBar"
               class="chars hidden"
             ></div>
-
-
             <form
               id="chatForm"
               class="composer"
             >
-
               <input
                 id="messageInput"
                 type="text"
@@ -3522,8 +2449,6 @@
                 dir="auto"
                 placeholder="Type your message…"
               />
-
-
               <button
                 id="exampleBtn"
                 class="example"
@@ -3531,8 +2456,6 @@
               >
                 Generate example response
               </button>
-
-
               <button
                 id="sendBtn"
                 class="send"
@@ -3540,40 +2463,25 @@
               >
                 Send
               </button>
-
             </form>
-
           </div>
-
         </div>
-
       </div>
-
     </section>
-
-
     <!-- VOCAB TEST -->
-
     <section
       id="vocabTest"
       class="screen column-screen"
     >
-
       <div class="workspace-header">
-
         <div>
-
           <h2 id="testTitle">
             Vocabulary Test
           </h2>
-
           <p id="testMeta">
             Test
           </p>
-
         </div>
-
-
         <button
           id="endTestBtn"
           class="btn"
@@ -3581,81 +2489,55 @@
         >
           End test
         </button>
-
       </div>
-
-
       <div class="quiz-wrap">
-
         <section
           id="questionCard"
           class="quiz-card"
         >
-
           <div class="quiz-status">
-
             <span id="progress">
               Question 1
             </span>
-
             <span id="score">
               Score: 0
             </span>
-
           </div>
-
-
           <div class="prompt-label">
             English meaning
           </div>
-
-
           <div
             id="prompt"
             class="prompt"
           ></div>
-
-
           <div
             id="pos"
             class="pos hidden"
           ></div>
-
-
           <div
             id="options"
             class="options hidden"
           ></div>
-
-
           <form
             id="hardcoreForm"
             class="hardcore hidden"
           >
-
             <label for="hardcoreInput">
               <strong>
                 Type the dictionary lemma
               </strong>
             </label>
-
-
             <div
               id="testCharBar"
               class="chars test-chars hidden"
             ></div>
-
-
             <div class="hardcore-row">
-
               <input
                 id="hardcoreInput"
                 autocomplete="off"
                 spellcheck="false"
                 placeholder="Type your answer exactly…"
               />
-
-
               <button
                 id="hardcoreSubmitBtn"
                 class="send"
@@ -3663,23 +2545,15 @@
               >
                 Check
               </button>
-
             </div>
-
-
             <p class="field-help">
               Capitalisation matters. If the dictionary accepts multiple lemmas, any accepted lemma is correct.
             </p>
-
           </form>
-
-
           <div
             id="answerFeedback"
             class="answer-feedback hidden"
           ></div>
-
-
           <button
             id="nextWordBtn"
             class="big-btn hidden"
@@ -3687,37 +2561,25 @@
           >
             Next word
           </button>
-
         </section>
-
-
         <section
           id="finishCard"
           class="quiz-card hidden"
         >
-
           <div class="eyebrow">
             Finished
           </div>
-
-
           <h2>
             Vocabulary test complete
           </h2>
-
-
           <p
             id="finalScore"
             class="final-score"
           ></p>
-
-
           <p
             id="finalNote"
             class="utility-message"
           ></p>
-
-
           <button
             id="backToVocabBtn"
             class="big-btn"
@@ -3725,129 +2587,89 @@
           >
             Back to Vocabulary Test
           </button>
-
         </section>
-
       </div>
-
     </section>
-
-
     <!-- STATS -->
-
     <section
       id="stats"
       class="screen column-screen"
     >
-
       <div class="utility">
-
         <section
           id="statsOverview"
           class="utility-card"
         >
-
           <div class="eyebrow">
             My Stats
           </div>
-
-
           <h3>
             Languages
           </h3>
-
-
           <p
             id="statsMessage"
             class="utility-message"
           >
             Loading…
           </p>
-
-
           <div
             id="statsLanguages"
             class="lang-list hidden"
           ></div>
-
-
           <div
             id="overall"
             class="overall hidden"
           >
-
             <span>
               Overall foreign vocabulary
             </span>
-
             <span
               id="overallCount"
               class="count"
             >
               0
             </span>
-
           </div>
-
-
           <div
             id="chatTimeOverall"
             class="overall hidden"
           >
-
             <span>
               Total chat time
             </span>
-
             <span
               id="chatTimeValue"
               class="count"
             >
               0s
             </span>
-
           </div>
-
-
           <div
             id="unallocatedTimeOverall"
             class="overall hidden"
           >
-
             <span class="legacy-note">
               Earlier chat time not assigned to a language
             </span>
-
             <span
               id="unallocatedTimeValue"
               class="count"
             >
               0s
             </span>
-
           </div>
-
         </section>
-
-
         <section
           id="statsDetail"
           class="utility-card hidden"
         >
-
           <div class="detail-top">
-
             <div>
-
               <div class="eyebrow">
                 Vocabulary
               </div>
-
               <h3 id="statsLangTitle"></h3>
-
             </div>
-
-
             <button
               id="statsBackBtn"
               class="linkbtn"
@@ -3855,63 +2677,42 @@
             >
               ← All languages
             </button>
-
           </div>
-
-
           <p
             id="statsLangMessage"
             class="utility-message"
           ></p>
-
-
           <ul
             id="vocabList"
             class="vocab-list"
           ></ul>
-
         </section>
-
       </div>
-
     </section>
-
-
     <!-- RECENT -->
-
     <section
       id="recent"
       class="screen column-screen"
     >
-
       <div class="utility">
-
         <section
           id="recentOverview"
           class="utility-card"
         >
-
           <div class="eyebrow">
             Recent Conversations
           </div>
-
-
           <h3>
             Your recent chats
           </h3>
-
-
           <p
             id="recentMessage"
             class="utility-message"
           ></p>
-
-
           <div
             id="recentDisabledActions"
             class="hidden"
           >
-
             <button
               id="recentEnableBtn"
               class="secondary-btn"
@@ -3919,48 +2720,30 @@
             >
               Allow recent conversations on this device
             </button>
-
           </div>
-
-
           <div
             id="recentList"
             class="recent-list"
           ></div>
-
-
           <p class="retention">
             When enabled, recent conversations are stored locally in this browser, limited to 20 conversations and removed after 30 days.
           </p>
-
         </section>
-
-
         <section
           id="recentDetail"
           class="utility-card hidden"
         >
-
           <div class="detail-top">
-
             <div>
-
               <div class="eyebrow">
                 Recent Conversation
               </div>
-
-
               <h3 id="recentTitle"></h3>
-
-
               <p
                 id="recentMeta"
                 class="utility-message"
               ></p>
-
             </div>
-
-
             <button
               id="recentBackBtn"
               class="linkbtn"
@@ -3968,260 +2751,189 @@
             >
               ← All conversations
             </button>
-
           </div>
-
-
           <div
             id="recentMessages"
             class="recent-messages"
           ></div>
-
         </section>
-
       </div>
-
     </section>
-
-
     <!-- PRIVACY -->
-
     <section
       id="privacy"
       class="screen column-screen"
     >
-
       <div class="legal-wrap">
-
         <article class="legal-content">
-
           <div class="eyebrow">
             PlainBetter
           </div>
-
           <h1>
             Privacy Policy
           </h1>
-
           <div class="legal-updated">
             Last updated: 18 August 2026
           </div>
-
           <p>
             This Privacy Policy explains how PlainBetter handles personal information when you use plainbetter.co.uk. PlainBetter is currently an independent UK-based project in an early testing stage.
           </p>
-
           <div class="legal-callout">
             For privacy or data protection requests, contact
             <a class="contact-email" href="#"></a>.
           </div>
-
           <h2>
             1. Information we process
           </h2>
-
           <h3>
             Account information
           </h3>
-
           <p>
             If you create an account, we process your email address, account identifier and authentication/session information. Authentication is provided by Supabase. PlainBetter does not receive or store your password in plain text.
           </p>
-
           <h3>
             Language-learning information
           </h3>
-
           <p>
             For logged-in users, we may store learning information such as your language, vocabulary lemmas, successful-use counts, successful Hardcore-test recalls and recorded chat-practice time.
           </p>
-
           <h3>
             Conversation content
           </h3>
-
           <p>
             When you use Chat or Generate Example Response, the text needed to provide the feature is sent to the PlainBetter backend and to OpenAI's API so a response can be generated. PlainBetter does not currently save full chat transcripts to your account database.
           </p>
-
           <h3>
             Recent Conversations on your device
           </h3>
-
           <p>
             If you choose to allow Recent Conversations, PlainBetter stores recent chat content in your browser's local storage. This is currently limited to 20 conversations and approximately 30 days. You can refuse or later withdraw this choice through Privacy choices in the footer.
           </p>
-
           <h3>
             Technical and security information
           </h3>
-
           <p>
             Our hosting, authentication, email and infrastructure providers may process technical information such as IP address, timestamps, request information, device/browser information and security logs as part of operating and protecting their services.
           </p>
-
           <h2>
             2. Why we use this information
           </h2>
-
           <p>
             We use personal information where it is needed to provide features you request, maintain your account and learning history, operate and secure the service, troubleshoot problems, prevent abuse, and communicate with you about authentication or account matters.
           </p>
-
           <p>
             Where the law requires consent for optional storage on your device, such as the current Recent Conversations feature, we rely on your consent. You can withdraw that consent at any time.
           </p>
-
           <h2>
             3. Browser storage
           </h2>
-
           <p>
             PlainBetter uses essential browser storage for functions such as remembering authentication/session state when you choose to sign in and remembering your privacy choice. Optional Recent Conversations storage is disabled unless you allow it.
           </p>
-
           <p>
             PlainBetter does not currently use advertising or behavioural-tracking storage technologies on the site.
           </p>
-
           <h2>
             4. Service providers
           </h2>
-
           <p>
             We use third-party service providers to host and operate PlainBetter, manage user accounts and email, and provide AI-powered language features. Where necessary, these providers process personal information on our behalf.
           </p>
-
           <h2>
             5. International processing
           </h2>
-
           <p>
             Some service providers operate internationally, so personal information may be processed outside the UK. Where applicable, transfers are handled using safeguards and contractual arrangements made available by those providers and required by data-protection law.
           </p>
-
           <h2>
             6. How long we keep information
           </h2>
-
           <ul>
             <li>
               Optional Recent Conversations stored on your device are limited to approximately 30 days and 20 conversations.
             </li>
-
             <li>
               Account, vocabulary and learning-stat information is generally kept while your account remains active, unless you ask us to delete it or limited retention is reasonably required for legal, security or operational reasons.
             </li>
-
             <li>
               Infrastructure and provider logs may have separate retention periods set by the relevant provider.
             </li>
           </ul>
-
           <h2>
             7. Your rights
           </h2>
-
           <p>
             Depending on the circumstances, UK data-protection law may give you rights including access, correction, deletion, restriction, objection, data portability and withdrawal of consent.
           </p>
-
           <p>
             To make a request, contact
             <a class="contact-email" href="#"></a>.
             You also have the right to complain to the UK Information Commissioner's Office if you are unhappy with how your personal information is handled.
           </p>
-
           <h2>
             8. Sensitive information
           </h2>
-
           <p>
             Please avoid putting unnecessary sensitive personal information, confidential information, or personal information about other people into your chat messages or custom scenarios.
           </p>
-
           <h2>
             9. Adults during the current beta
           </h2>
-
           <p>
             PlainBetter is currently intended for adults aged 18 or over during this early testing stage.
           </p>
-
           <h2>
             10. Changes to this policy
           </h2>
-
           <p>
             We may update this Privacy Policy as PlainBetter develops, particularly if we add new storage, analytics, advertising, payment or account-history features.
           </p>
-
         </article>
-
       </div>
-
     </section>
-
-
     <!-- TERMS -->
-
     <section
       id="terms"
       class="screen column-screen"
     >
-
       <div class="legal-wrap">
-
         <article class="legal-content">
-
           <div class="eyebrow">
             PlainBetter
           </div>
-
           <h1>
             Terms of Use
           </h1>
-
           <div class="legal-updated">
             Last updated: 17 August 2026
           </div>
-
           <p>
             These Terms of Use apply when you use PlainBetter at plainbetter.co.uk. PlainBetter is currently an early-stage language-learning service offered for testing and development.
           </p>
-
           <h2>
             1. Who may use PlainBetter
           </h2>
-
           <p>
             During the current beta stage, PlainBetter is intended for users aged 18 or over. By using the service, you agree to use it lawfully and in accordance with these terms.
           </p>
-
           <h2>
             2. Accounts
           </h2>
-
           <p>
             You may be able to use some features without an account. If you create an account, you are responsible for providing accurate account information, keeping your login details secure and promptly telling us if you believe your account has been compromised.
           </p>
-
           <h2>
             3. Language-learning content and AI
           </h2>
-
           <p>
             PlainBetter uses artificial intelligence and dictionary data to provide conversations, corrections, examples, definitions and learning suggestions. These outputs can be incomplete, inaccurate, unnatural or wrong. You should treat them as learning assistance rather than a guarantee of linguistic accuracy.
           </p>
-
           <h2>
             4. Acceptable use
           </h2>
-
           <p>
             You must not use PlainBetter to:
           </p>
-
           <ul>
             <li>break the law or encourage unlawful activity;</li>
             <li>harass, threaten or abuse other people;</li>
@@ -4230,159 +2942,110 @@
             <li>use automated methods to create unreasonable load or excessive API usage; or</li>
             <li>submit confidential or sensitive personal information that is not reasonably needed for language practice.</li>
           </ul>
-
           <h2>
             5. Your content
           </h2>
-
           <p>
             You keep ownership of content you submit to PlainBetter. You give us permission to process that content only as reasonably necessary to provide, secure and operate the service, including sending relevant conversation content to service providers used to generate responses.
           </p>
-
           <h2>
             6. PlainBetter content and intellectual property
           </h2>
-
           <p>
             The PlainBetter name, site design, software and original service content belong to PlainBetter or its licensors, except where third-party content or open-licensed dictionary material is identified separately.
           </p>
-
           <h2>
             7. Availability and changes
           </h2>
-
           <p>
             PlainBetter is currently a beta service. Features may change, be limited, stop working or be removed. We may suspend or discontinue parts of the service, including to maintain security, manage costs or improve the product.
           </p>
-
           <h2>
             8. No paid plan under these beta terms
           </h2>
-
           <p>
             PlainBetter does not currently offer a paid consumer plan under these terms. If paid subscriptions, credits, advertising-based unlocks or other paid features are introduced, the relevant price, billing, cancellation and consumer information will be presented before purchase and these terms will be updated where necessary.
           </p>
-
           <h2>
             9. Liability
           </h2>
-
           <p>
             Nothing in these terms excludes liability that cannot legally be excluded. Subject to that, PlainBetter is provided on an early-stage basis and we do not promise that it will always be available, error-free or suitable for every learning purpose.
           </p>
-
           <h2>
             10. Privacy
           </h2>
-
           <p>
             Our Privacy Policy explains how personal information is handled.
           </p>
-
           <h2>
             11. Ending access
           </h2>
-
           <p>
             You may stop using PlainBetter at any time. We may restrict or suspend access where reasonably necessary for security, abuse prevention, legal compliance or serious breach of these terms.
           </p>
-
           <h2>
             12. Governing law
           </h2>
-
           <p>
             These terms are governed by the laws of England and Wales, subject to any mandatory consumer protections that apply to you.
           </p>
-
           <h2>
             13. Contact
           </h2>
-
           <p>
             Questions about these terms can be sent to
             <a class="contact-email" href="#"></a>.
           </p>
-
         </article>
-
       </div>
-
     </section>
-
-
     <!-- CONTACT -->
-
     <section
       id="contact"
       class="screen column-screen"
     >
-
       <div class="legal-wrap">
-
         <article class="legal-content">
-
           <div class="eyebrow">
             PlainBetter
           </div>
-
           <h1>
             Contact
           </h1>
-
           <p class="intro">
             Questions, feedback, account requests and privacy requests are welcome.
           </p>
-
           <div class="legal-callout">
-
             Email:
-
             <a
               class="contact-email"
               href="#"
             ></a>
-
           </div>
-
           <h2>
             Testing feedback
           </h2>
-
           <p>
             If you are testing PlainBetter, it is particularly useful to tell us what felt confusing, what you expected to happen, which features you actually used and whether anything prevented you from continuing.
           </p>
-
           <h2>
             Privacy and account requests
           </h2>
-
           <p>
             You can also use this address to ask about your personal information or request deletion of account-related data.
           </p>
-
         </article>
-
       </div>
-
     </section>
-
   </main>
-
-
   <!-- FOOTER -->
-
   <footer class="site-footer">
-
     <div class="site-footer-inner">
-
       <div>
         © 2026 PlainBetter
       </div>
-
-
       <div class="footer-links">
-
         <button
           id="privacyFooterBtn"
           class="footer-link"
@@ -4390,11 +3053,9 @@
         >
           Privacy Policy
         </button>
-
         <span class="footer-dot" aria-hidden="true">
           •
         </span>
-
         <button
           id="termsFooterBtn"
           class="footer-link"
@@ -4402,11 +3063,9 @@
         >
           Terms of Use
         </button>
-
         <span class="footer-dot" aria-hidden="true">
           •
         </span>
-
         <button
           id="contactFooterBtn"
           class="footer-link"
@@ -4414,11 +3073,9 @@
         >
           Contact
         </button>
-
         <span class="footer-dot" aria-hidden="true">
           •
         </span>
-
         <button
           id="privacyChoicesBtn"
           class="footer-link"
@@ -4426,36 +3083,26 @@
         >
           Privacy choices
         </button>
-
       </div>
-
     </div>
-
   </footer>
-
-
   <div
     id="tooltip"
     class="tooltip"
     role="tooltip"
   ></div>
-
-
   <!-- AUTH -->
-
   <div
     id="authModal"
     class="auth-modal hidden"
     aria-hidden="true"
   >
-
     <section
       class="auth-card"
       role="dialog"
       aria-modal="true"
       aria-labelledby="authTitle"
     >
-
       <button
         id="authClose"
         class="auth-close"
@@ -4464,23 +3111,16 @@
       >
         ×
       </button>
-
-
       <h2 id="authTitle">
         Log in
       </h2>
-
-
       <p
         id="authSubtitle"
         class="utility-message"
       >
         Log in to your PlainBetter account.
       </p>
-
-
-      <div class="auth-tabs">
-
+      <div id="authTabs" class="auth-tabs">
         <button
           id="loginTab"
           class="tab active"
@@ -4488,8 +3128,6 @@
         >
           Log In
         </button>
-
-
         <button
           id="signupTab"
           class="tab"
@@ -4497,43 +3135,30 @@
         >
           Sign Up
         </button>
-
       </div>
-
-
       <form id="authForm">
-
-        <div class="field">
-
+        <div id="authEmailField" class="field">
           <label for="authEmail">
             Email
           </label>
-
           <input
             id="authEmail"
             type="email"
             autocomplete="email"
             required
           />
-
         </div>
-
-
-        <div class="field">
-
-          <label for="authPassword">
+        <div id="authPasswordField" class="field">
+          <label id="authPasswordLabel" for="authPassword">
             Password
           </label>
-
           <div class="password-wrap">
-
             <input
               id="authPassword"
               type="password"
               autocomplete="current-password"
               required
             />
-
             <button
               id="authPasswordToggle"
               class="password-toggle"
@@ -4543,12 +3168,38 @@
             >
               Show
             </button>
-
           </div>
-
+          <div id="forgotPasswordRow" class="auth-link-row">
+            <button
+              id="forgotPasswordBtn"
+              class="auth-link"
+              type="button"
+            >
+              Forgot password?
+            </button>
+          </div>
         </div>
-
-
+        <div id="authConfirmPasswordField" class="field hidden">
+          <label for="authConfirmPassword">
+            Confirm new password
+          </label>
+          <div class="password-wrap">
+            <input
+              id="authConfirmPassword"
+              type="password"
+              autocomplete="new-password"
+            />
+            <button
+              id="authConfirmPasswordToggle"
+              class="password-toggle"
+              type="button"
+              aria-label="Show confirmed password"
+              aria-pressed="false"
+            >
+              Show
+            </button>
+          </div>
+        </div>
         <button
           id="authSubmit"
           class="big-btn"
@@ -4556,45 +3207,40 @@
         >
           Log In
         </button>
-
-
+        <div id="authBackRow" class="auth-link-row hidden">
+          <button
+            id="authBackBtn"
+            class="auth-link"
+            type="button"
+          >
+            Back to Log In
+          </button>
+        </div>
         <div
           id="authMsg"
           class="auth-msg"
           aria-live="polite"
         ></div>
-
       </form>
-
     </section>
-
   </div>
-
-
   <!-- PRIVACY CHOICE -->
-
   <aside
     id="privacyBanner"
     class="privacy-banner hidden"
     aria-live="polite"
   >
-
     <h3>
       Privacy choices
     </h3>
-
     <p>
       PlainBetter uses essential browser storage for sign-in/session functions and to remember this privacy choice. With your permission, we can also save up to 20 recent conversations on this device for around 30 days.
     </p>
-
     <p
       id="privacyCurrent"
       class="privacy-current"
     ></p>
-
-
     <div class="privacy-actions">
-
       <button
         id="privacyEssentialBtn"
         class="privacy-choice-btn"
@@ -4602,8 +3248,6 @@
       >
         Essential only
       </button>
-
-
       <button
         id="privacyRecentBtn"
         class="privacy-choice-btn"
@@ -4611,8 +3255,6 @@
       >
         Allow recent conversations
       </button>
-
-
       <button
         id="privacyBannerPolicyBtn"
         class="privacy-policy-btn"
@@ -4620,29 +3262,18 @@
       >
         Read Privacy Policy
       </button>
-
     </div>
-
   </aside>
-
-
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-
   <script>
     const API =
       "https://api.plainbetter.co.uk";
-
     const SUPABASE_URL =
       "https://kfpdxalufjqmwmfqwpwv.supabase.co";
-
     const SUPABASE_KEY =
       "sb_publishable_p1ktbEl02SmIYMxOexx8Lw_KdllADUn";
-
     const CONTACT_EMAIL =
       "contact@plainbetter.co.uk";
-
-
     const supabaseClient =
       window.supabase.createClient(
         SUPABASE_URL,
@@ -4655,13 +3286,9 @@
           },
         }
       );
-
-
     const $ =
       id =>
         document.getElementById(id);
-
-
     const screens = {
       home: $("home"),
       chatSetup: $("chatSetup"),
@@ -4674,150 +3301,99 @@
       terms: $("terms"),
       contact: $("contact"),
     };
-
-
     let config = null;
-
     let languageMap =
       new Map();
-
     let session = null;
-
     let authMode =
       "login";
-
     let history = [];
-
     let activeLang = null;
     let activeLevel = null;
     let activeScenario = null;
     let activeCustom = "";
-
     let conversationEnded =
       false;
-
     let screenBeforeStats =
       screens.home;
-
     let screenBeforeRecent =
       screens.home;
-
     let screenBeforeInfo =
       screens.home;
-
     let chatStartedAt =
       null;
-
     let chatMs =
       0;
-
     let activeTest =
       null;
-
     let answerPending =
       false;
-
     let currentRecent =
       null;
-
-
     const RECENT_KEY =
       "plainbetter_recent_conversations_v1";
-
     const RECENT_MAX =
       20;
-
     const RECENT_TTL =
       30 *
       24 *
       60 *
       60 *
       1000;
-
     const PRIVACY_PREF_KEY =
       "plainbetter_privacy_preferences_v1";
-
     const PRIVACY_PREF_TTL =
       180 *
       24 *
       60 *
       60 *
       1000;
-
-
     const dictionaryCache =
       new Map();
-
-
     let activeWord =
       null;
-
     let hideTimer =
       null;
-
     let hoverTimer =
       null;
-
     let requestToken =
       0;
-
     let privacyPreference =
       null;
-
-
     /* =====================================================
        CHARACTER
        ===================================================== */
-
     const character =
       $("plainbetterCharacter");
-
-
     let characterState =
       "hanging";
-
     let characterTransitioning =
       false;
-
     let characterFadeAnimation =
       null;
-
-
     const CHARACTER_FADE_OUT_MS =
       190;
-
-
     const CHARACTER_FADE_IN_MS =
       230;
-
-
     function characterAnchorRatio() {
-
       if (
         window.innerWidth <=
         820
       ) {
         return .36;
       }
-
       if (
         window.innerWidth <=
         980
       ) {
         return .44;
       }
-
       return .29;
     }
-
-
     function characterAnchorX() {
-
       const raw =
         window.innerWidth *
         characterAnchorRatio();
-
-
       return Math.max(
         90,
         Math.min(
@@ -4827,237 +3403,159 @@
         )
       );
     }
-
-
     function hangingCharacterPosition() {
-
       const topbar =
         document
           .querySelector(
             ".topbar"
           )
           .getBoundingClientRect();
-
-
       return {
         left:
           characterAnchorX() -
           25,
-
         top:
           topbar.bottom -
           4,
       };
     }
-
-
     function sittingCharacterPosition() {
-
       const footer =
         document
           .querySelector(
             ".site-footer"
           )
           .getBoundingClientRect();
-
-
       return {
         left:
           characterAnchorX() -
           48,
-
         top:
           footer.top -
           94,
       };
     }
-
-
     function applyCharacterPosition(
       position
     ) {
-
       character.style.left =
         `${position.left}px`;
-
       character.style.top =
         `${position.top}px`;
     }
-
-
     function setCharacterPose(
       pose
     ) {
-
       character
         .classList
         .remove(
           "character-hanging",
           "character-sitting"
         );
-
-
       character
         .classList
         .add(
           `character-${pose}`
         );
-
-
       characterState =
         pose;
     }
-
-
     function stopCharacterFade() {
-
       if (
         characterFadeAnimation
       ) {
-
         try {
           characterFadeAnimation.cancel();
         } catch {}
-
         characterFadeAnimation =
           null;
       }
-
-
       character.style.opacity =
         "1";
-
-
       characterTransitioning =
         false;
     }
-
-
     function placeCharacterHanging() {
-
       stopCharacterFade();
-
-
       applyCharacterPosition(
         hangingCharacterPosition()
       );
-
-
       setCharacterPose(
         "hanging"
       );
-
-
       character.style.opacity =
         "1";
     }
-
-
     function placeCharacterSitting() {
-
       stopCharacterFade();
-
-
       applyCharacterPosition(
         sittingCharacterPosition()
       );
-
-
       setCharacterPose(
         "sitting"
       );
-
-
       character.style.opacity =
         "1";
     }
-
-
     function syncCharacterToScreen(
       screen
     ) {
-
       if (
         characterTransitioning
       ) {
         return;
       }
-
-
       if (
         screen ===
         screens.home
       ) {
-
         applyCharacterPosition(
           hangingCharacterPosition()
         );
-
-
         if (
           characterState !==
           "hanging"
         ) {
-
           setCharacterPose(
             "hanging"
           );
         }
-
       } else {
-
         applyCharacterPosition(
           sittingCharacterPosition()
         );
-
-
         if (
           characterState !==
           "sitting"
         ) {
-
           setCharacterPose(
             "sitting"
           );
         }
       }
     }
-
-
     async function fadeCharacterToScreen(
       targetScreen
     ) {
-
       if (
         characterTransitioning
       ) {
         return;
       }
-
-
       const targetState =
         targetScreen ===
           screens.home
-
           ? "hanging"
-
           : "sitting";
-
-
       if (
         targetState ===
         characterState
       ) {
-
         show(
           targetScreen
         );
-
-
         return;
       }
-
-
       const hiddenCharacter =
         window
           .getComputedStyle(
@@ -5065,58 +3563,39 @@
           )
           .display ===
         "none";
-
-
       const reducedMotion =
         window
           .matchMedia(
             "(prefers-reduced-motion: reduce)"
           )
           .matches;
-
-
       if (
         hiddenCharacter ||
         reducedMotion
       ) {
-
         show(
           targetScreen
         );
-
-
         if (
           targetState ===
           "hanging"
         ) {
-
           placeCharacterHanging();
-
         } else {
-
           placeCharacterSitting();
         }
-
-
         return;
       }
-
-
       characterTransitioning =
         true;
-
-
       character.style.opacity =
         "1";
-
-
       characterFadeAnimation =
         character.animate(
           [
             {
               opacity: 1,
             },
-
             {
               opacity: 0,
             },
@@ -5124,81 +3603,53 @@
           {
             duration:
               CHARACTER_FADE_OUT_MS,
-
             easing:
               "ease-in",
-
             fill:
               "forwards",
           }
         );
-
-
       try {
-
         await characterFadeAnimation.finished;
-
       } catch {
-
         characterTransitioning =
           false;
-
         return;
       }
-
-
       try {
         characterFadeAnimation.cancel();
       } catch {}
-
-
       characterFadeAnimation =
         null;
-
-
       character.style.opacity =
         "0";
-
-
       show(
         targetScreen
       );
-
-
       if (
         targetState ===
         "hanging"
       ) {
-
         applyCharacterPosition(
           hangingCharacterPosition()
         );
-
-
         setCharacterPose(
           "hanging"
         );
-
       } else {
-
         applyCharacterPosition(
           sittingCharacterPosition()
         );
-
-
         setCharacterPose(
           "sitting"
         );
       }
-
-
       characterFadeAnimation =
         character.animate(
           [
             {
               opacity: 0,
             },
-
             {
               opacity: 1,
             },
@@ -5206,135 +3657,88 @@
           {
             duration:
               CHARACTER_FADE_IN_MS,
-
             easing:
               "ease-out",
-
             fill:
               "forwards",
           }
         );
-
-
       try {
-
         await characterFadeAnimation.finished;
-
       } catch {
-
         characterTransitioning =
           false;
-
         return;
       }
-
-
       try {
         characterFadeAnimation.cancel();
       } catch {}
-
-
       characterFadeAnimation =
         null;
-
-
       character.style.opacity =
         "1";
-
-
       characterTransitioning =
         false;
     }
-
-
     async function navigateToScreen(
       targetScreen
     ) {
-
       const current =
         activeScreen();
-
-
       const currentIsHome =
         current ===
         screens.home;
-
-
       const targetIsHome =
         targetScreen ===
         screens.home;
-
-
       if (
         currentIsHome !==
         targetIsHome
       ) {
-
         await fadeCharacterToScreen(
           targetScreen
         );
-
-
         return;
       }
-
-
       show(
         targetScreen
       );
     }
-
-
     /* =====================================================
        CONTACT
        ===================================================== */
-
     function fillContactDetails() {
-
       document
         .querySelectorAll(
           ".contact-email"
         )
         .forEach(
           link => {
-
             link.textContent =
               CONTACT_EMAIL;
-
             link.href =
               `mailto:${CONTACT_EMAIL}`;
           }
         );
     }
-
-
     /* =====================================================
        PRIVACY
        ===================================================== */
-
     function readPrivacyPreference() {
-
       try {
-
         const raw =
           localStorage.getItem(
             PRIVACY_PREF_KEY
           );
-
-
         if (
           !raw
         ) {
           return null;
         }
-
-
         const parsed =
           JSON.parse(
             raw
           );
-
-
         if (
           !parsed ||
           typeof parsed.recentConversations !==
@@ -5342,15 +3746,11 @@
         ) {
           return null;
         }
-
-
         const decidedAt =
           Date.parse(
             parsed.decidedAt ||
             0
           );
-
-
         if (
           !Number.isFinite(
             decidedAt
@@ -5358,8 +3758,6 @@
         ) {
           return null;
         }
-
-
         if (
           Date.now() -
           decidedAt >
@@ -5367,124 +3765,79 @@
         ) {
           return null;
         }
-
-
         return parsed;
-
       } catch {
-
         return null;
       }
     }
-
-
     function recentStorageAllowed() {
-
       return (
         privacyPreference?.recentConversations ===
         true
       );
     }
-
-
     function updatePrivacyBannerText() {
-
       if (
         !privacyPreference
       ) {
-
         $("privacyCurrent")
           .textContent =
             "No choice has been saved yet.";
-
-
         return;
       }
-
-
       $("privacyCurrent")
         .textContent =
           recentStorageAllowed()
-
             ? "Current choice: recent conversations are allowed on this device."
-
             : "Current choice: essential storage only.";
     }
-
-
     function showPrivacyBanner() {
-
       updatePrivacyBannerText();
-
-
       $("privacyBanner")
         .classList
         .remove(
           "hidden"
         );
     }
-
-
     function hidePrivacyBanner() {
-
       $("privacyBanner")
         .classList
         .add(
           "hidden"
         );
     }
-
-
     function setPrivacyPreference(
       allowRecent
     ) {
-
       privacyPreference = {
-
         recentConversations:
           Boolean(
             allowRecent
           ),
-
         decidedAt:
           new Date()
             .toISOString(),
       };
-
-
       try {
-
         localStorage.setItem(
           PRIVACY_PREF_KEY,
           JSON.stringify(
             privacyPreference
           )
         );
-
       } catch {}
-
-
       if (
         !allowRecent
       ) {
-
         try {
-
           localStorage.removeItem(
             RECENT_KEY
           );
-
         } catch {}
-
-
         currentRecent =
           null;
       }
-
-
       hidePrivacyBanner();
-
-
       if (
         screens.recent
           .classList
@@ -5492,54 +3845,37 @@
             "active"
           )
       ) {
-
         renderRecentList();
       }
     }
-
-
     function initPrivacyPreferences() {
-
       privacyPreference =
         readPrivacyPreference();
-
-
       if (
         !privacyPreference
       ) {
-
         showPrivacyBanner();
       }
     }
-
-
     /* =====================================================
        TIMER / SCREENS
        ===================================================== */
-
     function pauseTimer() {
-
       if (
         chatStartedAt !==
         null
       ) {
-
         chatMs +=
           Math.max(
             0,
             performance.now() -
             chatStartedAt
           );
-
-
         chatStartedAt =
           null;
       }
     }
-
-
     function resumeTimer() {
-
       if (
         screens.chat
           .classList
@@ -5551,18 +3887,12 @@
         chatStartedAt ===
           null
       ) {
-
         chatStartedAt =
           performance.now();
       }
     }
-
-
     function takeChatSeconds() {
-
       pauseTimer();
-
-
       const seconds =
         Math.max(
           0,
@@ -5574,104 +3904,73 @@
             )
           )
         );
-
-
       chatMs =
         0;
-
-
       resumeTimer();
-
-
       return seconds;
     }
-
-
     function updateTopbar(
       screen
     ) {
-
       const home =
         screen ===
         screens.home;
-
-
       $("topBrand")
         .classList
         .toggle(
           "hidden",
           home
         );
-
-
       $("topBackBtn")
         .classList
         .toggle(
           "hidden",
           home
         );
-
-
       $("topHomeBtn")
         .classList
         .toggle(
           "hidden",
           home
         );
-
-
       if (
         home
       ) {
         return;
       }
-
-
       if (
         screen ===
           screens.chatSetup ||
         screen ===
           screens.vocabSetup
       ) {
-
         $("topBackBtn")
           .textContent =
             "← Back";
-
       } else if (
         screen ===
         screens.chat
       ) {
-
         $("topBackBtn")
           .textContent =
             "← Chat setup";
-
       } else if (
         screen ===
         screens.vocabTest
       ) {
-
         $("topBackBtn")
           .textContent =
             "← Vocabulary setup";
-
       } else {
-
         $("topBackBtn")
           .textContent =
             "← Back";
       }
     }
-
-
     function show(
       screen
     ) {
-
       pauseTimer();
-
-
       Object
         .values(
           screens
@@ -5684,46 +3983,30 @@
                 "active"
               )
         );
-
-
       screen
         .classList
         .add(
           "active"
         );
-
-
       updateTopbar(
         screen
       );
-
-
       const internalScroller =
         screen.querySelector(
           ".legal-wrap, .utility"
         );
-
-
       if (
         internalScroller
       ) {
-
         internalScroller.scrollTop =
           0;
       }
-
-
       syncCharacterToScreen(
         screen
       );
-
-
       resumeTimer();
     }
-
-
     function activeScreen() {
-
       return (
         Object
           .values(
@@ -5740,34 +4023,22 @@
         screens.home
       );
     }
-
-
     async function goHome() {
-
       screenBeforeStats =
         screens.home;
-
       screenBeforeRecent =
         screens.home;
-
       screenBeforeInfo =
         screens.home;
-
-
       await navigateToScreen(
         screens.home
       );
     }
-
-
     async function openInfoScreen(
       screen
     ) {
-
       const current =
         activeScreen();
-
-
       if (
         ![
           screens.privacy,
@@ -5777,81 +4048,53 @@
           current
         )
       ) {
-
         screenBeforeInfo =
           current;
       }
-
-
       await navigateToScreen(
         screen
       );
     }
-
-
     async function closeInfoScreen() {
-
       await navigateToScreen(
         screenBeforeInfo ||
         screens.home
       );
     }
-
-
     /* =====================================================
        HTTP / AUTH
        ===================================================== */
-
     async function jsonResponse(
       response
     ) {
-
       let data;
-
-
       try {
-
         data =
           await response.json();
-
       } catch {
-
         throw new Error(
           "The server returned an invalid response."
         );
       }
-
-
       if (
         !response.ok
       ) {
-
         throw new Error(
           data.error ||
           "The request failed."
         );
       }
-
-
       return data;
     }
-
-
     function authHeaders() {
-
       return session?.access_token
-
         ? {
             Authorization:
               `Bearer ${session.access_token}`,
           }
-
         : {};
     }
-
-
     async function requiredToken() {
-
       const {
         data,
         error,
@@ -5859,51 +4102,34 @@
         await supabaseClient
           .auth
           .getSession();
-
-
       if (
         error
       ) {
-
         throw new Error(
           "Could not read your login session."
         );
       }
-
-
       setAuth(
         data.session
       );
-
-
       if (
         !data.session?.access_token
       ) {
-
         throw new Error(
           "Please log in first."
         );
       }
-
-
       return data.session
         .access_token;
     }
-
-
     function setAuth(
       newSession
     ) {
-
       session =
         newSession ||
         null;
-
-
       const user =
         session?.user;
-
-
       $("signedOut")
         .classList
         .toggle(
@@ -5912,36 +4138,26 @@
             user
           )
         );
-
-
       $("signedIn")
         .classList
         .toggle(
           "hidden",
           !user
         );
-
-
       $("emailLabel")
         .textContent =
           user?.email ||
           "";
-
-
       $("emailLabel")
         .title =
           user?.email ||
           "";
-
-
       $("emailLabel")
         .classList
         .toggle(
           "hidden",
           !user
         );
-
-
       if (
         !user &&
         screens.stats
@@ -5950,52 +4166,34 @@
             "active"
           )
       ) {
-
         navigateToScreen(
           screens.home
         );
       }
     }
-
-
     function setPasswordVisible(
+      inputId,
+      toggleId,
       visible
     ) {
-
       const password =
-        $("authPassword");
-
-
+        $(inputId);
       const toggle =
-        $("authPasswordToggle");
-
-
+        $(toggleId);
       password.type =
         visible
-
           ? "text"
-
           : "password";
-
-
       toggle.textContent =
         visible
-
           ? "Hide"
-
           : "Show";
-
-
       toggle.setAttribute(
         "aria-label",
         visible
-
           ? "Hide password"
-
           : "Show password"
       );
-
-
       toggle.setAttribute(
         "aria-pressed",
         visible
@@ -6003,200 +4201,321 @@
           : "false"
       );
     }
-
-
+    function authSubmitLabel() {
+      if (
+        authMode ===
+        "signup"
+      ) {
+        return "Sign Up";
+      }
+      if (
+        authMode ===
+        "forgot"
+      ) {
+        return "Send reset link";
+      }
+      if (
+        authMode ===
+        "recovery"
+      ) {
+        return "Update password";
+      }
+      return "Log In";
+    }
     function setAuthMode(
       mode
     ) {
-
       authMode =
-        mode ===
-          "signup"
-
-          ? "signup"
-
+        [
+          "signup",
+          "forgot",
+          "recovery",
+        ].includes(
+          mode
+        )
+          ? mode
           : "login";
-
-
       const signup =
         authMode ===
         "signup";
-
-
+      const forgot =
+        authMode ===
+        "forgot";
+      const recovery =
+        authMode ===
+        "recovery";
+      const standard =
+        !forgot &&
+        !recovery;
+      $("authTabs")
+        ?.classList
+        .toggle(
+          "hidden",
+          !standard
+        );
       $("loginTab")
         .classList
         .toggle(
           "active",
+          standard &&
           !signup
         );
-
-
       $("signupTab")
         .classList
         .toggle(
           "active",
+          standard &&
           signup
         );
-
-
-      $("authTitle")
-        .textContent =
-          signup
-
-            ? "Create account"
-
-            : "Log in";
-
-
-      $("authSubtitle")
-        .textContent =
-          signup
-
-            ? "Create a PlainBetter account with your email and password."
-
-            : "Log in to your PlainBetter account.";
-
-
+      $("authEmailField")
+        .classList
+        .toggle(
+          "hidden",
+          recovery
+        );
+      $("authPasswordField")
+        .classList
+        .toggle(
+          "hidden",
+          forgot
+        );
+      $("authConfirmPasswordField")
+        .classList
+        .toggle(
+          "hidden",
+          !recovery
+        );
+      $("forgotPasswordRow")
+        .classList
+        .toggle(
+          "hidden",
+          authMode !==
+          "login"
+        );
+      $("authBackRow")
+        .classList
+        .toggle(
+          "hidden",
+          !forgot
+        );
+      if (
+        recovery
+      ) {
+        $("authTitle")
+          .textContent =
+            "Choose a new password";
+        $("authSubtitle")
+          .textContent =
+            "Enter and confirm the new password for your PlainBetter account.";
+        $("authPasswordLabel")
+          .textContent =
+            "New password";
+        $("authPassword")
+          .autocomplete =
+            "new-password";
+      } else if (
+        forgot
+      ) {
+        $("authTitle")
+          .textContent =
+            "Reset password";
+        $("authSubtitle")
+          .textContent =
+            "Enter your email address and we will send you a password reset link.";
+        $("authPasswordLabel")
+          .textContent =
+            "Password";
+      } else {
+        $("authTitle")
+          .textContent =
+            signup
+              ? "Create account"
+              : "Log in";
+        $("authSubtitle")
+          .textContent =
+            signup
+              ? "Create a PlainBetter account with your email and password."
+              : "Log in to your PlainBetter account.";
+        $("authPasswordLabel")
+          .textContent =
+            "Password";
+        $("authPassword")
+          .autocomplete =
+            signup
+              ? "new-password"
+              : "current-password";
+      }
+      $("authEmail")
+        .required =
+          !recovery;
+      $("authPassword")
+        .required =
+          !forgot;
+      $("authConfirmPassword")
+        .required =
+          recovery;
       $("authSubmit")
         .textContent =
-          signup
-
-            ? "Sign Up"
-
-            : "Log In";
-
-
-      $("authPassword")
-        .autocomplete =
-          signup
-
-            ? "new-password"
-
-            : "current-password";
-
-
+          authSubmitLabel();
       setPasswordVisible(
+        "authPassword",
+        "authPasswordToggle",
         false
       );
-
-
+      setPasswordVisible(
+        "authConfirmPassword",
+        "authConfirmPasswordToggle",
+        false
+      );
       $("authMsg")
         .textContent =
           "";
-
-
       $("authMsg")
         .className =
           "auth-msg";
     }
-
-
     function openAuth(
       mode
     ) {
-
+      $("authEmail")
+        .disabled =
+          false;
+      $("authSubmit")
+        .classList
+        .remove(
+          "hidden"
+        );
       setAuthMode(
         mode
       );
-
-
       $("authModal")
         .classList
         .remove(
           "hidden"
         );
-
-
       $("authModal")
         .setAttribute(
           "aria-hidden",
           "false"
         );
-
-
       setTimeout(
-        () =>
-          $("authEmail")
-            .focus(),
+        () => {
+          if (
+            authMode ===
+            "recovery"
+          ) {
+            $("authPassword")
+              .focus();
+          } else {
+            $("authEmail")
+              .focus();
+          }
+        },
         0
       );
     }
-
-
     function closeAuth() {
-
       $("authModal")
         .classList
         .add(
           "hidden"
         );
-
-
       $("authModal")
         .setAttribute(
           "aria-hidden",
           "true"
         );
-
-
       $("authForm")
         .reset();
-
-
+      $("authEmail")
+        .disabled =
+          false;
+      $("authSubmit")
+        .classList
+        .remove(
+          "hidden"
+        );
+      setPasswordVisible(
+        "authPassword",
+        "authPasswordToggle",
+        false
+      );
+      setPasswordVisible(
+        "authConfirmPassword",
+        "authConfirmPasswordToggle",
+        false
+      );
       $("authMsg")
         .textContent =
           "";
     }
-
-
     async function submitAuth(
       event
     ) {
-
       event.preventDefault();
-
-
       const email =
         $("authEmail")
           .value
           .trim();
-
-
       const password =
         $("authPassword")
           .value;
-
-
+      const confirmedPassword =
+        $("authConfirmPassword")
+          .value;
       if (
-        !email ||
-        !password
+        authMode ===
+        "forgot" &&
+        !email
       ) {
         return;
       }
-
-
+      if (
+        authMode ===
+        "recovery"
+      ) {
+        if (
+          !password ||
+          !confirmedPassword
+        ) {
+          return;
+        }
+        if (
+          password !==
+          confirmedPassword
+        ) {
+          $("authMsg")
+            .textContent =
+              "The two passwords do not match.";
+          $("authMsg")
+            .className =
+              "auth-msg error";
+          return;
+        }
+      } else if (
+        authMode !==
+        "forgot" &&
+        (
+          !email ||
+          !password
+        )
+      ) {
+        return;
+      }
       $("authSubmit")
         .disabled =
           true;
-
-
       $("authMsg")
         .textContent =
           "";
-
-
       $("authMsg")
         .className =
           "auth-msg";
-
-
       try {
-
         if (
           authMode ===
           "signup"
         ) {
-
           const {
             data,
             error,
@@ -6206,42 +4525,86 @@
               .signUp({
                 email,
                 password,
-
                 options: {
                   emailRedirectTo:
                     "https://plainbetter.co.uk",
                 },
               });
-
-
           if (
             error
           ) {
             throw error;
           }
-
-
           $("authMsg")
             .textContent =
               data.session
-
                 ? "Account created and you are signed in."
-
                 : "Account created. Check your email for the confirmation link.";
-
-
           if (
             data.session
           ) {
-
             setTimeout(
               closeAuth,
               600
             );
           }
-
+        } else if (
+          authMode ===
+          "forgot"
+        ) {
+          const {
+            error,
+          } =
+            await supabaseClient
+              .auth
+              .resetPasswordForEmail(
+                email,
+                {
+                  redirectTo:
+                    "https://plainbetter.co.uk",
+                }
+              );
+          if (
+            error
+          ) {
+            throw error;
+          }
+          $("authMsg")
+            .textContent =
+              "If an account exists for that email address, a password reset link has been sent.";
+          $("authEmail")
+            .disabled =
+              true;
+          $("authSubmit")
+            .classList
+            .add(
+              "hidden"
+            );
+        } else if (
+          authMode ===
+          "recovery"
+        ) {
+          const {
+            error,
+          } =
+            await supabaseClient
+              .auth
+              .updateUser({
+                password,
+              });
+          if (
+            error
+          ) {
+            throw error;
+          }
+          $("authMsg")
+            .textContent =
+              "Password updated. You are signed in with your new password.";
+          setTimeout(
+            closeAuth,
+            900
+          );
         } else {
-
           const {
             error,
           } =
@@ -6251,164 +4614,133 @@
                 email,
                 password,
               });
-
-
           if (
             error
           ) {
             throw error;
           }
-
-
           $("authMsg")
             .textContent =
               "Logged in.";
-
-
           setTimeout(
             closeAuth,
             450
           );
         }
-
       } catch (
         error
       ) {
-
         $("authMsg")
           .textContent =
             error.message ||
             "Authentication failed.";
-
-
         $("authMsg")
           .className =
             "auth-msg error";
-
       } finally {
-
         $("authSubmit")
           .disabled =
             false;
-
-
-        $("authSubmit")
-          .textContent =
-            authMode ===
-              "signup"
-
-              ? "Sign Up"
-
-              : "Log In";
+        if (
+          authMode !==
+          "forgot" ||
+          !$("authSubmit")
+            .classList
+            .contains(
+              "hidden"
+            )
+        ) {
+          $("authSubmit")
+            .textContent =
+              authSubmitLabel();
+        }
       }
     }
-
-
     async function logout() {
-
       const {
         error,
       } =
         await supabaseClient
           .auth
           .signOut();
-
-
       if (
         error
       ) {
-
         alert(
           error.message
         );
       }
     }
-
-
     async function initAuth() {
-
+      supabaseClient
+        .auth
+        .onAuthStateChange(
+          (
+            event,
+            newSession
+          ) => {
+            setAuth(
+              newSession
+            );
+            if (
+              event ===
+              "PASSWORD_RECOVERY"
+            ) {
+              setTimeout(
+                () =>
+                  openAuth(
+                    "recovery"
+                  ),
+                0
+              );
+            }
+          }
+        );
       const {
         data,
       } =
         await supabaseClient
           .auth
           .getSession();
-
-
       setAuth(
         data.session
       );
-
-
-      supabaseClient
-        .auth
-        .onAuthStateChange(
-          (
-            _event,
-            newSession
-          ) => {
-
-            setAuth(
-              newSession
-            );
-          }
-        );
     }
-
-
     /* =====================================================
        CONFIG
        ===================================================== */
-
     function populate(
       select,
       items,
       selected
     ) {
-
       select.innerHTML =
         "";
-
-
       items.forEach(
         item => {
-
           const option =
             document.createElement(
               "option"
             );
-
-
           option.value =
             item.id;
-
-
           option.textContent =
             item.name;
-
-
           if (
             item.id ===
             selected
           ) {
-
             option.selected =
               true;
           }
-
-
           select.appendChild(
             option
           );
         }
       );
     }
-
-
     async function loadConfig() {
-
       try {
-
         const data =
           await jsonResponse(
             await fetch(
@@ -6419,12 +4751,8 @@
               }
             )
           );
-
-
         config =
           data;
-
-
         languageMap =
           new Map(
             data.languages.map(
@@ -6434,134 +4762,86 @@
               ]
             )
           );
-
-
         populate(
           $("languageSelect"),
           data.languages
         );
-
-
         populate(
           $("levelSelect"),
           data.levels,
           data.defaultLevel ||
           "b1"
         );
-
-
         populate(
           $("scenarioSelect"),
           data.scenarios
         );
-
-
         const custom =
           document.createElement(
             "option"
           );
-
-
         custom.value =
           "custom";
-
-
         custom.textContent =
           "Custom scenario…";
-
-
         $("scenarioSelect")
           .appendChild(
             custom
           );
-
-
         const supported =
           data.languages.filter(
             language =>
               language.dictionaryEnabled
           );
-
-
         populate(
           $("vocabLanguage"),
           supported
         );
-
-
         $("languageSelect")
           .disabled =
             false;
-
-
         $("levelSelect")
           .disabled =
             false;
-
-
         $("scenarioSelect")
           .disabled =
             false;
-
-
         $("vocabLanguage")
           .disabled =
             false;
-
-
         $("startChatBtn")
           .disabled =
             false;
-
-
         $("startChatBtn")
           .textContent =
             "Chat";
-
-
         $("startVocabBtn")
           .disabled =
             supported.length ===
             0;
-
-
         $("startVocabBtn")
           .textContent =
             "Start test";
-
-
         $("customScenario")
           .maxLength =
             data.limits?.customScenarioMaxLength ||
             2000;
-
-
         updateCustom();
-
-
         updateVocabHelp();
-
       } catch (
         error
       ) {
-
         $("chatSetupError")
           .textContent =
             `Could not load app configuration: ${error.message}`;
-
-
         $("chatSetupError")
           .classList
           .remove(
             "hidden"
           );
-
-
         $("vocabSetupError")
           .textContent =
             `Could not load app configuration: ${error.message}`;
-
-
         $("vocabSetupError")
           .classList
           .remove(
@@ -6569,118 +4849,78 @@
           );
       }
     }
-
-
     function updateCustom() {
-
       const enabled =
         $("scenarioSelect")
           .value ===
         "custom";
-
-
       $("customPanel")
         .classList
         .toggle(
           "hidden",
           !enabled
         );
-
-
       $("customCount")
         .textContent =
           `${$("customScenario").value.length} / ${$("customScenario").maxLength}`;
-
-
       if (
         $("customScenario")
           .value
           .trim()
       ) {
-
         $("customError")
           .textContent =
             "";
       }
     }
-
-
     function updateVocabHelp() {
-
       const source =
         $("vocabSource")
           .value;
-
-
       $("sourceHelp")
         .textContent =
           source ===
             "my_vocab"
-
             ? "Tests words already recorded in your vocabulary."
-
             : source ===
                 "new_vocab"
-
               ? "We review your recorded vocabulary and select useful dictionary words we think you should learn next."
-
               : "Randomly selects words directly from the local dictionary.";
-
-
       $("modeHelp")
         .textContent =
           $("quizMode")
             .value ===
           "hardcore"
-
             ? "Hardcore mode requires the exact dictionary lemma. Correct answers are recorded for logged-in users."
-
             : "Multiple choice affects only the test score and never records a vocabulary success.";
     }
-
-
     /* =====================================================
        SPECIAL CHARACTERS
        ===================================================== */
-
     function insertChar(
       characterToInsert
     ) {
-
       const input =
         $("messageInput");
-
-
       const start =
         input.selectionStart ??
         input.value.length;
-
-
       const end =
         input.selectionEnd ??
         start;
-
-
       input.setRangeText(
         characterToInsert,
         start,
         end,
         "end"
       );
-
-
       input.focus();
     }
-
-
     function renderChars(
       languageId
     ) {
-
       const bar =
         $("charBar");
-
-
       const characters =
         languageMap
           .get(
@@ -6688,140 +4928,90 @@
           )
           ?.specialCharacters ||
         [];
-
-
       bar.innerHTML =
         "";
-
-
       if (
         !characters.length
       ) {
-
         bar
           .classList
           .add(
             "hidden"
           );
-
-
         return;
       }
-
-
       const label =
         document.createElement(
           "div"
         );
-
-
       label.className =
         "chars-label";
-
-
       label.textContent =
         "Characters you may not have on your keyboard";
-
-
       bar.appendChild(
         label
       );
-
-
       characters.forEach(
         characterToInsert => {
-
           const button =
             document.createElement(
               "button"
             );
-
-
           button.type =
             "button";
-
-
           button.className =
             "char-btn";
-
-
           button.textContent =
             characterToInsert;
-
-
           button.onmousedown =
             event =>
               event.preventDefault();
-
-
           button.onclick =
             () =>
               insertChar(
                 characterToInsert
               );
-
-
           bar.appendChild(
             button
           );
         }
       );
-
-
       bar
         .classList
         .remove(
           "hidden"
         );
     }
-
-
     function insertTestChar(
       characterToInsert
     ) {
-
       const input =
         $("hardcoreInput");
-
-
       if (
         input.disabled ||
         input.readOnly
       ) {
         return;
       }
-
-
       const start =
         input.selectionStart ??
         input.value.length;
-
-
       const end =
         input.selectionEnd ??
         start;
-
-
       input.setRangeText(
         characterToInsert,
         start,
         end,
         "end"
       );
-
-
       input.focus();
     }
-
-
     function renderTestChars(
       languageId
     ) {
-
       const bar =
         $("testCharBar");
-
-
       const characters =
         languageMap
           .get(
@@ -6829,181 +5019,121 @@
           )
           ?.specialCharacters ||
         [];
-
-
       bar.innerHTML =
         "";
-
-
       if (
         !characters.length
       ) {
-
         bar
           .classList
           .add(
             "hidden"
           );
-
-
         return;
       }
-
-
       const label =
         document.createElement(
           "div"
         );
-
-
       label.className =
         "chars-label";
-
-
       label.textContent =
         "Characters you may not have on an English keyboard";
-
-
       bar.appendChild(
         label
       );
-
-
       characters.forEach(
         characterToInsert => {
-
           const button =
             document.createElement(
               "button"
             );
-
-
           button.type =
             "button";
-
-
           button.className =
             "char-btn";
-
-
           button.textContent =
             characterToInsert;
-
-
           button.onmousedown =
             event =>
               event.preventDefault();
-
-
           button.onclick =
             () =>
               insertTestChar(
                 characterToInsert
               );
-
-
           bar.appendChild(
             button
           );
         }
       );
-
-
       bar
         .classList
         .remove(
           "hidden"
         );
     }
-
-
     function setTestCharButtons(
       enabled
     ) {
-
       $("testCharBar")
         .querySelectorAll(
           "button"
         )
         .forEach(
           button => {
-
             button.disabled =
               !enabled;
           }
         );
     }
-
-
     function setComposer(
       enabled
     ) {
-
       $("messageInput")
         .disabled =
           !enabled;
-
-
       $("sendBtn")
         .disabled =
           !enabled;
-
-
       $("exampleBtn")
         .disabled =
           !enabled;
-
-
       $("charBar")
         .querySelectorAll(
           "button"
         )
         .forEach(
           button => {
-
             button.disabled =
               !enabled;
           }
         );
     }
-
-
     function conversationPayload() {
-
       const payload = {
         language:
           activeLang,
-
         level:
           activeLevel,
-
         scenario:
           activeScenario,
       };
-
-
       if (
         activeScenario ===
         "custom"
       ) {
-
         payload.customScenario =
           activeCustom;
       }
-
-
       return payload;
     }
-
-
     /* =====================================================
        DICTIONARY
        ===================================================== */
-
     function splitWords(
       text
     ) {
-
       return String(
         text
       )
@@ -7011,42 +5141,29 @@
           /(\p{L}[\p{L}\p{M}'’-]*)/gu
         );
     }
-
-
     function metaMatcher(
       metadata =
         []
     ) {
-
       let cursor =
         0;
-
-
       return visible => {
-
         const key =
           visible
             .normalize(
               "NFC"
             )
             .toLocaleLowerCase();
-
-
         for (
           let i =
             cursor;
-
           i <
             metadata.length;
-
           i +=
             1
         ) {
-
           const item =
             metadata[i];
-
-
           if (
             item &&
             String(
@@ -7059,36 +5176,27 @@
               .toLocaleLowerCase() ===
             key
           ) {
-
             cursor =
               i +
               1;
-
-
             return {
               lookup:
                 item.lookup ||
                 visible,
-
               pos:
                 item.pos ||
                 "",
             };
           }
         }
-
-
         return {
           lookup:
             visible,
-
           pos:
             "",
         };
       };
     }
-
-
     function appendLanguageText(
       container,
       text,
@@ -7096,7 +5204,6 @@
       metadata =
         []
     ) {
-
       container.dir =
         languageMap
           .get(
@@ -7104,8 +5211,6 @@
           )
           ?.direction ||
         "auto";
-
-
       if (
         !languageMap
           .get(
@@ -7113,68 +5218,45 @@
           )
           ?.dictionaryEnabled
       ) {
-
         container.textContent =
           text;
-
-
         return;
       }
-
-
       const match =
         metaMatcher(
           metadata
         );
-
-
       splitWords(
         text
       )
         .forEach(
           part => {
-
             if (
               !/^\p{L}[\p{L}\p{M}'’-]*$/u.test(
                 part
               )
             ) {
-
               container.appendChild(
                 document.createTextNode(
                   part
                 )
               );
-
-
               return;
             }
-
-
             const meta =
               match(
                 part
               );
-
-
             const span =
               document.createElement(
                 "span"
               );
-
-
             span.className =
               "word";
-
-
             span.tabIndex =
               0;
-
-
             span.textContent =
               part;
-
-
             const open =
               () =>
                 openTooltip(
@@ -7184,101 +5266,67 @@
                   meta.lookup,
                   meta.pos
                 );
-
-
             span.onmouseenter =
               () => {
-
                 clearTimeout(
                   hoverTimer
                 );
-
-
                 hoverTimer =
                   setTimeout(
                     open,
                     100
                   );
               };
-
-
             span.onmouseleave =
               () => {
-
                 clearTimeout(
                   hoverTimer
                 );
-
-
                 hideTooltip();
               };
-
-
             span.onfocus =
               open;
-
-
             span.onblur =
               () =>
                 hideTooltip();
-
-
             span.onclick =
               event => {
-
                 event.stopPropagation();
-
-
                 open();
               };
-
-
             container.appendChild(
               span
             );
           }
         );
     }
-
-
     async function dictionaryLookup(
       language,
       word,
       pos =
         ""
     ) {
-
       const key =
         `${language}|${word.normalize("NFC").toLocaleLowerCase()}|${pos}`;
-
-
       if (
         dictionaryCache.has(
           key
         )
       ) {
-
         return dictionaryCache.get(
           key
         );
       }
-
-
       let url =
         `${API}/api/word?language=${encodeURIComponent(language)}&word=${encodeURIComponent(word)}`;
-
-
       if (
         pos &&
         pos !==
           "other"
       ) {
-
         url +=
           `&pos=${encodeURIComponent(pos)}`;
       }
-
-
       const promise =
         fetch(
           url
@@ -7290,40 +5338,27 @@
             () => ({
               found:
                 false,
-
               entries:
                 [],
-
               lookupError:
                 true,
             })
           );
-
-
       dictionaryCache.set(
         key,
         promise
       );
-
-
       return promise;
     }
-
-
     function positionTip(
       target
     ) {
-
       const targetRect =
         target
           .getBoundingClientRect();
-
-
       const tipRect =
         $("tooltip")
           .getBoundingClientRect();
-
-
       let left =
         targetRect.left +
         (
@@ -7331,14 +5366,10 @@
           tipRect.width
         ) /
         2;
-
-
       let top =
         targetRect.top -
         tipRect.height -
         8;
-
-
       left =
         Math.max(
           10,
@@ -7349,30 +5380,21 @@
             10
           )
         );
-
-
       if (
         top <
         10
       ) {
-
         top =
           targetRect.bottom +
           8;
       }
-
-
       $("tooltip")
         .style.left =
           `${left}px`;
-
-
       $("tooltip")
         .style.top =
           `${top}px`;
     }
-
-
     async function openTooltip(
       target,
       language,
@@ -7382,53 +5404,36 @@
       pos =
         ""
     ) {
-
       clearTimeout(
         hideTimer
       );
-
-
       activeWord =
         target;
-
-
       const token =
         ++requestToken;
-
-
       $("tooltip")
         .innerHTML =
           '<div class="tip-title"></div><div>Looking up…</div>';
-
-
       $("tooltip")
         .querySelector(
           ".tip-title"
         )
         .textContent =
           surface;
-
-
       $("tooltip")
         .classList
         .add(
           "visible"
         );
-
-
       positionTip(
         target
       );
-
-
       const data =
         await dictionaryLookup(
           language,
           lookup,
           pos
         );
-
-
       if (
         token !==
           requestToken ||
@@ -7437,79 +5442,48 @@
       ) {
         return;
       }
-
-
       const tip =
         $("tooltip");
-
-
       tip.innerHTML =
         "";
-
-
       const title =
         document.createElement(
           "div"
         );
-
-
       title.className =
         "tip-title";
-
-
       title.textContent =
         surface;
-
-
       tip.appendChild(
         title
       );
-
-
       if (
         data.lookupError ||
         !data.found ||
         !data.entries?.length
       ) {
-
         const unavailable =
           document.createElement(
             "div"
           );
-
-
         unavailable.textContent =
           data.lookupError
-
             ? "Dictionary lookup unavailable."
-
             : "Meaning not found.";
-
-
         tip.appendChild(
           unavailable
         );
-
-
         positionTip(
           target
         );
-
-
         return;
       }
-
-
       const entry =
         data.entries[0];
-
-
       const senses =
         (
           entry.senses?.length
-
             ? entry.senses
-
             : (
                 entry.meanings ||
                 []
@@ -7525,153 +5499,102 @@
             0,
             5
           );
-
-
       const list =
         document.createElement(
           "ol"
         );
-
-
       list.className =
         "tip-list";
-
-
       senses.forEach(
         sense => {
-
           const item =
             document.createElement(
               "li"
             );
-
-
           item.appendChild(
             document.createTextNode(
               sense.meaning ||
               ""
             )
           );
-
-
           if (
             sense.tags?.length
           ) {
-
             const tags =
               document.createElement(
                 "span"
               );
-
-
             tags.className =
               "tip-tags";
-
-
             tags.textContent =
               ` (${sense.tags.join(", ")})`;
-
-
             item.appendChild(
               tags
             );
           }
-
-
           list.appendChild(
             item
           );
         }
       );
-
-
       tip.appendChild(
         list
       );
-
-
       const meta =
         [];
-
-
       if (
         lookup &&
         lookup.toLocaleLowerCase() !==
           surface.toLocaleLowerCase()
       ) {
-
         meta.push(
           `from ${lookup}`
         );
       }
-
-
       if (
         entry.partOfSpeech &&
         entry.partOfSpeech !==
           "unknown"
       ) {
-
         meta.push(
           entry.partOfSpeech
         );
       }
-
-
       if (
         meta.length
       ) {
-
         const info =
           document.createElement(
             "div"
           );
-
-
         info.className =
           "tip-meta";
-
-
         info.textContent =
           meta.join(
             " · "
           );
-
-
         tip.appendChild(
           info
         );
       }
-
-
       positionTip(
         target
       );
     }
-
-
     function hideTooltip(
       delay =
         70
     ) {
-
       clearTimeout(
         hideTimer
       );
-
-
       hideTimer =
         setTimeout(
           () => {
-
             requestToken +=
               1;
-
-
             activeWord =
               null;
-
-
             $("tooltip")
               .classList
               .remove(
@@ -7681,12 +5604,9 @@
           delay
         );
     }
-
-
     /* =====================================================
        CHAT RENDERING
        ===================================================== */
-
     function addMessage(
       text,
       sender,
@@ -7696,33 +5616,22 @@
       options =
         {}
     ) {
-
       const row =
         document.createElement(
           "div"
         );
-
-
       const bubble =
         document.createElement(
           "div"
         );
-
-
       const body =
         document.createElement(
           "div"
         );
-
-
       row.className =
         `row ${sender}`;
-
-
       bubble.className =
         "bubble";
-
-
       bubble.dir =
         languageMap
           .get(
@@ -7730,173 +5639,110 @@
           )
           ?.direction ||
         "auto";
-
-
       if (
         options.example
       ) {
-
         const label =
           document.createElement(
             "div"
           );
-
-
         label.className =
           "example-label";
-
-
         label.textContent =
           "Example response";
-
-
         bubble.appendChild(
           label
         );
       }
-
-
       appendLanguageText(
         body,
         text,
         language,
         metadata
       );
-
-
       bubble.appendChild(
         body
       );
-
-
       if (
         options.translation
       ) {
-
         const translation =
           document.createElement(
             "div"
           );
-
-
         translation.className =
           "translation";
-
-
         translation.textContent =
           `English: ${options.translation}`;
-
-
         bubble.appendChild(
           translation
         );
       }
-
-
       row.appendChild(
         bubble
       );
-
-
       $("messages")
         .appendChild(
           row
         );
-
-
       $("messages")
         .scrollTop =
           $("messages")
             .scrollHeight;
     }
-
-
     function clearFeedback() {
-
       $("feedbackBody")
         .innerHTML =
           "";
-
-
       const placeholder =
         document.createElement(
           "div"
         );
-
-
       placeholder.className =
         "feedback-placeholder";
-
-
       placeholder.textContent =
         "Feedback will appear here after you send a message.";
-
-
       $("feedbackBody")
         .appendChild(
           placeholder
         );
     }
-
-
     function renderFeedback(
       feedback
     ) {
-
       const body =
         $("feedbackBody");
-
-
       body.innerHTML =
         "";
-
-
       if (
         !feedback ||
         feedback.hasIssues ===
           false
       ) {
-
         const paragraph =
           document.createElement(
             "p"
           );
-
-
         paragraph.className =
           "ok";
-
-
         paragraph.textContent =
           feedback?.explanation ||
           "No correction needed.";
-
-
         body.appendChild(
           paragraph
         );
-
-
         return;
       }
-
-
       const correction =
         document.createElement(
           "p"
         );
-
-
       const label =
         document.createElement(
           "strong"
         );
-
-
       label.textContent =
         "Correction: ";
-
-
       correction.append(
         label,
         document.createTextNode(
@@ -7904,76 +5750,49 @@
           ""
         )
       );
-
-
       const explanation =
         document.createElement(
           "p"
         );
-
-
       explanation.textContent =
         feedback.explanation ||
         "";
-
-
       body.append(
         correction,
         explanation
       );
     }
-
-
     function showChatError(
       message
     ) {
-
       $("feedbackBody")
         .innerHTML =
           "";
-
-
       const paragraph =
         document.createElement(
           "p"
         );
-
-
       paragraph.className =
         "error";
-
-
       paragraph.textContent =
         message;
-
-
       $("feedbackBody")
         .appendChild(
           paragraph
         );
     }
-
-
     /* =====================================================
        RECENT
        ===================================================== */
-
     function readRecent() {
-
       if (
         !recentStorageAllowed()
       ) {
-
         return [];
       }
-
-
       let list =
         [];
-
-
       try {
-
         list =
           JSON.parse(
             localStorage.getItem(
@@ -7981,30 +5800,21 @@
             ) ||
             "[]"
           );
-
       } catch {
-
         list =
           [];
       }
-
-
       if (
         !Array.isArray(
           list
         )
       ) {
-
         list =
           [];
       }
-
-
       const cutoff =
         Date.now() -
         RECENT_TTL;
-
-
       list =
         list
           .filter(
@@ -8032,40 +5842,26 @@
             0,
             RECENT_MAX
           );
-
-
       try {
-
         localStorage.setItem(
           RECENT_KEY,
           JSON.stringify(
             list
           )
         );
-
       } catch {}
-
-
       return list;
     }
-
-
     function saveRecentRecord() {
-
       if (
         !recentStorageAllowed() ||
         !currentRecent
       ) {
-
         return;
       }
-
-
       currentRecent.updatedAt =
         new Date()
           .toISOString();
-
-
       const list =
         readRecent()
           .filter(
@@ -8073,15 +5869,10 @@
               conversation.id !==
               currentRecent.id
           );
-
-
       list.unshift(
         currentRecent
       );
-
-
       try {
-
         localStorage.setItem(
           RECENT_KEY,
           JSON.stringify(
@@ -8091,263 +5882,174 @@
             )
           )
         );
-
       } catch {}
     }
-
-
     function newRecent({
       languageName,
       levelLabel,
       scenarioName,
     }) {
-
       if (
         !recentStorageAllowed()
       ) {
-
         currentRecent =
           null;
-
-
         return;
       }
-
-
       const now =
         new Date()
           .toISOString();
-
-
       currentRecent = {
         id:
           crypto.randomUUID
-
             ? crypto.randomUUID()
-
             : `${Date.now()}-${Math.random()}`,
-
         createdAt:
           now,
-
         updatedAt:
           now,
-
         languageId:
           activeLang,
-
         languageName,
-
         levelLabel,
-
         scenarioName,
-
         conversationEnded:
           false,
-
         messages:
           [],
       };
-
-
       saveRecentRecord();
     }
-
-
     function recentAdd(
       message
     ) {
-
       if (
         !recentStorageAllowed() ||
         !currentRecent
       ) {
-
         return -1;
       }
-
-
       currentRecent.messages.push({
         sender:
           message.sender,
-
         text:
           message.text ||
           "",
-
         wordMetadata:
           message.wordMetadata ||
           [],
-
         isExample:
           Boolean(
             message.isExample
           ),
-
         translation:
           message.translation ||
           "",
-
         feedback:
           message.feedback ||
           null,
       });
-
-
       saveRecentRecord();
-
-
       return (
         currentRecent.messages.length -
         1
       );
     }
-
-
     function recentFeedback(
       index,
       feedback
     ) {
-
       if (
         !recentStorageAllowed()
       ) {
         return;
       }
-
-
       if (
         currentRecent?.messages?.[index]
       ) {
-
         currentRecent
           .messages[index]
           .feedback =
             feedback;
-
-
         saveRecentRecord();
       }
     }
-
-
     function recentEnded() {
-
       if (
         !recentStorageAllowed() ||
         !currentRecent
       ) {
-
         return;
       }
-
-
       currentRecent.conversationEnded =
         true;
-
-
       currentRecent.endedAt =
         new Date()
           .toISOString();
-
-
       saveRecentRecord();
     }
-
-
     function formatDate(
       value
     ) {
-
       const date =
         new Date(
           value
         );
-
-
       if (
         Number.isNaN(
           date.getTime()
         )
       ) {
-
         return "";
       }
-
-
       return date.toLocaleString(
         undefined,
         {
           dateStyle:
             "medium",
-
           timeStyle:
             "short",
         }
       );
     }
-
-
     function storedFeedback(
       feedback
     ) {
-
       const box =
         document.createElement(
           "div"
         );
-
-
       box.className =
         "stored-feedback";
-
-
       if (
         !feedback ||
         feedback.hasIssues ===
           false
       ) {
-
         const paragraph =
           document.createElement(
             "p"
           );
-
-
         paragraph.className =
           "ok";
-
-
         paragraph.textContent =
           feedback?.explanation ||
           "No correction needed.";
-
-
         box.appendChild(
           paragraph
         );
-
-
         return box;
       }
-
-
       const correction =
         document.createElement(
           "p"
         );
-
-
       const label =
         document.createElement(
           "strong"
         );
-
-
       label.textContent =
         "Correction: ";
-
-
       correction.append(
         label,
         document.createTextNode(
@@ -8355,110 +6057,69 @@
           ""
         )
       );
-
-
       const explanation =
         document.createElement(
           "p"
         );
-
-
       explanation.textContent =
         feedback.explanation ||
         "";
-
-
       box.append(
         correction,
         explanation
       );
-
-
       return box;
     }
-
-
     function renderRecentList() {
-
       const wrap =
         $("recentList");
-
-
       $("recentOverview")
         .classList
         .remove(
           "hidden"
         );
-
-
       $("recentDetail")
         .classList
         .add(
           "hidden"
         );
-
-
       wrap.innerHTML =
         "";
-
-
       if (
         !recentStorageAllowed()
       ) {
-
         $("recentMessage")
           .textContent =
             "Recent conversation storage is currently off on this device. Your chats still work normally, but they will not be saved here after the conversation.";
-
-
         $("recentDisabledActions")
           .classList
           .remove(
             "hidden"
           );
-
-
         return;
       }
-
-
       $("recentDisabledActions")
         .classList
         .add(
           "hidden"
         );
-
-
       const conversations =
         readRecent();
-
-
       $("recentMessage")
         .textContent =
           conversations.length
-
             ? "Open a conversation to review its chat, feedback, translations and dictionary meanings."
-
             : "You do not have any recent conversations stored in this browser yet.";
-
-
       conversations.forEach(
         conversation => {
-
           const button =
             document.createElement(
               "button"
             );
-
-
           button.className =
             "recent-btn";
-
-
           button.type =
             "button";
-
-
           const preview =
             conversation.messages
               ?.find(
@@ -8467,24 +6128,16 @@
                   "user"
               )
               ?.text ||
-
             conversation.messages?.[0]?.text ||
-
             "Conversation";
-
-
           button.innerHTML =
             '<div class="recent-top"><strong></strong><span class="recent-time"></span></div><div class="recent-meta"></div><div class="recent-preview"></div>';
-
-
           button
             .querySelector(
               "strong"
             )
             .textContent =
               `${conversation.languageName || conversation.languageId} · ${conversation.scenarioName || "Conversation"}`;
-
-
           button
             .querySelector(
               ".recent-time"
@@ -8494,8 +6147,6 @@
                 conversation.updatedAt ||
                 conversation.createdAt
               );
-
-
           button
             .querySelector(
               ".recent-meta"
@@ -8503,7 +6154,6 @@
             .textContent =
               [
                 conversation.levelLabel,
-
                 conversation.conversationEnded
                   ? "Ended"
                   : "Recent",
@@ -8514,60 +6164,44 @@
                 .join(
                   " · "
                 );
-
-
           button
             .querySelector(
               ".recent-preview"
             )
             .textContent =
               preview;
-
-
           button.onclick =
             () =>
               renderRecentDetail(
                 conversation
               );
-
-
           wrap.appendChild(
             button
           );
         }
       );
     }
-
-
     function renderRecentDetail(
       conversation
     ) {
-
       $("recentOverview")
         .classList
         .add(
           "hidden"
         );
-
-
       $("recentDetail")
         .classList
         .remove(
           "hidden"
         );
-
-
       $("recentTitle")
         .textContent =
           `${conversation.languageName || conversation.languageId} conversation`;
-
-
       $("recentMeta")
         .textContent =
           [
             conversation.scenarioName,
             conversation.levelLabel,
-
             formatDate(
               conversation.createdAt
             ),
@@ -8578,80 +6212,52 @@
             .join(
               " · "
             );
-
-
       const wrap =
         $("recentMessages");
-
-
       wrap.innerHTML =
         "";
-
-
       (
         conversation.messages ||
         []
       )
         .forEach(
           message => {
-
             const row =
               document.createElement(
                 "div"
               );
-
-
             const bubble =
               document.createElement(
                 "div"
               );
-
-
             const body =
               document.createElement(
                 "div"
               );
-
-
             row.className =
               `row ${
                 message.sender ===
                 "user"
-
                   ? "user"
-
                   : "ai"
               }`;
-
-
             bubble.className =
               "bubble";
-
-
             if (
               message.isExample
             ) {
-
               const label =
                 document.createElement(
                   "div"
                 );
-
-
               label.className =
                 "example-label";
-
-
               label.textContent =
                 "Example response";
-
-
               bubble.appendChild(
                 label
               );
             }
-
-
             appendLanguageText(
               body,
               message.text ||
@@ -8660,53 +6266,35 @@
               message.wordMetadata ||
               []
             );
-
-
             bubble.appendChild(
               body
             );
-
-
             if (
               message.translation
             ) {
-
               const translation =
                 document.createElement(
                   "div"
                 );
-
-
               translation.className =
                 "translation";
-
-
               translation.textContent =
                 `English: ${message.translation}`;
-
-
               bubble.appendChild(
                 translation
               );
             }
-
-
             row.appendChild(
               bubble
             );
-
-
             wrap.appendChild(
               row
             );
-
-
             if (
               message.sender ===
                 "user" &&
               message.feedback
             ) {
-
               wrap.appendChild(
                 storedFeedback(
                   message.feedback
@@ -8716,40 +6304,26 @@
           }
         );
     }
-
-
     async function openRecent() {
-
       screenBeforeRecent =
         activeScreen();
-
-
       await navigateToScreen(
         screens.recent
       );
-
-
       renderRecentList();
     }
-
-
     async function closeRecent() {
-
       await navigateToScreen(
         screenBeforeRecent ||
         screens.home
       );
     }
-
-
     /* =====================================================
        STATS
        ===================================================== */
-
     function formatChatDuration(
       totalSeconds
     ) {
-
       const seconds =
         Math.max(
           0,
@@ -8760,15 +6334,11 @@
             0
           )
         );
-
-
       const hours =
         Math.floor(
           seconds /
           3600
         );
-
-
       const minutes =
         Math.floor(
           (
@@ -8777,102 +6347,66 @@
           ) /
           60
         );
-
-
       const remainingSeconds =
         seconds %
         60;
-
-
       if (
         hours >
         0
       ) {
-
         return `${hours}h ${minutes}m`;
       }
-
-
       if (
         minutes >
         0
       ) {
-
         return `${minutes}m ${remainingSeconds}s`;
       }
-
-
       return `${remainingSeconds}s`;
     }
-
-
     async function loadStats() {
-
       const message =
         $("statsMessage");
-
-
       $("statsOverview")
         .classList
         .remove(
           "hidden"
         );
-
-
       $("statsDetail")
         .classList
         .add(
           "hidden"
         );
-
-
       $("statsLanguages")
         .innerHTML =
           "";
-
-
       $("statsLanguages")
         .classList
         .add(
           "hidden"
         );
-
-
       $("overall")
         .classList
         .add(
           "hidden"
         );
-
-
       $("chatTimeOverall")
         .classList
         .add(
           "hidden"
         );
-
-
       $("unallocatedTimeOverall")
         .classList
         .add(
           "hidden"
         );
-
-
       message.className =
         "utility-message";
-
-
       message.textContent =
         "Loading…";
-
-
       try {
-
         const token =
           await requiredToken();
-
-
         const data =
           await jsonResponse(
             await fetch(
@@ -8882,203 +6416,141 @@
                   Authorization:
                     `Bearer ${token}`,
                 },
-
                 cache:
                   "no-store",
               }
             )
           );
-
-
         if (
           !data.languages?.length
         ) {
-
           message.textContent =
             "You do not have any saved vocabulary or recorded language chat time yet.";
-
         } else {
-
           message.textContent =
             "";
-
-
           data.languages.forEach(
             language => {
-
               const button =
                 document.createElement(
                   "button"
                 );
-
-
               button.className =
                 "lang-btn";
-
-
               button.type =
                 "button";
-
-
               button.innerHTML =
                 '<span class="lang-copy"><strong></strong><small></small></span><span class="lang-vocab-count"></span>';
-
-
               button
                 .querySelector(
                   "strong"
                 )
                 .textContent =
                   language.name;
-
-
               button
                 .querySelector(
                   "small"
                 )
                 .textContent =
                   `Chat time: ${formatChatDuration(language.chatSeconds)}`;
-
-
               button
                 .querySelector(
                   ".lang-vocab-count"
                 )
                 .textContent =
                   `${language.count} word${language.count === 1 ? "" : "s"}`;
-
-
               button.onclick =
                 () =>
                   loadStatsLanguage(
                     language.id,
                     language.name
                   );
-
-
               $("statsLanguages")
                 .appendChild(
                   button
                 );
             }
           );
-
-
           $("statsLanguages")
             .classList
             .remove(
               "hidden"
             );
         }
-
-
         $("overallCount")
           .textContent =
             data.overallTotal ||
             0;
-
-
         $("overall")
           .classList
           .remove(
             "hidden"
           );
-
-
         $("chatTimeValue")
           .textContent =
             formatChatDuration(
               data.totalChatSeconds
             );
-
-
         $("chatTimeOverall")
           .classList
           .remove(
             "hidden"
           );
-
-
         if (
           Number(
             data.unallocatedChatSeconds
           ) >
           0
         ) {
-
           $("unallocatedTimeValue")
             .textContent =
               formatChatDuration(
                 data.unallocatedChatSeconds
               );
-
-
           $("unallocatedTimeOverall")
             .classList
             .remove(
               "hidden"
             );
         }
-
       } catch (
         error
       ) {
-
         message.textContent =
           error.message;
-
-
         message.className =
           "utility-message error";
       }
     }
-
-
     async function loadStatsLanguage(
       languageId,
       name
     ) {
-
       $("statsOverview")
         .classList
         .add(
           "hidden"
         );
-
-
       $("statsDetail")
         .classList
         .remove(
           "hidden"
         );
-
-
       $("statsLangTitle")
         .textContent =
           `${name} vocabulary`;
-
-
       $("statsLangMessage")
         .textContent =
           "Loading…";
-
-
       $("statsLangMessage")
         .className =
           "utility-message";
-
-
       $("vocabList")
         .innerHTML =
           "";
-
-
       try {
-
         const token =
           await requiredToken();
-
-
         const data =
           await jsonResponse(
             await fetch(
@@ -9088,62 +6560,40 @@
                   Authorization:
                     `Bearer ${token}`,
                 },
-
                 cache:
                   "no-store",
               }
             )
           );
-
-
         const vocabText =
           data.items?.length
-
             ? `${data.items.length} saved vocabulary item${data.items.length === 1 ? "" : "s"}`
-
             : "No saved vocabulary yet";
-
-
         $("statsLangMessage")
           .textContent =
             `${vocabText} · Chat time: ${formatChatDuration(data.chatSeconds)}.`;
-
-
         (
           data.items ||
           []
         )
           .forEach(
             lemma => {
-
               const item =
                 document.createElement(
                   "li"
                 );
-
-
               item.className =
                 "vocab-item";
-
-
               const word =
                 document.createElement(
                   "span"
                 );
-
-
               word.className =
                 "word";
-
-
               word.tabIndex =
                 0;
-
-
               word.textContent =
                 lemma;
-
-
               word.dir =
                 languageMap
                   .get(
@@ -9151,8 +6601,6 @@
                   )
                   ?.direction ||
                 "auto";
-
-
               const open =
                 () =>
                   openTooltip(
@@ -9162,85 +6610,52 @@
                     lemma,
                     ""
                   );
-
-
               word.onmouseenter =
                 () => {
-
                   clearTimeout(
                     hoverTimer
                   );
-
-
                   hoverTimer =
                     setTimeout(
                       open,
                       100
                     );
                 };
-
-
               word.onmouseleave =
                 () =>
                   hideTooltip();
-
-
               word.onfocus =
                 open;
-
-
               word.onblur =
                 () =>
                   hideTooltip();
-
-
               word.onclick =
                 event => {
-
                   event.stopPropagation();
-
-
                   open();
                 };
-
-
               const deleteButton =
                 document.createElement(
                   "button"
                 );
-
-
               deleteButton.className =
                 "delete-word";
-
-
               deleteButton.type =
                 "button";
-
-
               deleteButton.textContent =
                 "Delete";
-
-
               deleteButton.onclick =
                 async () => {
-
                   if (
                     !confirm(
                       `Remove "${lemma}" from your saved ${name} vocabulary?`
                     )
                   ) {
-
                     return;
                   }
-
-
                   deleteButton.disabled =
                     true;
-
-
                   try {
-
                     const {
                       error,
                     } =
@@ -9257,123 +6672,81 @@
                           "lemma",
                           lemma
                         );
-
-
                     if (
                       error
                     ) {
-
                       throw error;
                     }
-
-
                     await loadStatsLanguage(
                       languageId,
                       name
                     );
-
                   } catch (
                     error
                   ) {
-
                     alert(
                       `Could not delete "${lemma}": ${error.message}`
                     );
-
-
                     deleteButton.disabled =
                       false;
                   }
                 };
-
-
               item.append(
                 word,
                 deleteButton
               );
-
-
               $("vocabList")
                 .appendChild(
                   item
                 );
             }
           );
-
       } catch (
         error
       ) {
-
         $("statsLangMessage")
           .textContent =
             error.message;
-
-
         $("statsLangMessage")
           .className =
             "utility-message error";
       }
     }
-
-
     async function openStats() {
-
       if (
         !session?.user
       ) {
-
         openAuth(
           "login"
         );
-
-
         return;
       }
-
-
       screenBeforeStats =
         activeScreen();
-
-
       await navigateToScreen(
         screens.stats
       );
-
-
       await loadStats();
     }
-
-
     async function closeStats() {
-
       await navigateToScreen(
         screenBeforeStats ||
         screens.home
       );
     }
-
-
     /* =====================================================
        CHAT
        ===================================================== */
-
     async function startChat() {
-
       const language =
         $("languageSelect")
           .value;
-
-
       const level =
         $("levelSelect")
           .value;
-
-
       const scenario =
         $("scenarioSelect")
           .value;
-
-
       const languageName =
         languageMap
           .get(
@@ -9381,105 +6754,65 @@
           )
           ?.name ||
         language;
-
-
       const levelLabel =
         $("levelSelect")
           .selectedOptions[0]
           ?.text ||
         level;
-
-
       const scenarioName =
         scenario ===
           "custom"
-
           ? "Custom scenario"
-
           : (
               $("scenarioSelect")
                 .selectedOptions[0]
                 ?.text ||
               scenario
             );
-
-
       let custom =
         "";
-
-
       if (
         scenario ===
         "custom"
       ) {
-
         custom =
           $("customScenario")
             .value
             .trim();
-
-
         if (
           !custom
         ) {
-
           $("customError")
             .textContent =
               "Please describe the conversation you want to practise.";
-
-
           return;
         }
       }
-
-
       activeLang =
         language;
-
-
       activeLevel =
         level;
-
-
       activeScenario =
         scenario;
-
-
       activeCustom =
         custom;
-
-
       history =
         [];
-
-
       conversationEnded =
         false;
-
-
       $("messages")
         .innerHTML =
           "";
-
-
       clearFeedback();
-
-
       $("chatTitle")
         .textContent =
           `${languageName} conversation`;
-
-
       $("chatMeta")
         .textContent =
           `${scenarioName} · ${levelLabel}`;
-
-
       $("messageInput")
         .placeholder =
           `Type your message in ${languageName}…`;
-
-
       $("messageInput")
         .dir =
           languageMap
@@ -9488,62 +6821,38 @@
             )
             ?.direction ||
           "auto";
-
-
       renderChars(
         language
       );
-
-
       show(
         screens.chat
       );
-
-
       setComposer(
         false
       );
-
-
       chatMs =
         0;
-
-
       chatStartedAt =
         null;
-
-
       resumeTimer();
-
-
       $("startChatBtn")
         .disabled =
           true;
-
-
       $("startChatBtn")
         .textContent =
           "Starting…";
-
-
       const body = {
         language,
         level,
         scenario,
       };
-
-
       if (
         custom
       ) {
-
         body.customScenario =
           custom;
       }
-
-
       try {
-
         const data =
           await jsonResponse(
             await fetch(
@@ -9551,12 +6860,10 @@
               {
                 method:
                   "POST",
-
                 headers: {
                   "Content-Type":
                     "application/json",
                 },
-
                 body:
                   JSON.stringify(
                     body
@@ -9564,178 +6871,108 @@
               }
             )
           );
-
-
         newRecent({
           languageName,
           levelLabel,
           scenarioName,
         });
-
-
         recentAdd({
           sender:
             "ai",
-
           text:
             data.reply,
-
           wordMetadata:
             data.replyWords,
         });
-
-
         addMessage(
           data.reply,
           "ai",
           language,
           data.replyWords
         );
-
-
         history.push({
           role:
             "assistant",
-
           content:
             data.reply,
         });
-
-
         conversationEnded =
           Boolean(
             data.conversationEnded
           );
-
-
         if (
           !conversationEnded
         ) {
-
           setComposer(
             true
           );
-
-
           $("messageInput")
             .focus();
         }
-
       } catch (
         error
       ) {
-
         showChatError(
           `Could not start the conversation: ${error.message}`
         );
-
       } finally {
-
         $("startChatBtn")
           .disabled =
             false;
-
-
         $("startChatBtn")
           .textContent =
             "Chat";
       }
     }
-
-
     function endChat() {
-
       recentEnded();
-
-
       currentRecent =
         null;
-
-
       pauseTimer();
-
-
       chatMs =
         0;
-
-
       chatStartedAt =
         null;
-
-
       history =
         [];
-
-
       conversationEnded =
         false;
-
-
       activeLang =
         null;
-
-
       activeLevel =
         null;
-
-
       activeScenario =
         null;
-
-
       activeCustom =
         "";
-
-
       $("messages")
         .innerHTML =
           "";
-
-
       $("messageInput")
         .value =
           "";
-
-
       $("charBar")
         .innerHTML =
           "";
-
-
       clearFeedback();
-
-
       show(
         screens.chatSetup
       );
     }
-
-
     async function generateExample() {
-
       if (
         conversationEnded
       ) {
-
         return;
       }
-
-
       setComposer(
         false
       );
-
-
       $("exampleBtn")
         .textContent =
           "Generating…";
-
-
       clearFeedback();
-
-
       try {
-
         const data =
           await jsonResponse(
             await fetch(
@@ -9743,16 +6980,13 @@
               {
                 method:
                   "POST",
-
                 headers: {
                   "Content-Type":
                     "application/json",
                 },
-
                 body:
                   JSON.stringify({
                     ...conversationPayload(),
-
                     history: [
                       ...history,
                     ],
@@ -9760,38 +6994,26 @@
               }
             )
           );
-
-
         recentAdd({
           sender:
             "user",
-
           text:
             data.exampleMessage,
-
           wordMetadata:
             data.exampleWords,
-
           isExample:
             true,
-
           translation:
             data.exampleTranslation,
         });
-
-
         recentAdd({
           sender:
             "ai",
-
           text:
             data.reply,
-
           wordMetadata:
             data.replyWords,
         });
-
-
         addMessage(
           data.exampleMessage,
           "user",
@@ -9800,125 +7022,86 @@
           {
             example:
               true,
-
             translation:
               data.exampleTranslation,
           }
         );
-
-
         addMessage(
           data.reply,
           "ai",
           activeLang,
           data.replyWords
         );
-
-
         history.push(
           {
             role:
               "user",
-
             content:
               data.exampleMessage,
           },
-
           {
             role:
               "assistant",
-
             content:
               data.reply,
           }
         );
-
-
         conversationEnded =
           Boolean(
             data.conversationEnded
           );
-
-
         if (
           conversationEnded
         ) {
-
           recentEnded();
-
-
           setComposer(
             false
           );
-
         } else {
-
           setComposer(
             true
           );
-
-
           $("messageInput")
             .focus();
         }
-
       } catch (
         error
       ) {
-
         showChatError(
           `Could not generate an example response: ${error.message}`
         );
-
-
         setComposer(
           true
         );
-
       } finally {
-
         $("exampleBtn")
           .textContent =
             "Generate example response";
       }
     }
-
-
     /* =====================================================
        VOCAB TEST
        ===================================================== */
-
     async function startVocabTest() {
-
       const language =
         $("vocabLanguage")
           .value;
-
-
       const count =
         Number(
           $("vocabCount")
             .value
         );
-
-
       const sourceMode =
         $("vocabSource")
           .value;
-
-
       const quizMode =
         $("quizMode")
           .value;
-
-
       $("vocabSetupError")
         .classList
         .add(
           "hidden"
         );
-
-
       if (
         [
           "my_vocab",
@@ -9928,40 +7111,26 @@
         ) &&
         !session?.user
       ) {
-
         $("vocabSetupError")
           .textContent =
             "Please log in to use this vocabulary source.";
-
-
         $("vocabSetupError")
           .classList
           .remove(
             "hidden"
           );
-
-
         return;
       }
-
-
       $("startVocabBtn")
         .disabled =
           true;
-
-
       $("startVocabBtn")
         .textContent =
           sourceMode ===
             "new_vocab"
-
             ? "Choosing words…"
-
             : "Starting…";
-
-
       try {
-
         const data =
           await jsonResponse(
             await fetch(
@@ -9969,14 +7138,11 @@
               {
                 method:
                   "POST",
-
                 headers: {
                   "Content-Type":
                     "application/json",
-
                   ...authHeaders(),
                 },
-
                 body:
                   JSON.stringify({
                     language,
@@ -9987,299 +7153,198 @@
               }
             )
           );
-
-
         activeTest = {
           ...data,
-
           languageId:
             language,
-
           index:
             0,
-
           score:
             0,
-
           answered:
             false,
         };
-
-
         renderTestChars(
           language
         );
-
-
         $("testTitle")
           .textContent =
             `${data.language.name} Vocabulary Test`;
-
-
         const sourceLabel =
           sourceMode ===
             "random"
-
             ? "Random"
-
             : sourceMode ===
                 "my_vocab"
-
               ? "My vocabulary"
-
               : "New vocabulary";
-
-
         const modeLabel =
           quizMode ===
             "hardcore"
-
             ? "Hardcore mode"
-
             : "Multiple choice";
-
-
         $("testMeta")
           .textContent =
             `${sourceLabel} · ${modeLabel} · ${data.count} words`;
-
-
         $("questionCard")
           .classList
           .remove(
             "hidden"
           );
-
-
         $("finishCard")
           .classList
           .add(
             "hidden"
           );
-
-
         show(
           screens.vocabTest
         );
-
-
         renderQuestion();
-
       } catch (
         error
       ) {
-
         $("vocabSetupError")
           .textContent =
             error.message;
-
-
         $("vocabSetupError")
           .classList
           .remove(
             "hidden"
           );
-
       } finally {
-
         $("startVocabBtn")
           .disabled =
             false;
-
-
         $("startVocabBtn")
           .textContent =
             "Start test";
       }
     }
-
-
     function renderQuestion() {
-
       const question =
         activeTest.questions[
           activeTest.index
         ];
-
-
       activeTest.answered =
         false;
-
-
       $("progress")
         .textContent =
           `Question ${activeTest.index + 1} of ${activeTest.questions.length}`;
-
-
       $("score")
         .textContent =
           `Score: ${activeTest.score}`;
-
-
       $("prompt")
         .textContent =
           question.prompt ||
           "Meaning unavailable";
-
-
       $("pos")
         .textContent =
           question.partOfSpeech ||
           "";
-
-
       $("pos")
         .classList
         .toggle(
           "hidden",
           !question.partOfSpeech
         );
-
-
       $("answerFeedback")
         .className =
           "answer-feedback hidden";
-
-
       $("nextWordBtn")
         .classList
         .add(
           "hidden"
         );
-
-
       $("options")
         .innerHTML =
           "";
-
-
       $("hardcoreInput")
         .value =
           "";
-
-
       $("hardcoreInput")
         .disabled =
           false;
-
-
       $("hardcoreInput")
         .readOnly =
           false;
-
-
       $("hardcoreSubmitBtn")
         .disabled =
           false;
-
-
       $("hardcoreSubmitBtn")
         .textContent =
           "Check";
-
-
       setTestCharButtons(
         true
       );
-
-
       if (
         activeTest.quizMode ===
         "hardcore"
       ) {
-
         $("options")
           .classList
           .add(
             "hidden"
           );
-
-
         $("hardcoreForm")
           .classList
           .remove(
             "hidden"
           );
-
-
         const hasCharacters =
           $("testCharBar")
             .querySelector(
               ".char-btn"
             );
-
-
         $("testCharBar")
           .classList
           .toggle(
             "hidden",
             !hasCharacters
           );
-
-
         setTimeout(
           () =>
             $("hardcoreInput")
               .focus(),
           0
         );
-
       } else {
-
         $("hardcoreForm")
           .classList
           .add(
             "hidden"
           );
-
-
         $("testCharBar")
           .classList
           .add(
             "hidden"
           );
-
-
         $("options")
           .classList
           .remove(
             "hidden"
           );
-
-
         (
           question.options ||
           []
         )
           .forEach(
             option => {
-
               const button =
                 document.createElement(
                   "button"
                 );
-
-
               button.className =
                 "option";
-
-
               button.type =
                 "button";
-
-
               button.textContent =
                 option;
-
-
               button.onclick =
                 () =>
                   submitAnswer(
                     option,
                     button
                   );
-
-
               $("options")
                 .appendChild(
                   button
@@ -10288,14 +7353,11 @@
           );
       }
     }
-
-
     async function submitAnswer(
       answer,
       selectedButton =
         null
     ) {
-
       if (
         answerPending ||
         activeTest?.answered ||
@@ -10305,62 +7367,42 @@
         )
           .trim()
       ) {
-
         return;
       }
-
-
       answerPending =
         true;
-
-
       $("options")
         .querySelectorAll(
           "button"
         )
         .forEach(
           button => {
-
             button.disabled =
               true;
           }
         );
-
-
       if (
         activeTest.quizMode ===
         "hardcore"
       ) {
-
         $("hardcoreInput")
           .disabled =
             true;
-
-
         $("hardcoreSubmitBtn")
           .disabled =
             true;
-
-
         $("hardcoreSubmitBtn")
           .textContent =
             "Checking…";
-
-
         setTestCharButtons(
           false
         );
       }
-
-
       try {
-
         const question =
           activeTest.questions[
             activeTest.index
           ];
-
-
         const data =
           await jsonResponse(
             await fetch(
@@ -10368,22 +7410,17 @@
               {
                 method:
                   "POST",
-
                 headers: {
                   "Content-Type":
                     "application/json",
-
                   ...authHeaders(),
                 },
-
                 body:
                   JSON.stringify({
                     testId:
                       activeTest.testId,
-
                     questionId:
                       question.id,
-
                     answer:
                       String(
                         answer
@@ -10393,96 +7430,66 @@
               }
             )
           );
-
-
         activeTest.answered =
           true;
-
-
         if (
           data.correct
         ) {
-
           activeTest.score +=
             1;
-
-
           $("answerFeedback")
             .className =
               "answer-feedback good";
-
-
           $("answerFeedback")
             .textContent =
               data.recorded
-
                 ? "Correct. This Hardcore recall was recorded in your vocabulary."
-
                 : "Correct.";
-
-
           if (
             selectedButton
           ) {
-
             selectedButton
               .classList
               .add(
                 "good"
               );
           }
-
         } else {
-
           const answers =
             data.correctAnswers ||
             [];
-
-
           $("answerFeedback")
             .className =
               "answer-feedback bad";
-
-
           $("answerFeedback")
             .textContent =
               answers.length
-
                 ? `Incorrect. Accepted answer${answers.length === 1 ? "" : "s"}: ${answers.join(" / ")}`
-
                 : "Incorrect.";
-
-
           if (
             selectedButton
           ) {
-
             selectedButton
               .classList
               .add(
                 "bad"
               );
           }
-
-
           if (
             activeTest.quizMode ===
             "multiple_choice"
           ) {
-
             $("options")
               .querySelectorAll(
                 "button"
               )
               .forEach(
                 button => {
-
                   if (
                     answers.includes(
                       button.textContent
                     )
                   ) {
-
                     button
                       .classList
                       .add(
@@ -10493,293 +7500,199 @@
               );
           }
         }
-
-
         $("score")
           .textContent =
             `Score: ${activeTest.score}`;
-
-
         const lastQuestion =
           activeTest.index ===
           activeTest.questions.length -
           1;
-
-
         if (
           activeTest.quizMode ===
           "hardcore"
         ) {
-
+          /*
+            Keep the answer field visible but stop it
+            being edited. The same submit button now
+            becomes the Next/Results control.
+            It receives focus, so pressing Enter again
+            immediately advances.
+          */
           $("hardcoreInput")
             .disabled =
               false;
-
-
           $("hardcoreInput")
             .readOnly =
               true;
-
-
           $("hardcoreSubmitBtn")
             .disabled =
               false;
-
-
           $("hardcoreSubmitBtn")
             .textContent =
               lastQuestion
-
                 ? "See results"
-
                 : "Next word";
-
-
           setTestCharButtons(
             false
           );
-
-
           requestAnimationFrame(
             () =>
               $("hardcoreSubmitBtn")
                 .focus()
           );
-
         } else {
-
           $("nextWordBtn")
             .textContent =
               lastQuestion
-
                 ? "See results"
-
                 : "Next word";
-
-
           $("nextWordBtn")
             .classList
             .remove(
               "hidden"
             );
-
-
           requestAnimationFrame(
             () =>
               $("nextWordBtn")
                 .focus()
           );
         }
-
       } catch (
         error
       ) {
-
         $("answerFeedback")
           .className =
             "answer-feedback bad";
-
-
         $("answerFeedback")
           .textContent =
             error.message;
-
-
         $("options")
           .querySelectorAll(
             "button"
           )
           .forEach(
             button => {
-
               button.disabled =
                 false;
             }
           );
-
-
         if (
           activeTest.quizMode ===
           "hardcore"
         ) {
-
           $("hardcoreInput")
             .disabled =
               false;
-
-
           $("hardcoreInput")
             .readOnly =
               false;
-
-
           $("hardcoreSubmitBtn")
             .disabled =
               false;
-
-
           $("hardcoreSubmitBtn")
             .textContent =
               "Check";
-
-
           setTestCharButtons(
             true
           );
-
-
           $("hardcoreInput")
             .focus();
         }
-
       } finally {
-
         answerPending =
           false;
       }
     }
-
-
     function nextQuestion() {
-
       if (
         !activeTest?.answered
       ) {
-
         return;
       }
-
-
       if (
         activeTest.index >=
         activeTest.questions.length -
         1
       ) {
-
         finishTest();
-
-
         return;
       }
-
-
       activeTest.index +=
         1;
-
-
       renderQuestion();
     }
-
-
     function finishTest() {
-
       $("questionCard")
         .classList
         .add(
           "hidden"
         );
-
-
       $("finishCard")
         .classList
         .remove(
           "hidden"
         );
-
-
       $("finalScore")
         .textContent =
           `You got ${activeTest.score} out of ${activeTest.questions.length} correct.`;
-
-
       if (
         activeTest.quizMode ===
         "hardcore"
       ) {
-
         $("finalNote")
           .textContent =
             activeTest.savesCorrectAnswers
-
               ? "Correct Hardcore answers were recorded as vocabulary evidence."
-
               : "Log in before starting a test if you want correct Hardcore answers recorded.";
-
       } else {
-
         $("finalNote")
           .textContent =
             "Multiple-choice answers affect this score only and never change your saved vocabulary.";
       }
-
-
       requestAnimationFrame(
         () =>
           $("backToVocabBtn")
             .focus()
       );
     }
-
-
     function leaveTest() {
-
       activeTest =
         null;
-
-
       answerPending =
         false;
-
-
       $("testCharBar")
         .innerHTML =
           "";
-
-
       show(
         screens.vocabSetup
       );
     }
-
-
     /* =====================================================
        NAVIGATION
        ===================================================== */
-
     $("chatTile")
       .onclick =
         () =>
           navigateToScreen(
             screens.chatSetup
           );
-
-
     $("vocabTile")
       .onclick =
         () =>
           navigateToScreen(
             screens.vocabSetup
           );
-
-
     $("topBrand")
       .onclick =
         goHome;
-
-
     $("topHomeBtn")
       .onclick =
         goHome;
-
-
     $("topBackBtn")
       .onclick =
         async () => {
-
           const current =
             activeScreen();
-
-
           if (
             [
               screens.privacy,
@@ -10789,326 +7702,264 @@
               current
             )
           ) {
-
             await closeInfoScreen();
-
-
             return;
           }
-
-
           if (
             current ===
               screens.chatSetup ||
             current ===
               screens.vocabSetup
           ) {
-
             await goHome();
-
-
             return;
           }
-
-
           if (
             current ===
             screens.chat
           ) {
-
             endChat();
-
-
             return;
           }
-
-
           if (
             current ===
             screens.vocabTest
           ) {
-
             leaveTest();
-
-
             return;
           }
-
-
           if (
             current ===
             screens.stats
           ) {
-
             await closeStats();
-
-
             return;
           }
-
-
           if (
             current ===
             screens.recent
           ) {
-
             await closeRecent();
-
-
             return;
           }
-
-
           await goHome();
         };
-
-
     $("scenarioSelect")
       .onchange =
         updateCustom;
-
-
     $("customScenario")
       .oninput =
         updateCustom;
-
-
     $("vocabSource")
       .onchange =
         updateVocabHelp;
-
-
     $("quizMode")
       .onchange =
         updateVocabHelp;
-
-
     $("startChatBtn")
       .onclick =
         startChat;
-
-
     $("endChatBtn")
       .onclick =
         endChat;
-
-
     $("exampleBtn")
       .onclick =
         generateExample;
-
-
     $("startVocabBtn")
       .onclick =
         startVocabTest;
-
-
+    /*
+      HARDCORE ENTER BEHAVIOUR
+      First Enter:
+        checks the typed answer.
+      Once answered:
+        the same form submission advances
+        to the next word.
+      Because the submit button is focused after
+      feedback appears, another press of Enter
+      immediately triggers this.
+    */
     $("hardcoreForm")
       .onsubmit =
         event => {
-
           event.preventDefault();
-
-
           if (
             activeTest?.answered
           ) {
-
             nextQuestion();
-
-
             return;
           }
-
-
           submitAnswer(
             $("hardcoreInput")
               .value
           );
         };
-
-
     $("nextWordBtn")
       .onclick =
         nextQuestion;
-
-
     $("endTestBtn")
       .onclick =
         leaveTest;
-
-
     $("backToVocabBtn")
       .onclick =
         leaveTest;
-
-
     $("statsBtn")
       .onclick =
         openStats;
-
-
     $("statsBackBtn")
       .onclick =
         loadStats;
-
-
     $("recentBtn")
       .onclick =
         openRecent;
-
-
     $("recentBackBtn")
       .onclick =
         renderRecentList;
-
-
     $("recentEnableBtn")
       .onclick =
         () => {
-
           setPrivacyPreference(
             true
           );
-
-
           renderRecentList();
         };
-
-
     $("privacyEssentialBtn")
       .onclick =
         () =>
           setPrivacyPreference(
             false
           );
-
-
     $("privacyRecentBtn")
       .onclick =
         () =>
           setPrivacyPreference(
             true
           );
-
-
     $("privacyChoicesBtn")
       .onclick =
         showPrivacyBanner;
-
-
     $("privacyBannerPolicyBtn")
       .onclick =
         () => {
-
           hidePrivacyBanner();
-
-
           openInfoScreen(
             screens.privacy
           );
         };
-
-
     $("privacyFooterBtn")
       .onclick =
         () =>
           openInfoScreen(
             screens.privacy
           );
-
-
     $("termsFooterBtn")
       .onclick =
         () =>
           openInfoScreen(
             screens.terms
           );
-
-
     $("contactFooterBtn")
       .onclick =
         () =>
           openInfoScreen(
             screens.contact
           );
-
-
     $("loginBtn")
       .onclick =
         () =>
           openAuth(
             "login"
           );
-
-
     $("signupBtn")
       .onclick =
         () =>
           openAuth(
             "signup"
           );
-
-
     $("logoutBtn")
       .onclick =
         logout;
-
-
     $("authClose")
       .onclick =
         closeAuth;
-
-
     $("authPasswordToggle")
       .onclick =
         () =>
           setPasswordVisible(
+            "authPassword",
+            "authPasswordToggle",
             $("authPassword")
               .type ===
             "password"
           );
-
-
+    $("authConfirmPasswordToggle")
+      .onclick =
+        () =>
+          setPasswordVisible(
+            "authConfirmPassword",
+            "authConfirmPasswordToggle",
+            $("authConfirmPassword")
+              .type ===
+            "password"
+          );
+    $("forgotPasswordBtn")
+      .onclick =
+        () => {
+          $("authEmail")
+            .disabled =
+              false;
+          $("authSubmit")
+            .classList
+            .remove(
+              "hidden"
+            );
+          setAuthMode(
+            "forgot"
+          );
+        };
+    $("authBackBtn")
+      .onclick =
+        () => {
+          $("authEmail")
+            .disabled =
+              false;
+          $("authSubmit")
+            .classList
+            .remove(
+              "hidden"
+            );
+          setAuthMode(
+            "login"
+          );
+        };
     $("loginTab")
       .onclick =
         () =>
           setAuthMode(
             "login"
           );
-
-
     $("signupTab")
       .onclick =
         () =>
           setAuthMode(
             "signup"
           );
-
-
     $("authForm")
       .onsubmit =
         submitAuth;
-
-
     $("authModal")
       .onclick =
         event => {
-
           if (
             event.target ===
             $("authModal")
           ) {
-
             closeAuth();
           }
         };
-
-
     document.addEventListener(
       "keydown",
       event => {
-
         if (
           event.key ===
             "Escape" &&
@@ -11118,74 +7969,52 @@
               "hidden"
             )
         ) {
-
           closeAuth();
         }
       }
     );
-
-
     document.addEventListener(
       "click",
       event => {
-
         if (
           !event.target.closest(
             ".word"
           )
         ) {
-
           hideTooltip(
             0
           );
         }
       }
     );
-
-
     window.addEventListener(
       "resize",
       () => {
-
         hideTooltip(
           0
         );
-
-
         if (
           characterTransitioning
         ) {
-
           if (
             characterFadeAnimation
           ) {
-
             try {
               characterFadeAnimation.cancel();
             } catch {}
-
-
             characterFadeAnimation =
               null;
           }
-
-
           characterTransitioning =
             false;
-
-
           character.style.opacity =
             "1";
         }
-
-
         syncCharacterToScreen(
           activeScreen()
         );
       }
     );
-
-
     $("messages")
       .addEventListener(
         "scroll",
@@ -11194,8 +8023,6 @@
             0
           )
       );
-
-
     $("recentMessages")
       .addEventListener(
         "scroll",
@@ -11204,110 +8031,71 @@
             0
           )
       );
-
-
     document.addEventListener(
       "visibilitychange",
       () => {
-
         if (
           document.visibilityState ===
           "visible"
         ) {
-
           resumeTimer();
-
         } else {
-
           pauseTimer();
         }
       }
     );
-
-
     /* =====================================================
        SEND CHAT MESSAGE
        ===================================================== */
-
     $("chatForm")
       .onsubmit =
         async event => {
-
           event.preventDefault();
-
-
           if (
             conversationEnded
           ) {
-
             return;
           }
-
-
           const message =
             $("messageInput")
               .value
               .trim();
-
-
           if (
             !message
           ) {
-
             return;
           }
-
-
           const historyBefore =
             [
               ...history,
             ];
-
-
           const recentIndex =
             recentAdd({
               sender:
                 "user",
-
               text:
                 message,
-
               wordMetadata:
                 [],
             });
-
-
           addMessage(
             message,
             "user",
             activeLang
           );
-
-
           $("messageInput")
             .value =
               "";
-
-
           clearFeedback();
-
-
           setComposer(
             false
           );
-
-
           $("sendBtn")
             .textContent =
               "Sending…";
-
-
           const seconds =
             takeChatSeconds();
-
-
           try {
-
             const data =
               await jsonResponse(
                 await fetch(
@@ -11315,191 +8103,126 @@
                   {
                     method:
                       "POST",
-
                     headers: {
                       "Content-Type":
                         "application/json",
-
                       ...authHeaders(),
                     },
-
                     body:
                       JSON.stringify({
                         ...conversationPayload(),
-
                         message,
-
                         history:
                           historyBefore,
-
                         chatSecondsSinceLastMessage:
                           seconds,
                       }),
                   }
                 )
               );
-
-
             recentFeedback(
               recentIndex,
               data.feedback
             );
-
-
             recentAdd({
               sender:
                 "ai",
-
               text:
                 data.reply,
-
               wordMetadata:
                 data.replyWords,
             });
-
-
             history.push(
               {
                 role:
                   "user",
-
                 content:
                   message,
               },
-
               {
                 role:
                   "assistant",
-
                 content:
                   data.reply,
               }
             );
-
-
             addMessage(
               data.reply,
               "ai",
               activeLang,
               data.replyWords
             );
-
-
             renderFeedback(
               data.feedback
             );
-
-
             conversationEnded =
               Boolean(
                 data.conversationEnded
               );
-
-
             if (
               conversationEnded
             ) {
-
               recentEnded();
-
-
               setComposer(
                 false
               );
-
             } else {
-
               setComposer(
                 true
               );
-
-
               $("messageInput")
                 .focus();
             }
-
           } catch (
             error
           ) {
-
             chatMs +=
               seconds *
               1000;
-
-
             if (
               recentStorageAllowed() &&
               currentRecent &&
               recentIndex >=
                 0
             ) {
-
               currentRecent
                 .messages
                 .splice(
                   recentIndex,
                   1
                 );
-
-
               saveRecentRecord();
             }
-
-
             showChatError(
               `Could not get an AI response: ${error.message}`
             );
-
-
             setComposer(
               true
             );
-
-
             $("messageInput")
               .focus();
-
           } finally {
-
             $("sendBtn")
               .textContent =
                 "Send";
           }
         };
-
-
     /* =====================================================
        INITIALISE
        ===================================================== */
-
     fillContactDetails();
-
-
     updateTopbar(
       screens.home
     );
-
-
     clearFeedback();
-
-
     initPrivacyPreferences();
-
-
     requestAnimationFrame(
       () => {
-
         placeCharacterHanging();
       }
     );
-
-
     loadConfig();
-
-
     initAuth();
-
   </script>
-
 </body>
 </html>
