@@ -2300,6 +2300,55 @@
         0 1px 3px rgba(16, 43, 62, .10);
     }
 
+    .password-wrap {
+      position: relative;
+    }
+
+    .password-wrap input {
+      padding-right: 78px;
+    }
+
+    .password-toggle {
+      position: absolute;
+
+      top: 50%;
+      right: 10px;
+
+      transform:
+        translateY(-50%);
+
+      border: 0;
+
+      padding:
+        5px 7px;
+
+      border-radius: 7px;
+
+      background: transparent;
+
+      color:
+        rgba(24, 58, 82, .72);
+
+      font-size: .86rem;
+      font-weight: 600;
+
+      line-height: 1;
+    }
+
+    .password-toggle:hover {
+      background:
+        rgba(24, 58, 82, .07);
+
+      color: var(--navy);
+    }
+
+    .password-toggle:focus-visible {
+      outline:
+        2px solid rgba(24, 58, 82, .40);
+
+      outline-offset: 1px;
+    }
+
     .auth-msg {
       min-height: 20px;
 
@@ -3951,7 +4000,7 @@
           </h1>
 
           <div class="legal-updated">
-            Last updated: 17 August 2026
+            Last updated: 18 August 2026
           </div>
 
           <p>
@@ -4036,30 +4085,8 @@
           </h2>
 
           <p>
-            PlainBetter currently uses the following service providers:
+            We use third-party service providers to host and operate PlainBetter, manage user accounts and email, and provide AI-powered language features. Where necessary, these providers process personal information on our behalf.
           </p>
-
-          <ul>
-            <li>
-              <strong>Supabase</strong> — authentication and database services.
-            </li>
-
-            <li>
-              <strong>OpenAI</strong> — generation and analysis of language-learning conversations through the API.
-            </li>
-
-            <li>
-              <strong>Render</strong> — backend hosting.
-            </li>
-
-            <li>
-              <strong>Cloudflare</strong> — domain, DNS, frontend hosting and email routing.
-            </li>
-
-            <li>
-              <strong>Resend</strong> — delivery of authentication-related email.
-            </li>
-          </ul>
 
           <h2>
             5. International processing
@@ -4494,12 +4521,26 @@
             Password
           </label>
 
-          <input
-            id="authPassword"
-            type="password"
-            autocomplete="current-password"
-            required
-          />
+          <div class="password-wrap">
+
+            <input
+              id="authPassword"
+              type="password"
+              autocomplete="current-password"
+              required
+            />
+
+            <button
+              id="authPasswordToggle"
+              class="password-toggle"
+              type="button"
+              aria-label="Show password"
+              aria-pressed="false"
+            >
+              Show
+            </button>
+
+          </div>
 
         </div>
 
@@ -5913,6 +5954,53 @@
     }
 
 
+    function setPasswordVisible(
+      visible
+    ) {
+
+      const password =
+        $("authPassword");
+
+
+      const toggle =
+        $("authPasswordToggle");
+
+
+      password.type =
+        visible
+
+          ? "text"
+
+          : "password";
+
+
+      toggle.textContent =
+        visible
+
+          ? "Hide"
+
+          : "Show";
+
+
+      toggle.setAttribute(
+        "aria-label",
+        visible
+
+          ? "Hide password"
+
+          : "Show password"
+      );
+
+
+      toggle.setAttribute(
+        "aria-pressed",
+        visible
+          ? "true"
+          : "false"
+      );
+    }
+
+
     function setAuthMode(
       mode
     ) {
@@ -5981,6 +6069,11 @@
             ? "new-password"
 
             : "current-password";
+
+
+      setPasswordVisible(
+        false
+      );
 
 
       $("authMsg")
@@ -10414,15 +10507,6 @@
           "hardcore"
         ) {
 
-          /*
-            Keep the answer field visible but stop it
-            being edited. The same submit button now
-            becomes the Next/Results control.
-
-            It receives focus, so pressing Enter again
-            immediately advances.
-          */
-
           $("hardcoreInput")
             .disabled =
               false;
@@ -10815,21 +10899,6 @@
         startVocabTest;
 
 
-    /*
-      HARDCORE ENTER BEHAVIOUR
-
-      First Enter:
-        checks the typed answer.
-
-      Once answered:
-        the same form submission advances
-        to the next word.
-
-      Because the submit button is focused after
-      feedback appears, another press of Enter
-      immediately triggers this.
-    */
-
     $("hardcoreForm")
       .onsubmit =
         event => {
@@ -10985,6 +11054,16 @@
     $("authClose")
       .onclick =
         closeAuth;
+
+
+    $("authPasswordToggle")
+      .onclick =
+        () =>
+          setPasswordVisible(
+            $("authPassword")
+              .type ===
+            "password"
+          );
 
 
     $("loginTab")
