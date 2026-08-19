@@ -2348,7 +2348,7 @@
               <option value="my_vocab">
                 My vocabulary
               </option>
-              <option value="new_vocab">
+              <option value="new_vocab" selected>
                 New vocabulary
               </option>
             </select>
@@ -2367,8 +2367,8 @@
               <option value="multiple_choice">
                 Multiple choice
               </option>
-              <option value="hardcore">
-                Hardcore mode
+              <option value="hardcore" selected>
+                Recall
               </option>
             </select>
           </div>
@@ -2503,7 +2503,10 @@
               Score: 0
             </span>
           </div>
-          <div class="prompt-label">
+          <div
+            id="promptLabel"
+            class="prompt-label"
+          >
             English meaning
           </div>
           <div
@@ -2523,7 +2526,7 @@
             class="hardcore hidden"
           >
             <label for="hardcoreInput">
-              <strong>
+              <strong id="recallAnswerLabel">
                 Type the dictionary lemma
               </strong>
             </label>
@@ -2546,7 +2549,10 @@
                 Check
               </button>
             </div>
-            <p class="field-help">
+            <p
+              id="recallHelp"
+              class="field-help"
+            >
               Capitalisation matters. If the dictionary accepts multiple lemmas, any accepted lemma is correct.
             </p>
           </form>
@@ -2621,7 +2627,7 @@
             class="overall hidden"
           >
             <span>
-              Overall foreign vocabulary
+              Overall vocabulary
             </span>
             <span
               id="overallCount"
@@ -2795,7 +2801,7 @@
             Language-learning information
           </h3>
           <p>
-            For logged-in users, we may store learning information such as your language, vocabulary lemmas, successful-use counts, successful Hardcore-test recalls and recorded chat-practice time.
+            For logged-in users, we may store learning information such as your language, vocabulary lemmas, successful-use counts, successful Recall-test answers and recorded chat-practice time.
           </p>
           <h3>
             Conversation content
@@ -4762,9 +4768,14 @@
               ]
             )
           );
+        const chatLanguages =
+          data.languages.filter(
+            language =>
+              !language.vocabTestOnly
+          );
         populate(
           $("languageSelect"),
-          data.languages
+          chatLanguages
         );
         populate(
           $("levelSelect"),
@@ -4791,7 +4802,8 @@
         const supported =
           data.languages.filter(
             language =>
-              language.dictionaryEnabled
+              language.dictionaryEnabled ||
+              language.vocabTestOnly
           );
         populate(
           $("vocabLanguage"),
@@ -4877,6 +4889,12 @@
       const source =
         $("vocabSource")
           .value;
+      const languageId =
+        $("vocabLanguage")
+          .value;
+      const isEnglish =
+        languageId ===
+        "english";
       $("sourceHelp")
         .textContent =
           source ===
@@ -4884,14 +4902,20 @@
             ? "Tests words already recorded in your vocabulary."
             : source ===
                 "new_vocab"
-              ? "We review your recorded vocabulary and select useful dictionary words we think you should learn next."
-              : "Randomly selects words directly from the local dictionary.";
+              ? isEnglish
+                ? "We review your recorded English vocabulary and select useful new English words for you to learn next."
+                : "We review your recorded vocabulary and select useful dictionary words we think you should learn next."
+              : isEnglish
+                ? "Selects useful English words and tests you on their definitions."
+                : "Randomly selects words directly from the local dictionary.";
       $("modeHelp")
         .textContent =
           $("quizMode")
             .value ===
           "hardcore"
-            ? "Hardcore mode requires the exact dictionary lemma. Correct answers are recorded for logged-in users."
+            ? isEnglish
+              ? "Recall requires you to type the English word matching the definition. Correct answers are recorded for logged-in users."
+              : "Recall requires the exact dictionary lemma. Correct answers are recorded for logged-in users."
             : "Multiple choice affects only the test score and never records a vocabulary success.";
     }
     /* =====================================================
@@ -7181,7 +7205,7 @@
         const modeLabel =
           quizMode ===
             "hardcore"
-            ? "Hardcore mode"
+            ? "Recall"
             : "Multiple choice";
         $("testMeta")
           .textContent =
@@ -7233,6 +7257,29 @@
       $("score")
         .textContent =
           `Score: ${activeTest.score}`;
+      const isEnglish =
+        activeTest.languageId ===
+        "english";
+      $("promptLabel")
+        .textContent =
+          isEnglish
+            ? "Definition"
+            : "English meaning";
+      $("recallAnswerLabel")
+        .textContent =
+          isEnglish
+            ? "Type the English word"
+            : "Type the dictionary lemma";
+      $("recallHelp")
+        .textContent =
+          isEnglish
+            ? "Type the English word that matches the definition."
+            : "Capitalisation matters. If the dictionary accepts multiple lemmas, any accepted lemma is correct.";
+      $("hardcoreInput")
+        .placeholder =
+          isEnglish
+            ? "Type the English word…"
+            : "Type your answer exactly…";
       $("prompt")
         .textContent =
           question.prompt ||
@@ -7443,7 +7490,7 @@
           $("answerFeedback")
             .textContent =
               data.recorded
-                ? "Correct. This Hardcore recall was recorded in your vocabulary."
+                ? "Correct. This Recall answer was recorded in your vocabulary."
                 : "Correct.";
           if (
             selectedButton
@@ -7642,8 +7689,8 @@
         $("finalNote")
           .textContent =
             activeTest.savesCorrectAnswers
-              ? "Correct Hardcore answers were recorded as vocabulary evidence."
-              : "Log in before starting a test if you want correct Hardcore answers recorded.";
+              ? "Correct Recall answers were recorded as vocabulary evidence."
+              : "Log in before starting a test if you want correct Recall answers recorded.";
       } else {
         $("finalNote")
           .textContent =
@@ -7769,7 +7816,7 @@
       .onclick =
         startVocabTest;
     /*
-      HARDCORE ENTER BEHAVIOUR
+      RECALL ENTER BEHAVIOUR
       First Enter:
         checks the typed answer.
       Once answered:
