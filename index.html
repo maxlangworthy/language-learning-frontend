@@ -1649,8 +1649,7 @@
           8px 9px;
         font-size: .80rem;
       }
-      #topBackBtn,
-      #topHomeBtn {
+      #topBackBtn {
         padding:
           8px 8px;
         font-size: .76rem;
@@ -1808,8 +1807,7 @@
       .top-brand {
         font-size: 1.12rem;
       }
-      #topBackBtn,
-      #topHomeBtn {
+      #topBackBtn {
         padding:
           7px 6px;
         font-size: .68rem;
@@ -1867,13 +1865,6 @@
           type="button"
         >
           ← Back
-        </button>
-        <button
-          id="topHomeBtn"
-          class="nav-btn hidden"
-          type="button"
-        >
-          Home
         </button>
       </div>
       <div class="top-right">
@@ -3933,12 +3924,6 @@
           "hidden",
           home
         );
-      $("topHomeBtn")
-        .classList
-        .toggle(
-          "hidden",
-          home
-        );
       if (
         home
       ) {
@@ -4036,6 +4021,33 @@
         screens.home;
       screenBeforeInfo =
         screens.home;
+
+      if (
+        characterTransitioning
+      ) {
+        stopCharacterFade();
+
+        characterTransitioning =
+          false;
+
+        character.style.opacity =
+          "1";
+
+        show(
+          screens.home
+        );
+
+        applyCharacterPosition(
+          hangingCharacterPosition()
+        );
+
+        setCharacterPose(
+          "hanging"
+        );
+
+        return;
+      }
+
       await navigateToScreen(
         screens.home
       );
@@ -4807,7 +4819,8 @@
           );
         populate(
           $("vocabLanguage"),
-          supported
+          supported,
+          "german"
         );
         $("languageSelect")
           .disabled =
@@ -6329,17 +6342,37 @@
         );
     }
     async function openRecent() {
-      screenBeforeRecent =
+      const current =
         activeScreen();
+
+      if (
+        current !==
+        screens.recent
+      ) {
+        screenBeforeRecent =
+          current;
+      }
+
       await navigateToScreen(
         screens.recent
       );
+
       renderRecentList();
     }
+
     async function closeRecent() {
+      const target =
+        screenBeforeRecent &&
+        screenBeforeRecent !==
+          screens.recent
+          ? screenBeforeRecent
+          : screens.home;
+
+      screenBeforeRecent =
+        screens.home;
+
       await navigateToScreen(
-        screenBeforeRecent ||
-        screens.home
+        target
       );
     }
     /* =====================================================
@@ -6745,17 +6778,38 @@
         );
         return;
       }
-      screenBeforeStats =
+
+      const current =
         activeScreen();
+
+      if (
+        current !==
+        screens.stats
+      ) {
+        screenBeforeStats =
+          current;
+      }
+
       await navigateToScreen(
         screens.stats
       );
+
       await loadStats();
     }
+
     async function closeStats() {
+      const target =
+        screenBeforeStats &&
+        screenBeforeStats !==
+          screens.stats
+          ? screenBeforeStats
+          : screens.home;
+
+      screenBeforeStats =
+        screens.home;
+
       await navigateToScreen(
-        screenBeforeStats ||
-        screens.home
+        target
       );
     }
     /* =====================================================
@@ -7730,9 +7784,6 @@
             screens.vocabSetup
           );
     $("topBrand")
-      .onclick =
-        goHome;
-    $("topHomeBtn")
       .onclick =
         goHome;
     $("topBackBtn")
