@@ -1213,6 +1213,177 @@
       font-size: .79rem;
       font-weight: 600;
     }
+    .stats-section {
+      margin-top: 24px;
+      padding-top: 22px;
+      border-top:
+        1px solid rgba(24, 58, 82, .13);
+    }
+    .stats-section:first-of-type {
+      margin-top: 18px;
+    }
+    .stats-section-heading {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 12px;
+    }
+    .stats-section-heading h4 {
+      margin: 2px 0 0;
+      font-size: 1.2rem;
+    }
+    .profile-window {
+      flex: 0 0 auto;
+      padding: 5px 8px;
+      border:
+        1px solid rgba(24, 58, 82, .13);
+      border-radius: 999px;
+      background:
+        rgba(248, 241, 222, .72);
+      color:
+        rgba(24, 58, 82, .68);
+      font-size: .78rem;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    .profile-summary {
+      display: grid;
+      grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+      gap: 9px;
+      margin: 15px 0 18px;
+    }
+    .profile-summary-card {
+      padding: 12px;
+      border:
+        1px solid rgba(24, 58, 82, .13);
+      border-radius: 11px;
+      background:
+        rgba(255, 255, 255, .72);
+    }
+    .profile-summary-card span {
+      display: block;
+      color:
+        rgba(24, 58, 82, .62);
+      font-size: .78rem;
+      line-height: 1.3;
+    }
+    .profile-summary-card strong {
+      display: block;
+      margin-top: 4px;
+      color: var(--navy);
+      font-size: 1.25rem;
+      font-weight: 600;
+    }
+    .profile-topics {
+      display: grid;
+      gap: 13px;
+    }
+    .profile-category {
+      padding: 13px;
+      border:
+        1px solid rgba(24, 58, 82, .13);
+      border-radius: 12px;
+      background:
+        rgba(248, 241, 222, .58);
+    }
+    .profile-category-head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+    .profile-category-head strong {
+      font-size: 1rem;
+    }
+    .profile-category-head span {
+      color:
+        rgba(24, 58, 82, .62);
+      font-size: .79rem;
+      white-space: nowrap;
+    }
+    .profile-topic {
+      padding: 10px 0;
+      border-top:
+        1px solid rgba(24, 58, 82, .10);
+    }
+    .profile-topic:first-child {
+      padding-top: 0;
+      border-top: 0;
+    }
+    .profile-topic:last-child {
+      padding-bottom: 0;
+    }
+    .profile-topic-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .profile-topic-name {
+      font-weight: 600;
+    }
+    .profile-topic-count {
+      color:
+        rgba(24, 58, 82, .67);
+      font-size: .8rem;
+      white-space: nowrap;
+    }
+    .profile-bar {
+      height: 5px;
+      margin-top: 7px;
+      overflow: hidden;
+      border-radius: 999px;
+      background:
+        rgba(24, 58, 82, .10);
+    }
+    .profile-bar-fill {
+      height: 100%;
+      border-radius: inherit;
+      background: var(--navy);
+    }
+    .profile-topic-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-top: 7px;
+      min-height: 22px;
+    }
+    .profile-topic-context {
+      color:
+        rgba(24, 58, 82, .60);
+      font-size: .78rem;
+    }
+    .trend-pill {
+      padding: 3px 7px;
+      border:
+        1px solid rgba(24, 58, 82, .13);
+      border-radius: 999px;
+      background:
+        rgba(255, 255, 255, .7);
+      color:
+        rgba(24, 58, 82, .72);
+      font-size: .74rem;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    .trend-pill.improving {
+      border-color:
+        rgba(45, 119, 75, .24);
+      background:
+        rgba(239, 249, 242, .86);
+      color: var(--success);
+    }
+    .trend-pill.recurring {
+      border-color:
+        rgba(158, 62, 56, .20);
+      background:
+        rgba(255, 247, 244, .88);
+      color: var(--danger);
+    }
     .recent-btn {
       display: block;
     }
@@ -1763,8 +1934,13 @@
           19px 15px;
       }
       .options,
-      .vocab-list {
+      .vocab-list,
+      .profile-summary {
         grid-template-columns: 1fr;
+      }
+      .stats-section-heading {
+        flex-direction: column;
+        gap: 7px;
       }
       .hardcore-row {
         flex-direction: column;
@@ -2663,7 +2839,7 @@
           <div class="detail-top">
             <div>
               <div class="eyebrow">
-                Vocabulary
+                Progress
               </div>
               <h3 id="statsLangTitle"></h3>
             </div>
@@ -2679,10 +2855,87 @@
             id="statsLangMessage"
             class="utility-message"
           ></p>
-          <ul
-            id="vocabList"
-            class="vocab-list"
-          ></ul>
+
+          <section
+            id="learnerProfileSection"
+            class="stats-section hidden"
+          >
+            <div class="stats-section-heading">
+              <div>
+                <div class="eyebrow">
+                  Learner profile
+                </div>
+                <h4>
+                  Recent correction patterns
+                </h4>
+              </div>
+              <span
+                id="profileWindow"
+                class="profile-window"
+              ></span>
+            </div>
+            <p
+              id="profileMessage"
+              class="utility-message"
+            ></p>
+            <div
+              id="profileSummary"
+              class="profile-summary hidden"
+            >
+              <div class="profile-summary-card">
+                <span>
+                  Recent messages
+                </span>
+                <strong id="profileMessageCount">
+                  0
+                </strong>
+              </div>
+              <div class="profile-summary-card">
+                <span>
+                  Messages corrected
+                </span>
+                <strong id="profileIssueCount">
+                  0
+                </strong>
+              </div>
+              <div class="profile-summary-card">
+                <span>
+                  No correction needed
+                </span>
+                <strong id="profileCleanCount">
+                  0
+                </strong>
+              </div>
+            </div>
+            <div
+              id="profileTopics"
+              class="profile-topics hidden"
+            ></div>
+          </section>
+
+          <section
+            id="vocabularyStatsSection"
+            class="stats-section"
+          >
+            <div class="stats-section-heading">
+              <div>
+                <div class="eyebrow">
+                  Vocabulary
+                </div>
+                <h4>
+                  Saved vocabulary
+                </h4>
+              </div>
+              <span
+                id="vocabStatsCount"
+                class="profile-window"
+              ></span>
+            </div>
+            <ul
+              id="vocabList"
+              class="vocab-list"
+            ></ul>
+          </section>
         </section>
       </div>
     </section>
@@ -2792,13 +3045,13 @@
             Language-learning information
           </h3>
           <p>
-            For logged-in users, we may store learning information such as your language, vocabulary lemmas, successful-use counts, successful Recall-test answers and recorded chat-practice time.
+            For logged-in users, we may store learning information such as your language, vocabulary lemmas, successful-use counts, successful Recall-test answers, recorded chat-practice time, and structured correction-pattern tags used to build your learner profile.
           </p>
           <h3>
             Conversation content
           </h3>
           <p>
-            When you use Chat or Generate Example Response, the text needed to provide the feature is sent to the PlainBetter backend and to OpenAI's API so a response can be generated. PlainBetter does not currently save full chat transcripts to your account database.
+            When you use AI-powered features such as Chat, Generate Example Response, or an AI-generated vocabulary test, the text needed to provide the feature is sent to the PlainBetter backend and to OpenAI's API so a response can be generated. PlainBetter does not currently save full chat transcripts to your account database, but for logged-in users it may store structured correction tags and whether a chat message needed correction so that a learner profile can be calculated.
           </p>
           <h3>
             Recent Conversations on your device
@@ -6579,6 +6832,383 @@
           "utility-message error";
       }
     }
+    function learnerProfileTrendLabel(
+      trend
+    ) {
+      if (
+        trend ===
+        "improving"
+      ) {
+        return {
+          label:
+            "Improving",
+          className:
+            "improving",
+        };
+      }
+      if (
+        trend ===
+        "recently_recurring"
+      ) {
+        return {
+          label:
+            "Recently recurring",
+          className:
+            "recurring",
+        };
+      }
+      if (
+        trend ===
+        "steady"
+      ) {
+        return {
+          label:
+            "Steady",
+          className:
+            "",
+        };
+      }
+      return null;
+    }
+
+    function resetLearnerProfileDisplay() {
+      $("learnerProfileSection")
+        .classList
+        .add(
+          "hidden"
+        );
+      $("profileSummary")
+        .classList
+        .add(
+          "hidden"
+        );
+      $("profileTopics")
+        .classList
+        .add(
+          "hidden"
+        );
+      $("profileTopics")
+        .innerHTML =
+          "";
+      $("profileMessage")
+        .textContent =
+          "";
+      $("profileMessage")
+        .className =
+          "utility-message";
+      $("profileWindow")
+        .textContent =
+          "";
+      $("profileMessageCount")
+        .textContent =
+          "0";
+      $("profileIssueCount")
+        .textContent =
+          "0";
+      $("profileCleanCount")
+        .textContent =
+          "0";
+    }
+
+    function renderLearnerProfile(
+      data
+    ) {
+      const profile =
+        data?.profile ||
+        {};
+      const sampleSize =
+        Number(
+          profile.sampleSize
+        ) ||
+        0;
+      const windowSize =
+        Number(
+          profile.window
+        ) ||
+        50;
+
+      $("learnerProfileSection")
+        .classList
+        .remove(
+          "hidden"
+        );
+      $("profileWindow")
+        .textContent =
+          sampleSize
+            ? `Latest ${sampleSize} / ${windowSize}`
+            : `Up to ${windowSize}`;
+
+      if (
+        sampleSize ===
+        0
+      ) {
+        $("profileMessage")
+          .textContent =
+            "Your learner profile will begin to appear here after you send logged-in chat messages in this language.";
+        return;
+      }
+
+      $("profileSummary")
+        .classList
+        .remove(
+          "hidden"
+        );
+      $("profileMessageCount")
+        .textContent =
+          sampleSize;
+      $("profileIssueCount")
+        .textContent =
+          Number(
+            profile.issueMessages
+          ) ||
+          0;
+      $("profileCleanCount")
+        .textContent =
+          Number(
+            profile.cleanMessages
+          ) ||
+          0;
+
+      const categories =
+        Array.isArray(
+          profile.categories
+        )
+          ? profile.categories
+          : [];
+
+      if (
+        !categories.length
+      ) {
+        $("profileMessage")
+          .textContent =
+            `No recurring correction areas have been identified in these ${sampleSize} message${sampleSize === 1 ? "" : "s"}.`;
+        return;
+      }
+
+      $("profileMessage")
+        .textContent =
+          "Each area is counted by the number of recent messages in which that correction appeared. A topic counts at most once per message.";
+
+      for (
+        const category
+        of categories
+      ) {
+        const categoryBox =
+          document.createElement(
+            "div"
+          );
+        categoryBox.className =
+          "profile-category";
+
+        const categoryHead =
+          document.createElement(
+            "div"
+          );
+        categoryHead.className =
+          "profile-category-head";
+
+        const categoryName =
+          document.createElement(
+            "strong"
+          );
+        categoryName.textContent =
+          category.label ||
+          category.id ||
+          "Other";
+
+        const categoryCount =
+          document.createElement(
+            "span"
+          );
+        const categoryMessages =
+          Number(
+            category.count
+          ) ||
+          0;
+        categoryCount.textContent =
+          `${categoryMessages} message${categoryMessages === 1 ? "" : "s"}`;
+
+        categoryHead.append(
+          categoryName,
+          categoryCount
+        );
+        categoryBox.appendChild(
+          categoryHead
+        );
+
+        const topics =
+          Array.isArray(
+            category.topics
+          )
+            ? category.topics
+            : [];
+
+        for (
+          const topic
+          of topics
+        ) {
+          const topicCount =
+            Number(
+              topic.count
+            ) ||
+            0;
+
+          if (
+            topicCount <=
+            0
+          ) {
+            continue;
+          }
+
+          const topicRow =
+            document.createElement(
+              "div"
+            );
+          topicRow.className =
+            "profile-topic";
+
+          const top =
+            document.createElement(
+              "div"
+            );
+          top.className =
+            "profile-topic-top";
+
+          const topicName =
+            document.createElement(
+              "span"
+            );
+          topicName.className =
+            "profile-topic-name";
+          topicName.textContent =
+            topic.label ||
+            topic.id ||
+            "Correction";
+
+          const count =
+            document.createElement(
+              "span"
+            );
+          count.className =
+            "profile-topic-count";
+          count.textContent =
+            `${topicCount} of ${sampleSize}`;
+
+          top.append(
+            topicName,
+            count
+          );
+
+          const bar =
+            document.createElement(
+              "div"
+            );
+          bar.className =
+            "profile-bar";
+
+          const fill =
+            document.createElement(
+              "div"
+            );
+          fill.className =
+            "profile-bar-fill";
+          fill.style.width =
+            `${Math.max(
+              3,
+              Math.min(
+                100,
+                (
+                  topicCount /
+                  sampleSize
+                ) *
+                100
+              )
+            )}%`;
+
+          bar.appendChild(
+            fill
+          );
+
+          const bottom =
+            document.createElement(
+              "div"
+            );
+          bottom.className =
+            "profile-topic-bottom";
+
+          const context =
+            document.createElement(
+              "span"
+            );
+          context.className =
+            "profile-topic-context";
+          context.textContent =
+            `Corrected in ${Math.round(
+              (
+                topicCount /
+                sampleSize
+              ) *
+              100
+            )}% of recent messages`;
+
+          bottom.appendChild(
+            context
+          );
+
+          const trend =
+            learnerProfileTrendLabel(
+              topic.trend
+            );
+
+          if (
+            trend
+          ) {
+            const badge =
+              document.createElement(
+                "span"
+              );
+            badge.className =
+              `trend-pill${
+                trend.className
+                  ? ` ${trend.className}`
+                  : ""
+              }`;
+            badge.textContent =
+              trend.label;
+            bottom.appendChild(
+              badge
+            );
+          }
+
+          topicRow.append(
+            top,
+            bar,
+            bottom
+          );
+          categoryBox.appendChild(
+            topicRow
+          );
+        }
+
+        $("profileTopics")
+          .appendChild(
+            categoryBox
+          );
+      }
+
+      if (
+        $("profileTopics")
+          .children
+          .length
+      ) {
+        $("profileTopics")
+          .classList
+          .remove(
+            "hidden"
+          );
+      }
+    }
+
     async function loadStatsLanguage(
       languageId,
       name
@@ -6595,7 +7225,7 @@
         );
       $("statsLangTitle")
         .textContent =
-          `${name} vocabulary`;
+          `${name} progress`;
       $("statsLangMessage")
         .textContent =
           "Loading…";
@@ -6605,9 +7235,38 @@
       $("vocabList")
         .innerHTML =
           "";
+      $("vocabStatsCount")
+        .textContent =
+          "";
+      resetLearnerProfileDisplay();
+
+      const languageInfo =
+        languageMap.get(
+          languageId
+        );
+      const supportsChatProfile =
+        !languageInfo
+          ?.vocabTestOnly;
+
       try {
         const token =
           await requiredToken();
+
+        const profilePromise =
+          supportsChatProfile
+            ? fetch(
+                `${API}/api/learner-profile?language=${encodeURIComponent(languageId)}`,
+                {
+                  headers: {
+                    Authorization:
+                      `Bearer ${token}`,
+                  },
+                  cache:
+                    "no-store",
+                }
+              )
+            : null;
+
         const data =
           await jsonResponse(
             await fetch(
@@ -6622,13 +7281,20 @@
               }
             )
           );
+
         const vocabText =
           data.items?.length
             ? `${data.items.length} saved vocabulary item${data.items.length === 1 ? "" : "s"}`
             : "No saved vocabulary yet";
+
         $("statsLangMessage")
           .textContent =
             `${vocabText} · Chat time: ${formatChatDuration(data.chatSeconds)}.`;
+
+        $("vocabStatsCount")
+          .textContent =
+            `${data.items?.length || 0} word${data.items?.length === 1 ? "" : "s"}`;
+
         (
           data.items ||
           []
@@ -6641,6 +7307,7 @@
                 );
               item.className =
                 "vocab-item";
+
               const word =
                 document.createElement(
                   "span"
@@ -6658,6 +7325,7 @@
                   )
                   ?.direction ||
                 "auto";
+
               const open =
                 () =>
                   openTooltip(
@@ -6667,6 +7335,7 @@
                     lemma,
                     ""
                   );
+
               word.onmouseenter =
                 () => {
                   clearTimeout(
@@ -6691,6 +7360,7 @@
                   event.stopPropagation();
                   open();
                 };
+
               const deleteButton =
                 document.createElement(
                   "button"
@@ -6710,8 +7380,10 @@
                   ) {
                     return;
                   }
+
                   deleteButton.disabled =
                     true;
+
                   try {
                     const {
                       error,
@@ -6729,11 +7401,13 @@
                           "lemma",
                           lemma
                         );
+
                     if (
                       error
                     ) {
                       throw error;
                     }
+
                     await loadStatsLanguage(
                       languageId,
                       name
@@ -6748,6 +7422,7 @@
                       false;
                   }
                 };
+
               item.append(
                 word,
                 deleteButton
@@ -6758,6 +7433,39 @@
                 );
             }
           );
+
+        if (
+          supportsChatProfile &&
+          profilePromise
+        ) {
+          $("learnerProfileSection")
+            .classList
+            .remove(
+              "hidden"
+            );
+          $("profileMessage")
+            .textContent =
+              "Loading learner profile…";
+
+          try {
+            const profileData =
+              await jsonResponse(
+                await profilePromise
+              );
+            renderLearnerProfile(
+              profileData
+            );
+          } catch (
+            profileError
+          ) {
+            $("profileMessage")
+              .textContent =
+                profileError.message;
+            $("profileMessage")
+              .className =
+                "utility-message error";
+          }
+        }
       } catch (
         error
       ) {
@@ -6769,6 +7477,7 @@
             "utility-message error";
       }
     }
+
     async function openStats() {
       if (
         !session?.user
